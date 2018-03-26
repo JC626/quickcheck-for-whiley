@@ -1,0 +1,106 @@
+\documentclass[]{article}
+
+%opening
+\title{ENGR489 Meeting Minutes \\ QuickCheck for Whiley}
+\author{Janice Chin \\ Primary Supervisor: David Pearce \\ Secondary Supervisor: Lindsay Groves}
+\date{}
+\begin{document}
+	
+\maketitle
+
+\section{March 20th 2018}
+\subsection{Present}
+\begin{itemize}
+	\item David Pearce
+\end{itemize}
+\subsection{Action points were achieved since the last meeting}
+None as this is the first meeting.
+\subsection{Action points have yet to be achieved since the last meeting}
+None as this is the first meeting.
+\subsection{Action points were agreed to for the next meeting}
+\begin{enumerate}
+	\item Install Whiley command line tool.
+	\item Read research papers about QuickCheck to determine strategies for generating test cases.
+\end{enumerate}
+
+\subsection{Discussion Points}
+
+\paragraph{Objective 1:} Take Whiley program and generate test cases from it using the Whiley compiler. 
+
+Assuming each Whiley program has specifications for each function.
+
+To investigate:
+\begin{itemize}
+	\item Learn and understand Whiley
+	\item Whiley jar file for the compiler
+	\item Whiley web project
+	\item Maven, pom.xml for dependencies for the generator
+	\item Need to know strategies for generating test cases
+\end{itemize}
+
+
+\section{March 26th 2018}
+\subsection{Present}
+\begin{itemize}
+	\item David Pearce
+\end{itemize}
+
+\subsection{Action points were achieved since the last meeting}
+
+\begin{itemize}
+	\item Read some research papers about QuickCheck and other testing tools (DART, ArbitCheck)
+	\item Read Whiley Getting Started Guide and started reading language specifications
+	\item Got WhileyLabs working on my machine, could not get Whiley working on the command line.
+\end{itemize}
+\subsection{Action points have yet to be achieved since the last meeting}
+None
+\subsection{Action points were agreed to for the next meeting}
+\begin{itemize}
+	\item Finish draft project proposal and send to supervisors to get it checked (by 30/3/2018).
+	\item Reading more research papers. Suggest reading papers about American Fuzzy Lop.
+	\item Begin implementation of project. The first steps are to create a Java project with the necessary hooks to access the Whiley compiler.  And, then to be able to read a compiled Whiley file (*.wyil) to identify functions to test. 
+\end{itemize}
+
+\subsection{Discussion Points}
+
+Whiley can also pass functions as an argument to other functions.
+\begin{itemize}
+		\item What testing method am I using? Random testing? Property testing?  
+		\begin{itemize}
+			\item Firstly, use random testing using the properties of the function. Pre-condition to for candidate values and post-condition to check test passed or failed. Then will look at limitations of the testing method and decide whether to expand on the testing method (such as using dynamic symbolic execution).
+		\end{itemize}
+		\item What types to use in test generation? Primitive, recursive etc
+		\begin{itemize}
+			\item Primitive types: bool, byte, int, real, null, any, void
+			\item Array
+			\item Later on: records (closed), union
+			\item Even later: Recursive types
+			\item Extra (may not be implemented) - references, functionss
+		\end{itemize}
+		\item Testing functions only or also test methods? Methods have side effects.
+		\begin{itemize}
+			\item Test for functions first then by methods.
+		\end{itemize}
+		\item Using pre- and post-conditions or property syntax?
+		\begin{itemize}
+			\item Do not need to worry as the interpreter should evaluate the pre- and post-conditions. Properties are only used by the verifier and are specified in the pre- and post-conditions.
+		\end{itemize}
+\end{itemize}
+
+%\section{ 2018}
+%\subsection{Present}
+%\begin{itemize}
+%	\item David Pearce
+%\end{itemize}
+%
+%\subsection{Action points were achieved since the last meeting}
+%\subsection{Action points have yet to be achieved since the last meeting}
+%\subsection{Action points were agreed to for the next meeting}
+%
+%\subsection{Discussion Points}
+
+%\begin{itemize}
+%	\item Should test generation only work for functions that have Whiley program specifications? (Probably a yes)
+%\end{itemize}
+
+\end{document}

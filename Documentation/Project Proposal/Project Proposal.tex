@@ -1,0 +1,260 @@
+%% $RCSfile: proj_proposal.tex,v $
+%% $Revision: 1.4 $
+%% $Date: 2017/10/06 02:55:50 $
+%% $Author: kevin $
+
+\documentclass[11pt, a4paper, twoside, openright]{report}
+
+\usepackage{float} % lets you have non-floating floats
+
+\usepackage{url} % for typesetting urls
+
+%  We don't want figures to float so we define
+%
+\newfloat{fig}{thp}{lof}[chapter]
+\floatname{fig}{Figure}
+
+%% These are standard LaTeX definitions for the document
+%%
+\title{QuickCheck for Whiley}
+\author{Janice Chin}
+
+
+%% This file can be used for creating a wide range of reports
+%%  across various Schools
+%%
+%% Set up some things, mostly for the front page, for your specific document
+%
+% Current options are:
+% [ecs|msor|sms]          Which school you are in.
+%                         (msor option retained for reproducing old data)
+% [bschonscomp|mcompsci]  Which degree you are doing
+%                          You can also specify any other degree by name
+%                          (see below)
+% [font|image]            Use a font or an image for the VUW logo
+%                          The font option will only work on ECS systems
+%
+\usepackage[image,ecs]{vuwproject} 
+
+% You should specifiy your supervisor here with
+     \supervisors{David Pearce, Lindsay Groves}
+% use \supervisors if there are more than one supervisor
+
+% Unless you've used the bschonscomp or mcompsci
+%  options above use
+   \otherdegree{Bachelor of Engineering with Honour}
+% here to specify degree
+
+% Comment this out if you want the date printed.
+\date{}
+
+\begin{document}
+
+% Make the page numbering roman, until after the contents, etc.
+\frontmatter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{abstract}
+   This document is a project proposal for the project, QuickCheck for Whiley. It will describe an engineering problem and how this project will solve the problem. It will also explain how to evaluate my proposed solution and any resource requirements needed for this project.
+%  This document gives some ideas about how to write a project
+%  proposal, and provides a template for a proposal. You should discuss
+%  your proposal with your supervisor.
+\end{abstract}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\maketitle
+
+%\tableofcontents
+
+% we want a list of the figures we defined
+%\listof{fig}{Figures}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\mainmatter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{1. Introduction}
+
+
+This project is about implementing an automated test-case generator for Whiley.
+
+%Testing is an important aspect of modern software development. Typically, one should have hundreds or thousands of tests for a given program. However, generating tests remains very challenging at times! More recently, QuickCheck has become an indepensible tool for automated test-case generation. This tool works by enumerating input values upto specified limits, thereby generating exhaustive tests for a subset of the input space. Whilst this may appear limited in theory, it has more than proven itself in practice.
+%
+%Whiley is a programming language developed at VUW offering a number of unusual features, such as compile-time software verification. In particular, the presence of pre- and post-conditions mean that generating test inputs for Whiley will be significant easier than for other languages, such as Java. In this project, you will develop a tool for automated test-case generation for Whiley based on QuickCheck. To evaluate this tool, we will insert bugs into a small benchmark set and see whether they can be uncovered by the tool.
+
+%In this section you should include a very brief introduction to the problem and the project.
+%
+%Your project proposal should cover the following points:
+%
+%\begin{itemize}
+%\item the engineering problem that you are going to solve;
+%\item how you plan to solve your problem;
+%\item how you intend to evaluate your solution; and
+%\item any resource requirements for your project such as software,
+%  hardware or other resources that will be needed in the course of the
+%  project.
+%\end{itemize}
+%
+%Your proposal should be not more than than 3 pages long.
+
+\section*{2. The Problem}
+
+Testing is an important process in software development as it helps detect the presence of bugs. However, writing and running tests can be tedious and costly. Furthermore, it is difficult to write tests for all possible cases therefore, obscure bugs may not be detected. An automated test-case generator called QuickCheck was implemented in Haskell to solve these issues. This tool generates random input values to create a large number of tests.
+
+
+Whiley is a programming language, developed to verify code and eliminate errors using formal specifications. Currently, the verifier has limitations with evaluating complex pre- and post-conditions. For example, a post-condition could be identified as not holding by the verifier even though it is a valid post-condition. This project aims to implement an automated test-case generator in Whiley to increase confidence in unverifiable code and ease testing of Whiley code.
+
+
+%In this section you should give a brief description of the problem
+%itself. You want to briefly explain the problem, why it is important
+%to solve the problem and define your project aims. After reading this
+%section, the reader should understand why it is a problem, believe
+%that it is important to solve and have a clear idea of the aims of
+%your project.
+%
+%When describing the aims of the project, you should avoid vague,
+%unmeasurable words like `analyse', `investigate', `describe', and use
+%specific, measurable words like `implement', `demonstrate', `show',
+%`prove'.
+%
+%For example:
+%
+%\begin{itemize}
+%\item[\bf Good] The aim of this project is to implement and evaluate a
+%  management system for network switches;
+%\end{itemize}
+%is much better than:
+%\begin{itemize}
+%\item[\bf Bad] The aim of this project is to investigate management
+%  systems for network switches.
+%\end{itemize}
+%
+%In the second case there is no idea of how much work is involved, and
+%you will never know whether you have finished. You and your supervisor
+%(and the markers of your project) may have very different ideas about
+%what such an `investigation' involves. Of course, it is possible that
+%the task you set yourself is not achievable, but if you are clear from
+%the outset this is less likely, and will more easily be corrected.
+
+\section*{3. Proposed Solution}
+
+The automated test generator requires reading a Whiley program and creating tests from it.
+
+%This involves reading a Whiley program and creating tests for each function.
+
+\subsection*{Timeline}
+\subsubsection*{Trimester 1}
+\begin{tabular}{ |p{10cm}|p{3cm}|p{2cm}| }
+	\hline
+	\textbf{Output} & \textbf{Estimated Time} & \textbf{Complete by}\\
+	\hline
+	Produce bibliography & 2 weeks & 9/4/2018 (Week 5) \\
+	\hline
+	Produce project proposal & 2 weeks & 9/4/2018 (Week 5) \\
+	\hline
+	Implement an automated test-case generator for Whiley programs with only the types:  bool, byte, int, real, null & 3 weeks & 16/4/2018 (Week 6) \\
+	
+	\hline
+	Implement automated test-case generation for types: void, array, union and records & 3 weeks & 14/5/2018 (Week 9) \\
+	\hline
+	Produce preliminary report & 3 weeks & 10/6/2018 (Week 12) \\	
+	\hline
+	Extend the automatic test generator to be able to generate other types or use methods for better test case distribution (weighting, classification). & 3 weeks & 2/7/2018 (Exam period) \\
+	\hline
+\end{tabular}
+
+%	Tri 1 Week 12 & Preliminary Report \\
+%	\hline
+%	Tri 2 Week 1-3 & Presentation on Preliminary Reports \\
+%	Tri 2 Week 7 & Draft final reports \\
+%	Tri 2 Week 9 & Feedback on draft final reports \\
+%	Tri 2 Week 10 & Project snapshot \\
+%	Tri 2 Week 12 & Final Report \\
+%	Tri 2 Exam period & Final Presentation \\
+
+\subsubsection*{Trimester 2}
+\begin{tabular}{ |p{10cm}|p{3cm}|p{2cm}| }
+	\hline
+	\textbf{Output} & \textbf{Estimated Time} & \textbf{Complete by}\\
+	\hline
+	Produce slides for presentation of preliminary report & 2 weeks & 16/7/2018 (Week 1)\\
+	\hline
+	Extend the automatic test generator to include other methods of testing (symbolic) or be able to generate other types & 3 weeks & 6/8/2018 (Week 4)\\
+	\hline
+	Produce draft of final report & 4 weeks & 15/9/2018 (Week 7)\\
+	\hline
+	Complete implementation of automated test generator & 3 weeks & 5/10/2018 (Week 10) \\
+	\hline
+	Finalise final report & 2 weeks & 21/10/2018 (Week 12) \\
+	\hline
+	Prepare slides for final presentation & 3 weeks & 16/11/2018 (Exam period)\\
+	\hline
+\end{tabular}
+%\item Be able to generate and run tests from a Whiley program. Tests do not have to be useful e.g. an integer argument may just be zero.
+%\item Be able to generate simple tests for Whiley functions that only contain primitive types. 
+%\item Generate more complex tests from Whiley programs, looking at boundary cases and XXX
+%\item Extra? - Generate tests for recursive types.
+
+
+
+%In this section you will explain how solve the problem, that is, how
+%you intend to carry the project out. At this early stage you need to
+%be both clear about what you are going to do and flexible enough to
+%adapt to changing circumstances. Making an early plan will not prevent
+%you from running into trouble, but it will help you identify possible
+%problems early. For example, if you intended to run an experiment in
+%HCI, you might realise early on that there would be problems gathering
+%sufficient data to get reliable results, and that you should re-design
+%your experiment.
+%
+%Part of the planning process involves producing a timetable for when
+%the work is actually going to be done.
+%
+%Each part of the project should produce some output. For example you
+%might plan on spending two weeks on background reading: the output of
+%this will be a bibliography, and a possibly a literature survey for
+%your report. Indeed, if you take the advice given above about having
+%specific, measurable goals, you should describe this part of your
+%project as:
+%
+%\begin{itemize}
+%\item[\bf Good] Produce bibliography (est: 2 weeks)
+%\end{itemize}
+%rather than
+%\begin{itemize}
+%\item[\bf Bad] Background reading (est: 2 weeks)
+%\end{itemize}
+%
+%Note that the methodology you outline here is dependent upon the type
+%of project and engineering area. You must talk to your supervisor
+%about this.
+
+\section*{4. Evaluating your Solution}
+
+To evaluate this tool, we will insert bugs into a small benchmark set and see whether they can be uncovered by the tool.
+
+%In this section you will explain how you will evaluate your solution
+%once you have built it. The method of evaluation will be domain
+%specific. Your supervisor should provide guidance as to what is an
+%appropriate form of evaluation. For example, user testing for a HCI
+%project or performance measurement for a Network Engineering project.
+
+\section*{5. Resource Requirements}
+
+%In this section you will detail any resource requirements such as
+%hardware, software or access to subjects.
+
+No special resources are required. Only the use of the ECS laboratories is required.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\backmatter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\bibliographystyle{ieeetr}
+%\bibliographystyle{acm}
+%\bibliography{sample}
+\end{document}

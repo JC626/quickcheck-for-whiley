@@ -78,7 +78,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section*{1. Introduction}
-Testing is an important process in software development as it helps detect the presence of bugs. However, writing and running tests can be tedious and costly. Furthermore, it is difficult to write tests for all possible cases therefore, obscure bugs may not be detected. An automated test-case generator called QuickCheck was implemented in Haskell to solve these issues. This tool creates a large number of tests using user-defined properties and geenrating random input values.
+Testing is an important process in software development as it helps detect the presence of bugs. However, writing and running tests can be tedious and costly. Furthermore, it is difficult to write tests for all possible cases therefore, obscure bugs may not be detected. An automated test-case generator called QuickCheck was implemented in Haskell to solve these issues. This tool creates a large number of tests using user-defined properties and generating random input values.
 
 This project is about implementing an automated test-case generator for the programming language, Whiley based on the QuickCheck tool.
 
@@ -139,12 +139,24 @@ Therefore, this project aims to implement an automated test-case generator in Wh
 
 \section*{3. Proposed Solution}
 
-The automated test generator requires reading a Whiley program and creating tests from it.
+The automated test-case generator needs to read a Whiley program and then generate tests for functions in the program. 
+Randomised input values that adhere to the function's preconditions will be used in testing. 
+The success of each test is determined by using the function's postconditions. 
+The test results should show the percentage of tests that passed and the inputs used in the failed tests.
 
-%\subsection*{3.1 Milestones}
-%\begin{enumerate}
-%	\item Something
-%\end{enumerate}
+Several components developed for the Whiley language will need to be used for the automated test-case generator. 
+
+After basic test-case generation is completed, more complex types can be generated for testing and further enhancements to the tool can be made. \\
+
+Possible enhancements include:
+\begin{itemize}
+	\item Weight on the frequency of test values
+	\item Shrinking failed test cases
+	\item Classifying tests
+	\item Using dynamic symbolic execution
+\end{itemize} 
+
+Regular meetings (weekly or fortnightly) with the primary supervisor, David Pearce will be held for assistance and guidance in the project.
 
 \subsection*{Timeline}
 A gantt chart of the project can be found on the project's repository.

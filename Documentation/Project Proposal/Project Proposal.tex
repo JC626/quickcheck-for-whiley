@@ -56,7 +56,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{abstract}
-   This document is a project proposal for the project, QuickCheck for Whiley. It will describe an engineering problem and how this project will solve the problem. It will also explain how to evaluate my proposed solution and any resource requirements needed for this project.
+   This document is a project proposal for the project, QuickCheck for Whiley. It describes an engineering problem and how this project will solve the problem. It will also explain how to evaluate my proposed solution and any resource requirements needed for this project.
 %  This document gives some ideas about how to write a project
 %  proposal, and provides a template for a proposal. You should discuss
 %  your proposal with your supervisor.
@@ -73,18 +73,14 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%\mainmatter
+\mainmatter
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section*{1. Introduction}
+Testing is an important process in software development as it helps detect the presence of bugs. However, writing and running tests can be tedious and costly. Furthermore, it is difficult to write tests for all possible cases therefore, obscure bugs may not be detected. An automated test-case generator called QuickCheck was implemented in Haskell to solve these issues. This tool creates a large number of tests using user-defined properties and geenrating random input values.
 
-
-This project is about implementing an automated test-case generator for Whiley.
-
-%Testing is an important aspect of modern software development. Typically, one should have hundreds or thousands of tests for a given program. However, generating tests remains very challenging at times! More recently, QuickCheck has become an indepensible tool for automated test-case generation. This tool works by enumerating input values upto specified limits, thereby generating exhaustive tests for a subset of the input space. Whilst this may appear limited in theory, it has more than proven itself in practice.
-%
-%Whiley is a programming language developed at VUW offering a number of unusual features, such as compile-time software verification. In particular, the presence of pre- and post-conditions mean that generating test inputs for Whiley will be significant easier than for other languages, such as Java. In this project, you will develop a tool for automated test-case generation for Whiley based on QuickCheck. To evaluate this tool, we will insert bugs into a small benchmark set and see whether they can be uncovered by the tool.
+This project is about implementing an automated test-case generator for the programming language, Whiley based on the QuickCheck tool.
 
 %In this section you should include a very brief introduction to the problem and the project.
 %
@@ -102,12 +98,13 @@ This project is about implementing an automated test-case generator for Whiley.
 %Your proposal should be not more than than 3 pages long.
 
 \section*{2. The Problem}
+Whiley is a programming language, developed to verify code and eliminate errors using formal specifications. 
+Ideally, programs written in Whiley should contain as few errors. 
+To achieve this goal, Whiley contains a verifying compiler which employs the use of specifications written by a developer to check for common errors such as accessing an index of an array which is outside its boundaries.
 
-Testing is an important process in software development as it helps detect the presence of bugs. However, writing and running tests can be tedious and costly. Furthermore, it is difficult to write tests for all possible cases therefore, obscure bugs may not be detected. An automated test-case generator called QuickCheck was implemented in Haskell to solve these issues. This tool generates random input values to create a large number of tests.
-
-
-Whiley is a programming language, developed to verify code and eliminate errors using formal specifications. Currently, the verifier has limitations with evaluating complex pre- and post-conditions. For example, a post-condition could be identified as not holding by the verifier even though it is a valid post-condition. This project aims to implement an automated test-case generator in Whiley to increase confidence in unverifiable code and ease testing of Whiley code.
-
+Currently, the verifying compiler has limitations when evaluating complex pre- and post-conditions. 
+For example, a post-condition could be falsely identified as not holding by the verifying compiler even though the program does meet the post-condition.
+Therefore, this project aims to implement an automated test-case generator in Whiley to improve software quality  and increase confidence in unverifiable code.
 
 %In this section you should give a brief description of the problem
 %itself. You want to briefly explain the problem, why it is important
@@ -144,62 +141,53 @@ Whiley is a programming language, developed to verify code and eliminate errors 
 
 The automated test generator requires reading a Whiley program and creating tests from it.
 
-%This involves reading a Whiley program and creating tests for each function.
+%\subsection*{3.1 Milestones}
+%\begin{enumerate}
+%	\item Something
+%\end{enumerate}
 
 \subsection*{Timeline}
+A gantt chart of the project can be found on the project's repository.
 \subsubsection*{Trimester 1}
-\begin{tabular}{ |p{10cm}|p{3cm}|p{2cm}| }
+\begin{tabular}{ |p{10cm}|p{2cm}|p{2cm}|p{2cm}| }
 	\hline
-	\textbf{Output} & \textbf{Estimated Time} & \textbf{Complete by}\\
+	\textbf{Output} & \textbf{Estimated Time} &
+	\textbf{Start Date} & \textbf{Complete by}\\
 	\hline
-	Produce bibliography & 2 weeks & 9/4/2018 (Week 5) \\
+	Produce bibliography & 2 weeks & 19/3/18
+	& 9/4/18 (Week 5) \\
 	\hline
-	Produce project proposal & 2 weeks & 9/4/2018 (Week 5) \\
+	Produce project proposal & 2 weeks & 19/3/18 & 9/4/18 (Week 5) \\
 	\hline
-	Implement an automated test-case generator for Whiley programs with only the types:  bool, byte, int, real, null & 3 weeks & 16/4/2018 (Week 6) \\
+	Implement an automated test-case generator for Whiley programs with only the types:  bool, byte, int, real, null & 3 weeks & 19/3/18 & 16/4/18 (Week 6) \\
 	
 	\hline
-	Implement automated test-case generation for types: void, array, union and records & 3 weeks & 14/5/2018 (Week 9) \\
+	Implement automated test-case generation for types: void, array, union and records & 3 weeks & 16/4/18 & 14/5/18 (Week 9) \\
 	\hline
-	Produce preliminary report & 3 weeks & 10/6/2018 (Week 12) \\	
+	Produce preliminary report & 3 weeks & 14/5/18 & 10/6/18 (Week 12) \\	
 	\hline
-	Extend the automatic test generator to be able to generate other types or use methods for better test case distribution (weighting, classification). & 3 weeks & 2/7/2018 (Exam period) \\
+	Extend the automatic test generator to be able to generate other types or use methods for better test case distribution (weighting, classification) & 3 weeks & 11/6/18 & 2/7/18 (Exam period) \\
 	\hline
 \end{tabular}
-
-%	Tri 1 Week 12 & Preliminary Report \\
-%	\hline
-%	Tri 2 Week 1-3 & Presentation on Preliminary Reports \\
-%	Tri 2 Week 7 & Draft final reports \\
-%	Tri 2 Week 9 & Feedback on draft final reports \\
-%	Tri 2 Week 10 & Project snapshot \\
-%	Tri 2 Week 12 & Final Report \\
-%	Tri 2 Exam period & Final Presentation \\
 
 \subsubsection*{Trimester 2}
-\begin{tabular}{ |p{10cm}|p{3cm}|p{2cm}| }
+\begin{tabular}{ |p{10cm}|p{3cm}|p{2cm}|p{2cm}| }
 	\hline
-	\textbf{Output} & \textbf{Estimated Time} & \textbf{Complete by}\\
+	\textbf{Output} & \textbf{Estimated Time} & \textbf{Start Date} & \textbf{Complete by}\\
 	\hline
-	Produce slides for presentation of preliminary report & 2 weeks & 16/7/2018 (Week 1)\\
+	Produce slides for presentation of preliminary report & 2 weeks & 2/7/18 & 16/7/18 (Week 1)\\
 	\hline
-	Extend the automatic test generator to include other methods of testing (symbolic) or be able to generate other types & 3 weeks & 6/8/2018 (Week 4)\\
+	Extend the automatic test generator to include other methods of testing (symbolic) or be able to generate other types & 3 weeks & 16/7/18 & 6/8/18 (Week 4)\\
 	\hline
-	Produce draft of final report & 4 weeks & 15/9/2018 (Week 7)\\
+	Produce draft of final report & 4 weeks & 6/8/18 & 15/9/18 (Week 7)\\
 	\hline
-	Complete implementation of automated test generator & 3 weeks & 5/10/2018 (Week 10) \\
+	Complete implementation of automated test generator & 3 weeks & 15/9/18 & 5/10/18 (Week 10) \\
 	\hline
-	Finalise final report & 2 weeks & 21/10/2018 (Week 12) \\
+	Finalise final report & 2 weeks & 6/10/18 & 21/10/18 (Week 12) \\
 	\hline
-	Prepare slides for final presentation & 3 weeks & 16/11/2018 (Exam period)\\
+	Prepare slides for final presentation & 3 weeks & 22/10/18 & 16/11/18 (Exam period)\\
 	\hline
 \end{tabular}
-%\item Be able to generate and run tests from a Whiley program. Tests do not have to be useful e.g. an integer argument may just be zero.
-%\item Be able to generate simple tests for Whiley functions that only contain primitive types. 
-%\item Generate more complex tests from Whiley programs, looking at boundary cases and XXX
-%\item Extra? - Generate tests for recursive types.
-
-
 
 %In this section you will explain how solve the problem, that is, how
 %you intend to carry the project out. At this early stage you need to
@@ -245,10 +233,9 @@ To evaluate this tool, we will insert bugs into a small benchmark set and see wh
 
 \section*{5. Resource Requirements}
 
-%In this section you will detail any resource requirements such as
-%hardware, software or access to subjects.
-
 No special resources are required. Only the use of the ECS laboratories is required.
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \backmatter

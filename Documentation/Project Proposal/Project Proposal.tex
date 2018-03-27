@@ -56,10 +56,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{abstract}
-   This document is a project proposal for the project, QuickCheck for Whiley. It describes an engineering problem and how this project will solve the problem. It will also explain how to evaluate my proposed solution and any resource requirements needed for this project.
-%  This document gives some ideas about how to write a project
-%  proposal, and provides a template for a proposal. You should discuss
-%  your proposal with your supervisor.
+   This document is a project proposal for the project, QuickCheck for Whiley. 
+   The project aims to improve software quality of Whiley programs by  implementing an automated test-case generator for Whiley.
+   The solution will be evaluated by checking if it can detect bugs in a small benchmark set. No special resources are required for this project.
 \end{abstract}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -78,7 +77,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section*{1. Introduction}
-Testing is an important process in software development as it helps detect the presence of bugs. However, writing and running tests can be tedious and costly. Furthermore, it is difficult to write tests for all possible cases therefore, obscure bugs may not be detected. An automated test-case generator called QuickCheck was implemented in Haskell to solve these issues. This tool creates a large number of tests using user-defined properties and generating random input values.
+Testing is an important process in software development as it helps detect the presence of bugs. However, writing and running tests can be tedious and costly. Furthermore, it is difficult to write tests for all possible cases therefore, obscure bugs may not be detected. An automated test-case generator called QuickCheck was implemented in Haskell which alleviates these issues. This tool creates a large number of tests using user-defined properties and generating random input values.
 
 This project is about implementing an automated test-case generator for the programming language, Whiley based on the QuickCheck tool.
 
@@ -146,7 +145,7 @@ The test results should show the percentage of tests that passed and the inputs 
 
 Several components developed for the Whiley language will need to be used for the automated test-case generator. 
 
-After basic test-case generation is completed, more complex types can be generated for testing and further enhancements to the tool can be made. \\
+After basic test-case generation is completed, more complex types can be generated for testing and/or further enhancements to the tool can be made. \\
 
 Possible enhancements include:
 \begin{itemize}

@@ -67,7 +67,7 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 
 	@Override
 	public Result execute(String... args) {
-		if (args.length < 2) {
+		if (args.length == 0) {
 			// FIXME: this is broken
 			System.out.println("usage: run <wyilfile> <method>");
 			return Result.ERRORS;
@@ -76,8 +76,7 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 			StdProject project = initialiseProject();
 			Path.ID id = Trie.fromString(args[0]);
 			Type.Function sig = new Type.Function(new Tuple<>(new Type[0]), new Tuple<>());
-			NameID name = new NameID(id, args[1]);
-			List<Decl.Function> functions = getFunctions(name, project);
+			List<Decl.Function> functions = getFunctions(id, project);
 			
 			// FIXME print statements
 			Decl.Function function = functions.get(0);
@@ -128,16 +127,15 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 //		}
 //	}
 	
-	private List<Decl.Function> getFunctions(NameID nid, Build.Project project) {
-		// First, find the enclosing WyilFile
-		Identifier name = new Identifier(nid.name());
-		// NOTE: need to read WyilFile here as, otherwise, it forces a
-		// rereading of the Whiley source file and a loss of all generation
-		// information.
+	// TODO map of NameId (function ID) -> GenerateTest 
+	private List<Decl.Function> getFunctions(Path.ID id, Build.Project project) {
 		try {
-			Path.Entry<WhileyFile> entry = project.get(nid.module(), WhileyFile.BinaryContentType);
+			// NOTE: need to read WyilFile here as, otherwise, it forces a
+			// rereading of the Whiley source file and a loss of all generation
+			// information.
+			Path.Entry<WhileyFile> entry = project.get(id, WhileyFile.BinaryContentType);
 			if (entry == null) {
-				throw new IllegalArgumentException("no WyIL file found: " + nid.module());
+				throw new IllegalArgumentException("no WyIL file found: " + id);
 			}
 			WhileyFile wyilFile = entry.read();
 			// Get declarations from the WhileyFile

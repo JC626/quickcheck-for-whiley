@@ -35,7 +35,7 @@ public class QuickCheck {
 		RunTest cmd = new RunTest(registry,Logger.NULL);
 		cmd.setWyildir(wyilDir);
 		// TODO remove name 
-		cmd.execute(id.toString(), "something");
+		cmd.execute(id.toString());
 	}
 	
 	// TODO something with the IOException

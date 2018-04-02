@@ -34,7 +34,8 @@ public class QuickCheck {
 		Content.Registry registry = new wyc.Activator.Registry();
 		RunTest cmd = new RunTest(registry,Logger.NULL);
 		cmd.setWyildir(wyilDir);
-		cmd.execute(id.toString());
+		// TODO remove name 
+		cmd.execute(id.toString(), "something");
 	}
 	
 	// TODO something with the IOException

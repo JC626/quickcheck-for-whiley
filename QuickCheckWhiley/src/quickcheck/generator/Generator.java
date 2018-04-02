@@ -11,6 +11,7 @@ public abstract class Generator {
 	 * Define generators here
 	 */
 	public static final IntegerGenerator INTEGER_GENERATOR = new IntegerGenerator();
+	public static final BooleanGenerator BOOLEAN_GENERATOR = new BooleanGenerator();
 
 	/**
 	 * Used for generating appropriate values
@@ -45,4 +46,24 @@ public abstract class Generator {
 			return Generator.semantics.Int(value);
 		}
 	}
+	
+	/**
+	 * Generate random boolean values.
+	 * This uses the singleton pattern, therefore only one generator
+	 * is created.
+	 * 
+	 * @author Janice Chin
+	 *
+	 */
+	private static final class BooleanGenerator extends Generator{		
+		private BooleanGenerator() {
+			
+		}
+		
+		@Override
+		public RValue generate() {
+			return Generator.semantics.Bool(randomiser.nextBoolean());
+		}
+	}
+	
 }

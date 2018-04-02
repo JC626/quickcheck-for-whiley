@@ -222,3 +222,6 @@ TSWLatexianTemp*
 
 # standalone packages
 *.sta
+
+# Eclipse settings
+.settings

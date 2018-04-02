@@ -6,6 +6,14 @@ import java.util.Random;
 import wyil.interpreter.ConcreteSemantics;
 import wyil.interpreter.ConcreteSemantics.RValue;
 
+/**
+ * A standard class for all Generators to inherit.
+ * Allows access to an instance of each generator 
+ * as all Generator implementations should be hidden.
+ * 
+ * @author Janice Chin
+ *
+ */
 public abstract class Generator {
 	/**
 	 * Define generators here
@@ -23,6 +31,10 @@ public abstract class Generator {
 	 */
 	private static Random randomiser = new Random();
 	
+	/**
+	 * Generate a randomised value for it's specified type
+	 * @return A randomised value
+	 */
 	public abstract RValue generate();
 	
 	/**

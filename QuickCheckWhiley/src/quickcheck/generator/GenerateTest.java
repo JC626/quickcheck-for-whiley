@@ -3,11 +3,11 @@ package quickcheck.generator;
 import java.util.ArrayList;
 import java.util.List;
 
+import quickcheck.generator.Generator;
 import wyc.lang.WhileyFile;
 import wyc.lang.WhileyFile.Decl;
 import wyc.lang.WhileyFile.Decl.FunctionOrMethod;
 import wyc.lang.WhileyFile.Decl.Variable;
-import wyil.interpreter.ConcreteSemantics;
 import wyil.interpreter.ConcreteSemantics.RValue;
 
 /**
@@ -36,10 +36,10 @@ public class GenerateTest {
 		for(Variable var : dec.getParameters()) {
 			WhileyFile.Type paramType = var.getType();
 			if(paramType instanceof WhileyFile.Type.Int) {
-				// TODO add int generator
+				this.parameterGenerators.add(Generator.INTEGER_GENERATOR);
 			}
 			else if(paramType instanceof WhileyFile.Type.Bool) {
-				// TODO add bool generator
+				this.parameterGenerators.add(Generator.BOOLEAN_GENERATOR);
 			}
 		}
 	}

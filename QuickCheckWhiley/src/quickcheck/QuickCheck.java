@@ -43,7 +43,7 @@ public class QuickCheck {
 		// TODO get the args to run the test
 		String name = "abs"; //args[0]
 		// TODO get current directory
-		String directory = "tests";
+		String directory = "examples";
 		File whileySrcDir = new File(directory); //new File(".");
 		QuickCheck.execWyil(whileySrcDir, Trie.fromString(name));
 	}

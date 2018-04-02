@@ -120,6 +120,14 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 			}
 		}
 	}
+		
+	/**
+	 * Get the functions in the Wyil file 
+	 * Based on part of wyil.interpreter.Interpreter execute function
+	 * @param id
+	 * @param project
+	 * @return A list of functions from the Wyil file
+	 */
 	private List<Decl.Function> getFunctions(Path.ID id, Build.Project project) {
 		try {
 			// NOTE: need to read WyilFile here as, otherwise, it forces a
@@ -136,7 +144,6 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 			List<Decl.Function> functions = new ArrayList<Decl.Function>();
 			for(Decl dec : declarations) {
 				if(dec instanceof Decl.Function) {
-					// TODO create GenerateTest instead
 					functions.add((Decl.Function) dec);
 				}
 			}

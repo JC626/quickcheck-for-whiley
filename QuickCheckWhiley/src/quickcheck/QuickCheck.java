@@ -41,7 +41,7 @@ public class QuickCheck {
 	// TODO something with the IOException
 	public static void main(String[] args) throws IOException{
 		// TODO get the args to run the test
-		String name = "BoolFun_Valid_1"; //args[0]
+		String name = "abs"; //args[0]
 		// TODO get current directory
 		String directory = "tests";
 		File whileySrcDir = new File(directory); //new File(".");

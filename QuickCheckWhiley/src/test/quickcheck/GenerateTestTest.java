@@ -14,7 +14,7 @@ import wyil.interpreter.ConcreteSemantics.RValue;
 
 /**
  * Test the GenerateTest class
- * @author Janice
+ * @author Janice Chin
  *
  */
 public class GenerateTestTest {
@@ -31,7 +31,7 @@ public class GenerateTestTest {
 	}
 	
 	/**
-	 * Test when the function has 1 Int parameter
+	 * Test when the function has 1 int parameter
 	 */
 	@Test
 	public void testFunctionIntParameter() {
@@ -42,5 +42,74 @@ public class GenerateTestTest {
 		RValue[] generatedParameters = testGen.generateParameters();
 		assertEquals(1, generatedParameters.length);
 		assertTrue(generatedParameters[0] instanceof RValue.Int);
+	}
+	
+	/**
+	 * Test when the function has multiple int parameters
+	 */
+	@Test
+	public void testFunctionMultiIntParameters() {
+		Decl.Variable intOne = new Decl.Variable(null, new Identifier("firstInt"), Type.Int);
+		Decl.Variable intTwo = new Decl.Variable(null, new Identifier("secInt"), Type.Int);
+		Decl.Variable intThree = new Decl.Variable(null, new Identifier("thirdInt"), Type.Int);
+
+		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(intOne, intTwo, intThree);
+		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
+		GenerateTest testGen = new GenerateTest(func);
+		RValue[] generatedParameters = testGen.generateParameters();
+		assertEquals(3, generatedParameters.length);
+		assertTrue(generatedParameters[0] instanceof RValue.Int);
+		assertTrue(generatedParameters[1] instanceof RValue.Int);
+		assertTrue(generatedParameters[2] instanceof RValue.Int);
+	}
+	
+	/**
+	 * Test when the function has 1 bool parameter
+	 */
+	@Test
+	public void testFunctionBoolParameter() {
+		Decl.Variable boolParam = new Decl.Variable(null, new Identifier("firstBool"), Type.Bool);
+		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(boolParam);
+		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
+		GenerateTest testGen = new GenerateTest(func);
+		RValue[] generatedParameters = testGen.generateParameters();
+		assertEquals(1, generatedParameters.length);
+		assertTrue(generatedParameters[0] instanceof RValue.Bool);
+	}
+	
+	/**
+	 * Test when the function has multiple bool parameters
+	 */
+	@Test
+	public void testFunctionMultipleBoolParameters() {
+		Decl.Variable boolOne = new Decl.Variable(null, new Identifier("firstBool"), Type.Bool);
+		Decl.Variable boolTwo = new Decl.Variable(null, new Identifier("secBool"), Type.Bool);
+		Decl.Variable boolThree = new Decl.Variable(null, new Identifier("thirdBool"), Type.Bool);
+
+		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(boolOne, boolTwo, boolThree);
+		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
+		GenerateTest testGen = new GenerateTest(func);
+		RValue[] generatedParameters = testGen.generateParameters();
+		assertEquals(3, generatedParameters.length);
+		assertTrue(generatedParameters[0] instanceof RValue.Bool);
+		assertTrue(generatedParameters[1] instanceof RValue.Bool);
+		assertTrue(generatedParameters[2] instanceof RValue.Bool);
+
+	}
+	
+	/**
+	 * Test when the function has different parameter types
+	 */
+	@Test
+	public void testFunctionDiffParameters() {
+		Decl.Variable intParam = new Decl.Variable(null, new Identifier("firstInt"), Type.Int);
+		Decl.Variable boolParam = new Decl.Variable(null, new Identifier("secBool"), Type.Bool);
+		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(intParam, boolParam);
+		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
+		GenerateTest testGen = new GenerateTest(func);
+		RValue[] generatedParameters = testGen.generateParameters();
+		assertEquals(2, generatedParameters.length);
+		assertTrue(generatedParameters[0] instanceof RValue.Int);
+		assertTrue(generatedParameters[1] instanceof RValue.Bool);
 	}
 }

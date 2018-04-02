@@ -2,12 +2,13 @@ package quickcheck;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import quickcheck.generator.GenerateTest;
 import wybs.lang.Build;
 import wybs.lang.NameID;
 import wybs.util.StdProject;
-import wybs.util.AbstractCompilationUnit.Identifier;
 import wyc.lang.WhileyFile;
 import wyc.lang.WhileyFile.Decl;
 import wyc.util.AbstractProjectCommand;
@@ -75,19 +76,14 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 		try {
 			StdProject project = initialiseProject();
 			Path.ID id = Trie.fromString(args[0]);
-			Type.Function sig = new Type.Function(new Tuple<>(new Type[0]), new Tuple<>());
 			List<Decl.Function> functions = getFunctions(id, project);
+			// Generate tests for each function
+			Interpreter interpreter = new Interpreter(project, System.out);
+			for(Decl.Function func : functions) {
+				// TODO set number of tests to execute?
+				executeTest(id, interpreter, func, 1);
+			}
 			
-			// FIXME print statements
-			Decl.Function function = functions.get(0);
-			System.out.println(function.getName());
-			System.out.println(function.getRequires());
-			System.out.println(function.getEnsures());
-			System.out.println(function.getParameters());
-			System.out.println(function.getReturns());
-
-			// TODO Generate tests
-			//executeFunctionOrMethod(name, sig, project);
 		} catch (IOException e) {
 			// FIXME: need a better error reporting mechanism
 			System.err.println("internal failure: " + e.getMessage());
@@ -102,32 +98,28 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 	// =======================================================================
 	
 	// TODO change to return the output values
-	
-//	/**
-//	 * Execute a given function or method in a wyil file.
-//	 *
-//	 * @param id
-//	 * @param signature
-//	 * @param project
-//	 * @throws IOException
-//	 */
-//	private void executeFunctionOrMethod(NameID id, Type.Callable signature, Build.Project project)
-//			throws IOException {
-//		// Try to run the given function or method
-//		Interpreter interpreter = new Interpreter(project, System.out);
-//		RValue[] returns = interpreter.execute(id, signature, interpreter.new CallStack());
-//		// Print out any return values produced
-//		if (returns != null) {
-//			for (int i = 0; i != returns.length; ++i) {
-//				if (i != 0) {
-//					System.out.println(", ");
-//				}
-//				System.out.println(returns[i]);
-//			}
-//		}
-//	}
-	
-	// TODO map of NameId (function ID) -> GenerateTest 
+	/**
+	 * Test a function from a Wyil file
+	 * by executing the test with randomised paramters
+	 * @param id The module used
+	 * @param interpreter Whiley interpreter used to execute the function/method
+	 * @param dec The function or method
+	 * @param numTest The number of tests to execute
+	 */
+	private void executeTest(Path.ID id, Interpreter interpreter, Decl.FunctionOrMethod dec, int numTest) {
+		GenerateTest testGen = new GenerateTest(dec);
+		NameID name = new NameID(id, dec.getName().get());
+		Type.Callable type = dec.getType();
+		for(int i=0; i < numTest; i++) {
+			RValue[] params = testGen.generateParameters();
+			System.out.println("INPUT: " + Arrays.toString(params));
+			RValue[] returns = interpreter.execute(name, type, interpreter.new CallStack(), params);
+			// Print out any return values produced
+			if (returns != null) {
+				System.out.println("OUTPUT: " + Arrays.toString(returns));
+			}
+		}
+	}
 	private List<Decl.Function> getFunctions(Path.ID id, Build.Project project) {
 		try {
 			// NOTE: need to read WyilFile here as, otherwise, it forces a

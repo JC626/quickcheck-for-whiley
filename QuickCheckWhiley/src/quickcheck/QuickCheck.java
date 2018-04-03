@@ -16,8 +16,11 @@ import wyil.interpreter.Interpreter.CallStack;
 
 /**
  * FIXME
- * Reads a WyIl? file, creating and executing
- * tests for each function in the file
+ * Reads a Wyil file, creating and executing
+ * randomised tests for each function in the file.
+ * The tests uses the precondition
+ * to select suitable candidate tests and validates 
+ * the tests using the postcondition.
  * 
  * @author Janice Chin
  *
@@ -34,7 +37,6 @@ public class QuickCheck {
 		Content.Registry registry = new wyc.Activator.Registry();
 		RunTest cmd = new RunTest(registry,Logger.NULL);
 		cmd.setWyildir(wyilDir);
-		// TODO remove name 
 		cmd.execute(id.toString());
 	}
 	

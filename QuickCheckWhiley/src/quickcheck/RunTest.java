@@ -9,6 +9,7 @@ import quickcheck.generator.GenerateTest;
 import wybs.lang.Build;
 import wybs.lang.NameID;
 import wybs.util.StdProject;
+import wybs.util.AbstractCompilationUnit.Tuple;
 import wyc.lang.WhileyFile;
 import wyc.lang.WhileyFile.Decl;
 import wyc.util.AbstractProjectCommand;
@@ -17,6 +18,7 @@ import wyfs.lang.Content;
 import wyfs.lang.Path;
 import wyfs.util.Trie;
 import wyil.interpreter.Interpreter;
+import wyil.interpreter.Interpreter.CallStack;
 import wyil.interpreter.ConcreteSemantics.RValue;
 
 import static wyc.lang.WhileyFile.*;
@@ -24,8 +26,8 @@ import static wyc.lang.WhileyFile.*;
 /**
  * FIXME
  * Responsible for implementing the command "<code>wy run ...</code>" which
- * loads the appropriate <code>wyil</code> file and gets executes a given method
- * using the <code>Interpreter</code>.
+ * loads the appropriate <code>wyil</code> file and executes tests 
+ * for a given function/method using the <code>Interpreter</code>.
  * 
  * Based on wyc.Command.Run
  *
@@ -110,19 +112,75 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 		GenerateTest testGen = new GenerateTest(dec);
 		NameID name = new NameID(id, dec.getName().get());
 		Type.Callable type = dec.getType();
+		Tuple<Expr> preconditions = dec.getRequires();
+		Tuple<Expr> postconditions = dec.getEnsures();
+		Tuple<Decl.Variable> inputParameters = dec.getParameters();
+		Tuple<Decl.Variable> outputParameters = dec.getReturns();
+		
+		System.out.println("FUNCTION "+ name);
+		System.out.println("FUNCTION PARAM TYPES "+ inputParameters);
+		System.out.println("PRECONDITION "+ preconditions);
+		System.out.println("POSTCONDITION "+ postconditions);
+		
+		// TODO check
+		// Have to remove the pre and post conditions out of the 
+		// function so the function is executed without validation
+		// Validation will be conducted manually inside this function.
+		Tuple<Expr> empty = new Tuple<Expr>();		
+		dec.setOperand(4, empty); // Remove precondition
+		dec.setOperand(5, empty); // Remove postcondition
+
+		int numPassed = 0;
 		for(int i=0; i < numTest; i++) {
-			RValue[] params = testGen.generateParameters();
-			System.out.println("INPUT: " + Arrays.toString(params));
-			RValue[] returns = interpreter.execute(name, type, interpreter.new CallStack(), params);
-			// Print out any return values produced
-			if (returns != null) {
-				System.out.println("OUTPUT: " + Arrays.toString(returns));
+			RValue[] paramValues = testGen.generateParameters();
+			CallStack frame = interpreter.new CallStack();
+			try {
+				// Check the precondition
+				for(int j=0; j < inputParameters.size(); j++) {
+					Decl.Variable parameter = inputParameters.get(j);
+					frame.putLocal(parameter.getName(), paramValues[j]);
+				}
+				interpreter.checkInvariants(frame, preconditions);
 			}
+			catch(AssertionError e){
+				System.out.println("Pre-condition failed on input: " + Arrays.toString(paramValues));
+				continue;
+			}
+			
+			System.out.println("INPUT: " + Arrays.toString(paramValues));
+			// Checks the postcondition when it is executed
+			RValue[] returns = null;
+			try {
+				returns = interpreter.execute(name, type, frame, paramValues);
+				// Add the return values into the frame for validation
+				for(int j=0; j < outputParameters.size(); j++) {
+					Decl.Variable parameter = outputParameters.get(j);
+					frame.putLocal(parameter.getName(), returns[j]);
+				}				
+				interpreter.checkInvariants(frame, postconditions);
+				numPassed++;
+//				// Print out any return values produced
+//				if (returns != null) {
+//					System.out.println("OUTPUT: " + Arrays.toString(returns));
+//				}
+			}
+			catch(AssertionError e) {
+				System.out.printf("Failed Input: %s Output: %s%n", Arrays.toString(paramValues), Arrays.toString(returns));
+			}
+		}
+		// Overall test statistics
+		if(numPassed == numTest) {
+			System.out.printf("Ok: ran %d tests%n", numTest);
+		}
+		else {
+			int numFailed = numTest - numPassed;
+			System.out.printf("Failed: %d passed (%.2f %%), %d failed (%.2f %%), ran %d tests%n",
+					numPassed, (double) 100 * numPassed/numTest, numFailed, (double) 100 * numFailed/numTest, numTest);
 		}
 	}
 		
 	/**
-	 * Get the functions in the Wyil file 
+	 * Get all functions in the Wyil file 
 	 * Based on part of wyil.interpreter.Interpreter execute function
 	 * @param id
 	 * @param project

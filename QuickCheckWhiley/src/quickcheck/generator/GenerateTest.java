@@ -56,6 +56,4 @@ public class GenerateTest {
 		}
 		return parameters;
 	}
-
-	// TODO function that will return whether the test passed or failed given the output
 }

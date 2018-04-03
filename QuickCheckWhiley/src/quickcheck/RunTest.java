@@ -152,13 +152,13 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 			RValue[] returns = null;
 			try {
 				returns = interpreter.execute(name, type, frame, paramValues);
-				numPassed++;
 				// Add the return values into the frame for validation
 				for(int j=0; j < outputParameters.size(); j++) {
 					Decl.Variable parameter = outputParameters.get(j);
 					frame.putLocal(parameter.getName(), returns[j]);
 				}				
 				interpreter.checkInvariants(frame, postconditions);
+				numPassed++;
 //				// Print out any return values produced
 //				if (returns != null) {
 //					System.out.println("OUTPUT: " + Arrays.toString(returns));

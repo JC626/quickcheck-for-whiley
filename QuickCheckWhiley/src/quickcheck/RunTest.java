@@ -26,8 +26,8 @@ import static wyc.lang.WhileyFile.*;
 /**
  * FIXME
  * Responsible for implementing the command "<code>wy run ...</code>" which
- * loads the appropriate <code>wyil</code> file and gets executes a given method
- * using the <code>Interpreter</code>.
+ * loads the appropriate <code>wyil</code> file and executes tests 
+ * for a given function/method using the <code>Interpreter</code>.
  * 
  * Based on wyc.Command.Run
  *

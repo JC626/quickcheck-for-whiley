@@ -111,49 +111,64 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 	private void executeTest(Path.ID id, Interpreter interpreter, Decl.FunctionOrMethod dec, int numTest) {
 		GenerateTest testGen = new GenerateTest(dec);
 		NameID name = new NameID(id, dec.getName().get());
-		System.out.println("FUNCTION "+ name);
-		System.out.println("FUNCTION PARAM TYPES "+ dec.getParameters());
-		System.out.println("PRECONDITION "+ dec.getRequires());
-		System.out.println("POSTCONDITION "+ dec.getEnsures());
 		Type.Callable type = dec.getType();
 		Tuple<Expr> preconditions = dec.getRequires();
 		Tuple<Expr> postconditions = dec.getEnsures();
-		int numPassed = 0;
+		Tuple<Decl.Variable> inputParameters = dec.getParameters();
+		Tuple<Decl.Variable> outputParameters = dec.getReturns();
 		
+		System.out.println("FUNCTION "+ name);
+		System.out.println("FUNCTION PARAM TYPES "+ inputParameters);
+		System.out.println("PRECONDITION "+ preconditions);
+		System.out.println("POSTCONDITION "+ postconditions);
+		
+		// TODO check
+		// Have to remove the pre and post conditions out of the 
+		// function so the function is executed without validation
+		// Validation will be conducted manually inside this function.
+		Tuple<Expr> empty = new Tuple<Expr>();		
+		dec.setOperand(4, empty); // Remove precondition
+		dec.setOperand(5, empty); // Remove postcondition
+
+		int numPassed = 0;
 		for(int i=0; i < numTest; i++) {
-			RValue[] params = testGen.generateParameters();
+			RValue[] paramValues = testGen.generateParameters();
 			CallStack frame = interpreter.new CallStack();
-			Tuple<Decl.Variable> parameters = dec.getParameters();
-			// Check the precondition
 			try {
-				for(int j=0; j < parameters.size(); j++) {
-					Decl.Variable parameter = parameters.get(j);
-					frame.putLocal(parameter.getName(), params[j]);
+				// Check the precondition
+				for(int j=0; j < inputParameters.size(); j++) {
+					Decl.Variable parameter = inputParameters.get(j);
+					frame.putLocal(parameter.getName(), paramValues[j]);
 				}
 				interpreter.checkInvariants(frame, preconditions);
 			}
 			catch(AssertionError e){
-				System.out.println("Pre-condition failed on input: " + Arrays.toString(params));
+				System.out.println("Pre-condition failed on input: " + Arrays.toString(paramValues));
 				continue;
 			}
 			
-			System.out.println("INPUT: " + Arrays.toString(params));
+			System.out.println("INPUT: " + Arrays.toString(paramValues));
 			// Checks the postcondition when it is executed
 			RValue[] returns = null;
 			try {
-				returns = interpreter.execute(name, type, frame, params);
+				returns = interpreter.execute(name, type, frame, paramValues);
 				numPassed++;
+				// Add the return values into the frame for validation
+				for(int j=0; j < outputParameters.size(); j++) {
+					Decl.Variable parameter = outputParameters.get(j);
+					frame.putLocal(parameter.getName(), returns[j]);
+				}				
+				interpreter.checkInvariants(frame, postconditions);
 //				// Print out any return values produced
 //				if (returns != null) {
 //					System.out.println("OUTPUT: " + Arrays.toString(returns));
 //				}
 			}
 			catch(AssertionError e) {
-				// TODO Would be nice to see the actual output, if postcondition failed!
-//				System.out.printf("Failed Input: %s Output: %s%n", Arrays.toString(params), Arrays.toString(returns));
-				System.out.printf("Failed Input: %s", Arrays.toString(params));
+				System.out.printf("Failed Input: %s Output: %s%n", Arrays.toString(paramValues), Arrays.toString(returns));
 			}
 		}
+		// Overall test statistics
 		if(numPassed == numTest) {
 			System.out.printf("Ok: ran %d tests%n", numTest);
 		}

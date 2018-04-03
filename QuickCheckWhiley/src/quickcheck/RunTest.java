@@ -9,6 +9,7 @@ import quickcheck.generator.GenerateTest;
 import wybs.lang.Build;
 import wybs.lang.NameID;
 import wybs.util.StdProject;
+import wybs.util.AbstractCompilationUnit.Tuple;
 import wyc.lang.WhileyFile;
 import wyc.lang.WhileyFile.Decl;
 import wyc.util.AbstractProjectCommand;
@@ -17,6 +18,7 @@ import wyfs.lang.Content;
 import wyfs.lang.Path;
 import wyfs.util.Trie;
 import wyil.interpreter.Interpreter;
+import wyil.interpreter.Interpreter.CallStack;
 import wyil.interpreter.ConcreteSemantics.RValue;
 
 import static wyc.lang.WhileyFile.*;
@@ -109,20 +111,61 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 	private void executeTest(Path.ID id, Interpreter interpreter, Decl.FunctionOrMethod dec, int numTest) {
 		GenerateTest testGen = new GenerateTest(dec);
 		NameID name = new NameID(id, dec.getName().get());
+		System.out.println("FUNCTION "+ name);
+		System.out.println("FUNCTION PARAM TYPES "+ dec.getParameters());
+		System.out.println("PRECONDITION "+ dec.getRequires());
+		System.out.println("POSTCONDITION "+ dec.getEnsures());
 		Type.Callable type = dec.getType();
+		Tuple<Expr> preconditions = dec.getRequires();
+		Tuple<Expr> postconditions = dec.getEnsures();
+		int numPassed = 0;
+		
 		for(int i=0; i < numTest; i++) {
 			RValue[] params = testGen.generateParameters();
-			System.out.println("INPUT: " + Arrays.toString(params));
-			RValue[] returns = interpreter.execute(name, type, interpreter.new CallStack(), params);
-			// Print out any return values produced
-			if (returns != null) {
-				System.out.println("OUTPUT: " + Arrays.toString(returns));
+			CallStack frame = interpreter.new CallStack();
+			Tuple<Decl.Variable> parameters = dec.getParameters();
+			// Check the precondition
+			try {
+				for(int j=0; j < parameters.size(); j++) {
+					Decl.Variable parameter = parameters.get(j);
+					frame.putLocal(parameter.getName(), params[j]);
+				}
+				interpreter.checkInvariants(frame, preconditions);
 			}
+			catch(AssertionError e){
+				System.out.println("Pre-condition failed on input: " + Arrays.toString(params));
+				continue;
+			}
+			
+			System.out.println("INPUT: " + Arrays.toString(params));
+			// Checks the postcondition when it is executed
+			RValue[] returns = null;
+			try {
+				returns = interpreter.execute(name, type, frame, params);
+				numPassed++;
+//				// Print out any return values produced
+//				if (returns != null) {
+//					System.out.println("OUTPUT: " + Arrays.toString(returns));
+//				}
+			}
+			catch(AssertionError e) {
+				// TODO Would be nice to see the actual output, if postcondition failed!
+//				System.out.printf("Failed Input: %s Output: %s%n", Arrays.toString(params), Arrays.toString(returns));
+				System.out.printf("Failed Input: %s", Arrays.toString(params));
+			}
+		}
+		if(numPassed == numTest) {
+			System.out.printf("Ok: ran %d tests%n", numTest);
+		}
+		else {
+			int numFailed = numTest - numPassed;
+			System.out.printf("Failed: %d passed (%.2f %%), %d failed (%.2f %%), ran %d tests%n",
+					numPassed, (double) 100 * numPassed/numTest, numFailed, (double) 100 * numFailed/numTest, numTest);
 		}
 	}
 		
 	/**
-	 * Get the functions in the Wyil file 
+	 * Get all functions in the Wyil file 
 	 * Based on part of wyil.interpreter.Interpreter execute function
 	 * @param id
 	 * @param project

@@ -87,6 +87,39 @@ Whiley can also pass functions as an argument to other functions.
 		\end{itemize}
 \end{itemize}
 
+\section{April 9th 2018}
+\subsection{Present}
+\begin{itemize}
+	\item % David Pearce
+\end{itemize}
+
+\subsection{Action points were achieved since the last meeting}
+\begin{itemize}
+	\item Read more research papers. Of particular note is MoreBugs, an extension to QuickCheck which generalises test cases so test cases that discover the same bug do not occur again.
+	\item Created base implementation of QuickCheck for Whiley. This does
+	\begin{itemize}
+		\item Generates Int (specific Int) and random Bool
+		\item Check candidate values are valid based on the precondition. Note: Does not generate a new test to replace the candidate values that do not pass the precondition.
+		\item Validates tests using postcondition
+	\end{itemize}
+\end{itemize}
+\subsection{Action points have yet to be achieved since the last meeting}
+\subsection{Action points were agreed to for the next meeting}
+
+\subsection{Discussion Points}
+
+\begin{itemize}
+	\item If I encounter any problems during implementation, would you prefer email or raising it in a comment in GitLab?
+	\item Should test generation only work for functions that have Whiley program specifications? (Probably a yes)
+	\item Does Whiley throw errors/exceptions during run-time? If so, how should my tests handle this?
+	\item Does the Whiley file need to be compiled before running the tests i.e. only use Wyil file? Or does QuickCheck compile the code and run the tests automatically?
+	\item Should I use the logger interface (wycc.util) for displaying test statistics?
+	\item For functions/methods with no post-condition, should I only run one test (to ensure the code can be executed)?
+	\item Wanted to know about wyal.util.SmallWorldDomain as it also uses a Generator.
+	\item Is it possible to get the specific postcondition that failed? I was thinking of displaying the postcondition that failed to the user.
+	\item Wasn't sure how to randomise a BigInteger for a Whiley Int value as it uses bit lengths to create a new BigInteger.
+\end{itemize}
+
 %\section{ 2018}
 %\subsection{Present}
 %\begin{itemize}
@@ -100,7 +133,6 @@ Whiley can also pass functions as an argument to other functions.
 %\subsection{Discussion Points}
 
 %\begin{itemize}
-%	\item Should test generation only work for functions that have Whiley program specifications? (Probably a yes)
 %\end{itemize}
 
 \end{document}

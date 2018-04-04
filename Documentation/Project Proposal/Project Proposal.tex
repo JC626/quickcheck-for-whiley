@@ -8,7 +8,7 @@
 \usepackage{float} % lets you have non-floating floats
 
 \usepackage{url} % for typesetting urls
-
+\usepackage{listings}  % for code
 %  We don't want figures to float so we define
 %
 \newfloat{fig}{thp}{lof}[chapter]
@@ -77,9 +77,36 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section*{1. Introduction}
-Testing is an important process in software development as it helps detect the presence of bugs. However, writing and running tests can be tedious and costly. Furthermore, it is difficult to write tests for all possible cases therefore, obscure bugs may not be detected. An automated test-case generator called QuickCheck was implemented in Haskell which alleviates these issues. This tool creates a large number of tests using user-defined properties and generating random input values.
+Testing is an important process in software development as it helps detect the presence of bugs.
+However, writing and running tests can be tedious and costly. Furthermore, it is difficult to write tests for all possible cases therefore, obscure bugs may not be detected. 
 
-This project is about implementing an automated test-case generator for the programming language, Whiley based on the QuickCheck tool.
+An automated test-case generator called QuickCheck was implemented in Haskell by Koen Claessen and John Hughes which alleviates these issues.
+
+This lightweight tool employs two testing ideas.
+Firstly, QuickCheck uses property-based testing which uses conditions that will always hold true. Users define the conditions in terms of formal specifications to validate functions under test.
+
+Secondly, QuickCheck generates test cases automatically using random testing. Input values are randomly generated for each test (within a range) using generators that correspond to the input value's type. QuickCheck contains generators for most of Haskell's predefined types and for functions. It requires the developer to specify their own generators for user-defined types. \\
+
+An example of using QuickCheck would be reversing a list.
+
+Firstly, a property is defined where the list xs, should be the same as reversing xs twice.
+
+\begin{lstlisting}
+	propReverseTwice xs = reverse (reverse xs) == xs
+\end{lstlisting}
+
+QuickCheck is then executed by importing the property and passing into the interpreter:
+
+\begin{lstlisting}
+	Main:> quickCheck propReverseTwice
+	Ok: passed 100 tests.
+\end{lstlisting}
+
+This will create a large number of test cases by using the user-defined property and random input values to check the property holds. QuickCheck reports various test statistics including the number of tests that have passed or failed.
+
+QuickCheck has been re-implemented in other languages including Scala, Java and C++. A commercial version of QuickCheck in Erlang called Quviq QuickCheck is co-founded by one of the original developers, John Hughes and is an extension of the original QuickCheck for Haskell.
+
+This project is about implementing an automated test-case generator for the programming language, Whiley based on the QuickCheck tool. 
 
 %In this section you should include a very brief introduction to the problem and the project.
 %
@@ -139,7 +166,7 @@ Therefore, this project aims to implement an automated test-case generator in Wh
 \section*{3. Proposed Solution}
 
 The automated test-case generator needs to read a Whiley program and then generate tests for functions in the program. 
-Randomised input values that adhere to the function's preconditions will be used in testing. 
+Input values that adhere to the function's preconditions will be used in testing. 
 The success of each test is determined by using the function's postconditions. 
 The test results should show the percentage of tests that passed and the inputs used in the failed tests.
 
@@ -170,7 +197,7 @@ A gantt chart of the project can be found on the project's repository.
 	\hline
 	Produce project proposal & 2 weeks & 19/3/18 & 9/4/18 (Week 5) \\
 	\hline
-	Implement an automated test-case generator for Whiley programs with only the types:  bool, byte, int, real, null & 3 weeks & 19/3/18 & 16/4/18 (Week 6) \\
+	Implement an automated test-case generator for Whiley programs with only the types: bool, byte, int, null & 3 weeks & 19/3/18 & 16/4/18 (Week 6) \\
 	
 	\hline
 	Implement automated test-case generation for types: void, array, union and records & 3 weeks & 16/4/18 & 14/5/18 (Week 9) \\
@@ -186,11 +213,11 @@ A gantt chart of the project can be found on the project's repository.
 	\hline
 	\textbf{Output} & \textbf{Estimated Time} & \textbf{Start Date} & \textbf{Complete by}\\
 	\hline
-	Produce slides for presentation of preliminary report & 2 weeks & 2/7/18 & 16/7/18 (Week 1)\\
+	Produce slides for presentation of preliminary report & 1 week & 2/7/18 & 9/7/18 (Break)\\
 	\hline
-	Extend the automatic test generator to include other methods of testing (symbolic) or be able to generate other types & 3 weeks & 16/7/18 & 6/8/18 (Week 4)\\
+	Extend the automatic test generator to include other methods of testing (symbolic) or be able to generate other types & 3 weeks & 9/7/18 & 30/7/18 (Week 4)\\
 	\hline
-	Produce draft of final report & 4 weeks & 6/8/18 & 15/9/18 (Week 7)\\
+	Produce draft of final report & 6 weeks & 30/7/18 & 15/9/18 (Week 7)\\
 	\hline
 	Complete implementation of automated test generator & 3 weeks & 15/9/18 & 5/10/18 (Week 10) \\
 	\hline

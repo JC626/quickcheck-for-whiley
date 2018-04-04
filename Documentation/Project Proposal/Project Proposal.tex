@@ -78,7 +78,7 @@
 
 \section*{1. Introduction}
 Testing is an important process in software development as it helps detect the presence of bugs.
-However, writing and running tests can be tedious and costly. Furthermore, it is difficult to write tests for all possible cases therefore, obscure bugs may not be detected. 
+However, writing and running tests can be tedious and costly. Furthermore, it is difficult to write tests for all possible cases and be able to detect all bugs.
 
 An automated test-case generator called QuickCheck was implemented in Haskell by Koen Claessen and John Hughes which alleviates these issues.
 
@@ -125,7 +125,7 @@ This project is about implementing an automated test-case generator for the prog
 
 \section*{2. The Problem}
 Whiley is a programming language, developed to verify code and eliminate errors using formal specifications. 
-Ideally, programs written in Whiley should contain as few errors. 
+Ideally, programs written in Whiley should contain no errors.
 To achieve this goal, Whiley contains a verifying compiler which employs the use of specifications written by a developer to check for common errors such as accessing an index of an array which is outside its boundaries.
 
 Currently, the verifying compiler has limitations when evaluating complex pre- and post-conditions. 
@@ -166,7 +166,7 @@ Therefore, this project aims to implement an automated test-case generator in Wh
 \section*{3. Proposed Solution}
 
 The automated test-case generator needs to read a Whiley program and then generate tests for functions in the program. 
-Input values that adhere to the function's preconditions will be used in testing. 
+Input values that adhere to the function's preconditions will be used in testing. Strategies for generating input values include random generation and dynamic generation.
 The success of each test is determined by using the function's postconditions. 
 The test results should show the percentage of tests that passed and the inputs used in the failed tests.
 
@@ -197,10 +197,10 @@ A gantt chart of the project can be found on the project's repository.
 	\hline
 	Produce project proposal & 2 weeks & 19/3/18 & 9/4/18 (Week 5) \\
 	\hline
-	Implement an automated test-case generator for Whiley programs with only the types: bool, byte, int, null & 3 weeks & 19/3/18 & 16/4/18 (Week 6) \\
+	Implement an automated test-case generator for Whiley programs for the primitive types: bool, byte, int, null & 3 weeks & 19/3/18 & 16/4/18 (Week 6) \\
 	
 	\hline
-	Implement automated test-case generation for types: void, array, union and records & 3 weeks & 16/4/18 & 14/5/18 (Week 9) \\
+	Implement automated test-case generation for more complex types: void, array, union and records & 3 weeks & 16/4/18 & 14/5/18 (Week 9) \\
 	\hline
 	Produce preliminary report & 3 weeks & 14/5/18 & 10/6/18 (Week 12) \\	
 	\hline

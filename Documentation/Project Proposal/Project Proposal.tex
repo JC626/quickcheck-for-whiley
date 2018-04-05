@@ -42,7 +42,7 @@
 
 % Unless you've used the bschonscomp or mcompsci
 %  options above use
-   \otherdegree{Bachelor of Engineering with Honour}
+   \otherdegree{Bachelor of Engineering with Honours}
 % here to specify degree
 
 % Comment this out if you want the date printed.
@@ -85,13 +85,13 @@ An automated test-case generator called QuickCheck was implemented in Haskell by
 This lightweight tool employs two testing ideas.
 Firstly, QuickCheck uses property-based testing which uses conditions that will always hold true. Users define the conditions in terms of formal specifications to validate functions under test.
 
-Secondly, QuickCheck generates test cases automatically using random testing. Input values are randomly generated for each test (within a range) using generators that correspond to the input value's type. QuickCheck contains generators for most of Haskell's predefined types and for functions. It requires the developer to specify their own generators for user-defined types. \\
+Secondly, QuickCheck generates test cases automatically using random testing. Input values are randomly generated for each test (within a range) using generators that correspond to the input value's type. QuickCheck contains generators for most of Haskell's predefined types and for functions. It requires the developer to specify their own generators for user-defined types. 
 
 An example of using QuickCheck would be reversing a list.
 
 Firstly, a property is defined where the list xs, should be the same as reversing xs twice.
 
-\begin{lstlisting}
+\begin{lstlisting}[language=haskell]
 	propReverseTwice xs = reverse (reverse xs) == xs
 \end{lstlisting}
 
@@ -125,8 +125,33 @@ This project is about implementing an automated test-case generator for the prog
 
 \section*{2. The Problem}
 Whiley is a programming language, developed to verify code and eliminate errors using formal specifications. 
-Ideally, programs written in Whiley should contain no errors.
+Ideally, programs written in Whiley should be error free.
 To achieve this goal, Whiley contains a verifying compiler which employs the use of specifications written by a developer to check for common errors such as accessing an index of an array which is outside its boundaries.
+
+Below is an example of a Whiley program with a function,  \texttt{min()} which finds the minimum value of two integers. This program prints out "The smallest integer is 3" when executed. 
+
+\begin{minipage}{\linewidth}
+\begin{lstlisting}[tabsize=3, numbers=left]
+import std::io
+import std::ascii
+
+method main():
+	int x = 5
+	int y = 3
+	int smallest = min(x, y)
+	io::print("The smallest integer is ")
+	io::println(smallest)
+
+function min(int x, int y) -> (int r)
+ensures r == x ==> x <= y
+ensures r == y ==> y <= x:
+	if x <= y:
+		return x
+	else:
+		return y
+
+\end{lstlisting}
+\end{minipage}
 
 Currently, the verifying compiler has limitations when evaluating complex pre- and post-conditions. 
 For example, a post-condition could be falsely identified as not holding by the verifying compiler even though the program does meet the post-condition.
@@ -276,7 +301,7 @@ No special resources are required. Only the use of the ECS laboratories is requi
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\backmatter
+%\backmatter
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %\bibliographystyle{ieeetr}

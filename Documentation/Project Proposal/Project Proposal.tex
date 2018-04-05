@@ -131,7 +131,9 @@ To achieve this goal, Whiley contains a verifying compiler which employs the use
 Below is an example of a Whiley program with a function,  \texttt{min()} which finds the minimum value of two integers. This program prints out "The smallest integer is 3" when executed. 
 
 \begin{minipage}{\linewidth}
-\begin{lstlisting}[tabsize=3, numbers=left]
+\label{}
+\begin{lstlisting}[tabsize=3, numbers=left,
+ caption= Whiley program for the min function \label{lst:min}]
 import std::io
 import std::ascii
 
@@ -195,9 +197,21 @@ Input values that adhere to the function's preconditions will be used in testing
 The success of each test is determined by using the function's postconditions. 
 The test results should show the percentage of tests that passed and the inputs used in the failed tests.
 
-Several components developed for the Whiley language will need to be used for the automated test-case generator. 
+An example of a function for test-case generation would be for the \texttt{min} function introduced in Listing \ref{lst:min}. 
 
-After basic test-case generation is completed, more complex types can be generated for testing and/or further enhancements to the tool can be made. \\
+Possible input values automatically generated include:
+\begin{itemize}
+	\item min(4, 4) would result in r = 4
+	\item min(6, 7) would result in r = 7
+	\item min(10, 5) would result in r = 10
+	\item min(-2, 8) would result in r = 8
+\end{itemize}
+
+Several components developed for the Whiley language will need to be used for the automated test-case generator. 
+The Whiley interpreter will be used for checking candidate values meet precondition and validating test outputs meet the postconditions. It will also be used for analysing the program structure such as the names of functions declared and their parameters. 
+The Whiley Compiler will be used for generating input data for different types.
+
+After basic test-case generation is completed, more complex types can be generated for testing and/or further enhancements to the tool can be made. 
 
 Possible enhancements include:
 \begin{itemize}
@@ -234,7 +248,7 @@ A gantt chart of the project can be found on the project's repository.
 \end{tabular}
 
 \subsubsection*{Trimester 2}
-\begin{tabular}{ |p{10cm}|p{3cm}|p{2cm}|p{2cm}| }
+\begin{tabular}{ |p{10cm}|p{2cm}|p{2cm}|p{2cm}| }
 	\hline
 	\textbf{Output} & \textbf{Estimated Time} & \textbf{Start Date} & \textbf{Complete by}\\
 	\hline

@@ -3,7 +3,7 @@
 %% $Date: 2017/10/06 02:55:50 $
 %% $Author: kevin $
 
-\documentclass[11pt, a4paper, twoside, openright]{report}
+\documentclass[11pt, a4paper, oneside, openright]{report}
 
 \usepackage{float} % lets you have non-floating floats
 
@@ -37,7 +37,7 @@
 \usepackage[image,ecs]{vuwproject} 
 
 % You should specifiy your supervisor here with
-     \supervisors{David Pearce, Lindsay Groves}
+     \supervisors{David Pearce and Lindsay Groves}
 % use \supervisors if there are more than one supervisor
 
 % Unless you've used the bschonscomp or mcompsci
@@ -131,7 +131,6 @@ To achieve this goal, Whiley contains a verifying compiler which employs the use
 Below is an example of a Whiley program with a function,  \texttt{min()} which finds the minimum value of two integers. This program prints out "The smallest integer is 3" when executed. 
 
 \begin{minipage}{\linewidth}
-\label{}
 \begin{lstlisting}[tabsize=3, numbers=left,
  caption= Whiley program for the min function \label{lst:min}]
 import std::io

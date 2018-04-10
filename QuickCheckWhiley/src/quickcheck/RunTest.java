@@ -99,7 +99,6 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 	// Helpers
 	// =======================================================================
 	
-	// TODO change to return the output values
 	/**
 	 * Test a function from a Wyil file
 	 * by executing the test with randomised paramters

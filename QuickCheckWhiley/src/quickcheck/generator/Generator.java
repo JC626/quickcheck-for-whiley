@@ -45,16 +45,24 @@ public abstract class Generator {
 	 * @author Janice Chin
 	 *
 	 */
-	private static final class IntegerGenerator extends Generator{		
+	private static final class IntegerGenerator extends Generator{
+		// FIXME 
+		private BigInteger LOWER_LIMIT = new BigInteger("-1000");
+		private BigInteger UPPER_LIMIT = new BigInteger("1000");
 		private IntegerGenerator() {
 			
 		}
 		
 		@Override
 		public RValue generate() {
-			// FIXME actually generate a value
-//			BigInteger value = new BigInteger(100, randomiser);
-			BigInteger value = BigInteger.valueOf(5);
+			BigInteger value;
+			boolean negateValue = LOWER_LIMIT.compareTo(new BigInteger("0")) < 0;
+			do {
+			    value = new BigInteger(UPPER_LIMIT.bitLength(), randomiser);
+				if(negateValue && !randomiser.nextBoolean()) {
+					value = value.negate();
+				}
+			} while (value.compareTo(UPPER_LIMIT) >= 0 && value.compareTo(LOWER_LIMIT) < 0);
 			return Generator.semantics.Int(value);
 		}
 	}

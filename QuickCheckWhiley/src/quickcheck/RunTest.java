@@ -16,6 +16,7 @@ import wyc.util.AbstractProjectCommand;
 import wycc.util.Logger;
 import wyfs.lang.Content;
 import wyfs.lang.Path;
+import wyfs.util.DirectoryRoot;
 import wyfs.util.Trie;
 import wyil.interpreter.Interpreter;
 import wyil.interpreter.Interpreter.CallStack;
@@ -71,13 +72,12 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 	@Override
 	public Result execute(String... args) {
 		if (args.length == 0) {
-			// FIXME: this is broken
 			System.out.println("usage: run <wyilfile> <method>");
 			return Result.ERRORS;
 		}
 		try {
-			StdProject project = initialiseProject();
-			Path.ID id = Trie.fromString(args[0]);
+			Build.Project project = createWhileyProject(args[0]);
+			Path.ID id = Trie.fromString(args[1]);
 			List<Decl.Function> functions = getFunctions(id, project);
 			// Generate tests for each function
 			Interpreter interpreter = new Interpreter(project, System.out);
@@ -98,6 +98,25 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 	// =======================================================================
 	// Helpers
 	// =======================================================================
+	
+	/**
+	 * Create a default Whiley project in the given directory. This can then be used
+	 * to read WyIL files from that directory.
+	 *
+	 * @param dir - The path directory to look for the Whiley/Wyil file.
+	 * @return Whiley Project
+	 */
+	private static Build.Project createWhileyProject(String dir) throws IOException {
+		// The content registry maps file name extensions to their Content.Type.
+		Content.Registry registry = new wyc.Activator.Registry();
+		// The directory root specified where to look for Whiley / WyIL files.
+		DirectoryRoot root = new DirectoryRoot(dir,registry);
+		ArrayList<Path.Root> roots = new ArrayList<>();
+		roots.add(root);
+		// Finally, create the project itself
+		return new StdProject(roots);
+	}
+
 	
 	/**
 	 * Test a function from a Wyil file

@@ -36,10 +36,10 @@ public class GenerateTest {
 		for(Variable var : dec.getParameters()) {
 			WhileyFile.Type paramType = var.getType();
 			if(paramType instanceof WhileyFile.Type.Int) {
-				this.parameterGenerators.add(Generator.INTEGER_GENERATOR);
+				this.parameterGenerators.add(new Generator.IntegerGenerator("-1000", "1000"));
 			}
 			else if(paramType instanceof WhileyFile.Type.Bool) {
-				this.parameterGenerators.add(Generator.BOOLEAN_GENERATOR);
+				this.parameterGenerators.add(new Generator.BooleanGenerator());
 			}
 		}
 	}

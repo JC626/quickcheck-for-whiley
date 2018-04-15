@@ -25,12 +25,40 @@ public abstract class Generator {
 	 */
 	private static Random randomiser = new Random();
 	
+	private int count = 1;
+	
 	/**
 	 * Generate a randomised value for it's specified type
 	 * @return A randomised value
 	 */
 	// FIXME add parameter with options in generate (for arrays, other generators used etc)
+	// TODO some type of modifier for the generate function -> To be able to specify range and such
 	public abstract RValue generate();
+	
+	
+	/**
+	 * Get the number of unique values that could be generated 
+	 * @return The number of unique values or -1 if there is an indefinite number
+	 */
+	public int range() {
+		return -1;
+	};
+	
+	public void resetCount() {
+		count = 1;
+	}
+	
+	public void incrementCount() {
+		count++;
+	}
+	
+	public int getCount() {
+		return count;
+	}
+	
+	public boolean exceedCount() {
+		return this.range() < count;
+	}
 	
 	/**
 	 * Generate random integer values.
@@ -39,24 +67,39 @@ public abstract class Generator {
 	 *
 	 */
 	public static final class IntegerGenerator extends Generator{
+		private TestType testType;
 		private BigInteger lowerLimit;
 		private BigInteger upperLimit;
-		public IntegerGenerator(String lower, String upper) {
-			this.lowerLimit = new BigInteger(lower);
-			this.upperLimit = new BigInteger(upper);
+		
+		public IntegerGenerator(TestType testType, BigInteger lower, BigInteger upper) {
+			this.testType = testType;
+			this.lowerLimit = lower;
+			this.upperLimit = upper;
 		}
 		
 		@Override
 		public RValue generate() {
 			BigInteger value;
-			boolean negateValue = lowerLimit.compareTo(new BigInteger("0")) < 0;
-			do {
-			    value = new BigInteger(upperLimit.bitLength(), randomiser);
-				if(negateValue && !randomiser.nextBoolean()) {
-					value = value.negate();
-				}
-			} while (value.compareTo(upperLimit) >= 0 && value.compareTo(lowerLimit) < 0);
-			return Generator.semantics.Int(value);
+			if(testType == TestType.EXHAUSTIVE) {
+				value = lowerLimit.add(BigInteger.valueOf(getCount()-1));
+				incrementCount();
+				return Generator.semantics.Int(value);
+			}
+			else {
+				boolean negateValue = lowerLimit.compareTo(new BigInteger("0")) < 0;
+				do {
+				    value = new BigInteger(upperLimit.bitLength(), randomiser);
+					if(negateValue && !randomiser.nextBoolean()) {
+						value = value.negate();
+					}
+				} while (value.compareTo(upperLimit) >= 0 && value.compareTo(lowerLimit) < 0);
+				return Generator.semantics.Int(value);
+			}
+		}
+		
+		@Override 
+		public int range() {
+			return upperLimit.subtract(lowerLimit).intValue();
 		}
 	}
 	
@@ -67,13 +110,27 @@ public abstract class Generator {
 	 *
 	 */
 	public static final class BooleanGenerator extends Generator{		
-		public BooleanGenerator() {
-			
+		private TestType testType;
+		
+		public BooleanGenerator(TestType testType) {
+			this.testType = testType;
 		}
 		
 		@Override
 		public RValue generate() {
+			if(testType == TestType.EXHAUSTIVE) {
+				if(getCount() == 1) {
+					incrementCount();
+					return Generator.semantics.Bool(true);
+				}
+				incrementCount();
+				return Generator.semantics.Bool(false);
+			}
 			return Generator.semantics.Bool(randomiser.nextBoolean());
+		}
+		@Override
+		public int range() {
+			return 2;
 		}
 	}
 	

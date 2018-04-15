@@ -2,6 +2,7 @@ package quickcheck.generator;
 
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Map;
 import java.util.Stack;
 
 import wyc.lang.WhileyFile;
@@ -33,15 +34,18 @@ public class ExhaustiveGenerateTest extends GenerateTest{
 	 */
 	private Stack<Generator> stack;
 	
-	public ExhaustiveGenerateTest(FunctionOrMethod dec) {
-		super(dec);
+	
+	
+	public ExhaustiveGenerateTest(FunctionOrMethod dec, Map<String, Object> keywordArgs) {
+		super(dec, keywordArgs);
 		this.numTests = 10;
 		this.allTests = totalCombinations.compareTo(BigInteger.valueOf(numTests)) != 1;
-		stack = new Stack<Generator>();
+		stack = new Stack<Generator>();	
 	}
+
 	
-	public ExhaustiveGenerateTest(FunctionOrMethod dec, int numTests) {
-		super(dec);
+	public ExhaustiveGenerateTest(FunctionOrMethod dec, Map<String, Object> keywordArgs, int numTests) {
+		super(dec, keywordArgs);
 		this.numTests = numTests;
 		this.allTests = totalCombinations.compareTo(BigInteger.valueOf(numTests)) != 1;
 		stack = new Stack<Generator>();

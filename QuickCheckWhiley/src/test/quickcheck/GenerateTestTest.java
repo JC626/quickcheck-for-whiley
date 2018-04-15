@@ -2,6 +2,9 @@ package test.quickcheck;
 
 import static org.junit.Assert.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.Test;
 
 import quickcheck.generator.GenerateTest;
@@ -26,7 +29,10 @@ public class GenerateTestTest {
 	public void testFunctionNoParameters() {
 		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>();
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
-		GenerateTest testGen = new GenerateTest(func);
+		Map<String, Object> generatorArgs = new HashMap<String, Object>();
+		generatorArgs.put("upperLimit", "10");
+		generatorArgs.put("lowerLimit", "-10");
+		GenerateTest testGen = new GenerateTest(func, generatorArgs);
 		assertArrayEquals(new RValue[0], testGen.generateParameters());
 	}
 	
@@ -38,7 +44,10 @@ public class GenerateTestTest {
 		Decl.Variable intParam = new Decl.Variable(null, new Identifier("firstInt"), Type.Int);
 		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(intParam);
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
-		GenerateTest testGen = new GenerateTest(func);
+		Map<String, Object> generatorArgs = new HashMap<String, Object>();
+		generatorArgs.put("upperLimit", "10");
+		generatorArgs.put("lowerLimit", "-10");
+		GenerateTest testGen = new GenerateTest(func, generatorArgs);
 		RValue[] generatedParameters = testGen.generateParameters();
 		assertEquals(1, generatedParameters.length);
 		assertTrue(generatedParameters[0] instanceof RValue.Int);
@@ -55,7 +64,10 @@ public class GenerateTestTest {
 
 		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(intOne, intTwo, intThree);
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
-		GenerateTest testGen = new GenerateTest(func);
+		Map<String, Object> generatorArgs = new HashMap<String, Object>();
+		generatorArgs.put("upperLimit", "10");
+		generatorArgs.put("lowerLimit", "-10");
+		GenerateTest testGen = new GenerateTest(func, generatorArgs);
 		RValue[] generatedParameters = testGen.generateParameters();
 		assertEquals(3, generatedParameters.length);
 		assertTrue(generatedParameters[0] instanceof RValue.Int);
@@ -71,7 +83,10 @@ public class GenerateTestTest {
 		Decl.Variable boolParam = new Decl.Variable(null, new Identifier("firstBool"), Type.Bool);
 		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(boolParam);
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
-		GenerateTest testGen = new GenerateTest(func);
+		Map<String, Object> generatorArgs = new HashMap<String, Object>();
+		generatorArgs.put("upperLimit", "10");
+		generatorArgs.put("lowerLimit", "-10");
+		GenerateTest testGen = new GenerateTest(func, generatorArgs);
 		RValue[] generatedParameters = testGen.generateParameters();
 		assertEquals(1, generatedParameters.length);
 		assertTrue(generatedParameters[0] instanceof RValue.Bool);
@@ -88,7 +103,10 @@ public class GenerateTestTest {
 
 		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(boolOne, boolTwo, boolThree);
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
-		GenerateTest testGen = new GenerateTest(func);
+		Map<String, Object> generatorArgs = new HashMap<String, Object>();
+		generatorArgs.put("upperLimit", "10");
+		generatorArgs.put("lowerLimit", "-10");
+		GenerateTest testGen = new GenerateTest(func, generatorArgs);
 		RValue[] generatedParameters = testGen.generateParameters();
 		assertEquals(3, generatedParameters.length);
 		assertTrue(generatedParameters[0] instanceof RValue.Bool);
@@ -106,7 +124,10 @@ public class GenerateTestTest {
 		Decl.Variable boolParam = new Decl.Variable(null, new Identifier("secBool"), Type.Bool);
 		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(intParam, boolParam);
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
-		GenerateTest testGen = new GenerateTest(func);
+		Map<String, Object> generatorArgs = new HashMap<String, Object>();
+		generatorArgs.put("upperLimit", "10");
+		generatorArgs.put("lowerLimit", "-10");
+		GenerateTest testGen = new GenerateTest(func, generatorArgs);
 		RValue[] generatedParameters = testGen.generateParameters();
 		assertEquals(2, generatedParameters.length);
 		assertTrue(generatedParameters[0] instanceof RValue.Int);

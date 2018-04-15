@@ -1,7 +1,5 @@
 package quickcheck;
 
-import java.io.IOException;
-
 import quickcheck.generator.TestType;
 import wycc.util.Logger;
 import wyfs.lang.Content;
@@ -19,19 +17,7 @@ import wyfs.util.Trie;
  *
  */
 public class QuickCheck {
-	
-	/**
-	 * Based on TestUtils.execWyil
-	 * @param wyilDir
-	 * @param id
-	 * @throws IOException
-	 */
-	public static void execWyil(String dir, Path.ID id, TestType testType) throws IOException {
-		Content.Registry registry = new wyc.Activator.Registry();
-		RunTest cmd = new RunTest(registry,Logger.NULL);
-		cmd.execute(dir, id.toString(), testType.toString());
-	}
-	
+		
 	/**
 	 * Extract the path ID for the given filename. This is a relative path from the
 	 * project root.
@@ -48,28 +34,30 @@ public class QuickCheck {
 	}
 	
 	public static void main(String[] args){
+		// TODO have a Map<String, Object> for customisation of the generator?
 		if(args.length == 0) {
-			System.out.println("Usage: java QuickCheck <wyilfile>");
+			System.out.println("Usage: java QuickCheck <wyilfile> <testtype> <numtests> <lowerintegerlimit> <upperintegerlimit>");
 			System.exit(-1);
 		}
-		try {
-			String filepath = args[0];
-			int lastSlash = filepath.lastIndexOf("/");
-			String relativePath = filepath.substring(0, lastSlash);
-			String filename = filepath.substring(lastSlash+1);
-			Path.ID id = extractPathID(filename);
-			filepath.lastIndexOf(filename);
-			TestType testType = TestType.RANDOM;
-			if(args.length >= 2) {
-				String type = args[1];
-				if(type.equalsIgnoreCase("exhaustive")) {
-					 testType = TestType.EXHAUSTIVE;
-				}
-				// Default is random testing
+		String filepath = args[0];
+		int lastSlash = filepath.lastIndexOf("/");
+		String relativePath = filepath.substring(0, lastSlash);
+		String filename = filepath.substring(lastSlash+1);
+		Path.ID id = extractPathID(filename);
+		filepath.lastIndexOf(filename);
+		TestType testType = TestType.RANDOM;
+		if(args.length >= 2) {
+			String type = args[1];
+			if(type.equalsIgnoreCase("exhaustive")) {
+				 testType = TestType.EXHAUSTIVE;
 			}
-			execWyil(relativePath, id, testType);
-		} catch (IOException e) {
-			e.printStackTrace();
+			// Default is random testing
 		}
+		Content.Registry registry = new wyc.Activator.Registry();
+		RunTest cmd = new RunTest(registry,Logger.NULL);
+		String numTests = args.length >= 3 ? args[2] : Integer.toString(RunTest.NUM_TESTS);
+		String lowerLimit = args.length >= 4 ? args[3] : Integer.toString(RunTest.LOWER_LIMIT);
+		String upperLimit = args.length >= 5 ? args[4] : Integer.toString(RunTest.UPPER_LIMIT);
+		cmd.execute(relativePath, id.toString(), testType.toString(), numTests, lowerLimit, upperLimit);			
 	}
 }

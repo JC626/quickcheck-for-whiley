@@ -59,8 +59,12 @@ public class ExhaustiveGenerateTest extends GenerateTest{
 		for(Variable var : getDec().getParameters()) {
 			WhileyFile.Type paramType = var.getType();
 			if(paramType instanceof WhileyFile.Type.Int) {
-				parameterGenerators.add(new Generator.IntegerGenerator(TestType.EXHAUSTIVE, BigInteger.valueOf(-5), BigInteger.valueOf(5)));
-				numCombinations.multiply(BigInteger.valueOf(2000));
+				String upperLimit = getKeywordArgs().get("upperLimit").toString();
+				String lowerLimit = getKeywordArgs().get("lowerLimit").toString();
+				BigInteger upper = new BigInteger(upperLimit);
+				BigInteger lower = new BigInteger(lowerLimit);
+				parameterGenerators.add(new Generator.IntegerGenerator(TestType.EXHAUSTIVE, lower, upper));
+				numCombinations.multiply(upper.subtract(lower));
 			}
 			else if(paramType instanceof WhileyFile.Type.Bool) {
 				parameterGenerators.add(new Generator.BooleanGenerator(TestType.EXHAUSTIVE));

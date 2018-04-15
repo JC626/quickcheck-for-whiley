@@ -28,8 +28,8 @@ public abstract class Generator {
 	private int count = 1;
 	
 	/**
-	 * Generate a randomised value for it's specified type
-	 * @return A randomised value
+	 * Generate a value for the specified type
+	 * @return A value
 	 */
 	// FIXME add parameter with options in generate (for arrays, other generators used etc)
 	// TODO some type of modifier for the generate function -> To be able to specify range and such
@@ -61,7 +61,8 @@ public abstract class Generator {
 	}
 	
 	/**
-	 * Generate random integer values.
+	 * Generate integer values
+	 * between the lower limit (inclusive) and the upper limit (exclusive)
 	 * 
 	 * @author Janice Chin
 	 *
@@ -82,6 +83,10 @@ public abstract class Generator {
 			BigInteger value;
 			if(testType == TestType.EXHAUSTIVE) {
 				value = lowerLimit.add(BigInteger.valueOf(getCount()-1));
+				if(value.compareTo(upperLimit) >= 0) {
+					resetCount();
+					value = lowerLimit.add(BigInteger.valueOf(getCount()-1));
+				}
 				incrementCount();
 				return Generator.semantics.Int(value);
 			}
@@ -92,7 +97,7 @@ public abstract class Generator {
 					if(negateValue && !randomiser.nextBoolean()) {
 						value = value.negate();
 					}
-				} while (value.compareTo(upperLimit) > 0 || value.compareTo(lowerLimit) < 0);
+				} while (value.compareTo(upperLimit) >= 0 || value.compareTo(lowerLimit) < 0);
 				return Generator.semantics.Int(value);
 			}
 		}
@@ -104,7 +109,7 @@ public abstract class Generator {
 	}
 	
 	/**
-	 * Generate random boolean values.
+	 * Generate boolean values.
 	 *
 	 * @author Janice Chin
 	 *

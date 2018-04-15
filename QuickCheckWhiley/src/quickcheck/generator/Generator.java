@@ -16,12 +16,6 @@ import wyil.interpreter.ConcreteSemantics.RValue;
  */
 public abstract class Generator {
 	/**
-	 * Define generators here
-	 */
-	public static final IntegerGenerator INTEGER_GENERATOR = new IntegerGenerator();
-	public static final BooleanGenerator BOOLEAN_GENERATOR = new BooleanGenerator();
-
-	/**
 	 * Used for generating appropriate values
 	 */
 	private static final ConcreteSemantics semantics = new ConcreteSemantics();
@@ -31,58 +25,112 @@ public abstract class Generator {
 	 */
 	private static Random randomiser = new Random();
 	
+	private int count = 1;
+	
 	/**
 	 * Generate a randomised value for it's specified type
 	 * @return A randomised value
 	 */
+	// FIXME add parameter with options in generate (for arrays, other generators used etc)
+	// TODO some type of modifier for the generate function -> To be able to specify range and such
 	public abstract RValue generate();
+	
+	
+	/**
+	 * Get the number of unique values that could be generated 
+	 * @return The number of unique values or -1 if there is an indefinite number
+	 */
+	public int range() {
+		return -1;
+	};
+	
+	public void resetCount() {
+		count = 1;
+	}
+	
+	public void incrementCount() {
+		count++;
+	}
+	
+	public int getCount() {
+		return count;
+	}
+	
+	public boolean exceedCount() {
+		return this.range() < count;
+	}
 	
 	/**
 	 * Generate random integer values.
-	 * This uses the singleton pattern, therefore only one generator
-	 * is created.
 	 * 
 	 * @author Janice Chin
 	 *
 	 */
-	private static final class IntegerGenerator extends Generator{
-		// FIXME 
-		private BigInteger LOWER_LIMIT = new BigInteger("-1000");
-		private BigInteger UPPER_LIMIT = new BigInteger("1000");
-		private IntegerGenerator() {
-			
+	public static final class IntegerGenerator extends Generator{
+		private TestType testType;
+		private BigInteger lowerLimit;
+		private BigInteger upperLimit;
+		
+		public IntegerGenerator(TestType testType, BigInteger lower, BigInteger upper) {
+			this.testType = testType;
+			this.lowerLimit = lower;
+			this.upperLimit = upper;
 		}
 		
 		@Override
 		public RValue generate() {
 			BigInteger value;
-			boolean negateValue = LOWER_LIMIT.compareTo(new BigInteger("0")) < 0;
-			do {
-			    value = new BigInteger(UPPER_LIMIT.bitLength(), randomiser);
-				if(negateValue && !randomiser.nextBoolean()) {
-					value = value.negate();
-				}
-			} while (value.compareTo(UPPER_LIMIT) >= 0 && value.compareTo(LOWER_LIMIT) < 0);
-			return Generator.semantics.Int(value);
+			if(testType == TestType.EXHAUSTIVE) {
+				value = lowerLimit.add(BigInteger.valueOf(getCount()-1));
+				incrementCount();
+				return Generator.semantics.Int(value);
+			}
+			else {
+				boolean negateValue = lowerLimit.compareTo(new BigInteger("0")) < 0;
+				do {
+				    value = new BigInteger(upperLimit.bitLength(), randomiser);
+					if(negateValue && !randomiser.nextBoolean()) {
+						value = value.negate();
+					}
+				} while (value.compareTo(upperLimit) > 0 || value.compareTo(lowerLimit) < 0);
+				return Generator.semantics.Int(value);
+			}
+		}
+		
+		@Override 
+		public int range() {
+			return upperLimit.subtract(lowerLimit).intValue();
 		}
 	}
 	
 	/**
 	 * Generate random boolean values.
-	 * This uses the singleton pattern, therefore only one generator
-	 * is created.
-	 * 
+	 *
 	 * @author Janice Chin
 	 *
 	 */
-	private static final class BooleanGenerator extends Generator{		
-		private BooleanGenerator() {
-			
+	public static final class BooleanGenerator extends Generator{		
+		private TestType testType;
+		
+		public BooleanGenerator(TestType testType) {
+			this.testType = testType;
 		}
 		
 		@Override
 		public RValue generate() {
+			if(testType == TestType.EXHAUSTIVE) {
+				if(getCount() == 1) {
+					incrementCount();
+					return Generator.semantics.Bool(true);
+				}
+				incrementCount();
+				return Generator.semantics.Bool(false);
+			}
 			return Generator.semantics.Bool(randomiser.nextBoolean());
+		}
+		@Override
+		public int range() {
+			return 2;
 		}
 	}
 	

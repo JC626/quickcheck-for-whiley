@@ -20,7 +20,7 @@ import wyil.interpreter.ConcreteSemantics.RValue;
  * @author Janice Chin
  *
  */
-public class GenerateTestTest {
+public class GenerateRandomTest {
 
 	/**
 	 * Test when the function has no parameters

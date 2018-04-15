@@ -96,7 +96,6 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 			}
 			catch(NumberFormatException e) {}
 			for(Decl.Function func : functions) {
-				// TODO set number of tests to execute?
 				executeTest(id, interpreter, func, testType, numTests, args[4], args[5]);
 			}
 			
@@ -140,8 +139,11 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 	 * @param dec The function or method
 	 * @param testType The type of tests to generate
 	 * @param numTest The number of tests to execute
+	 * @param lowerLimit The lower constraint used when generating integers
+	 * @param upperLimit The upper constraint used when generating integers
 	 */
 	private void executeTest(Path.ID id, Interpreter interpreter, Decl.FunctionOrMethod dec, TestType testType, int numTest, String lowerLimit, String upperLimit) {
+		// Set extra arguments to use in the function
 		Map<String, Object> generatorArgs = new HashMap<String, Object>();
 		generatorArgs.put("upperLimit", upperLimit);
 		generatorArgs.put("lowerLimit", lowerLimit);

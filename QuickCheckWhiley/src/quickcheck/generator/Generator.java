@@ -92,7 +92,7 @@ public abstract class Generator {
 					if(negateValue && !randomiser.nextBoolean()) {
 						value = value.negate();
 					}
-				} while (value.compareTo(upperLimit) >= 0 && value.compareTo(lowerLimit) < 0);
+				} while (value.compareTo(upperLimit) > 0 || value.compareTo(lowerLimit) < 0);
 				return Generator.semantics.Int(value);
 			}
 		}

@@ -3,7 +3,9 @@ package quickcheck;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import quickcheck.generator.ExhaustiveGenerateTest;
 import quickcheck.generator.GenerateTest;
@@ -38,6 +40,10 @@ import static wyc.lang.WhileyFile.*;
  *
  */
 public class RunTest extends AbstractProjectCommand<RunTest.Result> {
+	
+	public static final int NUM_TESTS = 10;
+	public static final int LOWER_LIMIT = -10;
+	public static final int UPPER_LIMIT = 10;
 	
 	/**
 	 * Result kind for this command
@@ -84,9 +90,14 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 			List<Decl.Function> functions = getFunctions(id, project);
 			// Generate tests for each function
 			Interpreter interpreter = new Interpreter(project, System.out);
+			int numTests = RunTest.NUM_TESTS;
+			try {
+				numTests = Integer.parseInt(args[3]);
+			}
+			catch(NumberFormatException e) {}
 			for(Decl.Function func : functions) {
 				// TODO set number of tests to execute?
-				executeTest(id, interpreter, func, testType, 11);
+				executeTest(id, interpreter, func, testType, numTests, args[4], args[5]);
 			}
 			
 		} catch (IOException e) {
@@ -130,13 +141,16 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 	 * @param testType The type of tests to generate
 	 * @param numTest The number of tests to execute
 	 */
-	private void executeTest(Path.ID id, Interpreter interpreter, Decl.FunctionOrMethod dec, TestType testType, int numTest) {
+	private void executeTest(Path.ID id, Interpreter interpreter, Decl.FunctionOrMethod dec, TestType testType, int numTest, String lowerLimit, String upperLimit) {
+		Map<String, Object> generatorArgs = new HashMap<String, Object>();
+		generatorArgs.put("upperLimit", upperLimit);
+		generatorArgs.put("lowerLimit", lowerLimit);
 		GenerateTest testGen;
 		if(testType == TestType.EXHAUSTIVE) {
-			testGen = new ExhaustiveGenerateTest(dec, numTest);
+			testGen = new ExhaustiveGenerateTest(dec, generatorArgs, numTest);
 		}
 		else {
-			testGen = new GenerateTest(dec);
+			testGen = new GenerateTest(dec, generatorArgs);
 		}
 		NameID name = new NameID(id, dec.getName().get());
 		Type.Callable type = dec.getType();

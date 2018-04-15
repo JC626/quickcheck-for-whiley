@@ -2,15 +2,15 @@ package quickcheck;
 
 import java.io.IOException;
 
+import quickcheck.generator.TestType;
 import wycc.util.Logger;
 import wyfs.lang.Content;
 import wyfs.lang.Path;
 import wyfs.util.Trie;
 
 /**
- * FIXME
- * Reads a Wyil file, creating and executing
- * randomised tests for each function in the file.
+ * FIXME Doc QC
+ * Reads a Wyil file, creating and executing tests for each function in the file.
  * The tests uses the precondition
  * to select suitable candidate tests and validates 
  * the tests using the postcondition.
@@ -26,10 +26,10 @@ public class QuickCheck {
 	 * @param id
 	 * @throws IOException
 	 */
-	public static void execWyil(String dir, Path.ID id) throws IOException {
+	public static void execWyil(String dir, Path.ID id, TestType testType) throws IOException {
 		Content.Registry registry = new wyc.Activator.Registry();
 		RunTest cmd = new RunTest(registry,Logger.NULL);
-		cmd.execute(dir, id.toString());
+		cmd.execute(dir, id.toString(), testType.toString());
 	}
 	
 	/**
@@ -59,7 +59,15 @@ public class QuickCheck {
 			String filename = filepath.substring(lastSlash+1);
 			Path.ID id = extractPathID(filename);
 			filepath.lastIndexOf(filename);
-			execWyil(relativePath, id);
+			TestType testType = TestType.RANDOM;
+			if(args.length >= 2) {
+				String type = args[1];
+				if(type.equalsIgnoreCase("exhaustive")) {
+					 testType = TestType.EXHAUSTIVE;
+				}
+				// Default is random testing
+			}
+			execWyil(relativePath, id, testType);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

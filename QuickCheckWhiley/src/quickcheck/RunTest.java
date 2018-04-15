@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import quickcheck.generator.ExhaustiveGenerateTest;
 import quickcheck.generator.GenerateTest;
+import quickcheck.generator.TestType;
 import wybs.lang.Build;
 import wybs.lang.NameID;
 import wybs.util.StdProject;
@@ -29,7 +31,7 @@ import static wyc.lang.WhileyFile.*;
  * Responsible for implementing the command "<code>wy run ...</code>" which
  * loads the appropriate <code>wyil</code> file and executes tests 
  * for a given function/method using the <code>Interpreter</code>.
- * 
+ * 	
  * Based on wyc.Command.Run
  *
  * @author Janice Chin
@@ -78,12 +80,13 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 		try {
 			Build.Project project = createWhileyProject(args[0]);
 			Path.ID id = Trie.fromString(args[1]);
+			TestType testType = TestType.valueOf(args[2]);
 			List<Decl.Function> functions = getFunctions(id, project);
 			// Generate tests for each function
 			Interpreter interpreter = new Interpreter(project, System.out);
 			for(Decl.Function func : functions) {
 				// TODO set number of tests to execute?
-				executeTest(id, interpreter, func, 1);
+				executeTest(id, interpreter, func, testType, 11);
 			}
 			
 		} catch (IOException e) {
@@ -120,14 +123,21 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 	
 	/**
 	 * Test a function from a Wyil file
-	 * by executing the test with randomised paramters
+	 * by executing the test with randomised parameters
 	 * @param id The module used
 	 * @param interpreter Whiley interpreter used to execute the function/method
 	 * @param dec The function or method
+	 * @param testType The type of tests to generate
 	 * @param numTest The number of tests to execute
 	 */
-	private void executeTest(Path.ID id, Interpreter interpreter, Decl.FunctionOrMethod dec, int numTest) {
-		GenerateTest testGen = new GenerateTest(dec);
+	private void executeTest(Path.ID id, Interpreter interpreter, Decl.FunctionOrMethod dec, TestType testType, int numTest) {
+		GenerateTest testGen;
+		if(testType == TestType.EXHAUSTIVE) {
+			testGen = new ExhaustiveGenerateTest(dec, numTest);
+		}
+		else {
+			testGen = new GenerateTest(dec);
+		}
 		NameID name = new NameID(id, dec.getName().get());
 		Type.Callable type = dec.getType();
 		Tuple<Expr> preconditions = dec.getRequires();

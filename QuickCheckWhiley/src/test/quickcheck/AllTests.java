@@ -9,7 +9,8 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({ 
-	GenerateRandomTest.class
+	GenerateRandomTest.class,
+	GenerateExhaustiveTest.class
 })
 public class AllTests {
 }

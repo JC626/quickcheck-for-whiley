@@ -80,12 +80,12 @@
 Testing is an important process in software development as it helps detect the presence of bugs.
 However, writing and running tests can be tedious and costly. Furthermore, it is difficult to write tests for all possible cases and be able to detect all bugs.
 
-An automated test-case generator called QuickCheck was implemented in Haskell by Koen Claessen and John Hughes which alleviates these issues.
+An automated test-case generator as written in the called QuickCheck was implemented in Haskell by Koen Claessen and John Hughes \cite{QClightweight} which alleviates these issues.
 
 This lightweight tool employs two testing ideas.
 Firstly, QuickCheck uses property-based testing which uses conditions that will always hold true. Users define the conditions in terms of formal specifications to validate functions under test.
 
-Secondly, QuickCheck generates test cases automatically using random testing. Input values are randomly generated for each test (within a range) using generators that correspond to the input value's type. QuickCheck contains generators for most of Haskell's predefined types and for functions. It requires the developer to specify their own generators for user-defined types. 
+Secondly, QuickCheck generates test cases automatically using random testing. Input values are randomly generated for each test (within a range) using generators that correspond to the input value's type. QuickCheck contains generators for most of Haskell's predefined types and for functions. It requires the developer to specify their own generators for user-defined types \cite{QClightweight}. 
 
 An example of using QuickCheck would be reversing a list.
 
@@ -102,9 +102,9 @@ QuickCheck is then executed by importing the property and passing into the inter
 	Ok: passed 100 tests.
 \end{lstlisting}
 
-This will create a large number of test cases by using the user-defined property and random input values to check the property holds. QuickCheck reports various test statistics including the number of tests that have passed or failed.
+This will create a large number of test cases by using the user-defined property and random input values to check the property holds. QuickCheck reports various test statistics including the number of tests that have passed or failed \cite{QClightweight}.
 
-QuickCheck has been re-implemented in other languages including Scala, Java and C++. A commercial version of QuickCheck in Erlang called Quviq QuickCheck is co-founded by one of the original developers, John Hughes and is an extension of the original QuickCheck for Haskell.
+QuickCheck has been re-implemented in other languages including Scala, Java and C++. A commercial version of QuickCheck in Erlang called Quviq QuickCheck is co-founded by one of the original developers, John Hughes and is an extension of the original QuickCheck for Haskell \cite{QCFunProfit}.
 
 This project is about implementing an automated test-case generator for the programming language, Whiley based on the QuickCheck tool. 
 
@@ -126,7 +126,7 @@ This project is about implementing an automated test-case generator for the prog
 \section*{2. The Problem}
 Whiley is a programming language, developed to verify code and eliminate errors using formal specifications. 
 Ideally, programs written in Whiley should be error free.
-To achieve this goal, Whiley contains a verifying compiler which employs the use of specifications written by a developer to check for common errors such as accessing an index of an array which is outside its boundaries.
+To achieve this goal, Whiley contains a verifying compiler which employs the use of specifications written by a developer to check for common errors such as accessing an index of an array which is outside its boundaries \cite{WhileyLang}.
 
 Below is an example of a Whiley program with a function,  \texttt{min()} which finds the minimum value of two integers. This program prints out "The smallest integer is 3" when executed. 
 
@@ -317,7 +317,7 @@ No special resources are required. Only the use of the ECS laboratories is requi
 %\backmatter
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%\bibliographystyle{ieeetr}
+\bibliographystyle{ieeetr}
 %\bibliographystyle{acm}
-%\bibliography{sample}
+\bibliography{bib}
 \end{document}

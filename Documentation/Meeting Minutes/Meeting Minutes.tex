@@ -127,25 +127,34 @@ None
 	\item Function generation can be difficult. Can be inefficient if functions call other functions. Could just create return values for the functions that conform to the functions post-condition. However, need to consider tradeoff between performance and accuracy.
 \end{itemize}
 
-%\section{April 16th 2018}
-%\subsection{Present}
-%\begin{itemize}
-%	\item David Pearce
-%\end{itemize}
-%
-%\subsection{Action points were achieved since the last meeting}
-%\subsection{Action points have yet to be achieved since the last meeting}
-%\subsection{Action points were agreed to for the next meeting}
-%
-%\subsection{Discussion Points}
-%\begin{itemize}
-%	\item Should test generation only work for functions that have Whiley program specifications? (Probably a yes)
-%\item Does Whiley throw errors/exceptions during run-time? If so, how should my tests handle this?
-%\item Should I use the logger interface (wycc.util) for displaying test statistics?
-%\item For functions/methods with no post-condition, should I only run one test (to ensure the code can be executed)?
-%\item Is it possible to get the specific postcondition that failed? I was thinking of displaying the postcondition that failed to the user.
-%\end{itemize}
+\section{April 16th 2018}
+\subsection{Present}
+\begin{itemize}
+	\item David Pearce
+\end{itemize}
 
+\subsection{Action points were achieved since the last meeting}
+	\begin{itemize}
+		\item Implemented exhaustive test generation for booleans and integers.
+		\item Started background survey but have not done much of this.
+	\end{itemize}
+
+\subsection{Action points have yet to be achieved since the last meeting}
+Background survey for preliminary report
+\subsection{Action points were agreed to for the next meeting}
+\begin{itemize}
+	\item Array, record and nominal generation
+\end{itemize}
+
+\subsection{Discussion Points}
+\begin{itemize}
+	\item Nominal types. Look at NameResolver and Flowtype checker. Ignore constraints when generating the tests. Like type synonyms.
+	\item Bounded random state space. Selecting n samples, using basic probability across the state space.
+	\item Arrays should be limited by its array size. This should be a constant upper limit. Random generation of elements. The arrays takes a generator element.
+	\item Records. Print name of the field. Don't know field names of \texttt{...}. This generates n number of fields.
+	\item Recursive types. Need to know if the type is recursive. Infinite data type e.g. binary tree. Limit it like an array. Cyclic generators? e.g. type list is \{int data, null | List next \}
+	\item Integer range paper -> For figuring out ranges to use during generation.
+\end{itemize}
 
 %\section{ 2018}
 %\subsection{Present}
@@ -159,6 +168,24 @@ None
 %
 %\subsection{Discussion Points}
 %\begin{itemize}
+%	\item Should test generation only work for functions that have Whiley program specifications? (Probably a yes)
+%	\item Does Whiley throw errors/exceptions during run-time? If so, how should my tests handle this?
+%	\item For functions/methods with no post-condition, should I only run one test (to ensure the code can be executed)?
+%\end{itemize}
+
+%\section{ 2018}
+%\subsection{Present}
+%\begin{itemize}
+%	\item David Pearce
+%\end{itemize}
+%
+%\subsection{Action points were achieved since the last meeting}
+%\subsection{Action points have yet to be achieved since the last meeting}
+%\subsection{Action points were agreed to for the next meeting}
+%
+%\subsection{Discussion Points}
+%\begin{itemize}
+
 %\end{itemize}
 
 

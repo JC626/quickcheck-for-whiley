@@ -29,30 +29,29 @@ public class RandomGenerateTest implements GenerateTest{
 	 */
 	private Decl.FunctionOrMethod dec;
 	
-	private Map<String, Object> keywordArgs;
-
 	/**
 	 *  A list of generators, each corresponding to a parameter in the function/method
 	 */
 	private List<Generator> parameterGenerators;
 	
-	// TODO Need to be able to pass multiple arguments? For limits on Integer generators etc?
-	public RandomGenerateTest(FunctionOrMethod dec, Map<String, Object> keywordArgs) {
+	private BigInteger lowerLimit;
+	private BigInteger upperLimit;
+	
+	public RandomGenerateTest(FunctionOrMethod dec, BigInteger lowerLimit, BigInteger upperLimit) {
 		super();
 		this.dec = dec;
-		this.keywordArgs = keywordArgs;
+		this.lowerLimit = lowerLimit;
+		this.upperLimit = upperLimit;
 		this.parameterGenerators = new ArrayList<Generator>();
 		createGenerators();
 	}	
 	
-	protected void createGenerators() {
+	private void createGenerators() {
 		// TODO get the generators for each parameter type
 		for(Variable var : this.dec.getParameters()) {
 			WhileyFile.Type paramType = var.getType();
 			if(paramType instanceof WhileyFile.Type.Int) {
-				String upperLimit = keywordArgs.get("upperLimit").toString();
-				String lowerLimit = keywordArgs.get("lowerLimit").toString();
-				this.parameterGenerators.add(new IntegerGenerator(TestType.RANDOM, new BigInteger(lowerLimit), new BigInteger(upperLimit)));
+				this.parameterGenerators.add(new IntegerGenerator(TestType.RANDOM, lowerLimit, upperLimit));
 			}
 			else if(paramType instanceof WhileyFile.Type.Bool) {
 				this.parameterGenerators.add(new BooleanGenerator(TestType.RANDOM));

@@ -32,17 +32,10 @@ public class ExhaustiveGenerateTest implements GenerateTest{
 	 */
 	private Decl.FunctionOrMethod dec;
 	
-	private Map<String, Object> keywordArgs;
-
 	/**
 	 *  A list of generators, each corresponding to a parameter in the function/method
 	 */
 	private List<Generator> parameterGenerators;
-	
-	private BigInteger totalCombinations;
-	private int numTested;
-	private int numTests; // Default number of tests to run
-	private boolean allTests;
 	/**
 	 * The last parameters used to create a test
 	 */
@@ -51,11 +44,20 @@ public class ExhaustiveGenerateTest implements GenerateTest{
 	 * Stores the generators used in an iterative manner.
 	 */
 	private Stack<Generator> stack;
+	
+	private BigInteger totalCombinations;
+	private int numTested;
+	private int numTests; // Default number of tests to run
+	private boolean allTests;
+	
+	private BigInteger lowerLimit;
+	private BigInteger upperLimit;
 
 	
-	public ExhaustiveGenerateTest(FunctionOrMethod dec, Map<String, Object> keywordArgs, int numTests) {
+	public ExhaustiveGenerateTest(FunctionOrMethod dec, int numTests, BigInteger lowerLimit, BigInteger upperLimit) {
 		this.dec = dec;
-		this.keywordArgs = keywordArgs;
+		this.lowerLimit = lowerLimit;
+		this.upperLimit = upperLimit;
 		this.parameterGenerators = new ArrayList<Generator>();
 		this.numTests = numTests;
 		createGenerators();
@@ -69,12 +71,8 @@ public class ExhaustiveGenerateTest implements GenerateTest{
 		for(Variable var : dec.getParameters()) {
 			WhileyFile.Type paramType = var.getType();
 			if(paramType instanceof WhileyFile.Type.Int) {
-				String upperLimit = keywordArgs.get("upperLimit").toString();
-				String lowerLimit = keywordArgs.get("lowerLimit").toString();
-				BigInteger upper = new BigInteger(upperLimit);
-				BigInteger lower = new BigInteger(lowerLimit);
-				parameterGenerators.add(new IntegerGenerator(TestType.EXHAUSTIVE, lower, upper));
-				numCombinations.multiply(upper.subtract(lower));
+				parameterGenerators.add(new IntegerGenerator(TestType.EXHAUSTIVE, lowerLimit, upperLimit));
+				numCombinations.multiply(upperLimit.subtract(lowerLimit));
 			}
 			else if(paramType instanceof WhileyFile.Type.Bool) {
 				parameterGenerators.add(new BooleanGenerator(TestType.EXHAUSTIVE));

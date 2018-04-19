@@ -2,11 +2,14 @@ package test.quickcheck;
 
 import static org.junit.Assert.*;
 
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Test;
 
+import quickcheck.generator.ExhaustiveGenerateTest;
+import quickcheck.generator.GenerateTest;
 import quickcheck.generator.RandomGenerateTest;
 import wybs.util.AbstractCompilationUnit.Identifier;
 import wybs.util.AbstractCompilationUnit.Tuple;
@@ -32,7 +35,9 @@ public class GenerateRandomTest {
 		Map<String, Object> generatorArgs = new HashMap<String, Object>();
 		generatorArgs.put("upperLimit", "10");
 		generatorArgs.put("lowerLimit", "-10");
-		RandomGenerateTest testGen = new RandomGenerateTest(func, generatorArgs);
+		BigInteger lower = BigInteger.valueOf(-10);
+		BigInteger upper = BigInteger.valueOf(10);
+		GenerateTest testGen = new RandomGenerateTest(func, lower, upper);
 		assertArrayEquals(new RValue[0], testGen.generateParameters());
 	}
 	
@@ -44,10 +49,9 @@ public class GenerateRandomTest {
 		Decl.Variable intParam = new Decl.Variable(null, new Identifier("firstInt"), Type.Int);
 		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(intParam);
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
-		Map<String, Object> generatorArgs = new HashMap<String, Object>();
-		generatorArgs.put("upperLimit", "10");
-		generatorArgs.put("lowerLimit", "-10");
-		RandomGenerateTest testGen = new RandomGenerateTest(func, generatorArgs);
+		BigInteger lower = BigInteger.valueOf(-10);
+		BigInteger upper = BigInteger.valueOf(10);
+		GenerateTest testGen = new RandomGenerateTest(func, lower, upper);
 		RValue[] generatedParameters = testGen.generateParameters();
 		assertEquals(1, generatedParameters.length);
 		assertTrue(generatedParameters[0] instanceof RValue.Int);
@@ -64,10 +68,9 @@ public class GenerateRandomTest {
 
 		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(intOne, intTwo, intThree);
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
-		Map<String, Object> generatorArgs = new HashMap<String, Object>();
-		generatorArgs.put("upperLimit", "10");
-		generatorArgs.put("lowerLimit", "-10");
-		RandomGenerateTest testGen = new RandomGenerateTest(func, generatorArgs);
+		BigInteger lower = BigInteger.valueOf(-10);
+		BigInteger upper = BigInteger.valueOf(10);
+		GenerateTest testGen = new RandomGenerateTest(func, lower, upper);
 		RValue[] generatedParameters = testGen.generateParameters();
 		assertEquals(3, generatedParameters.length);
 		assertTrue(generatedParameters[0] instanceof RValue.Int);
@@ -83,10 +86,9 @@ public class GenerateRandomTest {
 		Decl.Variable boolParam = new Decl.Variable(null, new Identifier("firstBool"), Type.Bool);
 		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(boolParam);
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
-		Map<String, Object> generatorArgs = new HashMap<String, Object>();
-		generatorArgs.put("upperLimit", "10");
-		generatorArgs.put("lowerLimit", "-10");
-		RandomGenerateTest testGen = new RandomGenerateTest(func, generatorArgs);
+		BigInteger lower = BigInteger.valueOf(-10);
+		BigInteger upper = BigInteger.valueOf(10);
+		GenerateTest testGen = new RandomGenerateTest(func, lower, upper);
 		RValue[] generatedParameters = testGen.generateParameters();
 		assertEquals(1, generatedParameters.length);
 		assertTrue(generatedParameters[0] instanceof RValue.Bool);
@@ -104,9 +106,9 @@ public class GenerateRandomTest {
 		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(boolOne, boolTwo, boolThree);
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
 		Map<String, Object> generatorArgs = new HashMap<String, Object>();
-		generatorArgs.put("upperLimit", "10");
-		generatorArgs.put("lowerLimit", "-10");
-		RandomGenerateTest testGen = new RandomGenerateTest(func, generatorArgs);
+		BigInteger lower = BigInteger.valueOf(-10);
+		BigInteger upper = BigInteger.valueOf(10);
+		GenerateTest testGen = new RandomGenerateTest(func, lower, upper);
 		RValue[] generatedParameters = testGen.generateParameters();
 		assertEquals(3, generatedParameters.length);
 		assertTrue(generatedParameters[0] instanceof RValue.Bool);
@@ -125,9 +127,9 @@ public class GenerateRandomTest {
 		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(intParam, boolParam);
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
 		Map<String, Object> generatorArgs = new HashMap<String, Object>();
-		generatorArgs.put("upperLimit", "10");
-		generatorArgs.put("lowerLimit", "-10");
-		RandomGenerateTest testGen = new RandomGenerateTest(func, generatorArgs);
+		BigInteger lower = BigInteger.valueOf(-10);
+		BigInteger upper = BigInteger.valueOf(10);
+		GenerateTest testGen = new RandomGenerateTest(func, lower, upper);
 		RValue[] generatedParameters = testGen.generateParameters();
 		assertEquals(2, generatedParameters.length);
 		assertTrue(generatedParameters[0] instanceof RValue.Int);

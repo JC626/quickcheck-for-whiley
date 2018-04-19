@@ -3,7 +3,6 @@ package quickcheck.generator;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import quickcheck.generator.type.BooleanGenerator;
 import quickcheck.generator.type.Generator;

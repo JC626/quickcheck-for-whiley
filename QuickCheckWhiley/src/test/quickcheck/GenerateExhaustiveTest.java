@@ -3,9 +3,6 @@ package test.quickcheck;
 import static org.junit.Assert.*;
 
 import java.math.BigInteger;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.junit.Test;
 
@@ -20,7 +17,9 @@ import wyil.interpreter.ConcreteSemantics;
 import wyil.interpreter.ConcreteSemantics.RValue;
 
 /**
- * Test for the exhaustive test generation
+ * Test the exhaustive test generation
+ * for generating all combinations of possible input data.
+ * 
  * @author Janice Chin
  *
  */

@@ -4,9 +4,7 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import quickcheck.generator.ExhaustiveGenerateTest;
 import quickcheck.generator.GenerateTest;
@@ -145,8 +143,6 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 	 * @param upperLimit The upper constraint used when generating integers
 	 */
 	private void executeTest(Path.ID id, Interpreter interpreter, Decl.FunctionOrMethod dec, TestType testType, int numTest, String lowerLimit, String upperLimit) {
-		// Set extra arguments to use in the function
-		Map<String, Object> generatorArgs = new HashMap<String, Object>();
 		GenerateTest testGen;
 		BigInteger lower = new BigInteger(lowerLimit);
 		BigInteger upper = new BigInteger(upperLimit);

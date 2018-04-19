@@ -8,7 +8,6 @@ import java.util.Map;
 
 import org.junit.Test;
 
-import quickcheck.generator.ExhaustiveGenerateTest;
 import quickcheck.generator.GenerateTest;
 import quickcheck.generator.RandomGenerateTest;
 import wybs.util.AbstractCompilationUnit.Identifier;
@@ -19,7 +18,9 @@ import wyc.lang.WhileyFile.Decl.Function;
 import wyil.interpreter.ConcreteSemantics.RValue;
 
 /**
- * Test the GenerateTest class
+ * Test the random test generation
+ * for generating random test data.
+ * 
  * @author Janice Chin
  *
  */
@@ -105,7 +106,6 @@ public class GenerateRandomTest {
 
 		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(boolOne, boolTwo, boolThree);
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
-		Map<String, Object> generatorArgs = new HashMap<String, Object>();
 		BigInteger lower = BigInteger.valueOf(-10);
 		BigInteger upper = BigInteger.valueOf(10);
 		GenerateTest testGen = new RandomGenerateTest(func, lower, upper);
@@ -126,7 +126,6 @@ public class GenerateRandomTest {
 		Decl.Variable boolParam = new Decl.Variable(null, new Identifier("secBool"), Type.Bool);
 		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(intParam, boolParam);
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
-		Map<String, Object> generatorArgs = new HashMap<String, Object>();
 		BigInteger lower = BigInteger.valueOf(-10);
 		BigInteger upper = BigInteger.valueOf(10);
 		GenerateTest testGen = new RandomGenerateTest(func, lower, upper);

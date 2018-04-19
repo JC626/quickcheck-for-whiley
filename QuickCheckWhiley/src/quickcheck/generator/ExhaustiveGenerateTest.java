@@ -63,11 +63,11 @@ public class ExhaustiveGenerateTest extends GenerateTest{
 				String lowerLimit = getKeywordArgs().get("lowerLimit").toString();
 				BigInteger upper = new BigInteger(upperLimit);
 				BigInteger lower = new BigInteger(lowerLimit);
-				parameterGenerators.add(new Generator.IntegerGenerator(TestType.EXHAUSTIVE, lower, upper));
+				parameterGenerators.add(new IntegerGenerator(TestType.EXHAUSTIVE, lower, upper));
 				numCombinations.multiply(upper.subtract(lower));
 			}
 			else if(paramType instanceof WhileyFile.Type.Bool) {
-				parameterGenerators.add(new Generator.BooleanGenerator(TestType.EXHAUSTIVE));
+				parameterGenerators.add(new BooleanGenerator(TestType.EXHAUSTIVE));
 				numCombinations.multiply(BigInteger.valueOf(2));
 			}
 		}

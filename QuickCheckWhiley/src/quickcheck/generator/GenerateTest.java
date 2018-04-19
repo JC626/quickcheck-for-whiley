@@ -49,10 +49,10 @@ public class GenerateTest {
 			if(paramType instanceof WhileyFile.Type.Int) {
 				String upperLimit = keywordArgs.get("upperLimit").toString();
 				String lowerLimit = keywordArgs.get("lowerLimit").toString();
-				this.parameterGenerators.add(new Generator.IntegerGenerator(TestType.RANDOM, new BigInteger(lowerLimit), new BigInteger(upperLimit)));
+				this.parameterGenerators.add(new IntegerGenerator(TestType.RANDOM, new BigInteger(lowerLimit), new BigInteger(upperLimit)));
 			}
 			else if(paramType instanceof WhileyFile.Type.Bool) {
-				this.parameterGenerators.add(new Generator.BooleanGenerator(TestType.RANDOM));
+				this.parameterGenerators.add(new BooleanGenerator(TestType.RANDOM));
 			}
 //			else if(paramType instanceof WhileyFile.Type.Array) {
 //				WhileyFile.Type arrEle = ((WhileyFile.Type.Array) paramType).getElement();
@@ -100,6 +100,4 @@ public class GenerateTest {
 		return keywordArgs;
 	}
 	
-	
-
 }

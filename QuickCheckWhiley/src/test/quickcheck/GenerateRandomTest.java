@@ -7,7 +7,7 @@ import java.util.Map;
 
 import org.junit.Test;
 
-import quickcheck.generator.GenerateTest;
+import quickcheck.generator.RandomGenerateTest;
 import wybs.util.AbstractCompilationUnit.Identifier;
 import wybs.util.AbstractCompilationUnit.Tuple;
 import wyc.lang.WhileyFile.Decl;
@@ -32,7 +32,7 @@ public class GenerateRandomTest {
 		Map<String, Object> generatorArgs = new HashMap<String, Object>();
 		generatorArgs.put("upperLimit", "10");
 		generatorArgs.put("lowerLimit", "-10");
-		GenerateTest testGen = new GenerateTest(func, generatorArgs);
+		RandomGenerateTest testGen = new RandomGenerateTest(func, generatorArgs);
 		assertArrayEquals(new RValue[0], testGen.generateParameters());
 	}
 	
@@ -47,7 +47,7 @@ public class GenerateRandomTest {
 		Map<String, Object> generatorArgs = new HashMap<String, Object>();
 		generatorArgs.put("upperLimit", "10");
 		generatorArgs.put("lowerLimit", "-10");
-		GenerateTest testGen = new GenerateTest(func, generatorArgs);
+		RandomGenerateTest testGen = new RandomGenerateTest(func, generatorArgs);
 		RValue[] generatedParameters = testGen.generateParameters();
 		assertEquals(1, generatedParameters.length);
 		assertTrue(generatedParameters[0] instanceof RValue.Int);
@@ -67,7 +67,7 @@ public class GenerateRandomTest {
 		Map<String, Object> generatorArgs = new HashMap<String, Object>();
 		generatorArgs.put("upperLimit", "10");
 		generatorArgs.put("lowerLimit", "-10");
-		GenerateTest testGen = new GenerateTest(func, generatorArgs);
+		RandomGenerateTest testGen = new RandomGenerateTest(func, generatorArgs);
 		RValue[] generatedParameters = testGen.generateParameters();
 		assertEquals(3, generatedParameters.length);
 		assertTrue(generatedParameters[0] instanceof RValue.Int);
@@ -86,7 +86,7 @@ public class GenerateRandomTest {
 		Map<String, Object> generatorArgs = new HashMap<String, Object>();
 		generatorArgs.put("upperLimit", "10");
 		generatorArgs.put("lowerLimit", "-10");
-		GenerateTest testGen = new GenerateTest(func, generatorArgs);
+		RandomGenerateTest testGen = new RandomGenerateTest(func, generatorArgs);
 		RValue[] generatedParameters = testGen.generateParameters();
 		assertEquals(1, generatedParameters.length);
 		assertTrue(generatedParameters[0] instanceof RValue.Bool);
@@ -106,7 +106,7 @@ public class GenerateRandomTest {
 		Map<String, Object> generatorArgs = new HashMap<String, Object>();
 		generatorArgs.put("upperLimit", "10");
 		generatorArgs.put("lowerLimit", "-10");
-		GenerateTest testGen = new GenerateTest(func, generatorArgs);
+		RandomGenerateTest testGen = new RandomGenerateTest(func, generatorArgs);
 		RValue[] generatedParameters = testGen.generateParameters();
 		assertEquals(3, generatedParameters.length);
 		assertTrue(generatedParameters[0] instanceof RValue.Bool);
@@ -127,7 +127,7 @@ public class GenerateRandomTest {
 		Map<String, Object> generatorArgs = new HashMap<String, Object>();
 		generatorArgs.put("upperLimit", "10");
 		generatorArgs.put("lowerLimit", "-10");
-		GenerateTest testGen = new GenerateTest(func, generatorArgs);
+		RandomGenerateTest testGen = new RandomGenerateTest(func, generatorArgs);
 		RValue[] generatedParameters = testGen.generateParameters();
 		assertEquals(2, generatedParameters.length);
 		assertTrue(generatedParameters[0] instanceof RValue.Int);

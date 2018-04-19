@@ -22,7 +22,7 @@ import wyil.interpreter.ConcreteSemantics.RValue;
  * @author Janice Chin
  *
  */
-public class GenerateTest {
+public class RandomGenerateTest implements GenerateTest{
 	
 	/**
 	 * The function/method we want to test
@@ -35,9 +35,9 @@ public class GenerateTest {
 	 *  A list of generators, each corresponding to a parameter in the function/method
 	 */
 	private List<Generator> parameterGenerators;
-
+	
 	// TODO Need to be able to pass multiple arguments? For limits on Integer generators etc?
-	public GenerateTest(FunctionOrMethod dec, Map<String, Object> keywordArgs) {
+	public RandomGenerateTest(FunctionOrMethod dec, Map<String, Object> keywordArgs) {
 		super();
 		this.dec = dec;
 		this.keywordArgs = keywordArgs;
@@ -64,10 +64,7 @@ public class GenerateTest {
 		}
 	}
 	
-	/**
-	 * Generate parameters to be used as a single test for the function.
-	 * @return The parameters for the function.
-	 */
+	@Override
 	public RValue[] generateParameters() {
 		// Iterate through the generators to generate the parameters
 		RValue[] parameters = new RValue[parameterGenerators.size()];
@@ -75,32 +72,6 @@ public class GenerateTest {
 			parameters[i] = parameterGenerators.get(i).generate();
 		}
 		return parameters;
-	}
-	
-	// Getters
-	
-	/**
-	 * Get the function/method used for generating the tests
-	 * @return Function/Method
-	 */
-	public Decl.FunctionOrMethod getDec() {
-		return dec;
-	}
-	
-	/**
-	 * Get the generators used for generating test data
-	 * @return Generators corresponding to each parameter type in the function/method
-	 */
-	public List<Generator> getParameterGenerators() {
-		return parameterGenerators;
-	}
-
-	/**
-	 * Get the extra arguments used within the generator
-	 * @return Extra arguments needed to generate tests
-	 */
-	public Map getKeywordArgs() {
-		return keywordArgs;
 	}
 	
 }

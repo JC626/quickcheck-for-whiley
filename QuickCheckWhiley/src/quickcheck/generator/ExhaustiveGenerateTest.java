@@ -1,6 +1,7 @@
 package quickcheck.generator;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
@@ -10,6 +11,7 @@ import quickcheck.generator.type.Generator;
 import quickcheck.generator.type.IntegerGenerator;
 import quickcheck.util.TestType;
 import wyc.lang.WhileyFile;
+import wyc.lang.WhileyFile.Decl;
 import wyc.lang.WhileyFile.Decl.FunctionOrMethod;
 import wyc.lang.WhileyFile.Decl.Variable;
 import wyil.interpreter.ConcreteSemantics.RValue;
@@ -24,7 +26,19 @@ import wyil.interpreter.ConcreteSemantics.RValue;
  * @author Janice Chin
  *
  */
-public class ExhaustiveGenerateTest extends GenerateTest{
+public class ExhaustiveGenerateTest implements GenerateTest{
+	/**
+	 * The function/method we want to test
+	 */
+	private Decl.FunctionOrMethod dec;
+	
+	private Map<String, Object> keywordArgs;
+
+	/**
+	 *  A list of generators, each corresponding to a parameter in the function/method
+	 */
+	private List<Generator> parameterGenerators;
+	
 	private BigInteger totalCombinations;
 	private int numTested;
 	private int numTests; // Default number of tests to run
@@ -37,34 +51,26 @@ public class ExhaustiveGenerateTest extends GenerateTest{
 	 * Stores the generators used in an iterative manner.
 	 */
 	private Stack<Generator> stack;
-	
-	
-	
-	public ExhaustiveGenerateTest(FunctionOrMethod dec, Map<String, Object> keywordArgs) {
-		super(dec, keywordArgs);
-		this.numTests = 10;
-		this.allTests = totalCombinations.compareTo(BigInteger.valueOf(numTests)) != 1;
-		stack = new Stack<Generator>();	
-	}
 
 	
 	public ExhaustiveGenerateTest(FunctionOrMethod dec, Map<String, Object> keywordArgs, int numTests) {
-		super(dec, keywordArgs);
+		this.dec = dec;
+		this.keywordArgs = keywordArgs;
+		this.parameterGenerators = new ArrayList<Generator>();
 		this.numTests = numTests;
+		createGenerators();
 		this.allTests = totalCombinations.compareTo(BigInteger.valueOf(numTests)) != 1;
 		stack = new Stack<Generator>();
 	}
 
-	@Override
 	protected void createGenerators() {
 		// TODO get the generators for each parameter type
 		BigInteger numCombinations = BigInteger.valueOf(1);
-		List<Generator> parameterGenerators = getParameterGenerators();
-		for(Variable var : getDec().getParameters()) {
+		for(Variable var : dec.getParameters()) {
 			WhileyFile.Type paramType = var.getType();
 			if(paramType instanceof WhileyFile.Type.Int) {
-				String upperLimit = getKeywordArgs().get("upperLimit").toString();
-				String lowerLimit = getKeywordArgs().get("lowerLimit").toString();
+				String upperLimit = keywordArgs.get("upperLimit").toString();
+				String lowerLimit = keywordArgs.get("lowerLimit").toString();
 				BigInteger upper = new BigInteger(upperLimit);
 				BigInteger lower = new BigInteger(lowerLimit);
 				parameterGenerators.add(new IntegerGenerator(TestType.EXHAUSTIVE, lower, upper));
@@ -88,7 +94,6 @@ public class ExhaustiveGenerateTest extends GenerateTest{
 	public RValue[] generateParameters() {
 		// Brute force generate parameters, iteratively 
 		// Keep the previous state
-		List<Generator> parameterGenerators = getParameterGenerators();
 		// Iterate through the generators to generate the parameters
 		if(parameters.length == 0){
 			return parameters;

@@ -9,6 +9,7 @@ import java.util.Map;
 
 import quickcheck.generator.ExhaustiveGenerateTest;
 import quickcheck.generator.GenerateTest;
+import quickcheck.generator.RandomGenerateTest;
 import quickcheck.util.TestType;
 import wybs.lang.Build;
 import wybs.lang.NameID;
@@ -152,7 +153,7 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 			testGen = new ExhaustiveGenerateTest(dec, generatorArgs, numTest);
 		}
 		else {
-			testGen = new GenerateTest(dec, generatorArgs);
+			testGen = new RandomGenerateTest(dec, generatorArgs);
 		}
 		NameID name = new NameID(id, dec.getName().get());
 		Type.Callable type = dec.getType();

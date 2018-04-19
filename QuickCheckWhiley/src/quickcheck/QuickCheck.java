@@ -1,6 +1,6 @@
 package quickcheck;
 
-import quickcheck.generator.TestType;
+import quickcheck.util.TestType;
 import wycc.util.Logger;
 import wyfs.lang.Content;
 import wyfs.lang.Path;

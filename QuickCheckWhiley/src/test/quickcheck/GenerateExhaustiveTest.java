@@ -3,15 +3,11 @@ package test.quickcheck;
 import static org.junit.Assert.*;
 
 import java.math.BigInteger;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.junit.Test;
 
 import quickcheck.generator.ExhaustiveGenerateTest;
 import quickcheck.generator.GenerateTest;
-import quickcheck.generator.Generator;
 import wybs.util.AbstractCompilationUnit.Identifier;
 import wybs.util.AbstractCompilationUnit.Tuple;
 import wyc.lang.WhileyFile.Decl;
@@ -21,7 +17,9 @@ import wyil.interpreter.ConcreteSemantics;
 import wyil.interpreter.ConcreteSemantics.RValue;
 
 /**
- * Test for the exhaustive test generation
+ * Test the exhaustive test generation
+ * for generating all combinations of possible input data.
+ * 
  * @author Janice Chin
  *
  */
@@ -35,10 +33,9 @@ public class GenerateExhaustiveTest {
 	public void testFunctionNoParameters() {
 		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>();
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
-		Map<String, Object> generatorArgs = new HashMap<String, Object>();
-		generatorArgs.put("lowerLimit", "-10");
-		generatorArgs.put("upperLimit", "10");
-		GenerateTest testGen = new ExhaustiveGenerateTest(func, generatorArgs);
+		BigInteger lower = BigInteger.valueOf(-10);
+		BigInteger upper = BigInteger.valueOf(10);
+		GenerateTest testGen = new ExhaustiveGenerateTest(func, 10, lower, upper);
 		assertArrayEquals(new RValue[0], testGen.generateParameters());
 	}
 	
@@ -50,10 +47,9 @@ public class GenerateExhaustiveTest {
 		Decl.Variable intParam = new Decl.Variable(null, new Identifier("firstInt"), Type.Int);
 		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(intParam);
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
-		Map<String, Object> generatorArgs = new HashMap<String, Object>();
-		generatorArgs.put("lowerLimit", "-2");
-		generatorArgs.put("upperLimit", "4");
-		GenerateTest testGen = new ExhaustiveGenerateTest(func, generatorArgs);
+		BigInteger lower = BigInteger.valueOf(-2);
+		BigInteger upper = BigInteger.valueOf(4);
+		GenerateTest testGen = new ExhaustiveGenerateTest(func, 10, lower, upper);
 		for(int i=-2; i <= 3; i++) {
 			RValue[] generatedParameters = testGen.generateParameters();
 			assertEquals(1, generatedParameters.length);
@@ -73,10 +69,9 @@ public class GenerateExhaustiveTest {
 
 		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(intOne, intTwo, intThree);
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
-		Map<String, Object> generatorArgs = new HashMap<String, Object>();
-		generatorArgs.put("lowerLimit", "-2");
-		generatorArgs.put("upperLimit", "4");
-		GenerateTest testGen = new ExhaustiveGenerateTest(func, generatorArgs, 18);
+		BigInteger lower = BigInteger.valueOf(-2);
+		BigInteger upper = BigInteger.valueOf(4);
+		GenerateTest testGen = new ExhaustiveGenerateTest(func, 18, lower, upper);
 		for(int i=-2; i <= 3; i++) {
 			for(int j=-2; j <= 3; j++) {
 				for(int k=-2; k <= 3; k++) {
@@ -98,10 +93,9 @@ public class GenerateExhaustiveTest {
 		Decl.Variable boolParam = new Decl.Variable(null, new Identifier("firstBool"), Type.Bool);
 		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(boolParam);
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
-		Map<String, Object> generatorArgs = new HashMap<String, Object>();
-		generatorArgs.put("lowerLimit", "-5");
-		generatorArgs.put("upperLimit", "5");
-		GenerateTest testGen = new ExhaustiveGenerateTest(func, generatorArgs, 2);
+		BigInteger lower = BigInteger.valueOf(-5);
+		BigInteger upper = BigInteger.valueOf(5);
+		GenerateTest testGen = new ExhaustiveGenerateTest(func, 5, lower, upper);
 		RValue[] generatedParameters = testGen.generateParameters();
 		assertEquals(1, generatedParameters.length);
 		assertEquals(semantics.Bool(true), generatedParameters[0]);
@@ -122,10 +116,9 @@ public class GenerateExhaustiveTest {
 
 		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(boolOne, boolTwo, boolThree);
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
-		Map<String, Object> generatorArgs = new HashMap<String, Object>();
-		generatorArgs.put("lowerLimit", "-5");
-		generatorArgs.put("upperLimit", "5");
-		GenerateTest testGen = new ExhaustiveGenerateTest(func, generatorArgs);
+		BigInteger lower = BigInteger.valueOf(-5);
+		BigInteger upper = BigInteger.valueOf(5);
+		GenerateTest testGen = new ExhaustiveGenerateTest(func, 10, lower, upper);
 		for(int i=0; i <= 1; i++) {
 			for(int j=0; j <= 1; j++) {
 				for(int k=0; k <= 1; k++) {
@@ -148,10 +141,9 @@ public class GenerateExhaustiveTest {
 		Decl.Variable boolParam = new Decl.Variable(null, new Identifier("secBool"), Type.Bool);
 		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(intParam, boolParam);
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
-		Map<String, Object> generatorArgs = new HashMap<String, Object>();
-		generatorArgs.put("lowerLimit", "-2");
-		generatorArgs.put("upperLimit", "4");
-		GenerateTest testGen = new ExhaustiveGenerateTest(func, generatorArgs);
+		BigInteger lower = BigInteger.valueOf(-2);
+		BigInteger upper = BigInteger.valueOf(4);
+		GenerateTest testGen = new ExhaustiveGenerateTest(func, 10, lower, upper);
 		for(int i=-2; i <= 3; i++) {
 			for(int j=0; j <= 1; j++) {
 				RValue[] generatedParameters = testGen.generateParameters();
@@ -163,7 +155,7 @@ public class GenerateExhaustiveTest {
 		// Switch the parameters around
 		parameters = new Tuple<Decl.Variable>(boolParam, intParam);
 		func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
-		testGen = new ExhaustiveGenerateTest(func, generatorArgs);
+		testGen = new ExhaustiveGenerateTest(func, 10, lower, upper);
 		for(int i=0; i <= 1; i++) {
 			for(int j=-2; j <= 3; j++) {
 				RValue[] generatedParameters = testGen.generateParameters();

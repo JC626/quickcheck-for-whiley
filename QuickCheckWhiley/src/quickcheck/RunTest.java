@@ -1,15 +1,15 @@
 package quickcheck;
 
 import java.io.IOException;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import quickcheck.generator.ExhaustiveGenerateTest;
 import quickcheck.generator.GenerateTest;
-import quickcheck.generator.TestType;
+import quickcheck.generator.RandomGenerateTest;
+import quickcheck.util.TestType;
 import wybs.lang.Build;
 import wybs.lang.NameID;
 import wybs.util.StdProject;
@@ -143,16 +143,14 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 	 * @param upperLimit The upper constraint used when generating integers
 	 */
 	private void executeTest(Path.ID id, Interpreter interpreter, Decl.FunctionOrMethod dec, TestType testType, int numTest, String lowerLimit, String upperLimit) {
-		// Set extra arguments to use in the function
-		Map<String, Object> generatorArgs = new HashMap<String, Object>();
-		generatorArgs.put("upperLimit", upperLimit);
-		generatorArgs.put("lowerLimit", lowerLimit);
 		GenerateTest testGen;
+		BigInteger lower = new BigInteger(lowerLimit);
+		BigInteger upper = new BigInteger(upperLimit);
 		if(testType == TestType.EXHAUSTIVE) {
-			testGen = new ExhaustiveGenerateTest(dec, generatorArgs, numTest);
+			testGen = new ExhaustiveGenerateTest(dec, numTest, lower, upper);
 		}
 		else {
-			testGen = new GenerateTest(dec, generatorArgs);
+			testGen = new RandomGenerateTest(dec, lower, upper);
 		}
 		NameID name = new NameID(id, dec.getName().get());
 		Type.Callable type = dec.getType();

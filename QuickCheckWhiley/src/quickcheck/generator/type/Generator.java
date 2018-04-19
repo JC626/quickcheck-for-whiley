@@ -1,4 +1,4 @@
-package quickcheck.generator;
+package quickcheck.generator.type;
 
 import wyil.interpreter.ConcreteSemantics.RValue;
 

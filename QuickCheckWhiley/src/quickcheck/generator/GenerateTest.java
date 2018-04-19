@@ -5,7 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import quickcheck.generator.Generator;
+import quickcheck.generator.type.BooleanGenerator;
+import quickcheck.generator.type.Generator;
+import quickcheck.generator.type.IntegerGenerator;
+import quickcheck.util.TestType;
 import wyc.lang.WhileyFile;
 import wyc.lang.WhileyFile.Decl;
 import wyc.lang.WhileyFile.Decl.FunctionOrMethod;

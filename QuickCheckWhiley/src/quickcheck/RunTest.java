@@ -9,7 +9,7 @@ import java.util.Map;
 
 import quickcheck.generator.ExhaustiveGenerateTest;
 import quickcheck.generator.GenerateTest;
-import quickcheck.generator.TestType;
+import quickcheck.util.TestType;
 import wybs.lang.Build;
 import wybs.lang.NameID;
 import wybs.util.StdProject;

@@ -1,8 +1,9 @@
-package quickcheck.generator;
+package quickcheck.generator.type;
 
 import java.math.BigInteger;
 import java.util.Random;
 
+import quickcheck.util.TestType;
 import wyil.interpreter.ConcreteSemantics;
 import wyil.interpreter.ConcreteSemantics.RValue;
 

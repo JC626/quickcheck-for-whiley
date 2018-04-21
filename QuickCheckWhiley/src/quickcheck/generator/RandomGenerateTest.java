@@ -4,6 +4,8 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
+import quickcheck.RunTest;
+import quickcheck.generator.type.ArrayGenerator;
 import quickcheck.generator.type.BooleanGenerator;
 import quickcheck.generator.type.Generator;
 import quickcheck.generator.type.IntegerGenerator;
@@ -35,31 +37,38 @@ public class RandomGenerateTest implements GenerateTest{
 	
 	private BigInteger lowerLimit;
 	private BigInteger upperLimit;
-	
+		
 	public RandomGenerateTest(FunctionOrMethod dec, BigInteger lowerLimit, BigInteger upperLimit) {
 		super();
 		this.dec = dec;
 		this.lowerLimit = lowerLimit;
 		this.upperLimit = upperLimit;
 		this.parameterGenerators = new ArrayList<Generator>();
-		createGenerators();
-	}	
-	
-	private void createGenerators() {
-		// TODO get the generators for each parameter type
+		// Get the generators
 		for(Variable var : this.dec.getParameters()) {
 			WhileyFile.Type paramType = var.getType();
-			if(paramType instanceof WhileyFile.Type.Int) {
-				this.parameterGenerators.add(new IntegerGenerator(TestType.RANDOM, lowerLimit, upperLimit));
-			}
-			else if(paramType instanceof WhileyFile.Type.Bool) {
-				this.parameterGenerators.add(new BooleanGenerator(TestType.RANDOM));
-			}
-//			else if(paramType instanceof WhileyFile.Type.Array) {
-//				WhileyFile.Type arrEle = ((WhileyFile.Type.Array) paramType).getElement();
-//				// TODO get generator type
-//			}
+			this.parameterGenerators.add(getGenerator(paramType));
 		}
+	}	
+
+	private Generator getGenerator(WhileyFile.Type paramType) {
+		if(paramType instanceof WhileyFile.Type.Int) {
+			return new IntegerGenerator(TestType.RANDOM, lowerLimit, upperLimit);
+		}
+		else if(paramType instanceof WhileyFile.Type.Bool) {
+			return new BooleanGenerator(TestType.RANDOM);
+		}
+		else if(paramType instanceof WhileyFile.Type.Array) {
+			WhileyFile.Type arrEle = ((WhileyFile.Type.Array) paramType).getElement();
+			List<Generator> generators = new ArrayList<Generator>();
+			for(int i=0; i < RunTest.ARRAY_UPPER_LIMIT; i++) {
+				Generator gen = getGenerator(arrEle);
+				generators.add(gen);
+			}
+			return new ArrayGenerator(generators, TestType.RANDOM, RunTest.ARRAY_LOWER_LIMIT, RunTest.ARRAY_UPPER_LIMIT);
+		}
+		assert false;
+		return null;
 	}
 	
 	@Override

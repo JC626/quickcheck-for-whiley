@@ -38,7 +38,7 @@ public final class BooleanGenerator implements Generator {
 	}
 
 	@Override
-	public int range() {
+	public int size() {
 		return 2;
 	}
 
@@ -49,7 +49,7 @@ public final class BooleanGenerator implements Generator {
 
 	@Override
 	public boolean exceedCount() {
-		return this.range() < count;
+		return this.size() < count;
 	}
 
 }

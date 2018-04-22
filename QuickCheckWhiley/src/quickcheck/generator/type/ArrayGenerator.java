@@ -20,16 +20,19 @@ public class ArrayGenerator implements Generator{
 	private static Random randomiser = new Random();
 	
 	private int count = 1;
+	private int currentCombinations;
 	private TestType testType;
 	private int lowerLimit;
 	private int upperLimit;
 	private List<Generator> generators;
+	private RValue[] parameters;
 	
 	public ArrayGenerator(List<Generator> generators, TestType testType, int lower, int upper) {
 		this.generators = generators;
 		this.testType = testType;
 		this.lowerLimit = lower;
 		this.upperLimit = upper;
+		this.currentCombinations = 0;
 	}
 	
 	@Override
@@ -41,13 +44,37 @@ public class ArrayGenerator implements Generator{
 				return semantics.Array(new RValue[0]);
 			}
 			else {
-				int size = 1 + (count / generators.get(0).size());
-				RValue[] array = new RValue[size];
-				for(int i=0; i < array.length; i++) {
-					array[i] = generators.get(i).generate();
+				int size = 1;
+				if(parameters != null) {
+					if(currentCombinations >= Math.pow(generators.get(0).size(), parameters.length)) {
+						size = parameters.length + 1;
+						if(size > generators.size()) {
+							size = 1;
+						}
+						currentCombinations = 0;
+					}
+				}
+				if(parameters == null || parameters.length < size) {
+					parameters = new RValue[size];
+					for(int i=0; i < parameters.length; i++) {
+						parameters[i] = generators.get(i).generate();
+					}
+				}
+				else {
+					for(int i=parameters.length - 1; i >= 0 ; i--) {
+						Generator gen = generators.get(i);
+						if(!gen.exceedCount()) {
+							parameters[i] = gen.generate();
+							break;
+						}
+						else {
+							parameters[i] = gen.generate();
+						}
+					}
 				}
 				count++;
-				return semantics.Array(array);
+				currentCombinations++;
+				return semantics.Array(parameters);
 			}
 		}
 		else {

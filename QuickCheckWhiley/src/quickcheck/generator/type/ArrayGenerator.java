@@ -105,6 +105,7 @@ public class ArrayGenerator implements Generator{
 	public void resetCount() {
 		count = 1;
 		currentCombinations = 0;
+		this.arrElements = null;
 	}
 
 	@Override

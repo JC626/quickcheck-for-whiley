@@ -44,7 +44,6 @@ public class ExhaustiveGenerateTest implements GenerateTest{
 	/**
 	 * Stores the generators used in an iterative manner.
 	 */
-	private Stack<Generator> stack;
 	
 	private BigInteger totalCombinations;
 	private int numTested;
@@ -74,7 +73,6 @@ public class ExhaustiveGenerateTest implements GenerateTest{
 		}
 		this.parameters = new RValue[parameterGenerators.size()];
 		this.allTests = totalCombinations.compareTo(BigInteger.valueOf(numTests)) != 1;
-		stack = new Stack<Generator>();
 	}
 	
 	
@@ -113,48 +111,30 @@ public class ExhaustiveGenerateTest implements GenerateTest{
 				for(int i=0; i < parameters.length; i++) {
 					Generator gen = parameterGenerators.get(i);
 					parameters[i] = gen.generate();
-					stack.push(gen);
 				}
 			}
 			else{
-				assert stack.size() > 0;
-				// Get the last generator used
-				int genIndex = stack.size() -1;
-				Generator gen = stack.peek();
-				/*
-				 *  If the last generator has reached it's limit 
-				 *  (i.e. we cannot move onto the next combination)
-				 *  reset and remove the generator.
-			     *  Repeat for all previous generators that have reached its limit,
-			     *  until we reach a generator which hasn't reached it's limit.
-			     *  All generators which have reached its limit will be 
-			     *  re-added as they are used for generating the next set of combinations.
-				 */
-				while(gen.exceedCount() && !stack.isEmpty()) {
-					gen.resetCount();
-					stack.pop();
-					if(stack.isEmpty()) {
+	            /*
+	             *  Generate the array elements backwards.
+	             *  If the last generator has reached it's upper limit 
+	             *  (i.e. we cannot move onto the next combination) then reset the generator.
+	             *  Repeat for all previous generators that have reached its limit,
+	             *  until we reach a generator which hasn't reached it's limit.
+	             */
+				for(int i=parameters.length - 1; i >= 0 ; i--) {
+					Generator gen = parameterGenerators.get(i);
+					if(!gen.exceedCount()) {
+						parameters[i] = gen.generate();
 						break;
 					}
-					gen = stack.peek();
-					genIndex--;
-				}
-				// Remove the current generator as it will be re-added in the for loop
-				if(!stack.isEmpty()) {
-					stack.pop();
-				}
-				// Generate the next possible combination, re-adding generators (that have been resetted)
-				for(int i=genIndex; i < parameterGenerators.size(); i++) {
-					gen = parameterGenerators.get(i);
-					RValue newValue = gen.generate();
-					parameters[i] = newValue;
-					stack.push(gen);					
+					else {
+						gen.resetCount();
+						parameters[i] = gen.generate();
+					}
 				}
 			}
 		}
 		// TODO selection of tests if we cannot do all exhaustive combinations?
-		
-		assert stack.size() > 0;
 		numTested++;
 		return parameters;
 	}

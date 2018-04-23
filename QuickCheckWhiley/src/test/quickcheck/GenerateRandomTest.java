@@ -158,9 +158,8 @@ public class GenerateRandomTest {
 		assertTrue(generatedParameters[2] instanceof RValue.Array);
 	}
 	
-	// TODO test for arrays
 	@Test
-	public void testArraySingleInt() {
+	public void testArraySingleBool() {
 		Decl.Variable arrayParam = new Decl.Variable(null, new Identifier("boolArr"), new Type.Array(Type.Bool));
 		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(arrayParam);
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
@@ -178,7 +177,7 @@ public class GenerateRandomTest {
 	}
 	
 	@Test
-	public void testArraySingleBool() {
+	public void testArraySingleInt() {
 		Decl.Variable arrayParam = new Decl.Variable(null, new Identifier("intArr"), new Type.Array(Type.Int));
 		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(arrayParam);
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
@@ -197,8 +196,8 @@ public class GenerateRandomTest {
 	
 	@Test
 	public void testMultiArray() {
-		Decl.Variable boolArrayParam = new Decl.Variable(null, new Identifier("intArr"), new Type.Array(Type.Bool));
-		Decl.Variable intArrayParam = new Decl.Variable(null, new Identifier("boolArr"), new Type.Array(Type.Int));
+		Decl.Variable boolArrayParam = new Decl.Variable(null, new Identifier("boolArr"), new Type.Array(Type.Bool));
+		Decl.Variable intArrayParam = new Decl.Variable(null, new Identifier("intArr"), new Type.Array(Type.Int));
 		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(boolArrayParam, intArrayParam);
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
 		BigInteger lower = BigInteger.valueOf(-10);

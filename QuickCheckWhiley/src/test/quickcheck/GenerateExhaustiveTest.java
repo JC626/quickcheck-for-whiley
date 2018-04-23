@@ -25,7 +25,16 @@ import wyil.interpreter.ConcreteSemantics.RValue;
  */
 public class GenerateExhaustiveTest {
 	private static final ConcreteSemantics semantics = new ConcreteSemantics();
-	
+	private static RValue[][] boolCombinations = {{}, {RValue.True}, {RValue.False}, 
+			   										  {RValue.True, RValue.True}, {RValue.True, RValue.False},
+			   										  {RValue.False, RValue.True}, {RValue.False, RValue.False}, 
+			   										  {RValue.True, RValue.True, RValue.True}, {RValue.True, RValue.True, RValue.False},
+			   										  {RValue.True, RValue.False, RValue.True}, {RValue.True, RValue.False, RValue.False},
+			   										  {RValue.False, RValue.True, RValue.True}, {RValue.False, RValue.True, RValue.False},
+			   										  {RValue.False, RValue.False, RValue.True}, {RValue.False, RValue.False, RValue.False}};
+
+
+
 	/**
 	 * Test when the function has no parameters
 	 */
@@ -133,10 +142,11 @@ public class GenerateExhaustiveTest {
 	}
 	
 	/**
-	 * Test when the function has different parameter types
+	 * Test when the function has different parameter types,
+	 * int and bool
 	 */
 	@Test
-	public void testFunctionDiffParameters() {
+	public void testFunctionDiffParameters1() {
 		Decl.Variable intParam = new Decl.Variable(null, new Identifier("firstInt"), Type.Int);
 		Decl.Variable boolParam = new Decl.Variable(null, new Identifier("secBool"), Type.Bool);
 		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(intParam, boolParam);
@@ -164,7 +174,143 @@ public class GenerateExhaustiveTest {
 				assertEquals(semantics.Int(BigInteger.valueOf(j)), generatedParameters[1]);
 			}
 		}
+	}
+	
+	/**
+	 * Test when the function has different parameter types,
+	 * int, bool and array
+	 */
+	@Test
+	public void testFunctionDiffParameters2() {
+		Decl.Variable intParam = new Decl.Variable(null, new Identifier("firstInt"), Type.Int);
+		Decl.Variable boolParam = new Decl.Variable(null, new Identifier("secBool"), Type.Bool);
+		Decl.Variable arrayParam = new Decl.Variable(null, new Identifier("boolArr"), new Type.Array(Type.Bool));
+		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(intParam, boolParam, arrayParam);
+		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
+		BigInteger lower = BigInteger.valueOf(0);
+		BigInteger upper = BigInteger.valueOf(3);
+		GenerateTest testGen = new ExhaustiveGenerateTest(func, 90, lower, upper);
+		for(int i=0; i < 3; i++) {
+			for(int j=0; j <= 1; j++) {
+				for(int k=0; k < boolCombinations.length; k++) {
+					RValue[] generatedParameters = testGen.generateParameters();
+					assertEquals(3, generatedParameters.length);
+					assertEquals(semantics.Int(BigInteger.valueOf(i)), generatedParameters[0]);
+					assertEquals(semantics.Bool(j==0), generatedParameters[1]);
+					assertEquals(semantics.Array(boolCombinations[k]), generatedParameters[2]);
+				}				
+			}
+		}
+	}
 
+	@Test
+	public void testFunctionArraySingleBool() {
+		Decl.Variable arrayParam = new Decl.Variable(null, new Identifier("boolArr"), new Type.Array(Type.Bool));
+		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(arrayParam);
+		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
+		BigInteger lower = BigInteger.valueOf(0);
+		BigInteger upper = BigInteger.valueOf(3);
+		GenerateTest testGen = new ExhaustiveGenerateTest(func, 15, lower, upper);
+		for(int i=0; i < boolCombinations.length; i++) {
+			RValue[] generatedParameters = testGen.generateParameters();
+			assertEquals(1, generatedParameters.length);
+			assertEquals(semantics.Array(boolCombinations[i]), generatedParameters[0]);
+		}
+	}
+	
+	@Test
+	public void testFunctionArraySingleInt() {
+		Decl.Variable arrayParam = new Decl.Variable(null, new Identifier("intArr"), new Type.Array(Type.Int));
+		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(arrayParam);
+		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
+		BigInteger lower = BigInteger.valueOf(0);
+		BigInteger upper = BigInteger.valueOf(3);
+		GenerateTest testGen = new ExhaustiveGenerateTest(func, 40, lower, upper);
+		// Empty
+		RValue[] generatedParameters = testGen.generateParameters();
+		assertEquals(1, generatedParameters.length);
+		assertEquals(semantics.Array(new RValue[0]), generatedParameters[0]);
+		// Single
+		for(int i=lower.intValue(); i < upper.intValue(); i++) {
+			generatedParameters = testGen.generateParameters();
+			assertEquals(1, generatedParameters.length);
+			RValue[] expected = {semantics.Int(BigInteger.valueOf(i))};
+			assertEquals(semantics.Array(expected), generatedParameters[0]);
+		}
+		// 2 elements
+		for(int i=lower.intValue(); i < upper.intValue(); i++) {
+			for(int j=lower.intValue(); j < upper.intValue(); j++) {
+				generatedParameters = testGen.generateParameters();
+				assertEquals(1, generatedParameters.length);
+				RValue[] expected = {semantics.Int(BigInteger.valueOf(i)), semantics.Int(BigInteger.valueOf(j))};
+				assertEquals(semantics.Array(expected), generatedParameters[0]);
+			}
+	
+		}
+		// 3 elements
+		for(int i=lower.intValue(); i < upper.intValue(); i++) {
+			for(int j=lower.intValue(); j < upper.intValue(); j++) {
+				for(int k=lower.intValue(); k < upper.intValue(); k++) {
+					generatedParameters = testGen.generateParameters();
+					assertEquals(1, generatedParameters.length);
+					RValue[] expected = {semantics.Int(BigInteger.valueOf(i)), semantics.Int(BigInteger.valueOf(j)), semantics.Int(BigInteger.valueOf(k))};
+					assertEquals(semantics.Array(expected), generatedParameters[0]);
+				}
+			}
+		}
+	}
+	
+	@Test
+	public void testMultiArray() {
+		Decl.Variable boolArrayParam = new Decl.Variable(null, new Identifier("boolArr"), new Type.Array(Type.Bool));
+		Decl.Variable intArrayParam = new Decl.Variable(null, new Identifier("intArr"), new Type.Array(Type.Int));
+		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(boolArrayParam, intArrayParam);
+		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
+		BigInteger lower = BigInteger.valueOf(0);
+		BigInteger upper = BigInteger.valueOf(3);
+		GenerateTest testGen = new ExhaustiveGenerateTest(func, 600, lower, upper);
+		
+		for(int n=0; n < boolCombinations.length; n++) {
+			RValue boolCombo = semantics.Array(boolCombinations[n]);
+			// Empty
+			RValue[] generatedParameters = testGen.generateParameters();
+			assertEquals(2, generatedParameters.length);
+			assertEquals(boolCombo, generatedParameters[0]);
+			assertEquals(semantics.Array(new RValue[0]), generatedParameters[1]);
+			// Single
+			for(int i=lower.intValue(); i < upper.intValue(); i++) {
+				generatedParameters = testGen.generateParameters();
+				assertEquals(2, generatedParameters.length);
+				RValue[] expected = {semantics.Int(BigInteger.valueOf(i))};
+				assertEquals(boolCombo, generatedParameters[0]);
+				assertEquals(semantics.Array(expected), generatedParameters[1]);
+			}
+			// 2 elements
+			for(int i=lower.intValue(); i < upper.intValue(); i++) {
+				for(int j=lower.intValue(); j < upper.intValue(); j++) {
+					generatedParameters = testGen.generateParameters();
+					assertEquals(2, generatedParameters.length);
+					RValue[] expected = {semantics.Int(BigInteger.valueOf(i)), semantics.Int(BigInteger.valueOf(j))};
+					assertEquals(boolCombo, generatedParameters[0]);
+					assertEquals(semantics.Array(expected), generatedParameters[1]);
+				}
+		
+			}
+			// 3 elements
+			for(int i=lower.intValue(); i < upper.intValue(); i++) {
+				for(int j=lower.intValue(); j < upper.intValue(); j++) {
+					for(int k=lower.intValue(); k < upper.intValue(); k++) {
+						generatedParameters = testGen.generateParameters();
+						assertEquals(2, generatedParameters.length);
+						RValue[] expected = {semantics.Int(BigInteger.valueOf(i)), semantics.Int(BigInteger.valueOf(j)), semantics.Int(BigInteger.valueOf(k))};
+						assertEquals(boolCombo, generatedParameters[0]);
+						assertEquals(semantics.Array(expected), generatedParameters[1]);
+					}
+				}
+			}
+		}
+		
+		
 	}
 	
 }

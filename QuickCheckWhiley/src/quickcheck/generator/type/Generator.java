@@ -10,17 +10,16 @@ import wyil.interpreter.ConcreteSemantics.RValue;
  */
 
 public interface Generator{
-	
+		
 	public RValue generate();
 	
 	/**
 	 * Get the number of unique values that could be generated 
 	 */
-	public int range();
+	public int size();
 	
 	public void resetCount();
 	
-	
 	public boolean exceedCount();
-	
+		
 }

@@ -16,6 +16,7 @@ import wyc.lang.WhileyFile.Decl;
 import wyc.lang.WhileyFile.Type;
 import wyc.lang.WhileyFile.Decl.Function;
 import wyil.interpreter.ConcreteSemantics.RValue;
+import wyil.interpreter.ConcreteSemantics.RValue.Array;
 
 /**
  * Test the random test generation
@@ -118,10 +119,11 @@ public class GenerateRandomTest {
 	}
 	
 	/**
-	 * Test when the function has different parameter types
+	 * Test when the function has different parameter types,
+	 * int and bool
 	 */
 	@Test
-	public void testFunctionDiffParameters() {
+	public void testFunctionDiffParameters1() {
 		Decl.Variable intParam = new Decl.Variable(null, new Identifier("firstInt"), Type.Int);
 		Decl.Variable boolParam = new Decl.Variable(null, new Identifier("secBool"), Type.Bool);
 		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(intParam, boolParam);
@@ -133,5 +135,88 @@ public class GenerateRandomTest {
 		assertEquals(2, generatedParameters.length);
 		assertTrue(generatedParameters[0] instanceof RValue.Int);
 		assertTrue(generatedParameters[1] instanceof RValue.Bool);
+	}
+	
+	/**
+	 * Test when the function has different parameter types,
+	 * int, bool and array
+	 */
+	@Test
+	public void testFunctionDiffParameters2() {
+		Decl.Variable intParam = new Decl.Variable(null, new Identifier("firstInt"), Type.Int);
+		Decl.Variable boolParam = new Decl.Variable(null, new Identifier("secBool"), Type.Bool);
+		Decl.Variable arrayParam = new Decl.Variable(null, new Identifier("boolArr"), new Type.Array(Type.Bool));
+		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(intParam, boolParam, arrayParam);
+		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
+		BigInteger lower = BigInteger.valueOf(-10);
+		BigInteger upper = BigInteger.valueOf(10);
+		GenerateTest testGen = new RandomGenerateTest(func, lower, upper);
+		RValue[] generatedParameters = testGen.generateParameters();
+		assertEquals(3, generatedParameters.length);
+		assertTrue(generatedParameters[0] instanceof RValue.Int);
+		assertTrue(generatedParameters[1] instanceof RValue.Bool);
+		assertTrue(generatedParameters[2] instanceof RValue.Array);
+	}
+	
+	@Test
+	public void testArraySingleBool() {
+		Decl.Variable arrayParam = new Decl.Variable(null, new Identifier("boolArr"), new Type.Array(Type.Bool));
+		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(arrayParam);
+		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
+		BigInteger lower = BigInteger.valueOf(-10);
+		BigInteger upper = BigInteger.valueOf(10);
+		GenerateTest testGen = new RandomGenerateTest(func, lower, upper);
+		RValue[] generatedParameters = testGen.generateParameters();
+		assertEquals(1, generatedParameters.length);
+		assertTrue(generatedParameters[0] instanceof RValue.Array);
+		RValue.Array arr = (Array) generatedParameters[0];
+		RValue[] elements = arr.getElements();
+		for(int i=0; i < elements.length; i++) {
+			assertTrue(elements[i] instanceof RValue.Bool);
+		}
+	}
+	
+	@Test
+	public void testArraySingleInt() {
+		Decl.Variable arrayParam = new Decl.Variable(null, new Identifier("intArr"), new Type.Array(Type.Int));
+		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(arrayParam);
+		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
+		BigInteger lower = BigInteger.valueOf(-10);
+		BigInteger upper = BigInteger.valueOf(10);
+		GenerateTest testGen = new RandomGenerateTest(func, lower, upper);
+		RValue[] generatedParameters = testGen.generateParameters();
+		assertEquals(1, generatedParameters.length);
+		assertTrue(generatedParameters[0] instanceof RValue.Array);
+		RValue.Array arr = (Array) generatedParameters[0];
+		RValue[] elements = arr.getElements();
+		for(int i=0; i < elements.length; i++) {
+			assertTrue(elements[i] instanceof RValue.Int);
+		}
+	}
+	
+	@Test
+	public void testMultiArray() {
+		Decl.Variable boolArrayParam = new Decl.Variable(null, new Identifier("boolArr"), new Type.Array(Type.Bool));
+		Decl.Variable intArrayParam = new Decl.Variable(null, new Identifier("intArr"), new Type.Array(Type.Int));
+		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(boolArrayParam, intArrayParam);
+		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
+		BigInteger lower = BigInteger.valueOf(-10);
+		BigInteger upper = BigInteger.valueOf(10);
+		GenerateTest testGen = new RandomGenerateTest(func, lower, upper);
+		RValue[] generatedParameters = testGen.generateParameters();
+		assertEquals(2, generatedParameters.length);
+		assertTrue(generatedParameters[0] instanceof RValue.Array);
+		assertTrue(generatedParameters[1] instanceof RValue.Array);
+		RValue.Array boolArr = (Array) generatedParameters[0];
+		RValue[] boolElements = boolArr.getElements();
+		for(int i=0; i < boolElements.length; i++) {
+			assertTrue(boolElements[i] instanceof RValue.Bool);
+		}
+		
+		RValue.Array intArr = (Array) generatedParameters[1];
+		RValue[] intElements = intArr.getElements();
+		for(int i=0; i < intElements.length; i++) {
+			assertTrue(boolElements[i] instanceof RValue.Bool);
+		}
 	}
 }

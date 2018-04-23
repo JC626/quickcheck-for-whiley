@@ -3,9 +3,10 @@ package quickcheck.generator;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Stack;
 
+import quickcheck.RunTest;
+import quickcheck.generator.type.ArrayGenerator;
 import quickcheck.generator.type.BooleanGenerator;
 import quickcheck.generator.type.Generator;
 import quickcheck.generator.type.IntegerGenerator;
@@ -60,32 +61,41 @@ public class ExhaustiveGenerateTest implements GenerateTest{
 		this.upperLimit = upperLimit;
 		this.parameterGenerators = new ArrayList<Generator>();
 		this.numTests = numTests;
-		createGenerators();
-		this.allTests = totalCombinations.compareTo(BigInteger.valueOf(numTests)) != 1;
-		stack = new Stack<Generator>();
-	}
-
-	protected void createGenerators() {
-		// TODO get the generators for each parameter type
-		BigInteger numCombinations = BigInteger.valueOf(1);
-		for(Variable var : dec.getParameters()) {
+		this.totalCombinations = BigInteger.valueOf(1);
+		// Get the generators
+		for(Variable var : this.dec.getParameters()) {
 			WhileyFile.Type paramType = var.getType();
-			if(paramType instanceof WhileyFile.Type.Int) {
-				parameterGenerators.add(new IntegerGenerator(TestType.EXHAUSTIVE, lowerLimit, upperLimit));
-				numCombinations.multiply(upperLimit.subtract(lowerLimit));
-			}
-			else if(paramType instanceof WhileyFile.Type.Bool) {
-				parameterGenerators.add(new BooleanGenerator(TestType.EXHAUSTIVE));
-				numCombinations.multiply(BigInteger.valueOf(2));
-			}
+			Generator gen = getGenerator(paramType);
+			totalCombinations.multiply(BigInteger.valueOf(gen.size()));
+			this.parameterGenerators.add(gen);
 		}
 		if(parameterGenerators.isEmpty()) {
 			this.totalCombinations = new BigInteger("0");
 		}
-		else {
-			this.totalCombinations = numCombinations;
+		this.parameters = new RValue[parameterGenerators.size()];
+		this.allTests = totalCombinations.compareTo(BigInteger.valueOf(numTests)) != 1;
+		stack = new Stack<Generator>();
+	}
+	
+	
+	private Generator getGenerator(WhileyFile.Type paramType) {
+		if(paramType instanceof WhileyFile.Type.Int) {
+			return new IntegerGenerator(TestType.EXHAUSTIVE, lowerLimit, upperLimit);
 		}
-		parameters = new RValue[parameterGenerators.size()];
+		else if(paramType instanceof WhileyFile.Type.Bool) {
+			return new BooleanGenerator(TestType.EXHAUSTIVE);
+		}
+		else if(paramType instanceof WhileyFile.Type.Array) {
+			WhileyFile.Type arrEle = ((WhileyFile.Type.Array) paramType).getElement();
+			List<Generator> generators = new ArrayList<Generator>();
+			for(int i=0; i < RunTest.ARRAY_UPPER_LIMIT; i++) {
+				Generator gen = getGenerator(arrEle);
+				generators.add(gen);
+			}
+			return new ArrayGenerator(generators, TestType.EXHAUSTIVE, RunTest.ARRAY_LOWER_LIMIT, RunTest.ARRAY_UPPER_LIMIT);
+		}
+		assert false;
+		return null;
 	}
 
 	@Override
@@ -120,7 +130,7 @@ public class ExhaustiveGenerateTest implements GenerateTest{
 			     *  All generators which have reached its limit will be 
 			     *  re-added as they are used for generating the next set of combinations.
 				 */
-				while(gen.exceedCount() && stack.size() > 1) {
+				while(gen.exceedCount() && !stack.isEmpty()) {
 					gen.resetCount();
 					stack.pop();
 					if(stack.isEmpty()) {

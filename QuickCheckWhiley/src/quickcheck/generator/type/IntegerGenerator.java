@@ -54,7 +54,7 @@ public final class IntegerGenerator implements Generator {
 	}
 
 	@Override
-	public int range() {
+	public int size() {
 		return upperLimit.subtract(lowerLimit).intValue();
 	}
 
@@ -65,7 +65,7 @@ public final class IntegerGenerator implements Generator {
 
 	@Override
 	public boolean exceedCount() {
-		return this.range() < count;
-	}
+		return this.size() < count;
+	}	
 
 }

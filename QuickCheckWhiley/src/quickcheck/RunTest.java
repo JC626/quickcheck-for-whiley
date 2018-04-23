@@ -42,8 +42,10 @@ import static wyc.lang.WhileyFile.*;
 public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 	
 	public static final int NUM_TESTS = 10;
-	public static final int LOWER_LIMIT = -10;
-	public static final int UPPER_LIMIT = 10;
+	public static final int INT_LOWER_LIMIT = -10;
+	public static final int INT_UPPER_LIMIT = 10;
+	public static final int ARRAY_LOWER_LIMIT = 0;
+	public static final int ARRAY_UPPER_LIMIT = 3;
 	
 	/**
 	 * Result kind for this command

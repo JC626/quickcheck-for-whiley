@@ -56,8 +56,8 @@ public class QuickCheck {
 		Content.Registry registry = new wyc.Activator.Registry();
 		RunTest cmd = new RunTest(registry,Logger.NULL);
 		String numTests = args.length >= 3 ? args[2] : Integer.toString(RunTest.NUM_TESTS);
-		String lowerLimit = args.length >= 4 ? args[3] : Integer.toString(RunTest.LOWER_LIMIT);
-		String upperLimit = args.length >= 5 ? args[4] : Integer.toString(RunTest.UPPER_LIMIT);
+		String lowerLimit = args.length >= 4 ? args[3] : Integer.toString(RunTest.INT_LOWER_LIMIT);
+		String upperLimit = args.length >= 5 ? args[4] : Integer.toString(RunTest.INT_UPPER_LIMIT);
 		cmd.execute(relativePath, id.toString(), testType.toString(), numTests, lowerLimit, upperLimit);			
 	}
 }

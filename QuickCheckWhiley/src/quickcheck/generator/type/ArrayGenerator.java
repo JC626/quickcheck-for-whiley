@@ -48,9 +48,6 @@ public class ArrayGenerator implements Generator{
 				if(parameters != null) {
 					if(currentCombinations >= Math.pow(generators.get(0).size(), parameters.length)) {
 						size = parameters.length + 1;
-						if(size > generators.size()) {
-							size = 1;
-						}
 						currentCombinations = 0;
 					}
 				}
@@ -101,6 +98,7 @@ public class ArrayGenerator implements Generator{
 	@Override
 	public void resetCount() {
 		count = 1;
+		currentCombinations = 0;
 	}
 
 	@Override

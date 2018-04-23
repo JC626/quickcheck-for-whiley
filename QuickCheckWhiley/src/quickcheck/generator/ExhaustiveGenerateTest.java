@@ -130,7 +130,7 @@ public class ExhaustiveGenerateTest implements GenerateTest{
 			     *  All generators which have reached its limit will be 
 			     *  re-added as they are used for generating the next set of combinations.
 				 */
-				while(gen.exceedCount() && stack.size() > 1) {
+				while(gen.exceedCount() && !stack.isEmpty()) {
 					gen.resetCount();
 					stack.pop();
 					if(stack.isEmpty()) {

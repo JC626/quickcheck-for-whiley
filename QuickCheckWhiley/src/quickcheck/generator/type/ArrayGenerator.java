@@ -25,7 +25,7 @@ public class ArrayGenerator implements Generator{
 	private int lowerLimit;
 	private int upperLimit;
 	private List<Generator> generators;
-	private RValue[] parameters;
+	private RValue[] arrElements;
 	
 	public ArrayGenerator(List<Generator> generators, TestType testType, int lower, int upper) {
 		this.generators = generators;
@@ -45,33 +45,39 @@ public class ArrayGenerator implements Generator{
 			}
 			else {
 				int size = 1;
-				if(parameters != null) {
-					if(currentCombinations >= Math.pow(generators.get(0).size(), parameters.length)) {
-						size = parameters.length + 1;
+				// Get the size of the array
+				if(arrElements != null) {
+					if(currentCombinations >= Math.pow(generators.get(0).size(), arrElements.length)) {
+						size = arrElements.length + 1;
 						currentCombinations = 0;
 					}
 				}
-				if(parameters == null || parameters.length < size) {
-					parameters = new RValue[size];
-					for(int i=0; i < parameters.length; i++) {
-						parameters[i] = generators.get(i).generate();
+				// Resetting as it is a new array size
+				if(arrElements == null || arrElements.length < size) {
+					arrElements = new RValue[size];
+					for(int i=0; i < arrElements.length; i++) {
+						Generator gen = generators.get(i);
+						gen.resetCount();
+						arrElements[i] = gen.generate();
 					}
 				}
 				else {
-					for(int i=parameters.length - 1; i >= 0 ; i--) {
+					// Generate the array elements backwards 
+					for(int i=arrElements.length - 1; i >= 0 ; i--) {
 						Generator gen = generators.get(i);
 						if(!gen.exceedCount()) {
-							parameters[i] = gen.generate();
+							arrElements[i] = gen.generate();
 							break;
 						}
 						else {
-							parameters[i] = gen.generate();
+							gen.resetCount();
+							arrElements[i] = gen.generate();
 						}
 					}
 				}
 				count++;
 				currentCombinations++;
-				return semantics.Array(parameters);
+				return semantics.Array(arrElements);
 			}
 		}
 		else {

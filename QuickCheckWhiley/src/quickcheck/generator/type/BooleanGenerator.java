@@ -27,12 +27,8 @@ public final class BooleanGenerator implements Generator {
 	@Override
 	public RValue generate() {
 		if(testType == TestType.EXHAUSTIVE) {
-			if(count == 1) {
-				count++;
-				return semantics.Bool(true);
-			}
 			count++;
-			return semantics.Bool(false);
+			return semantics.Bool(count % 2 == 0);
 		}
 		return semantics.Bool(randomiser.nextBoolean());
 	}

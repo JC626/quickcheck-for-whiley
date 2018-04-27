@@ -240,7 +240,7 @@ public class GenerateRandomTest {
 		RValue.Array intArr = (Array) generatedParameters[1];
 		RValue[] intElements = intArr.getElements();
 		for(int i=0; i < intElements.length; i++) {
-			assertTrue(boolElements[i] instanceof RValue.Bool);
+			assertTrue(intElements[i] instanceof RValue.Int);
 		}
 	}
 }

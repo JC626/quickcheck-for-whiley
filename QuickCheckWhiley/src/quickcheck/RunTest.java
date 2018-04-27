@@ -152,8 +152,9 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 			testGen = new ExhaustiveGenerateTest(dec, numTest, lower, upper);
 		}
 		else {
-			testGen = new RandomGenerateTest(dec, lower, upper);
+			testGen = new RandomGenerateTest(dec, interpreter.getTypeSystem(), lower, upper);
 		}
+		
 		NameID name = new NameID(id, dec.getName().get());
 		Type.Callable type = dec.getType();
 		Tuple<Expr> preconditions = dec.getRequires();
@@ -165,8 +166,7 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 		System.out.println("FUNCTION PARAM TYPES "+ inputParameters);
 		System.out.println("PRECONDITION "+ preconditions);
 		System.out.println("POSTCONDITION "+ postconditions);
-		
-		// TODO check
+				
 		// Have to remove the pre and post conditions out of the 
 		// function so the function is executed without validation
 		// Validation will be conducted manually inside this function.

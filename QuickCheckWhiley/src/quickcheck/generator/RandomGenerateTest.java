@@ -9,12 +9,16 @@ import quickcheck.generator.type.ArrayGenerator;
 import quickcheck.generator.type.BooleanGenerator;
 import quickcheck.generator.type.Generator;
 import quickcheck.generator.type.IntegerGenerator;
+import quickcheck.generator.type.NominalGenerator;
 import quickcheck.util.TestType;
+import wybs.lang.NameResolver.ResolutionError;
+import wybs.util.AbstractCompilationUnit.Name;
 import wyc.lang.WhileyFile;
 import wyc.lang.WhileyFile.Decl;
 import wyc.lang.WhileyFile.Decl.FunctionOrMethod;
 import wyc.lang.WhileyFile.Decl.Variable;
 import wyil.interpreter.ConcreteSemantics.RValue;
+import wyil.type.TypeSystem;
 
 /**
  * Generate candidate test parameters for a function.
@@ -35,12 +39,15 @@ public class RandomGenerateTest implements GenerateTest{
 	 */
 	private List<Generator> parameterGenerators;
 	
+	private TypeSystem typeSystem;
+	
 	private BigInteger lowerLimit;
 	private BigInteger upperLimit;
 		
-	public RandomGenerateTest(FunctionOrMethod dec, BigInteger lowerLimit, BigInteger upperLimit) {
+	public RandomGenerateTest(FunctionOrMethod dec, TypeSystem typeSystem, BigInteger lowerLimit, BigInteger upperLimit) {
 		super();
 		this.dec = dec;
+		this.typeSystem = typeSystem;
 		this.lowerLimit = lowerLimit;
 		this.upperLimit = upperLimit;
 		this.parameterGenerators = new ArrayList<Generator>();
@@ -66,6 +73,20 @@ public class RandomGenerateTest implements GenerateTest{
 				generators.add(gen);
 			}
 			return new ArrayGenerator(generators, TestType.RANDOM, RunTest.ARRAY_LOWER_LIMIT, RunTest.ARRAY_UPPER_LIMIT);
+		}
+		else if(paramType instanceof WhileyFile.Type.Nominal) {
+			// Nominal generator takes another generator
+			WhileyFile.Type.Nominal nom = (WhileyFile.Type.Nominal) paramType;
+			try {
+				Decl.Type decl = typeSystem.resolveExactly(nom.getName(), Decl.Type.class);
+				Decl.Variable var = decl.getVariableDeclaration();
+				Generator gen = getGenerator(var.getType());
+				return new NominalGenerator(gen);
+			} catch (ResolutionError e) {
+				// TODO What to do with resolution error?
+				e.printStackTrace();
+				assert false;
+			}
 		}
 		assert false;
 		return null;

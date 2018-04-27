@@ -2,21 +2,31 @@ package test.quickcheck;
 
 import static org.junit.Assert.*;
 
+import java.io.IOException;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.experimental.theories.Theories;
 
 import quickcheck.generator.GenerateTest;
 import quickcheck.generator.RandomGenerateTest;
+import wybs.lang.Build;
+import wybs.util.StdProject;
 import wybs.util.AbstractCompilationUnit.Identifier;
 import wybs.util.AbstractCompilationUnit.Tuple;
 import wyc.lang.WhileyFile.Decl;
 import wyc.lang.WhileyFile.Type;
 import wyc.lang.WhileyFile.Decl.Function;
+import wyfs.lang.Content;
+import wyfs.lang.Path;
+import wyfs.util.DirectoryRoot;
 import wyil.interpreter.ConcreteSemantics.RValue;
 import wyil.interpreter.ConcreteSemantics.RValue.Array;
+import wyil.type.TypeSystem;
 
 /**
  * Test the random test generation
@@ -26,6 +36,20 @@ import wyil.interpreter.ConcreteSemantics.RValue.Array;
  *
  */
 public class GenerateRandomTest {
+	private static TypeSystem typeSystem;
+		
+	@BeforeClass
+	public static void setupClass() throws IOException {
+		// The content registry maps file name extensions to their Content.Type.
+		Content.Registry registry = new wyc.Activator.Registry();
+		// The directory root specified where to look for Whiley / WyIL files.
+		DirectoryRoot root = new DirectoryRoot("test", registry);
+		ArrayList<Path.Root> roots = new ArrayList<>();
+		roots.add(root);
+		// Finally, create the project itself
+		Build.Project project = new StdProject(roots);
+		typeSystem = new TypeSystem(project);
+	}
 
 	/**
 	 * Test when the function has no parameters
@@ -39,7 +63,7 @@ public class GenerateRandomTest {
 		generatorArgs.put("lowerLimit", "-10");
 		BigInteger lower = BigInteger.valueOf(-10);
 		BigInteger upper = BigInteger.valueOf(10);
-		GenerateTest testGen = new RandomGenerateTest(func, lower, upper);
+		GenerateTest testGen = new RandomGenerateTest(func, typeSystem, lower, upper);
 		assertArrayEquals(new RValue[0], testGen.generateParameters());
 	}
 	
@@ -53,7 +77,7 @@ public class GenerateRandomTest {
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
 		BigInteger lower = BigInteger.valueOf(-10);
 		BigInteger upper = BigInteger.valueOf(10);
-		GenerateTest testGen = new RandomGenerateTest(func, lower, upper);
+		GenerateTest testGen = new RandomGenerateTest(func, typeSystem, lower, upper);
 		RValue[] generatedParameters = testGen.generateParameters();
 		assertEquals(1, generatedParameters.length);
 		assertTrue(generatedParameters[0] instanceof RValue.Int);
@@ -72,7 +96,7 @@ public class GenerateRandomTest {
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
 		BigInteger lower = BigInteger.valueOf(-10);
 		BigInteger upper = BigInteger.valueOf(10);
-		GenerateTest testGen = new RandomGenerateTest(func, lower, upper);
+		GenerateTest testGen = new RandomGenerateTest(func, typeSystem, lower, upper);
 		RValue[] generatedParameters = testGen.generateParameters();
 		assertEquals(3, generatedParameters.length);
 		assertTrue(generatedParameters[0] instanceof RValue.Int);
@@ -90,7 +114,7 @@ public class GenerateRandomTest {
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
 		BigInteger lower = BigInteger.valueOf(-10);
 		BigInteger upper = BigInteger.valueOf(10);
-		GenerateTest testGen = new RandomGenerateTest(func, lower, upper);
+		GenerateTest testGen = new RandomGenerateTest(func, typeSystem, lower, upper);
 		RValue[] generatedParameters = testGen.generateParameters();
 		assertEquals(1, generatedParameters.length);
 		assertTrue(generatedParameters[0] instanceof RValue.Bool);
@@ -109,7 +133,7 @@ public class GenerateRandomTest {
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
 		BigInteger lower = BigInteger.valueOf(-10);
 		BigInteger upper = BigInteger.valueOf(10);
-		GenerateTest testGen = new RandomGenerateTest(func, lower, upper);
+		GenerateTest testGen = new RandomGenerateTest(func, typeSystem, lower, upper);
 		RValue[] generatedParameters = testGen.generateParameters();
 		assertEquals(3, generatedParameters.length);
 		assertTrue(generatedParameters[0] instanceof RValue.Bool);
@@ -130,7 +154,7 @@ public class GenerateRandomTest {
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
 		BigInteger lower = BigInteger.valueOf(-10);
 		BigInteger upper = BigInteger.valueOf(10);
-		GenerateTest testGen = new RandomGenerateTest(func, lower, upper);
+		GenerateTest testGen = new RandomGenerateTest(func, typeSystem, lower, upper);
 		RValue[] generatedParameters = testGen.generateParameters();
 		assertEquals(2, generatedParameters.length);
 		assertTrue(generatedParameters[0] instanceof RValue.Int);
@@ -150,7 +174,7 @@ public class GenerateRandomTest {
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
 		BigInteger lower = BigInteger.valueOf(-10);
 		BigInteger upper = BigInteger.valueOf(10);
-		GenerateTest testGen = new RandomGenerateTest(func, lower, upper);
+		GenerateTest testGen = new RandomGenerateTest(func, typeSystem, lower, upper);
 		RValue[] generatedParameters = testGen.generateParameters();
 		assertEquals(3, generatedParameters.length);
 		assertTrue(generatedParameters[0] instanceof RValue.Int);
@@ -165,7 +189,7 @@ public class GenerateRandomTest {
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
 		BigInteger lower = BigInteger.valueOf(-10);
 		BigInteger upper = BigInteger.valueOf(10);
-		GenerateTest testGen = new RandomGenerateTest(func, lower, upper);
+		GenerateTest testGen = new RandomGenerateTest(func, typeSystem, lower, upper);
 		RValue[] generatedParameters = testGen.generateParameters();
 		assertEquals(1, generatedParameters.length);
 		assertTrue(generatedParameters[0] instanceof RValue.Array);
@@ -183,7 +207,7 @@ public class GenerateRandomTest {
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
 		BigInteger lower = BigInteger.valueOf(-10);
 		BigInteger upper = BigInteger.valueOf(10);
-		GenerateTest testGen = new RandomGenerateTest(func, lower, upper);
+		GenerateTest testGen = new RandomGenerateTest(func, typeSystem, lower, upper);
 		RValue[] generatedParameters = testGen.generateParameters();
 		assertEquals(1, generatedParameters.length);
 		assertTrue(generatedParameters[0] instanceof RValue.Array);
@@ -202,7 +226,7 @@ public class GenerateRandomTest {
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
 		BigInteger lower = BigInteger.valueOf(-10);
 		BigInteger upper = BigInteger.valueOf(10);
-		GenerateTest testGen = new RandomGenerateTest(func, lower, upper);
+		GenerateTest testGen = new RandomGenerateTest(func, typeSystem, lower, upper);
 		RValue[] generatedParameters = testGen.generateParameters();
 		assertEquals(2, generatedParameters.length);
 		assertTrue(generatedParameters[0] instanceof RValue.Array);
@@ -216,7 +240,7 @@ public class GenerateRandomTest {
 		RValue.Array intArr = (Array) generatedParameters[1];
 		RValue[] intElements = intArr.getElements();
 		for(int i=0; i < intElements.length; i++) {
-			assertTrue(boolElements[i] instanceof RValue.Bool);
+			assertTrue(intElements[i] instanceof RValue.Int);
 		}
 	}
 }

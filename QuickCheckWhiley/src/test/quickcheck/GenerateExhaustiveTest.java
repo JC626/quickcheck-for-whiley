@@ -2,19 +2,28 @@ package test.quickcheck;
 
 import static org.junit.Assert.*;
 
+import java.io.IOException;
 import java.math.BigInteger;
+import java.util.ArrayList;
 
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import quickcheck.generator.ExhaustiveGenerateTest;
 import quickcheck.generator.GenerateTest;
+import wybs.lang.Build;
+import wybs.util.StdProject;
 import wybs.util.AbstractCompilationUnit.Identifier;
 import wybs.util.AbstractCompilationUnit.Tuple;
 import wyc.lang.WhileyFile.Decl;
 import wyc.lang.WhileyFile.Type;
 import wyc.lang.WhileyFile.Decl.Function;
+import wyfs.lang.Content;
+import wyfs.lang.Path;
+import wyfs.util.DirectoryRoot;
 import wyil.interpreter.ConcreteSemantics;
 import wyil.interpreter.ConcreteSemantics.RValue;
+import wyil.type.TypeSystem;
 
 /**
  * Test the exhaustive test generation
@@ -33,6 +42,20 @@ public class GenerateExhaustiveTest {
 			   										  {RValue.False, RValue.True, RValue.True}, {RValue.False, RValue.True, RValue.False},
 			   										  {RValue.False, RValue.False, RValue.True}, {RValue.False, RValue.False, RValue.False}};
 
+	private static TypeSystem typeSystem;
+	
+	@BeforeClass
+	public static void setupClass() throws IOException {
+		// The content registry maps file name extensions to their Content.Type.
+		Content.Registry registry = new wyc.Activator.Registry();
+		// The directory root specified where to look for Whiley / WyIL files.
+		DirectoryRoot root = new DirectoryRoot("test", registry);
+		ArrayList<Path.Root> roots = new ArrayList<>();
+		roots.add(root);
+		// Finally, create the project itself
+		Build.Project project = new StdProject(roots);
+		typeSystem = new TypeSystem(project);
+	}
 
 
 	/**
@@ -44,7 +67,7 @@ public class GenerateExhaustiveTest {
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
 		BigInteger lower = BigInteger.valueOf(-10);
 		BigInteger upper = BigInteger.valueOf(10);
-		GenerateTest testGen = new ExhaustiveGenerateTest(func, 10, lower, upper);
+		GenerateTest testGen = new ExhaustiveGenerateTest(func, typeSystem, 10, lower, upper);
 		assertArrayEquals(new RValue[0], testGen.generateParameters());
 	}
 	
@@ -58,7 +81,7 @@ public class GenerateExhaustiveTest {
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
 		BigInteger lower = BigInteger.valueOf(-2);
 		BigInteger upper = BigInteger.valueOf(4);
-		GenerateTest testGen = new ExhaustiveGenerateTest(func, 10, lower, upper);
+		GenerateTest testGen = new ExhaustiveGenerateTest(func, typeSystem, 10, lower, upper);
 		for(int i=-2; i <= 3; i++) {
 			RValue[] generatedParameters = testGen.generateParameters();
 			assertEquals(1, generatedParameters.length);
@@ -80,7 +103,7 @@ public class GenerateExhaustiveTest {
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
 		BigInteger lower = BigInteger.valueOf(-2);
 		BigInteger upper = BigInteger.valueOf(4);
-		GenerateTest testGen = new ExhaustiveGenerateTest(func, 18, lower, upper);
+		GenerateTest testGen = new ExhaustiveGenerateTest(func, typeSystem, 18, lower, upper);
 		for(int i=-2; i <= 3; i++) {
 			for(int j=-2; j <= 3; j++) {
 				for(int k=-2; k <= 3; k++) {
@@ -104,7 +127,7 @@ public class GenerateExhaustiveTest {
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
 		BigInteger lower = BigInteger.valueOf(-5);
 		BigInteger upper = BigInteger.valueOf(5);
-		GenerateTest testGen = new ExhaustiveGenerateTest(func, 5, lower, upper);
+		GenerateTest testGen = new ExhaustiveGenerateTest(func, typeSystem, 5, lower, upper);
 		RValue[] generatedParameters = testGen.generateParameters();
 		assertEquals(1, generatedParameters.length);
 		assertEquals(semantics.Bool(true), generatedParameters[0]);
@@ -127,7 +150,7 @@ public class GenerateExhaustiveTest {
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
 		BigInteger lower = BigInteger.valueOf(-5);
 		BigInteger upper = BigInteger.valueOf(5);
-		GenerateTest testGen = new ExhaustiveGenerateTest(func, 10, lower, upper);
+		GenerateTest testGen = new ExhaustiveGenerateTest(func, typeSystem, 10, lower, upper);
 		for(int i=0; i <= 1; i++) {
 			for(int j=0; j <= 1; j++) {
 				for(int k=0; k <= 1; k++) {
@@ -153,7 +176,7 @@ public class GenerateExhaustiveTest {
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
 		BigInteger lower = BigInteger.valueOf(-2);
 		BigInteger upper = BigInteger.valueOf(4);
-		GenerateTest testGen = new ExhaustiveGenerateTest(func, 10, lower, upper);
+		GenerateTest testGen = new ExhaustiveGenerateTest(func, typeSystem, 10, lower, upper);
 		for(int i=-2; i <= 3; i++) {
 			for(int j=0; j <= 1; j++) {
 				RValue[] generatedParameters = testGen.generateParameters();
@@ -165,7 +188,7 @@ public class GenerateExhaustiveTest {
 		// Switch the parameters around
 		parameters = new Tuple<Decl.Variable>(boolParam, intParam);
 		func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
-		testGen = new ExhaustiveGenerateTest(func, 10, lower, upper);
+		testGen = new ExhaustiveGenerateTest(func, typeSystem, 10, lower, upper);
 		for(int i=0; i <= 1; i++) {
 			for(int j=-2; j <= 3; j++) {
 				RValue[] generatedParameters = testGen.generateParameters();
@@ -189,7 +212,7 @@ public class GenerateExhaustiveTest {
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
 		BigInteger lower = BigInteger.valueOf(0);
 		BigInteger upper = BigInteger.valueOf(3);
-		GenerateTest testGen = new ExhaustiveGenerateTest(func, 90, lower, upper);
+		GenerateTest testGen = new ExhaustiveGenerateTest(func, typeSystem, 90, lower, upper);
 		for(int i=0; i < 3; i++) {
 			for(int j=0; j <= 1; j++) {
 				for(int k=0; k < boolCombinations.length; k++) {
@@ -210,7 +233,7 @@ public class GenerateExhaustiveTest {
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
 		BigInteger lower = BigInteger.valueOf(0);
 		BigInteger upper = BigInteger.valueOf(3);
-		GenerateTest testGen = new ExhaustiveGenerateTest(func, 15, lower, upper);
+		GenerateTest testGen = new ExhaustiveGenerateTest(func, typeSystem, 15, lower, upper);
 		for(int i=0; i < boolCombinations.length; i++) {
 			RValue[] generatedParameters = testGen.generateParameters();
 			assertEquals(1, generatedParameters.length);
@@ -225,7 +248,7 @@ public class GenerateExhaustiveTest {
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
 		BigInteger lower = BigInteger.valueOf(0);
 		BigInteger upper = BigInteger.valueOf(3);
-		GenerateTest testGen = new ExhaustiveGenerateTest(func, 40, lower, upper);
+		GenerateTest testGen = new ExhaustiveGenerateTest(func, typeSystem, 40, lower, upper);
 		// Empty
 		RValue[] generatedParameters = testGen.generateParameters();
 		assertEquals(1, generatedParameters.length);
@@ -268,7 +291,7 @@ public class GenerateExhaustiveTest {
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
 		BigInteger lower = BigInteger.valueOf(0);
 		BigInteger upper = BigInteger.valueOf(3);
-		GenerateTest testGen = new ExhaustiveGenerateTest(func, 600, lower, upper);
+		GenerateTest testGen = new ExhaustiveGenerateTest(func, typeSystem, 600, lower, upper);
 		
 		for(int n=0; n < boolCombinations.length; n++) {
 			RValue boolCombo = semantics.Array(boolCombinations[n]);

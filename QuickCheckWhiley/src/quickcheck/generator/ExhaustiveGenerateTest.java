@@ -10,12 +10,15 @@ import quickcheck.generator.type.ArrayGenerator;
 import quickcheck.generator.type.BooleanGenerator;
 import quickcheck.generator.type.Generator;
 import quickcheck.generator.type.IntegerGenerator;
+import quickcheck.generator.type.NominalGenerator;
 import quickcheck.util.TestType;
+import wybs.lang.NameResolver.ResolutionError;
 import wyc.lang.WhileyFile;
 import wyc.lang.WhileyFile.Decl;
 import wyc.lang.WhileyFile.Decl.FunctionOrMethod;
 import wyc.lang.WhileyFile.Decl.Variable;
 import wyil.interpreter.ConcreteSemantics.RValue;
+import wyil.type.TypeSystem;
 
 /**
  * Generate candidate test parameters exhaustively from a function.
@@ -50,12 +53,15 @@ public class ExhaustiveGenerateTest implements GenerateTest{
 	private int numTests; // Default number of tests to run
 	private boolean allTests;
 	
+	private TypeSystem typeSystem;
+	
 	private BigInteger lowerLimit;
 	private BigInteger upperLimit;
 
 	
-	public ExhaustiveGenerateTest(FunctionOrMethod dec, int numTests, BigInteger lowerLimit, BigInteger upperLimit) {
+	public ExhaustiveGenerateTest(FunctionOrMethod dec, TypeSystem typeSystem, int numTests, BigInteger lowerLimit, BigInteger upperLimit) {
 		this.dec = dec;
+		this.typeSystem = typeSystem;
 		this.lowerLimit = lowerLimit;
 		this.upperLimit = upperLimit;
 		this.parameterGenerators = new ArrayList<Generator>();
@@ -91,6 +97,20 @@ public class ExhaustiveGenerateTest implements GenerateTest{
 				generators.add(gen);
 			}
 			return new ArrayGenerator(generators, TestType.EXHAUSTIVE, RunTest.ARRAY_LOWER_LIMIT, RunTest.ARRAY_UPPER_LIMIT);
+		}
+		else if(paramType instanceof WhileyFile.Type.Nominal) {
+			// Nominal generator takes another generator
+			WhileyFile.Type.Nominal nom = (WhileyFile.Type.Nominal) paramType;
+			try {
+				Decl.Type decl = typeSystem.resolveExactly(nom.getName(), Decl.Type.class);
+				Decl.Variable var = decl.getVariableDeclaration();
+				Generator gen = getGenerator(var.getType());
+				return new NominalGenerator(gen);
+			} catch (ResolutionError e) {
+				// TODO What to do with resolution error?
+				e.printStackTrace();
+				assert false;
+			}
 		}
 		assert false;
 		return null;

@@ -149,7 +149,7 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 		BigInteger lower = new BigInteger(lowerLimit);
 		BigInteger upper = new BigInteger(upperLimit);
 		if(testType == TestType.EXHAUSTIVE) {
-			testGen = new ExhaustiveGenerateTest(dec, numTest, lower, upper);
+			testGen = new ExhaustiveGenerateTest(dec,interpreter.getTypeSystem(), numTest, lower, upper);
 		}
 		else {
 			testGen = new RandomGenerateTest(dec, interpreter.getTypeSystem(), lower, upper);

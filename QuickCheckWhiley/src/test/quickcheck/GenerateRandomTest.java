@@ -4,26 +4,22 @@ import static org.junit.Assert.*;
 
 import java.io.IOException;
 import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.experimental.theories.Theories;
 
 import quickcheck.generator.GenerateTest;
 import quickcheck.generator.RandomGenerateTest;
+import test.utils.TestHelper;
 import wybs.lang.Build;
-import wybs.util.StdProject;
-import wybs.util.AbstractCompilationUnit.Identifier;
-import wybs.util.AbstractCompilationUnit.Tuple;
+import wybs.util.AbstractCompilationUnit.*;
 import wyc.lang.WhileyFile.Decl;
 import wyc.lang.WhileyFile.Type;
 import wyc.lang.WhileyFile.Decl.Function;
-import wyfs.lang.Content;
-import wyfs.lang.Path;
-import wyfs.util.DirectoryRoot;
 import wyil.interpreter.ConcreteSemantics.RValue;
 import wyil.interpreter.ConcreteSemantics.RValue.Array;
 import wyil.type.TypeSystem;
@@ -36,21 +32,26 @@ import wyil.type.TypeSystem;
  *
  */
 public class GenerateRandomTest {
-	private static TypeSystem typeSystem;
+	/**
+	 * This directory contains the source files for each test case. Every test
+	 * corresponds to a file in this directory.
+	 */
+	private final static String TEST_DIR = "tests";
+	
+	private final static TestHelper helper = new TestHelper(TEST_DIR);
+	/**
+	 * Base type system used for the tests that do not require reading from a test file
+	 */
+	private static TypeSystem baseTypeSystem;
+
 		
 	@BeforeClass
 	public static void setupClass() throws IOException {
-		// The content registry maps file name extensions to their Content.Type.
-		Content.Registry registry = new wyc.Activator.Registry();
-		// The directory root specified where to look for Whiley / WyIL files.
-		DirectoryRoot root = new DirectoryRoot("test", registry);
-		ArrayList<Path.Root> roots = new ArrayList<>();
-		roots.add(root);
-		// Finally, create the project itself
-		Build.Project project = new StdProject(roots);
-		typeSystem = new TypeSystem(project);
-	}
-
+		Build.Project project = helper.createProject();
+		baseTypeSystem = new TypeSystem(project);
+	}	
+	
+	
 	/**
 	 * Test when the function has no parameters
 	 */
@@ -63,7 +64,7 @@ public class GenerateRandomTest {
 		generatorArgs.put("lowerLimit", "-10");
 		BigInteger lower = BigInteger.valueOf(-10);
 		BigInteger upper = BigInteger.valueOf(10);
-		GenerateTest testGen = new RandomGenerateTest(func, typeSystem, lower, upper);
+		GenerateTest testGen = new RandomGenerateTest(func, baseTypeSystem, lower, upper);
 		assertArrayEquals(new RValue[0], testGen.generateParameters());
 	}
 	
@@ -77,7 +78,7 @@ public class GenerateRandomTest {
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
 		BigInteger lower = BigInteger.valueOf(-10);
 		BigInteger upper = BigInteger.valueOf(10);
-		GenerateTest testGen = new RandomGenerateTest(func, typeSystem, lower, upper);
+		GenerateTest testGen = new RandomGenerateTest(func, baseTypeSystem, lower, upper);
 		RValue[] generatedParameters = testGen.generateParameters();
 		assertEquals(1, generatedParameters.length);
 		assertTrue(generatedParameters[0] instanceof RValue.Int);
@@ -96,7 +97,7 @@ public class GenerateRandomTest {
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
 		BigInteger lower = BigInteger.valueOf(-10);
 		BigInteger upper = BigInteger.valueOf(10);
-		GenerateTest testGen = new RandomGenerateTest(func, typeSystem, lower, upper);
+		GenerateTest testGen = new RandomGenerateTest(func, baseTypeSystem, lower, upper);
 		RValue[] generatedParameters = testGen.generateParameters();
 		assertEquals(3, generatedParameters.length);
 		assertTrue(generatedParameters[0] instanceof RValue.Int);
@@ -114,7 +115,7 @@ public class GenerateRandomTest {
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
 		BigInteger lower = BigInteger.valueOf(-10);
 		BigInteger upper = BigInteger.valueOf(10);
-		GenerateTest testGen = new RandomGenerateTest(func, typeSystem, lower, upper);
+		GenerateTest testGen = new RandomGenerateTest(func, baseTypeSystem, lower, upper);
 		RValue[] generatedParameters = testGen.generateParameters();
 		assertEquals(1, generatedParameters.length);
 		assertTrue(generatedParameters[0] instanceof RValue.Bool);
@@ -133,7 +134,7 @@ public class GenerateRandomTest {
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
 		BigInteger lower = BigInteger.valueOf(-10);
 		BigInteger upper = BigInteger.valueOf(10);
-		GenerateTest testGen = new RandomGenerateTest(func, typeSystem, lower, upper);
+		GenerateTest testGen = new RandomGenerateTest(func, baseTypeSystem, lower, upper);
 		RValue[] generatedParameters = testGen.generateParameters();
 		assertEquals(3, generatedParameters.length);
 		assertTrue(generatedParameters[0] instanceof RValue.Bool);
@@ -154,7 +155,7 @@ public class GenerateRandomTest {
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
 		BigInteger lower = BigInteger.valueOf(-10);
 		BigInteger upper = BigInteger.valueOf(10);
-		GenerateTest testGen = new RandomGenerateTest(func, typeSystem, lower, upper);
+		GenerateTest testGen = new RandomGenerateTest(func, baseTypeSystem, lower, upper);
 		RValue[] generatedParameters = testGen.generateParameters();
 		assertEquals(2, generatedParameters.length);
 		assertTrue(generatedParameters[0] instanceof RValue.Int);
@@ -174,7 +175,7 @@ public class GenerateRandomTest {
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
 		BigInteger lower = BigInteger.valueOf(-10);
 		BigInteger upper = BigInteger.valueOf(10);
-		GenerateTest testGen = new RandomGenerateTest(func, typeSystem, lower, upper);
+		GenerateTest testGen = new RandomGenerateTest(func, baseTypeSystem, lower, upper);
 		RValue[] generatedParameters = testGen.generateParameters();
 		assertEquals(3, generatedParameters.length);
 		assertTrue(generatedParameters[0] instanceof RValue.Int);
@@ -189,7 +190,7 @@ public class GenerateRandomTest {
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
 		BigInteger lower = BigInteger.valueOf(-10);
 		BigInteger upper = BigInteger.valueOf(10);
-		GenerateTest testGen = new RandomGenerateTest(func, typeSystem, lower, upper);
+		GenerateTest testGen = new RandomGenerateTest(func, baseTypeSystem, lower, upper);
 		RValue[] generatedParameters = testGen.generateParameters();
 		assertEquals(1, generatedParameters.length);
 		assertTrue(generatedParameters[0] instanceof RValue.Array);
@@ -207,7 +208,7 @@ public class GenerateRandomTest {
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
 		BigInteger lower = BigInteger.valueOf(-10);
 		BigInteger upper = BigInteger.valueOf(10);
-		GenerateTest testGen = new RandomGenerateTest(func, typeSystem, lower, upper);
+		GenerateTest testGen = new RandomGenerateTest(func, baseTypeSystem, lower, upper);
 		RValue[] generatedParameters = testGen.generateParameters();
 		assertEquals(1, generatedParameters.length);
 		assertTrue(generatedParameters[0] instanceof RValue.Array);
@@ -226,7 +227,7 @@ public class GenerateRandomTest {
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
 		BigInteger lower = BigInteger.valueOf(-10);
 		BigInteger upper = BigInteger.valueOf(10);
-		GenerateTest testGen = new RandomGenerateTest(func, typeSystem, lower, upper);
+		GenerateTest testGen = new RandomGenerateTest(func, baseTypeSystem, lower, upper);
 		RValue[] generatedParameters = testGen.generateParameters();
 		assertEquals(2, generatedParameters.length);
 		assertTrue(generatedParameters[0] instanceof RValue.Array);
@@ -243,4 +244,75 @@ public class GenerateRandomTest {
 			assertTrue(intElements[i] instanceof RValue.Int);
 		}
 	}
+		
+	@Test
+	public void testNominal1() throws IOException {
+		String testName = "nominal_1";
+		helper.compile(testName);
+		Build.Project project = helper.createProject();
+		TypeSystem typeSystem = new TypeSystem(project);
+		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		
+		BigInteger lower = BigInteger.valueOf(-10);
+		BigInteger upper = BigInteger.valueOf(10);
+		GenerateTest testGen = new RandomGenerateTest(functions.get(0), typeSystem, lower, upper);
+		RValue[] generatedParameters = testGen.generateParameters();
+		assertEquals(1, generatedParameters.length);
+		assertTrue(generatedParameters[0] instanceof RValue.Int);
+	}
+	
+	@Test
+	public void testNominal2() throws IOException {
+		String testName = "nominal_2";
+		helper.compile(testName);
+		Build.Project project = helper.createProject();
+		TypeSystem typeSystem = new TypeSystem(project);
+		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		
+		BigInteger lower = BigInteger.valueOf(-10);
+		BigInteger upper = BigInteger.valueOf(10);
+		GenerateTest testGen = new RandomGenerateTest(functions.get(0), typeSystem, lower, upper);
+		RValue[] generatedParameters = testGen.generateParameters();
+		assertEquals(1, generatedParameters.length);
+		assertTrue(generatedParameters[0] instanceof RValue.Int);
+	}
+	
+	@Test
+	public void testMultiNominal() throws IOException {
+		String testName = "nominal_multi";
+		helper.compile(testName);
+		Build.Project project = helper.createProject();
+		TypeSystem typeSystem = new TypeSystem(project);
+		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		
+		BigInteger lower = BigInteger.valueOf(-10);
+		BigInteger upper = BigInteger.valueOf(10);
+		GenerateTest testGen = new RandomGenerateTest(functions.get(0), typeSystem, lower, upper);
+		RValue[] generatedParameters = testGen.generateParameters();
+		assertEquals(3, generatedParameters.length);
+		assertTrue(generatedParameters[0] instanceof RValue.Int);
+		assertTrue(generatedParameters[1] instanceof RValue.Bool);
+		assertTrue(generatedParameters[2] instanceof RValue.Array);
+	}
+	
+	/**
+	 * Test creating a nominal based on another nominal
+	 * @throws IOException
+	 */
+	@Test
+	public void testNominalSame() throws IOException {
+		String testName = "nominal_same";
+		helper.compile(testName);
+		Build.Project project = helper.createProject();
+		TypeSystem typeSystem = new TypeSystem(project);
+		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		
+		BigInteger lower = BigInteger.valueOf(-10);
+		BigInteger upper = BigInteger.valueOf(10);
+		GenerateTest testGen = new RandomGenerateTest(functions.get(0), typeSystem, lower, upper);
+		RValue[] generatedParameters = testGen.generateParameters();
+		assertEquals(1, generatedParameters.length);
+		assertTrue(generatedParameters[0] instanceof RValue.Int);
+	}
+	
 }

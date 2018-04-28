@@ -336,8 +336,85 @@ public class GenerateExhaustiveTest {
 				}
 			}
 		}
+	}
 		
+	@Test
+	public void testNominal1() throws IOException {
+		String testName = "nominal_1";
+		helper.compile(testName);
+		Build.Project project = helper.createProject();
+		TypeSystem typeSystem = new TypeSystem(project);
+		List<Decl.Function> functions = helper.getFunctions(testName, project);
 		
+		BigInteger lower = BigInteger.valueOf(-2);
+		BigInteger upper = BigInteger.valueOf(2);
+		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), typeSystem, 10, lower, upper);
+		for(int i=lower.intValue(); i < upper.intValue(); i++) {
+			RValue[] generatedParameters = testGen.generateParameters();
+			assertEquals(semantics.Int(BigInteger.valueOf(i)), generatedParameters[0]);
+		}
+	}
+	
+	@Test
+	public void testNominal2() throws IOException {
+		String testName = "nominal_2";
+		helper.compile(testName);
+		Build.Project project = helper.createProject();
+		TypeSystem typeSystem = new TypeSystem(project);
+		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		
+		BigInteger lower = BigInteger.valueOf(-10);
+		BigInteger upper = BigInteger.valueOf(10);
+		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), typeSystem, 10, lower, upper);
+		for(int i=lower.intValue(); i < upper.intValue(); i++) {
+			RValue[] generatedParameters = testGen.generateParameters();
+			assertEquals(semantics.Int(BigInteger.valueOf(i)), generatedParameters[0]);
+		}
+	}
+	
+	@Test
+	public void testMultiNominal() throws IOException {
+		String testName = "nominal_multi";
+		helper.compile(testName);
+		Build.Project project = helper.createProject();
+		TypeSystem typeSystem = new TypeSystem(project);
+		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		BigInteger lower = BigInteger.valueOf(0);
+		BigInteger upper = BigInteger.valueOf(3);
+		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), typeSystem, 90, lower, upper);
+		for(int i=0; i < 3; i++) {
+			for(int j=0; j <= 1; j++) {
+				for(int k=0; k < boolCombinations.length; k++) {
+					RValue[] generatedParameters = testGen.generateParameters();
+					assertEquals(3, generatedParameters.length);
+					assertEquals(semantics.Int(BigInteger.valueOf(i)), generatedParameters[0]);
+					assertEquals(semantics.Bool(j==0), generatedParameters[1]);
+					assertEquals(semantics.Array(boolCombinations[k]), generatedParameters[2]);
+				}				
+			}
+		}
+	}
+	
+	/**
+	 * Test creating a nominal based on another nominal
+	 * @throws IOException
+	 */
+	@Test
+	public void testNominalSame() throws IOException {
+		String testName = "nominal_same";
+		helper.compile(testName);
+		Build.Project project = helper.createProject();
+		TypeSystem typeSystem = new TypeSystem(project);
+		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		
+		BigInteger lower = BigInteger.valueOf(0);
+		BigInteger upper = BigInteger.valueOf(3);
+		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), typeSystem, 16, lower, upper);
+		for(int i=0; i < 3; i++) {
+			RValue[] generatedParameters = testGen.generateParameters();
+			assertEquals(1, generatedParameters.length);
+			assertEquals(semantics.Int(BigInteger.valueOf(i)), generatedParameters[0]);
+		}
 	}
 	
 }

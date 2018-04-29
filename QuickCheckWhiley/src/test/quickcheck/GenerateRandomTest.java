@@ -22,6 +22,7 @@ import wyc.lang.WhileyFile.Type;
 import wyc.lang.WhileyFile.Decl.Function;
 import wyil.interpreter.ConcreteSemantics.RValue;
 import wyil.interpreter.ConcreteSemantics.RValue.Array;
+import wyil.interpreter.ConcreteSemantics.RValue.Record;
 import wyil.type.TypeSystem;
 
 /**
@@ -125,7 +126,7 @@ public class GenerateRandomTest {
 	 * Test when the function has multiple bool parameters
 	 */
 	@Test
-	public void testFunctionMultipleBoolParameters() {
+	public void testFunctionMultiBoolParameters() {
 		Decl.Variable boolOne = new Decl.Variable(null, new Identifier("firstBool"), Type.Bool);
 		Decl.Variable boolTwo = new Decl.Variable(null, new Identifier("secBool"), Type.Bool);
 		Decl.Variable boolThree = new Decl.Variable(null, new Identifier("thirdBool"), Type.Bool);
@@ -313,6 +314,101 @@ public class GenerateRandomTest {
 		RValue[] generatedParameters = testGen.generateParameters();
 		assertEquals(1, generatedParameters.length);
 		assertTrue(generatedParameters[0] instanceof RValue.Int);
+	}
+	
+	@Test
+	public void testRecord1() throws IOException {
+		String testName = "record_1";
+		helper.compile(testName);
+		Build.Project project = helper.createProject();
+		TypeSystem typeSystem = new TypeSystem(project);
+		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		
+		BigInteger lower = BigInteger.valueOf(-10);
+		BigInteger upper = BigInteger.valueOf(10);	
+		GenerateTest testGen = new RandomGenerateTest(functions.get(0), typeSystem, lower, upper);
+		RValue[] generatedParameters = testGen.generateParameters();
+		assertEquals(1, generatedParameters.length);
+		assertTrue(generatedParameters[0] instanceof RValue.Record);
+		RValue.Record record = (Record) generatedParameters[0];
+		RValue first = record.read(new Identifier("x"));
+		assertTrue(first instanceof RValue.Int);
+		RValue second = record.read(new Identifier("y"));
+		assertTrue(second instanceof RValue.Int);
+	}
+	
+	@Test
+	public void testRecord2() throws IOException {
+		String testName = "record_2";
+		helper.compile(testName);
+		Build.Project project = helper.createProject();
+		TypeSystem typeSystem = new TypeSystem(project);
+		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		
+		BigInteger lower = BigInteger.valueOf(-10);
+		BigInteger upper = BigInteger.valueOf(10);	
+		GenerateTest testGen = new RandomGenerateTest(functions.get(0), typeSystem, lower, upper);
+		RValue[] generatedParameters = testGen.generateParameters();
+		assertEquals(1, generatedParameters.length);
+		assertTrue(generatedParameters[0] instanceof RValue.Record);
+		RValue.Record record = (Record) generatedParameters[0];
+		RValue first = record.read(new Identifier("negate"));
+		assertTrue(first instanceof RValue.Bool);
+		RValue second = record.read(new Identifier("x"));
+		assertTrue(second instanceof RValue.Int);
+	}
+	
+	@Test
+	public void testMultiRecord() throws IOException {
+		String testName = "record_multi";
+		helper.compile(testName);
+		Build.Project project = helper.createProject();
+		TypeSystem typeSystem = new TypeSystem(project);
+		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		
+		BigInteger lower = BigInteger.valueOf(-10);
+		BigInteger upper = BigInteger.valueOf(10);	
+		GenerateTest testGen = new RandomGenerateTest(functions.get(0), typeSystem, lower, upper);
+		RValue[] generatedParameters = testGen.generateParameters();
+		assertEquals(2, generatedParameters.length);
+		assertTrue(generatedParameters[0] instanceof RValue.Record);
+		assertTrue(generatedParameters[1] instanceof RValue.Record);
+		
+		RValue.Record recordPoint = (Record) generatedParameters[0];
+		RValue first = recordPoint.read(new Identifier("x"));
+		assertTrue(first instanceof RValue.Int);
+		RValue second = recordPoint.read(new Identifier("y"));
+		assertTrue(second instanceof RValue.Int);
+		
+		RValue.Record recordCounter = (Record) generatedParameters[1];
+		first = recordCounter.read(new Identifier("negate"));
+		assertTrue(first instanceof RValue.Bool);
+		second = recordCounter.read(new Identifier("x"));
+		assertTrue(second instanceof RValue.Int);
+	}
+	
+	@Test
+	public void testRecordSame() throws IOException {
+		String testName = "record_same";
+		helper.compile(testName);
+		Build.Project project = helper.createProject();
+		TypeSystem typeSystem = new TypeSystem(project);
+		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		
+		BigInteger lower = BigInteger.valueOf(-10);
+		BigInteger upper = BigInteger.valueOf(10);	
+		GenerateTest testGen = new RandomGenerateTest(functions.get(0), typeSystem, lower, upper);
+		RValue[] generatedParameters = testGen.generateParameters();
+		assertEquals(2, generatedParameters.length);
+		assertTrue(generatedParameters[1] instanceof RValue.Record);
+		for(int i=0; i < 2; i++) {
+			assertTrue(generatedParameters[i] instanceof RValue.Record);
+			RValue.Record record = (Record) generatedParameters[i];
+			RValue first = record.read(new Identifier("x"));
+			assertTrue(first instanceof RValue.Int);
+			RValue second = record.read(new Identifier("y"));
+			assertTrue(second instanceof RValue.Int);
+		}
 	}
 	
 }

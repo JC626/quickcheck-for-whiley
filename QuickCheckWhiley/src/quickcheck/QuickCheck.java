@@ -41,10 +41,13 @@ public class QuickCheck {
 		}
 		String filepath = args[0];
 		int lastSlash = filepath.lastIndexOf("/");
-		String relativePath = filepath.substring(0, lastSlash);
-		String filename = filepath.substring(lastSlash+1);
+		String relativePath = ".";
+		String filename = filepath;
+		if(lastSlash > -1) {
+			relativePath = filepath.substring(0, lastSlash);
+			filename = filepath.substring(lastSlash+1);
+		}
 		Path.ID id = extractPathID(filename);
-		filepath.lastIndexOf(filename);
 		TestType testType = TestType.RANDOM;
 		if(args.length >= 2) {
 			String type = args[1];

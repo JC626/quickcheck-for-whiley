@@ -52,7 +52,8 @@ public class RecordGenerator implements Generator{
 				}
 			}
 			count++;
-			return semantics.Record(elements);		
+			// Need to clone (shallow is fine) so the elements array doesn't get sorted
+			return semantics.Record(elements.clone());		
 		}
 		else {
 			Field[] recordFields = new Field[generators.size()];
@@ -61,7 +62,8 @@ public class RecordGenerator implements Generator{
 				recordFields[i] = semantics.Field(names.get(i), gen.generate());
 			}
 			count++;
-			return semantics.Record(recordFields);
+			// Need to clone (shallow is fine) so the elements array doesn't get sorted
+			return semantics.Record(recordFields.clone());
 		}
 	}
 

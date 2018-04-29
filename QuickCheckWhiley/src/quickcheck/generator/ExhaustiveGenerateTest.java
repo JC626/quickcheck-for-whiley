@@ -3,7 +3,6 @@ package quickcheck.generator;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
 
 import quickcheck.RunTest;
 import quickcheck.generator.type.ArrayGenerator;
@@ -11,8 +10,11 @@ import quickcheck.generator.type.BooleanGenerator;
 import quickcheck.generator.type.Generator;
 import quickcheck.generator.type.IntegerGenerator;
 import quickcheck.generator.type.NominalGenerator;
+import quickcheck.generator.type.RecordGenerator;
 import quickcheck.util.TestType;
 import wybs.lang.NameResolver.ResolutionError;
+import wybs.util.AbstractCompilationUnit.Identifier;
+import wybs.util.AbstractCompilationUnit.Tuple;
 import wyc.lang.WhileyFile;
 import wyc.lang.WhileyFile.Decl;
 import wyc.lang.WhileyFile.Decl.FunctionOrMethod;
@@ -111,6 +113,18 @@ public class ExhaustiveGenerateTest implements GenerateTest{
 				e.printStackTrace();
 				assert false;
 			}
+		}
+		else if(paramType instanceof WhileyFile.Type.Record) {
+			WhileyFile.Type.Record record = (WhileyFile.Type.Record) paramType;
+			Tuple<Decl.Variable> tuple = record.getFields();
+			List<Generator> generators = new ArrayList<Generator>();
+			List<Identifier> names = new ArrayList<Identifier>();
+			for(Decl.Variable var : tuple) {
+				Generator gen = getGenerator(var.getType());
+				names.add(var.getName());
+				generators.add(gen);
+			}
+			return new RecordGenerator(generators, names, TestType.EXHAUSTIVE);
 		}
 		assert false;
 		return null;

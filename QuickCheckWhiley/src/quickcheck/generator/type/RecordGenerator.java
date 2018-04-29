@@ -67,9 +67,9 @@ public class RecordGenerator implements Generator{
 
 	@Override
 	public int size() {
-		int size = 0;
+		int size = 1;
 		for(int i=0; i < generators.size(); i++) {
-			size += generators.get(i).size();
+			size *= generators.get(i).size();
 		}
 		return size;
 	}

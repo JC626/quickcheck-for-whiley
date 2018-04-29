@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 
 import java.io.IOException;
 import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.BeforeClass;
@@ -12,19 +11,17 @@ import org.junit.Test;
 
 import quickcheck.generator.ExhaustiveGenerateTest;
 import quickcheck.generator.GenerateTest;
+import quickcheck.generator.RandomGenerateTest;
 import test.utils.TestHelper;
 import wybs.lang.Build;
-import wybs.util.StdProject;
 import wybs.util.AbstractCompilationUnit.Identifier;
 import wybs.util.AbstractCompilationUnit.Tuple;
 import wyc.lang.WhileyFile.Decl;
 import wyc.lang.WhileyFile.Type;
 import wyc.lang.WhileyFile.Decl.Function;
-import wyfs.lang.Content;
-import wyfs.lang.Path;
-import wyfs.util.DirectoryRoot;
 import wyil.interpreter.ConcreteSemantics;
 import wyil.interpreter.ConcreteSemantics.RValue;
+import wyil.interpreter.ConcreteSemantics.RValue.Record;
 import wyil.type.TypeSystem;
 
 /**
@@ -416,5 +413,128 @@ public class GenerateExhaustiveTest {
 			assertEquals(semantics.Int(BigInteger.valueOf(i)), generatedParameters[0]);
 		}
 	}
+	
+	@Test
+	public void testRecord1() throws IOException {
+		String testName = "record_1";
+		helper.compile(testName);
+		Build.Project project = helper.createProject();
+		TypeSystem typeSystem = new TypeSystem(project);
+		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		
+		BigInteger lower = BigInteger.valueOf(0);
+		BigInteger upper = BigInteger.valueOf(6);
+		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), typeSystem, 25, lower, upper);
+		for(int i=0; i < 6; i++) {
+			for(int j=0; j < 6; j++) {
+				RValue[] generatedParameters = testGen.generateParameters();
+				assertEquals(1, generatedParameters.length);
+				RValue.Record record = (Record) generatedParameters[0];
+				RValue first = record.read(new Identifier("x"));
+				assertEquals(semantics.Int(BigInteger.valueOf(i)), first);
+				RValue second = record.read(new Identifier("y"));
+				assertEquals(semantics.Int(BigInteger.valueOf(j)), second);
+			}
+		}
+
+	}
+	
+	@Test
+	public void testRecord2() throws IOException {
+		String testName = "record_2";
+		helper.compile(testName);
+		Build.Project project = helper.createProject();
+		TypeSystem typeSystem = new TypeSystem(project);
+		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		
+		BigInteger lower = BigInteger.valueOf(0);
+		BigInteger upper = BigInteger.valueOf(6);
+		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), typeSystem, 10, lower, upper);
+		for(int i=0; i < 2; i++) {
+			for(int j=0; j < 6; j++) {
+				RValue[] generatedParameters = testGen.generateParameters();
+				assertEquals(1, generatedParameters.length);
+				RValue.Record record = (Record) generatedParameters[0];
+				RValue first = record.read(new Identifier("negate"));
+				assertEquals(semantics.Bool(i == 0), first);
+				RValue second = record.read(new Identifier("x"));
+				assertEquals(semantics.Int(BigInteger.valueOf(j)), second);
+			}
+		}
+
+	}
+	
+	@Test
+	public void testMultiRecord() throws IOException {
+		String testName = "record_multi";
+		helper.compile(testName);
+		Build.Project project = helper.createProject();
+		TypeSystem typeSystem = new TypeSystem(project);
+		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		
+		BigInteger lower = BigInteger.valueOf(0);
+		BigInteger upper = BigInteger.valueOf(3);
+		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), typeSystem, 10, lower, upper);
+		for(int i=0; i < 3; i++) {
+			for(int j=0; j < 3; j++) {
+				for(int k=0; k <= 1; k++) {
+					for(int m=0; m < 3; m++) {
+						RValue[] generatedParameters = testGen.generateParameters();
+
+						assertEquals(2, generatedParameters.length);
+						RValue.Record recordPoint = (Record) generatedParameters[0];
+						RValue first = recordPoint.read(new Identifier("x"));
+						assertEquals(semantics.Int(BigInteger.valueOf(i)), first);
+						RValue second = recordPoint.read(new Identifier("y"));
+						assertEquals(semantics.Int(BigInteger.valueOf(j)), second);
+						
+						RValue.Record recordCounter = (Record) generatedParameters[1];
+						RValue third = recordCounter.read(new Identifier("negate"));
+						assertEquals(semantics.Bool(k==0), third);
+						RValue fourth = recordCounter.read(new Identifier("x"));
+						assertEquals(semantics.Int(BigInteger.valueOf(m)), fourth);
+					}
+				}
+			}
+		}
+		
+
+	}
+	
+	@Test
+	public void testRecordSame() throws IOException {
+		String testName = "record_same";
+		helper.compile(testName);
+		Build.Project project = helper.createProject();
+		TypeSystem typeSystem = new TypeSystem(project);
+		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		
+		BigInteger lower = BigInteger.valueOf(0);
+		BigInteger upper = BigInteger.valueOf(3);
+		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), typeSystem, 10, lower, upper);
+		for(int i=0; i < 3; i++) {
+			for(int j=0; j < 3; j++) {
+				for(int k=0; k < 3; k++) {
+					for(int m=0; m < 3; m++) {
+						RValue[] generatedParameters = testGen.generateParameters();
+
+						assertEquals(2, generatedParameters.length);
+						RValue.Record recordPoint = (Record) generatedParameters[0];
+						RValue first = recordPoint.read(new Identifier("x"));
+						assertEquals(semantics.Int(BigInteger.valueOf(i)), first);
+						RValue second = recordPoint.read(new Identifier("y"));
+						assertEquals(semantics.Int(BigInteger.valueOf(j)), second);
+						
+						RValue.Record recordCell = (Record) generatedParameters[1];
+						RValue third = recordCell.read(new Identifier("x"));
+						assertEquals(semantics.Int(BigInteger.valueOf(k)), third);
+						RValue fourth = recordCell.read(new Identifier("y"));
+						assertEquals(semantics.Int(BigInteger.valueOf(m)), fourth);
+					}
+				}
+			}
+		}
+	}
+	
 	
 }

@@ -30,7 +30,7 @@ public class NullGenerator implements Generator{
 
 	@Override
 	public boolean exceedCount() {
-		return false;
+		return true;
 	}
 
 }

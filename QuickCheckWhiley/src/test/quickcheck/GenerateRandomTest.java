@@ -152,15 +152,18 @@ public class GenerateRandomTest {
 	public void testFunctionDiffParameters1() {
 		Decl.Variable intParam = new Decl.Variable(null, new Identifier("firstInt"), Type.Int);
 		Decl.Variable boolParam = new Decl.Variable(null, new Identifier("secBool"), Type.Bool);
-		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(intParam, boolParam);
+		Decl.Variable nullParam = new Decl.Variable(null, new Identifier("thirdNull"), Type.Null);
+
+		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(intParam, boolParam, nullParam);
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
 		BigInteger lower = BigInteger.valueOf(-10);
 		BigInteger upper = BigInteger.valueOf(10);
 		GenerateTest testGen = new RandomGenerateTest(func, baseTypeSystem, lower, upper);
 		RValue[] generatedParameters = testGen.generateParameters();
-		assertEquals(2, generatedParameters.length);
+		assertEquals(3, generatedParameters.length);
 		assertTrue(generatedParameters[0] instanceof RValue.Int);
 		assertTrue(generatedParameters[1] instanceof RValue.Bool);
+		assertTrue(generatedParameters[2] instanceof RValue.Null);
 	}
 	
 	/**
@@ -409,6 +412,19 @@ public class GenerateRandomTest {
 			RValue second = record.read(new Identifier("y"));
 			assertTrue(second instanceof RValue.Int);
 		}
+	}
+	
+	@Test
+	public void testNull() {
+		Decl.Variable nullParam = new Decl.Variable(null, new Identifier("nullParam"), Type.Null);
+		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(nullParam);
+		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
+		BigInteger lower = BigInteger.valueOf(-10);
+		BigInteger upper = BigInteger.valueOf(10);
+		GenerateTest testGen = new RandomGenerateTest(func, baseTypeSystem, lower, upper);
+		RValue[] generatedParameters = testGen.generateParameters();
+		assertEquals(1, generatedParameters.length);
+		assertTrue(generatedParameters[0] instanceof RValue.Null);
 	}
 	
 }

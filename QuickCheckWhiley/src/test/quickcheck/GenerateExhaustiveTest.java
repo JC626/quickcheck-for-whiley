@@ -172,8 +172,9 @@ public class GenerateExhaustiveTest {
 	@Test
 	public void testFunctionDiffParameters1() {
 		Decl.Variable intParam = new Decl.Variable(null, new Identifier("firstInt"), Type.Int);
-		Decl.Variable boolParam = new Decl.Variable(null, new Identifier("secBool"), Type.Bool);
-		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(intParam, boolParam);
+		Decl.Variable nullParam = new Decl.Variable(null, new Identifier("secNull"), Type.Null);
+		Decl.Variable boolParam = new Decl.Variable(null, new Identifier("thirdBool"), Type.Bool);
+		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(intParam, nullParam, boolParam);
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
 		BigInteger lower = BigInteger.valueOf(-2);
 		BigInteger upper = BigInteger.valueOf(4);
@@ -181,9 +182,10 @@ public class GenerateExhaustiveTest {
 		for(int i=-2; i <= 3; i++) {
 			for(int j=0; j <= 1; j++) {
 				RValue[] generatedParameters = testGen.generateParameters();
-				assertEquals(2, generatedParameters.length);
+				assertEquals(3, generatedParameters.length);
 				assertEquals(semantics.Int(BigInteger.valueOf(i)), generatedParameters[0]);
-				assertEquals(semantics.Bool(j==0), generatedParameters[1]);
+				assertEquals(semantics.Null(), generatedParameters[1]);
+				assertEquals(semantics.Bool(j==0), generatedParameters[2]);
 			}
 		}
 		// Switch the parameters around
@@ -533,6 +535,21 @@ public class GenerateExhaustiveTest {
 					}
 				}
 			}
+		}
+	}
+	
+	@Test
+	public void testNull() {
+		Decl.Variable nullParam = new Decl.Variable(null, new Identifier("nullParam"), Type.Null);
+		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(nullParam);
+		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
+		BigInteger lower = BigInteger.valueOf(-10);
+		BigInteger upper = BigInteger.valueOf(10);
+		GenerateTest testGen = new ExhaustiveGenerateTest(func, baseTypeSystem, 10, lower, upper);
+		for(int i=0; i < 10; i++) {
+			RValue[] generatedParameters = testGen.generateParameters();
+			assertEquals(1, generatedParameters.length);
+			assertEquals(semantics.Null(), generatedParameters[0]);
 		}
 	}
 	

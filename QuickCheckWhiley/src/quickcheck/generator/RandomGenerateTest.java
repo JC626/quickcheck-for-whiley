@@ -10,6 +10,7 @@ import quickcheck.generator.type.BooleanGenerator;
 import quickcheck.generator.type.Generator;
 import quickcheck.generator.type.IntegerGenerator;
 import quickcheck.generator.type.NominalGenerator;
+import quickcheck.generator.type.NullGenerator;
 import quickcheck.generator.type.RecordGenerator;
 import quickcheck.util.TestType;
 import wybs.lang.NameResolver.ResolutionError;
@@ -66,6 +67,9 @@ public class RandomGenerateTest implements GenerateTest{
 		}
 		else if(paramType instanceof WhileyFile.Type.Bool) {
 			return new BooleanGenerator(TestType.RANDOM);
+		}
+		else if(paramType instanceof WhileyFile.Type.Null) {
+			return new NullGenerator();
 		}
 		else if(paramType instanceof WhileyFile.Type.Array) {
 			WhileyFile.Type arrEle = ((WhileyFile.Type.Array) paramType).getElement();

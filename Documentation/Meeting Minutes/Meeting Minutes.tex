@@ -153,7 +153,35 @@ Background survey for preliminary report
 	\item Arrays should be limited by its array size. This should be a constant upper limit. Random generation of elements. The arrays takes a generator element.
 	\item Records. Print name of the field. Don't know field names of \texttt{...}. This generates n number of fields.
 	\item Recursive types. Need to know if the type is recursive. Infinite data type e.g. binary tree. Limit it like an array. Cyclic generators? e.g. type list is \{int data, null | List next \}
-	\item Integer range paper -> For figuring out ranges to use during generation.
+	\item Integer range paper - For figuring out ranges to use during generation.
+\end{itemize}
+
+\section{April 30th 2018}
+\subsection{Present}
+\begin{itemize}
+	\item David Pearce
+\end{itemize}
+
+\subsection{Action points were achieved since the last meeting}
+\begin{itemize}
+	\item Array generation. Size of elements are bounded between 0 and 3.
+	\item Nominal type generation.
+	\item Record generation for closed records only. 
+	\item Null generation
+\end{itemize}
+\subsection{Action points have yet to be achieved since the last meeting}
+None
+\subsection{Action points were agreed to for the next meeting}
+\begin{itemize}
+	\item Union generator
+	\item Start on integer range analysis
+\end{itemize}
+\subsection{Discussion Points}
+\begin{itemize}
+ \item ResolutionError occurs when a name of a type cannot be found. To resolve, need to import the correct files used such as the Whiley standard library.
+ \item Look at Knuth's Algorithm S for random sampling.
+ \item Null type primarily used for recursive types.
+ \item When generating union types, need to fairly select values of each type. E.g. for int|bool, select an int then a bool then an int etc.
 \end{itemize}
 
 %\section{ 2018}
@@ -168,24 +196,7 @@ Background survey for preliminary report
 %
 %\subsection{Discussion Points}
 %\begin{itemize}
-%	\item Should test generation only work for functions that have Whiley program specifications? (Probably a yes)
-%	\item Does Whiley throw errors/exceptions during run-time? If so, how should my tests handle this?
-%	\item For functions/methods with no post-condition, should I only run one test (to ensure the code can be executed)?
-%\end{itemize}
-
-%\section{ 2018}
-%\subsection{Present}
-%\begin{itemize}
-%	\item David Pearce
-%\end{itemize}
-%
-%\subsection{Action points were achieved since the last meeting}
-%\subsection{Action points have yet to be achieved since the last meeting}
-%\subsection{Action points were agreed to for the next meeting}
-%
-%\subsection{Discussion Points}
-%\begin{itemize}
-
+% \item EMAIL DAVE Send Latex lstlisting format for Whiley code
 %\end{itemize}
 
 

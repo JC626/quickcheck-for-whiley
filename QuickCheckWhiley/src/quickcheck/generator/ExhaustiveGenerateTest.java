@@ -5,13 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import quickcheck.RunTest;
-import quickcheck.generator.type.ArrayGenerator;
-import quickcheck.generator.type.BooleanGenerator;
-import quickcheck.generator.type.Generator;
-import quickcheck.generator.type.IntegerGenerator;
-import quickcheck.generator.type.NominalGenerator;
-import quickcheck.generator.type.NullGenerator;
-import quickcheck.generator.type.RecordGenerator;
+import quickcheck.generator.type.*;
 import quickcheck.util.TestType;
 import wybs.lang.NameResolver.ResolutionError;
 import wybs.util.AbstractCompilationUnit.Identifier;
@@ -129,6 +123,15 @@ public class ExhaustiveGenerateTest implements GenerateTest{
 				generators.add(gen);
 			}
 			return new RecordGenerator(generators, names, TestType.EXHAUSTIVE);
+		}
+		else if(paramType instanceof WhileyFile.Type.Union) {
+			WhileyFile.Type.Union union = (WhileyFile.Type.Union) paramType;
+			List<Generator> generators = new ArrayList<Generator>();
+			for(int i=0; i < union.size(); i++) {
+				Generator gen = getGenerator(union.get(i));
+				generators.add(gen);
+			}
+			return new UnionGenerator(generators, TestType.EXHAUSTIVE);
 		}
 		assert false;
 		return null;

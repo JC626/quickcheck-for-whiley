@@ -11,7 +11,6 @@ import org.junit.Test;
 
 import quickcheck.generator.ExhaustiveGenerateTest;
 import quickcheck.generator.GenerateTest;
-import quickcheck.generator.RandomGenerateTest;
 import test.utils.TestHelper;
 import wybs.lang.Build;
 import wybs.util.AbstractCompilationUnit.Identifier;

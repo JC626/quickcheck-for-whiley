@@ -7,8 +7,25 @@
 
 \usepackage{float} % lets you have non-floating floats
 
+\usepackage[usenames, dvipsnames]{color}
 \usepackage{url} % for typesetting urls
 \usepackage{listings}  % for code
+
+\lstdefinelanguage{Whiley}{
+	keywords={assert, for, while, switch, is, if, case, return,
+		else, process, define, as, requires, ensures, where, no,
+		all, bool, int, byte, void, real, in, any, null, char,
+		string, function, var, method, type, some, reduce, import
+	},
+	keywordstyle=\color{Plum},
+	basicstyle=\ttfamily,
+	commentstyle=\rmfamily\itshape\color{gray},
+	stringstyle=\small\itshape,
+	moredelim=*[s][commentstyle]{/*}{*/}, % allows keyword highlighting inside comments
+	morecomment=[l][commentstyle]{//},      % single line comments are set by...
+	moredelim=*[s][\color{blue}]{"}{"}, % highlighting print statement
+}
+
 %  We don't want figures to float so we define
 %
 \newfloat{fig}{thp}{lof}[chapter]
@@ -18,6 +35,7 @@
 %%
 \title{QuickCheck for Whiley}
 \author{Janice Chin}
+
 
 
 %% This file can be used for creating a wide range of reports
@@ -131,7 +149,7 @@ To achieve this goal, Whiley contains a verifying compiler which employs the use
 Below is an example of a Whiley program with a function,  \texttt{min()} which finds the minimum value of two integers. This program prints out "The smallest integer is 3" when executed. 
 
 \begin{minipage}{\linewidth}
-\begin{lstlisting}[tabsize=3, numbers=left,
+\begin{lstlisting}[language=Whiley, tabsize=3, numbers=left,
  caption= Whiley program for the min function \label{lst:min}]
 import std::io
 import std::ascii

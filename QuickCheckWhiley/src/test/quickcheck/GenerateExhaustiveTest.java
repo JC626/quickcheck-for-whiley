@@ -599,4 +599,40 @@ public class GenerateExhaustiveTest {
 		}
 	}
 	
+	@Test
+	public void testUnion3() {
+		Decl.Variable unionParam = new Decl.Variable(null, new Identifier("unionParamComplex"), new Type.Union(Type.Null, new Type.Array(Type.Bool)));
+		Decl.Variable unionParam2 = new Decl.Variable(null, new Identifier("unionParam"), new Type.Union(Type.Bool, Type.Int));
+		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(unionParam, unionParam2);
+		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
+		BigInteger lower = BigInteger.valueOf(-5);
+		BigInteger upper = BigInteger.valueOf(5);
+		GenerateTest testGen = new ExhaustiveGenerateTest(func, baseTypeSystem, 15, lower, upper);
+		
+		for(int i=-1; i < boolCombinations.length; i++) {
+			RValue[] generatedParameters = testGen.generateParameters();
+			assertEquals(2, generatedParameters.length);
+			if(i == -1) {
+				assertEquals(semantics.Null(), generatedParameters[0]);
+			}
+			else {
+				assertEquals(semantics.Array(boolCombinations[i]), generatedParameters[0]);
+			}
+			
+			generatedParameters = testGen.generateParameters();
+			assertEquals(2, generatedParameters.length);
+			assertEquals(semantics.Int(BigInteger.valueOf(-5)), generatedParameters[1]);
+			
+			generatedParameters = testGen.generateParameters();
+			assertEquals(2, generatedParameters.length);
+			assertEquals(semantics.Bool(false), generatedParameters[1]);
+			
+			for(int j=-4; j < 5; j++) {
+				generatedParameters = testGen.generateParameters();
+				assertEquals(2, generatedParameters.length);
+				assertEquals(semantics.Int(BigInteger.valueOf(j)), generatedParameters[1]);
+			}
+		}
+	}
+	
 }

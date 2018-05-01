@@ -427,4 +427,59 @@ public class GenerateRandomTest {
 		assertTrue(generatedParameters[0] instanceof RValue.Null);
 	}
 	
+	@Test
+	public void testUnion1() {
+		Decl.Variable unionParam = new Decl.Variable(null, new Identifier("unionParam"), new Type.Union(Type.Null, Type.Int));
+		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(unionParam);
+		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
+		BigInteger lower = BigInteger.valueOf(-5);
+		BigInteger upper = BigInteger.valueOf(5);
+		GenerateTest testGen = new RandomGenerateTest(func, baseTypeSystem, lower, upper);
+		RValue[] generatedParameters = testGen.generateParameters();
+		assertEquals(1, generatedParameters.length);
+		if (!(generatedParameters[0] instanceof RValue.Int || generatedParameters[0] instanceof RValue.Null)) {
+			fail("Generated parameter from Union should be a Int or Null but was " + generatedParameters[0]);
+		}
+	}
+	
+	@Test
+	public void testUnion2() {
+		Decl.Variable unionParam = new Decl.Variable(null, new Identifier("unionParam"), new Type.Union(Type.Bool, Type.Int));
+		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(unionParam);
+		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
+		BigInteger lower = BigInteger.valueOf(-5);
+		BigInteger upper = BigInteger.valueOf(5);
+		GenerateTest testGen = new RandomGenerateTest(func, baseTypeSystem, lower, upper);
+		RValue[] generatedParameters = testGen.generateParameters();
+		assertEquals(1, generatedParameters.length);
+		if (!(generatedParameters[0] instanceof RValue.Int || generatedParameters[0] instanceof RValue.Bool)) {
+			fail("Generated parameter from Union should be a Int or Bool but was " + generatedParameters[0]);
+		}
+	}
+	
+	@Test
+	public void testUnion3() {
+		Decl.Variable unionParam = new Decl.Variable(null, new Identifier("unionParam1"), new Type.Union(Type.Bool, Type.Int));
+		Decl.Variable unionParam2 = new Decl.Variable(null, new Identifier("unionParam2"), new Type.Union(Type.Null, new Type.Array(Type.Bool)));
+		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(unionParam, unionParam2);
+		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
+		BigInteger lower = BigInteger.valueOf(-5);
+		BigInteger upper = BigInteger.valueOf(5);
+		GenerateTest testGen = new RandomGenerateTest(func, baseTypeSystem, lower, upper);
+		RValue[] generatedParameters = testGen.generateParameters();
+		assertEquals(2, generatedParameters.length);
+		if (!(generatedParameters[0] instanceof RValue.Int || generatedParameters[0] instanceof RValue.Bool)) {
+			fail("Generated parameter from Union should be a Int or Bool but was " + generatedParameters[0]);
+		}
+		if(generatedParameters[1] instanceof RValue.Array) {
+			RValue.Array boolArr = (Array) generatedParameters[1];
+			RValue[] boolElements = boolArr.getElements();
+			for(int i=0; i < boolElements.length; i++) {
+				assertTrue(boolElements[i] instanceof RValue.Bool);
+			}
+		}
+		else if (!(generatedParameters[1] instanceof RValue.Null)) {
+			fail("Generated parameter from Union should be a Null or Boolean array but was " + generatedParameters[1]);
+		}
+	}
 }

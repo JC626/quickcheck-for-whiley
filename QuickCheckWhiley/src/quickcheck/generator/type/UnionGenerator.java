@@ -1,6 +1,7 @@
 package quickcheck.generator.type;
 
 import java.util.List;
+import java.util.Random;
 
 import quickcheck.util.TestType;
 import wyil.interpreter.ConcreteSemantics.RValue;
@@ -14,6 +15,11 @@ import wyil.interpreter.ConcreteSemantics.RValue;
  *
  */
 public final class UnionGenerator implements Generator {
+	/**
+	 * Randomise values produced
+	 */
+	private static Random randomiser = new Random();
+	
 	private int count = 1;
 	private int size = 0;
 	private TestType testType;
@@ -51,11 +57,9 @@ public final class UnionGenerator implements Generator {
 			return currentGen.generate();
 		}
 		else {
-			// Iterate through the different generators
-			if(currentIndex >= generators.size()) {
-				currentIndex = 0;
-			}
-			return generators.get(currentIndex++).generate();
+			// Pick a random generator to generate tests
+			int index = randomiser.nextInt(generators.size());
+			return generators.get(index).generate();
 		}
 	}
 

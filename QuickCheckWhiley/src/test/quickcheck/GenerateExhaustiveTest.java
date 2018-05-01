@@ -553,5 +553,50 @@ public class GenerateExhaustiveTest {
 		}
 	}
 	
+	@Test
+	public void testUnion1() {
+		Decl.Variable unionParam = new Decl.Variable(null, new Identifier("unionParam"), new Type.Union(Type.Null, Type.Int));
+		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(unionParam);
+		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
+		BigInteger lower = BigInteger.valueOf(-5);
+		BigInteger upper = BigInteger.valueOf(5);
+		GenerateTest testGen = new ExhaustiveGenerateTest(func, baseTypeSystem, 15, lower, upper);
+		RValue[] generatedParameters = testGen.generateParameters();
+		assertEquals(1, generatedParameters.length);
+		assertEquals(semantics.Null(), generatedParameters[0]);
+		for(int i=-5; i < 5; i++) {
+			generatedParameters = testGen.generateParameters();
+			assertEquals(1, generatedParameters.length);
+			assertEquals(semantics.Int(BigInteger.valueOf(i)), generatedParameters[0]);
+		}
+
+	}
+	
+	@Test
+	public void testUnion2() {
+		Decl.Variable unionParam = new Decl.Variable(null, new Identifier("unionParam"), new Type.Union(Type.Bool, Type.Int));
+		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(unionParam);
+		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
+		BigInteger lower = BigInteger.valueOf(-5);
+		BigInteger upper = BigInteger.valueOf(5);
+		GenerateTest testGen = new ExhaustiveGenerateTest(func, baseTypeSystem, 15, lower, upper);
+		RValue[] generatedParameters = testGen.generateParameters();
+		assertEquals(1, generatedParameters.length);
+		assertEquals(semantics.Bool(true), generatedParameters[0]);
+		
+		generatedParameters = testGen.generateParameters();
+		assertEquals(1, generatedParameters.length);
+		assertEquals(semantics.Int(BigInteger.valueOf(-5)), generatedParameters[0]);
+		
+		generatedParameters = testGen.generateParameters();
+		assertEquals(1, generatedParameters.length);
+		assertEquals(semantics.Bool(false), generatedParameters[0]);
+		
+		for(int i=-4; i < 5; i++) {
+			generatedParameters = testGen.generateParameters();
+			assertEquals(1, generatedParameters.length);
+			assertEquals(semantics.Int(BigInteger.valueOf(i)), generatedParameters[0]);
+		}
+	}
 	
 }

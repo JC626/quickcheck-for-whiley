@@ -45,6 +45,9 @@ public final class UnionGenerator implements Generator {
 			}
 			// Generate all possible values, skip generators that have already finished generating values
 			Generator currentGen = generators.get(currentIndex);
+			if(exceedCount()) {
+				resetCount();
+			}
 			while(currentGen.exceedCount()) {
 				currentIndex++;
 				if(currentIndex >= generators.size()) {
@@ -52,6 +55,7 @@ public final class UnionGenerator implements Generator {
 				}
 				currentGen = generators.get(currentIndex);
 			}
+
 			currentIndex++;
 			count++;
 			return currentGen.generate();

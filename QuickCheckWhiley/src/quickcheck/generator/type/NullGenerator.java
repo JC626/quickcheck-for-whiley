@@ -8,6 +8,7 @@ public class NullGenerator implements Generator{
 	 * Used for generating appropriate values
 	 */
 	private static final ConcreteSemantics semantics = new ConcreteSemantics();
+	private boolean generated = false;
 	
 	public NullGenerator() {
 		super();
@@ -15,6 +16,7 @@ public class NullGenerator implements Generator{
 
 	@Override
 	public RValue generate() {
+		generated = true;
 		return semantics.Null();
 	}
 
@@ -25,12 +27,12 @@ public class NullGenerator implements Generator{
 
 	@Override
 	public void resetCount() {
-		
+		generated = false;
 	}
 
 	@Override
 	public boolean exceedCount() {
-		return true;
+		return generated;
 	}
 
 }

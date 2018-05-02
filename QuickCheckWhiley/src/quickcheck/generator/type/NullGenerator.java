@@ -10,10 +10,9 @@ import wyil.interpreter.ConcreteSemantics.RValue;
  *
  */
 public class NullGenerator implements Generator{
-	/**
-	 * Used for generating appropriate values
-	 */
+	/** Used for generating appropriate values */
 	private static final ConcreteSemantics semantics = new ConcreteSemantics();
+	/** Check if the null value has been generated yet */
 	private boolean generated = false;
 	
 	public NullGenerator() {

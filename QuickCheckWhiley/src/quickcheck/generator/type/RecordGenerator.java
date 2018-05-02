@@ -22,20 +22,23 @@ import wyil.interpreter.ConcreteSemantics.RValue.Field;
  *
  */
 public class RecordGenerator implements Generator{
-	/**
-	 * Used for generating appropriate values
-	 */
+	/** Used for generating appropriate values */
 	private static final ConcreteSemantics semantics = new ConcreteSemantics();
 	
-	private int count = 1;
-	private TestType testType;
+	/** Generators corresponding to each field */
 	private List<Generator> generators;
-	private List<Identifier> names;
+	/** Field names for the record */
+	private List<Identifier> fieldNames;
+	/** Current field elements generated */
 	private Field[] elements;
+	
+	private TestType testType;
+	
+	private int count = 1;
 	
 	public RecordGenerator(List<Generator> generators, List<Identifier> names, TestType testType) {
 		this.generators = generators;
-		this.names = names;
+		this.fieldNames = names;
 		this.testType = testType;
 	}
 	
@@ -47,7 +50,7 @@ public class RecordGenerator implements Generator{
 				for(int i=0; i < elements.length; i++) {
 					Generator gen = generators.get(i);
 					gen.resetCount();
-					elements[i] = semantics.Field(names.get(i), gen.generate());
+					elements[i] = semantics.Field(fieldNames.get(i), gen.generate());
 				}
 			}
 			else {
@@ -55,12 +58,12 @@ public class RecordGenerator implements Generator{
 				for(int i=elements.length - 1; i >= 0 ; i--) {
 					Generator gen = generators.get(i);
 					if(!gen.exceedCount()) {
-						elements[i] = semantics.Field(names.get(i), gen.generate());
+						elements[i] = semantics.Field(fieldNames.get(i), gen.generate());
 						break;
 					}
 					else {
 						gen.resetCount();
-						elements[i] = semantics.Field(names.get(i), gen.generate());
+						elements[i] = semantics.Field(fieldNames.get(i), gen.generate());
 					}
 				}
 			}
@@ -72,7 +75,7 @@ public class RecordGenerator implements Generator{
 			Field[] recordFields = new Field[generators.size()];
 			for(int i=0; i < recordFields.length; i++) {
 				Generator gen = generators.get(i);
-				recordFields[i] = semantics.Field(names.get(i), gen.generate());
+				recordFields[i] = semantics.Field(fieldNames.get(i), gen.generate());
 			}
 			count++;
 			// Need to clone (shallow is fine) so the elements array doesn't get sorted

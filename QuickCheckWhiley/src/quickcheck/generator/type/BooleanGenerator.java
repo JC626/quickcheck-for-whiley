@@ -15,18 +15,14 @@ import wyil.interpreter.ConcreteSemantics.RValue;
  *
  */
 public final class BooleanGenerator implements Generator {
-	/**
-	 * Used for generating appropriate values
-	 */
+	/** Used for generating appropriate values */
 	private static final ConcreteSemantics semantics = new ConcreteSemantics();
 	
-	/**
-	 * Randomise values produced
-	 */
+	/** Randomise values produced */
 	private static Random randomiser = new Random();
 	
-	private int count = 1;
 	private TestType testType;
+	private int count = 1;
 
 	public BooleanGenerator(TestType testType) {
 		this.testType = testType;

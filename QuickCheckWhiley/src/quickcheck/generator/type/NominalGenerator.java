@@ -16,6 +16,7 @@ import wyil.interpreter.ConcreteSemantics.RValue;
  *
  */
 public class NominalGenerator implements Generator{
+	/**Generator for the type that is renamed.*/
 	private Generator generator;
 
 	public NominalGenerator(Generator generator) {

@@ -25,7 +25,7 @@ import wyil.type.TypeSystem;
 
 /**
  * Test the exhaustive test generation
- * for generating all combinations of possible input data.
+ * for generating all combinations of possible test values.
  * 
  * @author Janice Chin
  *
@@ -228,6 +228,9 @@ public class GenerateExhaustiveTest {
 		}
 	}
 
+	/**
+	 * Test when the function has a boolean array
+	 */
 	@Test
 	public void testFunctionArraySingleBool() {
 		Decl.Variable arrayParam = new Decl.Variable(null, new Identifier("boolArr"), new Type.Array(Type.Bool));
@@ -243,6 +246,9 @@ public class GenerateExhaustiveTest {
 		}
 	}
 	
+	/**
+	 * Test when the function has a integer array
+	 */
 	@Test
 	public void testFunctionArraySingleInt() {
 		Decl.Variable arrayParam = new Decl.Variable(null, new Identifier("intArr"), new Type.Array(Type.Int));
@@ -285,6 +291,10 @@ public class GenerateExhaustiveTest {
 		}
 	}
 	
+	/**
+	 * Test when the function has multiple arrays,
+	 * a boolean and a integer array
+	 */
 	@Test
 	public void testMultiArray() {
 		Decl.Variable boolArrayParam = new Decl.Variable(null, new Identifier("boolArr"), new Type.Array(Type.Bool));
@@ -336,6 +346,10 @@ public class GenerateExhaustiveTest {
 		}
 	}
 		
+	/**
+	 * Test when the function with a precondition
+	 * for the nominal type on an integer.
+	 */
 	@Test
 	public void testNominal1() throws IOException {
 		String testName = "nominal_1";
@@ -353,6 +367,10 @@ public class GenerateExhaustiveTest {
 		}
 	}
 	
+	/**
+	 * Test when the function with a postcondition
+	 * for the nominal type on an integer.
+	 */
 	@Test
 	public void testNominal2() throws IOException {
 		String testName = "nominal_2";
@@ -370,6 +388,10 @@ public class GenerateExhaustiveTest {
 		}
 	}
 	
+	/**
+	 * Test when the function has multiple nominal types,
+	 * integer, boolean and boolean array.
+	 */
 	@Test
 	public void testMultiNominal() throws IOException {
 		String testName = "nominal_multi";
@@ -415,6 +437,12 @@ public class GenerateExhaustiveTest {
 		}
 	}
 	
+	/**
+	 * Test a record with different field types,
+	 * two integer fields.
+	 * 
+	 * @throws IOException
+	 */
 	@Test
 	public void testRecord1() throws IOException {
 		String testName = "record_1";
@@ -440,6 +468,12 @@ public class GenerateExhaustiveTest {
 
 	}
 	
+	/**
+	 * Test a record with different field types,
+	 * boolean and integer.
+	 * 
+	 * @throws IOException
+	 */
 	@Test
 	public void testRecord2() throws IOException {
 		String testName = "record_2";
@@ -465,6 +499,13 @@ public class GenerateExhaustiveTest {
 
 	}
 	
+	/**
+	 * Test having multiple records in the function.
+	 * One record has a boolean and integer field.
+	 * The other record has two integer fields.
+	 * 
+	 * @throws IOException
+	 */
 	@Test
 	public void testMultiRecord() throws IOException {
 		String testName = "record_multi";
@@ -498,10 +539,14 @@ public class GenerateExhaustiveTest {
 				}
 			}
 		}
-		
-
 	}
 	
+	/**
+	 * Test two records with the same field types
+	 * and same field names.
+	 * 
+	 * @throws IOException
+	 */
 	@Test
 	public void testRecordSame() throws IOException {
 		String testName = "record_same";
@@ -537,6 +582,9 @@ public class GenerateExhaustiveTest {
 		}
 	}
 	
+	/**
+	 * Test generating null.
+	 */
 	@Test
 	public void testNull() {
 		Decl.Variable nullParam = new Decl.Variable(null, new Identifier("nullParam"), Type.Null);
@@ -552,6 +600,10 @@ public class GenerateExhaustiveTest {
 		}
 	}
 	
+	/**
+	 * Test having a union for a
+	 * null and integer type.
+	 */
 	@Test
 	public void testUnion1() {
 		Decl.Variable unionParam = new Decl.Variable(null, new Identifier("unionParam"), new Type.Union(Type.Null, Type.Int));
@@ -571,6 +623,10 @@ public class GenerateExhaustiveTest {
 
 	}
 	
+	/**
+	 * Test having a union for a
+	 * boolean and integer type.
+	 */
 	@Test
 	public void testUnion2() {
 		Decl.Variable unionParam = new Decl.Variable(null, new Identifier("unionParam"), new Type.Union(Type.Bool, Type.Int));
@@ -598,8 +654,13 @@ public class GenerateExhaustiveTest {
 		}
 	}
 	
+	/**
+	 * Test multiple unions,
+	 * one union has boolean and integer type,
+	 * the other union has a null and boolean array type.
+	 */
 	@Test
-	public void testUnion3() {
+	public void testMultipleUnion() {
 		Decl.Variable unionParam = new Decl.Variable(null, new Identifier("unionParamComplex"), new Type.Union(Type.Null, new Type.Array(Type.Bool)));
 		Decl.Variable unionParam2 = new Decl.Variable(null, new Identifier("unionParam"), new Type.Union(Type.Bool, Type.Int));
 		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(unionParam, unionParam2);

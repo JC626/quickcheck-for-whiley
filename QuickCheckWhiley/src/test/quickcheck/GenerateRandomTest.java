@@ -187,6 +187,9 @@ public class GenerateRandomTest {
 		assertTrue(generatedParameters[2] instanceof RValue.Array);
 	}
 	
+	/**
+	 * Test when the function has a boolean array
+	 */
 	@Test
 	public void testArraySingleBool() {
 		Decl.Variable arrayParam = new Decl.Variable(null, new Identifier("boolArr"), new Type.Array(Type.Bool));
@@ -205,6 +208,9 @@ public class GenerateRandomTest {
 		}
 	}
 	
+	/**
+	 * Test when the function has a integer array
+	 */
 	@Test
 	public void testArraySingleInt() {
 		Decl.Variable arrayParam = new Decl.Variable(null, new Identifier("intArr"), new Type.Array(Type.Int));
@@ -223,6 +229,10 @@ public class GenerateRandomTest {
 		}
 	}
 	
+	/**
+	 * Test when the function has multiple arrays,
+	 * a boolean and a integer array
+	 */
 	@Test
 	public void testMultiArray() {
 		Decl.Variable boolArrayParam = new Decl.Variable(null, new Identifier("boolArr"), new Type.Array(Type.Bool));
@@ -249,6 +259,10 @@ public class GenerateRandomTest {
 		}
 	}
 		
+	/**
+	 * Test when the function with a precondition
+	 * for the nominal type on an integer.
+	 */
 	@Test
 	public void testNominal1() throws IOException {
 		String testName = "nominal_1";
@@ -265,6 +279,10 @@ public class GenerateRandomTest {
 		assertTrue(generatedParameters[0] instanceof RValue.Int);
 	}
 	
+	/**
+	 * Test when the function with a postcondition
+	 * for the nominal type on an integer.
+	 */
 	@Test
 	public void testNominal2() throws IOException {
 		String testName = "nominal_2";
@@ -281,6 +299,10 @@ public class GenerateRandomTest {
 		assertTrue(generatedParameters[0] instanceof RValue.Int);
 	}
 	
+	/**
+	 * Test when the function has multiple nominal types,
+	 * integer, boolean and boolean array.
+	 */
 	@Test
 	public void testMultiNominal() throws IOException {
 		String testName = "nominal_multi";
@@ -300,7 +322,9 @@ public class GenerateRandomTest {
 	}
 	
 	/**
-	 * Test creating a nominal based on another nominal
+	 * Test a record with different field types,
+	 * two integer fields.
+	 * 
 	 * @throws IOException
 	 */
 	@Test
@@ -319,6 +343,12 @@ public class GenerateRandomTest {
 		assertTrue(generatedParameters[0] instanceof RValue.Int);
 	}
 	
+	/**
+	 * Test a record with different field types,
+	 * boolean and integer.
+	 * 
+	 * @throws IOException
+	 */
 	@Test
 	public void testRecord1() throws IOException {
 		String testName = "record_1";
@@ -340,6 +370,12 @@ public class GenerateRandomTest {
 		assertTrue(second instanceof RValue.Int);
 	}
 	
+	/**
+	 * Test a record with different field types,
+	 * boolean and integer.
+	 * 
+	 * @throws IOException
+	 */
 	@Test
 	public void testRecord2() throws IOException {
 		String testName = "record_2";
@@ -361,6 +397,13 @@ public class GenerateRandomTest {
 		assertTrue(second instanceof RValue.Int);
 	}
 	
+	/**
+	 * Test having multiple records in the function.
+	 * One record has a boolean and integer field.
+	 * The other record has two integer fields.
+	 * 
+	 * @throws IOException
+	 */
 	@Test
 	public void testMultiRecord() throws IOException {
 		String testName = "record_multi";
@@ -390,6 +433,12 @@ public class GenerateRandomTest {
 		assertTrue(second instanceof RValue.Int);
 	}
 	
+	/**
+	 * Test two records with the same field types
+	 * and same field names.
+	 * 
+	 * @throws IOException
+	 */
 	@Test
 	public void testRecordSame() throws IOException {
 		String testName = "record_same";
@@ -414,6 +463,9 @@ public class GenerateRandomTest {
 		}
 	}
 	
+	/**
+	 * Test generating null.
+	 */
 	@Test
 	public void testNull() {
 		Decl.Variable nullParam = new Decl.Variable(null, new Identifier("nullParam"), Type.Null);
@@ -427,6 +479,10 @@ public class GenerateRandomTest {
 		assertTrue(generatedParameters[0] instanceof RValue.Null);
 	}
 	
+	/**
+	 * Test having a union for a 
+	 * null and integer type.
+	 */
 	@Test
 	public void testUnion1() {
 		Decl.Variable unionParam = new Decl.Variable(null, new Identifier("unionParam"), new Type.Union(Type.Null, Type.Int));
@@ -442,6 +498,10 @@ public class GenerateRandomTest {
 		}
 	}
 	
+	/**
+	 * Test having a union for a
+	 * boolean and integer type.
+	 */
 	@Test
 	public void testUnion2() {
 		Decl.Variable unionParam = new Decl.Variable(null, new Identifier("unionParam"), new Type.Union(Type.Bool, Type.Int));
@@ -457,8 +517,13 @@ public class GenerateRandomTest {
 		}
 	}
 	
+	/**
+	 * Test multiple unions,
+	 * one union has boolean and integer type,
+	 * the other union has a null and boolean array type.
+	 */
 	@Test
-	public void testUnion3() {
+	public void testMultipleUnion() {
 		Decl.Variable unionParam = new Decl.Variable(null, new Identifier("unionParam1"), new Type.Union(Type.Bool, Type.Int));
 		Decl.Variable unionParam2 = new Decl.Variable(null, new Identifier("unionParam2"), new Type.Union(Type.Null, new Type.Array(Type.Bool)));
 		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(unionParam, unionParam2);

@@ -7,6 +7,18 @@ import quickcheck.util.TestType;
 import wyil.interpreter.ConcreteSemantics;
 import wyil.interpreter.ConcreteSemantics.RValue;
 
+/**
+ * Generate an array based on the type of the generator.
+ * The size of the array generated is limited based on 
+ * the lower and upper limit.
+ * 
+ * e.g. int[] 
+ * would require a IntegerGenerator 
+ * and could return [4, 6].
+ * 
+ * @author Janice Chin
+ *
+ */
 public class ArrayGenerator implements Generator{
 	/**
 	 * Used for generating appropriate values

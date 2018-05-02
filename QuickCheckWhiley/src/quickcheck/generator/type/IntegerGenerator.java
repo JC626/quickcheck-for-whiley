@@ -7,6 +7,16 @@ import quickcheck.util.TestType;
 import wyil.interpreter.ConcreteSemantics;
 import wyil.interpreter.ConcreteSemantics.RValue;
 
+/**
+ * Generate integer values.
+ * The integer generated is between the
+ * lower limit (inclusive) and the upper limit (exclusive).
+ * 
+ * e.g. -100, 0, 120, 5
+ * 
+ * @author Janice Chin
+ *
+ */
 public final class IntegerGenerator implements Generator {
 	/**
 	 * Used for generating appropriate values

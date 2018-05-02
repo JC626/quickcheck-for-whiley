@@ -8,6 +8,19 @@ import wyil.interpreter.ConcreteSemantics;
 import wyil.interpreter.ConcreteSemantics.RValue;
 import wyil.interpreter.ConcreteSemantics.RValue.Field;
 
+/**
+ * Generates record values.
+ * Since a record is made up of a number of fields of varying types,
+ * multiple generators of varying types are required
+ * to correspond to each field.
+ * 
+ * e.g. type Point {int x, int y}
+ * would require two IntegerGenerators
+ * and could return a possible value of {x: 10, y: 6}.
+ * 
+ * @author Janice Chin
+ *
+ */
 public class RecordGenerator implements Generator{
 	/**
 	 * Used for generating appropriate values

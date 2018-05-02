@@ -7,9 +7,14 @@ import quickcheck.util.TestType;
 import wyil.interpreter.ConcreteSemantics.RValue;
 
 /**
- * Generate values for the union type
+ * Generate values for the union type.
+ * Since a union can be any of a number of types,
+ * multiple generators for each type is required.
+ * 
  * e.g. (int|bool)
- * would generate integer and boolean values.
+ * would require a IntegerGenerator and BooleanGenerator
+ * to be able to generate integer and boolean values.
+ * Possible values generated could be 1, true, 6, false.
  * 
  * @author Janice Chin
  *

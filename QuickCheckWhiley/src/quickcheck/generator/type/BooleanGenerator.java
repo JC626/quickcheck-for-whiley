@@ -6,6 +6,14 @@ import quickcheck.util.TestType;
 import wyil.interpreter.ConcreteSemantics;
 import wyil.interpreter.ConcreteSemantics.RValue;
 
+/**
+ * Generate boolean values.
+ * 
+ * e.g. true, false
+ * 
+ * @author Janice Chin
+ *
+ */
 public final class BooleanGenerator implements Generator {
 	/**
 	 * Used for generating appropriate values

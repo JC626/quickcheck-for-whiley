@@ -11,7 +11,6 @@ import org.junit.Test;
 
 import quickcheck.generator.ExhaustiveGenerateTest;
 import quickcheck.generator.GenerateTest;
-import quickcheck.generator.RandomGenerateTest;
 import test.utils.TestHelper;
 import wybs.lang.Build;
 import wybs.util.AbstractCompilationUnit.Identifier;
@@ -553,5 +552,86 @@ public class GenerateExhaustiveTest {
 		}
 	}
 	
+	@Test
+	public void testUnion1() {
+		Decl.Variable unionParam = new Decl.Variable(null, new Identifier("unionParam"), new Type.Union(Type.Null, Type.Int));
+		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(unionParam);
+		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
+		BigInteger lower = BigInteger.valueOf(-5);
+		BigInteger upper = BigInteger.valueOf(5);
+		GenerateTest testGen = new ExhaustiveGenerateTest(func, baseTypeSystem, 15, lower, upper);
+		RValue[] generatedParameters = testGen.generateParameters();
+		assertEquals(1, generatedParameters.length);
+		assertEquals(semantics.Null(), generatedParameters[0]);
+		for(int i=-5; i < 5; i++) {
+			generatedParameters = testGen.generateParameters();
+			assertEquals(1, generatedParameters.length);
+			assertEquals(semantics.Int(BigInteger.valueOf(i)), generatedParameters[0]);
+		}
+
+	}
+	
+	@Test
+	public void testUnion2() {
+		Decl.Variable unionParam = new Decl.Variable(null, new Identifier("unionParam"), new Type.Union(Type.Bool, Type.Int));
+		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(unionParam);
+		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
+		BigInteger lower = BigInteger.valueOf(-5);
+		BigInteger upper = BigInteger.valueOf(5);
+		GenerateTest testGen = new ExhaustiveGenerateTest(func, baseTypeSystem, 15, lower, upper);
+		RValue[] generatedParameters = testGen.generateParameters();
+		assertEquals(1, generatedParameters.length);
+		assertEquals(semantics.Bool(true), generatedParameters[0]);
+		
+		generatedParameters = testGen.generateParameters();
+		assertEquals(1, generatedParameters.length);
+		assertEquals(semantics.Int(BigInteger.valueOf(-5)), generatedParameters[0]);
+		
+		generatedParameters = testGen.generateParameters();
+		assertEquals(1, generatedParameters.length);
+		assertEquals(semantics.Bool(false), generatedParameters[0]);
+		
+		for(int i=-4; i < 5; i++) {
+			generatedParameters = testGen.generateParameters();
+			assertEquals(1, generatedParameters.length);
+			assertEquals(semantics.Int(BigInteger.valueOf(i)), generatedParameters[0]);
+		}
+	}
+	
+	@Test
+	public void testUnion3() {
+		Decl.Variable unionParam = new Decl.Variable(null, new Identifier("unionParamComplex"), new Type.Union(Type.Null, new Type.Array(Type.Bool)));
+		Decl.Variable unionParam2 = new Decl.Variable(null, new Identifier("unionParam"), new Type.Union(Type.Bool, Type.Int));
+		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(unionParam, unionParam2);
+		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
+		BigInteger lower = BigInteger.valueOf(-5);
+		BigInteger upper = BigInteger.valueOf(5);
+		GenerateTest testGen = new ExhaustiveGenerateTest(func, baseTypeSystem, 15, lower, upper);
+		
+		for(int i=-1; i < boolCombinations.length; i++) {
+			RValue[] generatedParameters = testGen.generateParameters();
+			assertEquals(2, generatedParameters.length);
+			if(i == -1) {
+				assertEquals(semantics.Null(), generatedParameters[0]);
+			}
+			else {
+				assertEquals(semantics.Array(boolCombinations[i]), generatedParameters[0]);
+			}
+			
+			generatedParameters = testGen.generateParameters();
+			assertEquals(2, generatedParameters.length);
+			assertEquals(semantics.Int(BigInteger.valueOf(-5)), generatedParameters[1]);
+			
+			generatedParameters = testGen.generateParameters();
+			assertEquals(2, generatedParameters.length);
+			assertEquals(semantics.Bool(false), generatedParameters[1]);
+			
+			for(int j=-4; j < 5; j++) {
+				generatedParameters = testGen.generateParameters();
+				assertEquals(2, generatedParameters.length);
+				assertEquals(semantics.Int(BigInteger.valueOf(j)), generatedParameters[1]);
+			}
+		}
+	}
 	
 }

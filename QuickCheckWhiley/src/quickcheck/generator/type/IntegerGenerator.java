@@ -20,8 +20,8 @@ public final class IntegerGenerator implements Generator {
 	
 	private int count = 1;
 	private TestType testType;
-	private BigInteger lowerLimit;
-	private BigInteger upperLimit;
+	private BigInteger lowerLimit; // Lower limit is inclusive
+	private BigInteger upperLimit; // Upper limit is exclusive
 	
 	public IntegerGenerator(TestType testType, BigInteger lower, BigInteger upper) {
 		this.testType = testType;

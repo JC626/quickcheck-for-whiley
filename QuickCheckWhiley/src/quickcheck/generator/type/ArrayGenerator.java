@@ -1,6 +1,5 @@
 package quickcheck.generator.type;
 
-import java.math.BigInteger;
 import java.util.List;
 import java.util.Random;
 

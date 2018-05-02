@@ -18,8 +18,7 @@ import wyil.interpreter.ConcreteSemantics.RValue;
 import wyil.type.TypeSystem;
 
 /**
- * Generate candidate test parameters for a function.
- * The default is random test generation.
+ * Generate candidate test parameters for a function randomly.
  *  
  * @author Janice Chin
  *
@@ -55,6 +54,11 @@ public class RandomGenerateTest implements GenerateTest{
 		}
 	}	
 
+	/**
+	 * Get the generator based on a type
+	 * @param paramType The type of a parameter for a function/method
+	 * @return The generator that corresponds to the parameter's type
+	 */
 	private Generator getGenerator(WhileyFile.Type paramType) {
 		if(paramType instanceof WhileyFile.Type.Int) {
 			return new IntegerGenerator(TestType.RANDOM, lowerLimit, upperLimit);

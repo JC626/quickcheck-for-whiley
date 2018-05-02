@@ -7,29 +7,37 @@ import quickcheck.util.TestType;
 import wyil.interpreter.ConcreteSemantics.RValue;
 
 /**
- * Generate values for the union type
+ * Generate values for the union type.
+ * Since a union can be any of a number of types,
+ * multiple generators for each type is required.
+ * 
  * e.g. (int|bool)
- * would generate integer and boolean values.
+ * would require a IntegerGenerator and BooleanGenerator
+ * to be able to generate integer and boolean values.
+ * Possible values generated could be 1, true, 6, false.
  * 
  * @author Janice Chin
  *
  */
 public final class UnionGenerator implements Generator {
-	/**
-	 * Randomise values produced
-	 */
+	/** Randomise values produced */
 	private static Random randomiser = new Random();
 	
-	private int count = 1;
-	private int size = 0;
-	private TestType testType;
+	/** Generators corresponding to each type in the union*/
 	private List<Generator> generators;
+	/**Index of the next generator used for generating values (exhaustive)*/
 	private int currentIndex;
+	
+	private TestType testType;
+	
+	private int size = 0;
+	private int count = 1;
 
 	public UnionGenerator(List<Generator> generators, TestType testType) {
 		this.generators = generators;
 		this.testType = testType;
 		currentIndex = 0;
+		// Calculate the size
 		this.size = 0;
 		for(int i=0; i < generators.size(); i++) {
 			size += generators.get(i).size();

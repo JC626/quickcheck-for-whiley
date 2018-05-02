@@ -24,7 +24,7 @@ import wyfs.util.DirectoryRoot;
 import wyfs.util.Trie;
 
 /**
- * Helper functions used for generation tests
+ * Helper functions used for unit testing
  * 
  * @author Janice Chin
  *
@@ -80,9 +80,9 @@ public class TestHelper {
 	/**
 	 * Get the functions from the testName file
 	 * by using Java reflection on RunTest
-	 * @param testName The testName
+	 * @param testName The filename of the test
 	 * @param project The project
-	 * @return Functions for the file
+	 * @return Functions in the file
 	 */
 	@SuppressWarnings("unchecked")
 	public List<Decl.Function> getFunctions(String testName, Build.Project project){
@@ -97,8 +97,8 @@ public class TestHelper {
 			List<Decl.Function> functions = (List<Function>) met.invoke(cmd, id, project);
 			return functions;
 		} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			fail("Could not get the functions");
 		}
 		fail("Functions could not be found for " + testName);
 		return null;

@@ -2,6 +2,13 @@ package quickcheck.generator;
 
 import wyil.interpreter.ConcreteSemantics.RValue;
 
+/**
+ * An interface for standardising 
+ * a method for generating candidate test values. 
+ * 
+ * @author Janice Chin
+ *
+ */
 public interface GenerateTest {
 	
 	/**

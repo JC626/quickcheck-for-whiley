@@ -7,31 +7,53 @@ import quickcheck.util.TestType;
 import wyil.interpreter.ConcreteSemantics;
 import wyil.interpreter.ConcreteSemantics.RValue;
 
+/**
+ * Generate an array based on the type of the generator.
+ * The size of the array generated is limited based on 
+ * the lower and upper limit.
+ * 
+ * e.g. int[] 
+ * would require a IntegerGenerator 
+ * and could return [4, 6].
+ * 
+ * @author Janice Chin
+ *
+ */
 public class ArrayGenerator implements Generator{
-	/**
-	 * Used for generating appropriate values
-	 */
+	/** Used for generating appropriate values */
 	private static final ConcreteSemantics semantics = new ConcreteSemantics();
 	
-	/**
-	 * Randomise values produced
-	 */
+	/** Randomise values produced */
 	private static Random randomiser = new Random();
 	
-	private int count = 1;
-	private int currentCombinations;
 	private TestType testType;
-	private int lowerLimit;
-	private int upperLimit;
+	/** Generators corresponding to each array element */
 	private List<Generator> generators;
+	/** Current array elements generated */
 	private RValue[] arrElements;
 	
+	/** Lower limit for the size of the array generated */
+	private int lowerLimit;
+	/** Upper limit for the size of the array generated */
+	private int upperLimit;
+	
+	private int size = 0;
+	/** Number of combinations completed so far for the current size of the array */
+	private int currentCombinations;
+	private int count = 1;
+
 	public ArrayGenerator(List<Generator> generators, TestType testType, int lower, int upper) {
 		this.generators = generators;
 		this.testType = testType;
 		this.lowerLimit = lower;
 		this.upperLimit = upper;
 		this.currentCombinations = 0;
+		// Calculate size
+		this.size = 1;
+		int generatorRange = generators.get(0).size();
+		for(int i=1; i <= upperLimit; i++) {
+			this.size += Math.pow(generatorRange, i);
+		}
 	}
 	
 	@Override
@@ -92,11 +114,6 @@ public class ArrayGenerator implements Generator{
 
 	@Override
 	public int size() {
-		int size = 1;
-		int generatorRange = generators.get(0).size();
-		for(int i=1; i <= upperLimit; i++) {
-			size += Math.pow(generatorRange, i);
-		}
 		return size;
 	}
 

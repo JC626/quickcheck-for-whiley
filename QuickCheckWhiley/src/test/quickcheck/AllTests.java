@@ -4,6 +4,7 @@ import org.junit.runners.Suite;
 
 /**
  * Execute all tests
+ * 
  * @author Janice Chin
  *
  */

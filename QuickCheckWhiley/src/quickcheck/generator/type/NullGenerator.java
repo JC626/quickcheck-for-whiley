@@ -3,11 +3,16 @@ package quickcheck.generator.type;
 import wyil.interpreter.ConcreteSemantics;
 import wyil.interpreter.ConcreteSemantics.RValue;
 
+/**
+ * Generate a null value.
+ * 
+ * @author Janice Chin
+ *
+ */
 public class NullGenerator implements Generator{
-	/**
-	 * Used for generating appropriate values
-	 */
+	/** Used for generating appropriate values */
 	private static final ConcreteSemantics semantics = new ConcreteSemantics();
+	/** Check if the null value has been generated yet */
 	private boolean generated = false;
 	
 	public NullGenerator() {

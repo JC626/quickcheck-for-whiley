@@ -78,7 +78,11 @@ public class ExhaustiveGenerateTest implements GenerateTest{
 		this.allTests = totalCombinations.compareTo(BigInteger.valueOf(numTests)) != 1;
 	}
 	
-	
+	/**
+	 * Get the generator based on a type
+	 * @param paramType The type of a parameter for a function/method
+	 * @return The generator that corresponds to the parameter's type
+	 */
 	private Generator getGenerator(WhileyFile.Type paramType) {
 		if(paramType instanceof WhileyFile.Type.Int) {
 			return new IntegerGenerator(TestType.EXHAUSTIVE, lowerLimit, upperLimit);

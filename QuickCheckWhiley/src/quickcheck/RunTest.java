@@ -29,10 +29,9 @@ import wyil.interpreter.ConcreteSemantics.RValue;
 import static wyc.lang.WhileyFile.*;
 
 /**
- * FIXME
- * Responsible for implementing the command "<code>wy run ...</code>" which
+ * Responsible for implementing the command "<code>java QuickCheck ...</code>" which
  * loads the appropriate <code>wyil</code> file and executes tests 
- * for a given function/method using the <code>Interpreter</code>.
+ * for the functions/methods using the <code>Interpreter</code>.
  * 	
  * Based on wyc.Command.Run
  *
@@ -145,6 +144,7 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 	 * @param upperLimit The upper constraint used when generating integers
 	 */
 	private void executeTest(Path.ID id, Interpreter interpreter, Decl.FunctionOrMethod dec, TestType testType, int numTest, String lowerLimit, String upperLimit) {
+		// Get the method for generating test values
 		GenerateTest testGen;
 		BigInteger lower = new BigInteger(lowerLimit);
 		BigInteger upper = new BigInteger(upperLimit);
@@ -154,7 +154,7 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 		else {
 			testGen = new RandomGenerateTest(dec, interpreter.getTypeSystem(), lower, upper);
 		}
-		
+		// Get the function's relevant header information
 		NameID name = new NameID(id, dec.getName().get());
 		Type.Callable type = dec.getType();
 		Tuple<Expr> preconditions = dec.getRequires();
@@ -169,7 +169,7 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 				
 		// Have to remove the pre and post conditions out of the 
 		// function so the function is executed without validation
-		// Validation will be conducted manually inside this function.
+		// Validation will be conducted manually inside the function.
 		Tuple<Expr> empty = new Tuple<Expr>();		
 		dec.setOperand(4, empty); // Remove precondition
 		dec.setOperand(5, empty); // Remove postcondition
@@ -178,8 +178,8 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 		for(int i=0; i < numTest; i++) {
 			RValue[] paramValues = testGen.generateParameters();
 			CallStack frame = interpreter.new CallStack();
+			// Check the precondition
 			try {
-				// Check the precondition
 				for(int j=0; j < inputParameters.size(); j++) {
 					Decl.Variable parameter = inputParameters.get(j);
 					frame.putLocal(parameter.getName(), paramValues[j]);
@@ -226,7 +226,7 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 	/**
 	 * Get all functions in the Wyil file 
 	 * Based on part of wyil.interpreter.Interpreter execute function
-	 * @param id
+	 * @param id 
 	 * @param project
 	 * @return A list of functions from the Wyil file
 	 */

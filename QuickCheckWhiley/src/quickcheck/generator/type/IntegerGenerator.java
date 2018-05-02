@@ -31,12 +31,14 @@ public final class IntegerGenerator implements Generator {
 	/** Upper limit (exclusive) for the integer generated */
 	private BigInteger upperLimit; 
 	
+	private int size;
 	private int count = 1;
 
 	public IntegerGenerator(TestType testType, BigInteger lower, BigInteger upper) {
 		this.testType = testType;
 		this.lowerLimit = lower;
 		this.upperLimit = upper;
+		this.size = upperLimit.subtract(lowerLimit).intValue();
 	}
 	
 	@Override
@@ -65,7 +67,7 @@ public final class IntegerGenerator implements Generator {
 
 	@Override
 	public int size() {
-		return upperLimit.subtract(lowerLimit).intValue();
+		return size;
 	}
 
 	@Override

@@ -34,12 +34,24 @@ public class RecordGenerator implements Generator{
 	
 	private TestType testType;
 	
+	private int size;
 	private int count = 1;
 	
 	public RecordGenerator(List<Generator> generators, List<Identifier> names, TestType testType) {
 		this.generators = generators;
 		this.fieldNames = names;
 		this.testType = testType;
+		//Calculate size
+		if(generators.size() > 0) {
+			this.size = 1;
+			for(int i=0; i < generators.size(); i++) {
+				size *= generators.get(i).size();
+			}
+		}
+		else {
+			this.size = 0;
+		}
+
 	}
 	
 	@Override
@@ -85,10 +97,6 @@ public class RecordGenerator implements Generator{
 
 	@Override
 	public int size() {
-		int size = 1;
-		for(int i=0; i < generators.size(); i++) {
-			size *= generators.get(i).size();
-		}
 		return size;
 	}
 

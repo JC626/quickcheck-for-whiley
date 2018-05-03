@@ -428,7 +428,7 @@ public class GenerateExhaustiveTest {
 		Interpreter interpreter = new Interpreter(project, System.out);
 		List<Decl.Function> functions = helper.getFunctions(testName, project);
 		
-		BigInteger lower = BigInteger.valueOf(0);
+		BigInteger lower = BigInteger.valueOf(-3);
 		BigInteger upper = BigInteger.valueOf(3);
 		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), interpreter, 16, lower, upper);
 		for(int i=1; i < 3; i++) {

@@ -40,7 +40,7 @@ public class NominalGenerator implements Generator{
 			isValid = value.checkInvariant(decl.getVariableDeclaration(), decl.getInvariant(), interpreter);
 			i++;
 			// No valid values
-			if(i >= generator.size()) {
+			if(i > generator.size()) {
 				// TODO Change this to a different exception
 				throw new Error("No possible values can be generated for the nominal type: " + decl.getName());
 			}

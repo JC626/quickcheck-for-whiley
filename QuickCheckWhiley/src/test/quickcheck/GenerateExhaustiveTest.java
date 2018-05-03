@@ -22,7 +22,6 @@ import wyil.interpreter.ConcreteSemantics;
 import wyil.interpreter.Interpreter;
 import wyil.interpreter.ConcreteSemantics.RValue;
 import wyil.interpreter.ConcreteSemantics.RValue.Record;
-import wyil.type.TypeSystem;
 
 /**
  * Test the exhaustive test generation
@@ -703,6 +702,37 @@ public class GenerateExhaustiveTest {
 				assertEquals(2, generatedParameters.length);
 				assertEquals(semantics.Int(BigInteger.valueOf(j)), generatedParameters[1]);
 			}
+		}
+	}
+	
+	/**
+	 * Test having a union for that has multiple of the same types,
+	 * boolean, integer, boolean, integer type.
+	 */
+	@Test
+	public void testUnionSame() {
+		Decl.Variable unionParam = new Decl.Variable(null, new Identifier("unionParam"), new Type.Union(Type.Bool, Type.Int, Type.Bool, Type.Int));
+		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(unionParam);
+		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
+		BigInteger lower = BigInteger.valueOf(-5);
+		BigInteger upper = BigInteger.valueOf(5);
+		GenerateTest testGen = new ExhaustiveGenerateTest(func, baseInterpreter, 15, lower, upper);
+		RValue[] generatedParameters = testGen.generateParameters();
+		assertEquals(1, generatedParameters.length);
+		assertEquals(semantics.Bool(true), generatedParameters[0]);
+		
+		generatedParameters = testGen.generateParameters();
+		assertEquals(1, generatedParameters.length);
+		assertEquals(semantics.Int(BigInteger.valueOf(-5)), generatedParameters[0]);
+		
+		generatedParameters = testGen.generateParameters();
+		assertEquals(1, generatedParameters.length);
+		assertEquals(semantics.Bool(false), generatedParameters[0]);
+		
+		for(int i=-4; i < 5; i++) {
+			generatedParameters = testGen.generateParameters();
+			assertEquals(1, generatedParameters.length);
+			assertEquals(semantics.Int(BigInteger.valueOf(i)), generatedParameters[0]);
 		}
 	}
 	

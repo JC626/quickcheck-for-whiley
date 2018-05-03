@@ -14,6 +14,7 @@ import wyc.lang.WhileyFile;
 import wyc.lang.WhileyFile.Decl;
 import wyc.lang.WhileyFile.Decl.FunctionOrMethod;
 import wyc.lang.WhileyFile.Decl.Variable;
+import wyil.interpreter.Interpreter;
 import wyil.interpreter.ConcreteSemantics.RValue;
 import wyil.type.TypeSystem;
 
@@ -50,19 +51,19 @@ public class ExhaustiveGenerateTest implements GenerateTest{
 	private int numTests; // Default number of tests to run
 	private boolean allTests;
 	
-	private TypeSystem typeSystem;
+	private Interpreter interpreter;
 	
 	private BigInteger lowerLimit;
 	private BigInteger upperLimit;
 
 	
-	public ExhaustiveGenerateTest(FunctionOrMethod dec, TypeSystem typeSystem, int numTests, BigInteger lowerLimit, BigInteger upperLimit) {
+	public ExhaustiveGenerateTest(FunctionOrMethod dec, Interpreter interpreter, int numTests, BigInteger lowerLimit, BigInteger upperLimit) {
 		this.dec = dec;
-		this.typeSystem = typeSystem;
+		this.interpreter = interpreter;
 		this.lowerLimit = lowerLimit;
 		this.upperLimit = upperLimit;
-		this.parameterGenerators = new ArrayList<Generator>();
 		this.numTests = numTests;
+		this.parameterGenerators = new ArrayList<Generator>();
 		this.totalCombinations = BigInteger.valueOf(1);
 		// Get the generators
 		for(Variable var : this.dec.getParameters()) {
@@ -106,10 +107,10 @@ public class ExhaustiveGenerateTest implements GenerateTest{
 			// Nominal generator takes another generator
 			WhileyFile.Type.Nominal nom = (WhileyFile.Type.Nominal) paramType;
 			try {
-				Decl.Type decl = typeSystem.resolveExactly(nom.getName(), Decl.Type.class);
+				Decl.Type decl = interpreter.getTypeSystem().resolveExactly(nom.getName(), Decl.Type.class);
 				Decl.Variable var = decl.getVariableDeclaration();
 				Generator gen = getGenerator(var.getType());
-				return new NominalGenerator(gen);
+				return new NominalGenerator(gen, interpreter, decl);
 			} catch (ResolutionError e) {
 				// TODO What to do with resolution error?
 				e.printStackTrace();

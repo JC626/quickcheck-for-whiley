@@ -14,7 +14,9 @@ import wyc.lang.WhileyFile;
 import wyc.lang.WhileyFile.Decl;
 import wyc.lang.WhileyFile.Decl.FunctionOrMethod;
 import wyc.lang.WhileyFile.Decl.Variable;
+import wyc.lang.WhileyFile.Expr;
 import wyil.interpreter.ConcreteSemantics.RValue;
+import wyil.interpreter.Interpreter;
 import wyil.type.TypeSystem;
 
 /**
@@ -25,28 +27,24 @@ import wyil.type.TypeSystem;
  */
 public class RandomGenerateTest implements GenerateTest{
 	
-	/**
-	 * The function/method we want to test
-	 */
+	/** The function/method we want to test */
 	private Decl.FunctionOrMethod dec;
 	
-	/**
-	 *  A list of generators, each corresponding to a parameter in the function/method
-	 */
+	/** A list of generators, each corresponding to a parameter in the function/method */
 	private List<Generator> parameterGenerators;
 	
-	private TypeSystem typeSystem;
+	private Interpreter interpreter;
 	
 	private BigInteger lowerLimit;
 	private BigInteger upperLimit;
 		
-	public RandomGenerateTest(FunctionOrMethod dec, TypeSystem typeSystem, BigInteger lowerLimit, BigInteger upperLimit) {
+	public RandomGenerateTest(FunctionOrMethod dec, Interpreter interpreter, BigInteger lowerLimit, BigInteger upperLimit) {
 		super();
 		this.dec = dec;
-		this.typeSystem = typeSystem;
+		this.interpreter = interpreter;
 		this.lowerLimit = lowerLimit;
 		this.upperLimit = upperLimit;
-		this.parameterGenerators = new ArrayList<Generator>();
+		this.parameterGenerators = new ArrayList<Generator>();		
 		// Get the generators
 		for(Variable var : this.dec.getParameters()) {
 			WhileyFile.Type paramType = var.getType();
@@ -82,10 +80,10 @@ public class RandomGenerateTest implements GenerateTest{
 			// Nominal generator takes another generator
 			WhileyFile.Type.Nominal nom = (WhileyFile.Type.Nominal) paramType;
 			try {
-				Decl.Type decl = typeSystem.resolveExactly(nom.getName(), Decl.Type.class);
+				Decl.Type decl = interpreter.getTypeSystem().resolveExactly(nom.getName(), Decl.Type.class);
 				Decl.Variable var = decl.getVariableDeclaration();
 				Generator gen = getGenerator(var.getType());
-				return new NominalGenerator(gen);
+				return new NominalGenerator(gen, interpreter, decl);
 			} catch (ResolutionError e) {
 				// TODO What to do with resolution error?
 				e.printStackTrace();

@@ -150,10 +150,10 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 		BigInteger lower = new BigInteger(lowerLimit);
 		BigInteger upper = new BigInteger(upperLimit);
 		if(testType == TestType.EXHAUSTIVE) {
-			testGen = new ExhaustiveGenerateTest(dec,interpreter.getTypeSystem(), numTest, lower, upper);
+			testGen = new ExhaustiveGenerateTest(dec, interpreter, numTest, lower, upper);
 		}
 		else {
-			testGen = new RandomGenerateTest(dec, interpreter.getTypeSystem(), lower, upper);
+			testGen = new RandomGenerateTest(dec, interpreter, lower, upper);
 		}
 		// Get the function's relevant header information
 		NameID name = new NameID(id, dec.getName().get());

@@ -52,4 +52,26 @@ public final class BooleanGenerator implements Generator {
 		return this.size() < count;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((testType == null) ? 0 : testType.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		BooleanGenerator other = (BooleanGenerator) obj;
+		if (testType != other.testType)
+			return false;
+		return true;
+	}
+
 }

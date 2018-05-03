@@ -430,11 +430,21 @@ public class GenerateExhaustiveTest {
 		
 		BigInteger lower = BigInteger.valueOf(-3);
 		BigInteger upper = BigInteger.valueOf(3);
+		try {
+			GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), interpreter, 16, lower, upper);
+			testGen.generateParameters();
+			fail("Should not be able to generate parameters that are invalid");
+		}
+		catch(Error e) {}
 		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), interpreter, 16, lower, upper);
-		for(int i=1; i < 3; i++) {
+
+		lower = BigInteger.valueOf(0);
+		upper = BigInteger.valueOf(20);
+		testGen = new ExhaustiveGenerateTest(functions.get(0), interpreter, 16, lower, upper);
+		for(int i=1; i < 2; i++) {
 			RValue[] generatedParameters = testGen.generateParameters();
 			assertEquals(1, generatedParameters.length);
-			assertEquals(semantics.Int(BigInteger.valueOf(i)), generatedParameters[0]);
+			assertEquals(semantics.Int(BigInteger.valueOf(i*10)), generatedParameters[0]);
 		}
 	}
 	

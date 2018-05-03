@@ -12,6 +12,7 @@ import java.util.Map;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import quickcheck.generator.ExhaustiveGenerateTest;
 import quickcheck.generator.GenerateTest;
 import quickcheck.generator.RandomGenerateTest;
 import test.utils.TestHelper;
@@ -335,10 +336,20 @@ public class GenerateRandomTest {
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new Interpreter(project, System.out);
 		List<Decl.Function> functions = helper.getFunctions(testName, project);
-		
-		BigInteger lower = BigInteger.valueOf(-10);
-		BigInteger upper = BigInteger.valueOf(10);
+
+		BigInteger lower = BigInteger.valueOf(-3);
+		BigInteger upper = BigInteger.valueOf(3);
+		try {
+			GenerateTest testGen = new RandomGenerateTest(functions.get(0), interpreter, lower, upper);
+			testGen.generateParameters();
+			fail("Should not be able to generate parameters that are invalid");
+		}
+		catch(Error e) {}
 		GenerateTest testGen = new RandomGenerateTest(functions.get(0), interpreter, lower, upper);
+
+		lower = BigInteger.valueOf(0);
+		upper = BigInteger.valueOf(20);
+		testGen = new RandomGenerateTest(functions.get(0), interpreter, lower, upper);
 		RValue[] generatedParameters = testGen.generateParameters();
 		assertEquals(1, generatedParameters.length);
 		assertTrue(generatedParameters[0] instanceof RValue.Int);

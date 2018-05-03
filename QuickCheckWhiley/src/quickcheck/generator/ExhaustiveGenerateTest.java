@@ -131,10 +131,14 @@ public class ExhaustiveGenerateTest implements GenerateTest{
 		}
 		else if(paramType instanceof WhileyFile.Type.Union) {
 			WhileyFile.Type.Union union = (WhileyFile.Type.Union) paramType;
+			// Decided not to use a Set as there are few generators
+			// and it is highly unlikely a user would have a very large union
 			List<Generator> generators = new ArrayList<Generator>();
 			for(int i=0; i < union.size(); i++) {
 				Generator gen = getGenerator(union.get(i));
-				generators.add(gen);
+				if(!generators.contains(gen)) {
+					generators.add(gen);
+				}
 			}
 			return new UnionGenerator(generators, TestType.EXHAUSTIVE);
 		}

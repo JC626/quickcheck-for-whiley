@@ -93,4 +93,37 @@ public final class UnionGenerator implements Generator {
 		return this.size() < count;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((generators == null) ? 0 : generators.hashCode());
+		result = prime * result + size;
+		result = prime * result + ((testType == null) ? 0 : testType.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		UnionGenerator other = (UnionGenerator) obj;
+		if (generators == null) {
+			if (other.generators != null)
+				return false;
+		} else if (!generators.equals(other.generators))
+			return false;
+		if (size != other.size)
+			return false;
+		if (testType != other.testType)
+			return false;
+		return true;
+	}
+	
+	
+
 }

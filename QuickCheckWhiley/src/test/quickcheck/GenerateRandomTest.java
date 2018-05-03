@@ -12,7 +12,6 @@ import java.util.Map;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import quickcheck.generator.ExhaustiveGenerateTest;
 import quickcheck.generator.GenerateTest;
 import quickcheck.generator.RandomGenerateTest;
 import test.utils.TestHelper;
@@ -25,7 +24,6 @@ import wyil.interpreter.ConcreteSemantics.RValue;
 import wyil.interpreter.ConcreteSemantics.RValue.Array;
 import wyil.interpreter.ConcreteSemantics.RValue.Record;
 import wyil.interpreter.Interpreter;
-import wyil.type.TypeSystem;
 
 /**
  * Test the random test generation
@@ -557,6 +555,25 @@ public class GenerateRandomTest {
 		}
 		else if (!(generatedParameters[1] instanceof RValue.Null)) {
 			fail("Generated parameter from Union should be a Null or Boolean array but was " + generatedParameters[1]);
+		}
+	}
+	
+	/**
+	 * Test having a union for that has multiple of the same types,
+	 * boolean, integer, boolean, integer type.
+	 */
+	@Test
+	public void testUnionSame() {
+		Decl.Variable unionParam = new Decl.Variable(null, new Identifier("unionParam"), new Type.Union(Type.Bool, Type.Int, Type.Bool, Type.Int));
+		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(unionParam);
+		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
+		BigInteger lower = BigInteger.valueOf(-5);
+		BigInteger upper = BigInteger.valueOf(5);
+		GenerateTest testGen = new RandomGenerateTest(func, baseInterpreter, lower, upper);
+		RValue[] generatedParameters = testGen.generateParameters();
+		assertEquals(1, generatedParameters.length);
+		if (!(generatedParameters[0] instanceof RValue.Int || generatedParameters[0] instanceof RValue.Bool)) {
+			fail("Generated parameter from Union should be a Int or Bool but was " + generatedParameters[0]);
 		}
 	}
 }

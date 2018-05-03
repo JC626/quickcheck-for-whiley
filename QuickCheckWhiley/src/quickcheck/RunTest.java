@@ -12,6 +12,7 @@ import quickcheck.generator.RandomGenerateTest;
 import quickcheck.util.TestType;
 import wybs.lang.Build;
 import wybs.lang.NameID;
+import wybs.lang.NameResolver.ResolutionError;
 import wybs.util.StdProject;
 import wybs.util.AbstractCompilationUnit.Tuple;
 import wyc.lang.WhileyFile;
@@ -149,10 +150,10 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 		BigInteger lower = new BigInteger(lowerLimit);
 		BigInteger upper = new BigInteger(upperLimit);
 		if(testType == TestType.EXHAUSTIVE) {
-			testGen = new ExhaustiveGenerateTest(dec,interpreter.getTypeSystem(), numTest, lower, upper);
+			testGen = new ExhaustiveGenerateTest(dec, interpreter, numTest, lower, upper);
 		}
 		else {
-			testGen = new RandomGenerateTest(dec, interpreter.getTypeSystem(), lower, upper);
+			testGen = new RandomGenerateTest(dec, interpreter, lower, upper);
 		}
 		// Get the function's relevant header information
 		NameID name = new NameID(id, dec.getName().get());
@@ -199,6 +200,17 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 				// Add the return values into the frame for validation
 				for(int j=0; j < outputParameters.size(); j++) {
 					Decl.Variable parameter = outputParameters.get(j);
+					Type paramType = parameter.getType();
+					// Check the nominal type postcondition
+					if(paramType instanceof Type.Nominal) {
+						Type.Nominal nom = (Type.Nominal) paramType;
+						Decl.Type decl = interpreter.getTypeSystem().resolveExactly(nom.getName(), Decl.Type.class);
+						RValue.Bool valid = returns[j].checkInvariant(decl.getVariableDeclaration(), decl.getInvariant(), interpreter);
+						if(valid == RValue.Bool.False) {
+							System.out.println("Post condition for " + parameter  + " failed");
+							throw new AssertionError("");
+						}
+					}
 					frame.putLocal(parameter.getName(), returns[j]);
 				}				
 				interpreter.checkInvariants(frame, postconditions);
@@ -210,6 +222,10 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 			}
 			catch(AssertionError e) {
 				System.out.printf("Failed Input: %s Output: %s%n", Arrays.toString(paramValues), Arrays.toString(returns));
+			} catch (ResolutionError e) {
+				// FIXME
+				e.printStackTrace();
+				assert false;
 			}
 		}
 		// Overall test statistics

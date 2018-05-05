@@ -64,6 +64,17 @@ public final class IntegerGenerator implements Generator {
 			return semantics.Int(value);
 		}
 	}
+	
+	/**
+	 * Intersect the range of this generator with
+	 * another generator if it hasn't generated any values yet.
+	 * 
+	 * @param other An integer range to intersect with
+	 */
+	public void joinRange(IntegerRange other) {
+		assert count == 1;
+		this.range = range.intersection(other);
+	}
 
 	@Override
 	public int size() {

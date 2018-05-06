@@ -86,6 +86,20 @@ public class GenerateRandomTest {
 	}
 	
 	/**
+	 * Test when the function has an int parameter with 
+	 * an invalid range
+	 */
+	@Test(expected = Error.class)
+	public void testFunctionIntInvalid() {
+		Decl.Variable intParam = new Decl.Variable(null, new Identifier("firstInt"), Type.Int);
+		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(intParam);
+		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
+		BigInteger lower = BigInteger.valueOf(4);
+		BigInteger upper = BigInteger.valueOf(4);
+		new RandomGenerateTest(func, baseInterpreter, lower, upper);
+	}
+	
+	/**
 	 * Test when the function has multiple int parameters
 	 */
 	@Test

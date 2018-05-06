@@ -39,6 +39,7 @@ public final class IntegerGenerator implements Generator {
 		this.testType = testType;
 		this.range = new IntegerRange(lower, upper);
 		this.size = upper.subtract(lower).intValue();
+		checkValidRange();
 	}
 	
 	@Override
@@ -65,6 +66,13 @@ public final class IntegerGenerator implements Generator {
 		}
 	}
 	
+	private void checkValidRange() {
+		// Throw an error if the range is bigger than the other
+		if(range.lowerBound().compareTo(range.upperBound()) >= 0) {
+			throw new Error("Upper integer limit is greater than the lower integer limit");
+		}
+	}
+	
 	/**
 	 * Intersect the range of this generator with
 	 * another generator if it hasn't generated any values yet.
@@ -74,6 +82,7 @@ public final class IntegerGenerator implements Generator {
 	public void joinRange(IntegerRange other) {
 		assert count == 1;
 		this.range = range.intersection(other);
+		checkValidRange();
 	}
 
 	@Override

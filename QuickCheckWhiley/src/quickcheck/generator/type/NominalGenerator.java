@@ -115,13 +115,40 @@ public class NominalGenerator implements Generator{
 	 */
 	public IntegerRange discoverRanges(Expr expr, Identifier nomName, CallStack frame, Interpreter instance) {
 		// TODO check order of operations for equal and not equal
-		RValue val;
+//		RValue val;
+		IntegerRange range = null;
 		switch (expr.getOpcode()) {
-		case WhileyFile.EXPR_equal:
-		case WhileyFile.EXPR_notequal:
-			// TODO check type of values on both sides
-//				val = executeNotEqual((Expr.NotEqual) expr, frame);
+//		case WhileyFile.EXPR_equal:
+//		case WhileyFile.EXPR_notequal:
+//			break;
+		case WhileyFile.EXPR_logicalnot:
+			range = discoverRanges(expr, nomName, frame, instance);
+			// Flip the ranges around
+			if(range != null) {
+				return new IntegerRange(range.upperBound(), range.lowerBound());
+			}
 			break;
+		case WhileyFile.EXPR_logicalor:
+		case WhileyFile.EXPR_logicaland:
+		case WhileyFile.EXPR_logiaclimplication:
+		case WhileyFile.EXPR_logicaliff:
+			Expr.NaryOperator nary = (Expr.NaryOperator) expr;
+			Tuple<Expr> operands = nary.getOperands();
+			for(int i=0;i!=operands.size();++i) {
+				IntegerRange other = discoverRanges(operands.get(i), nomName, frame, instance);
+				if(range == null) {
+					range = other;
+				}
+				else if(other != null) {
+					if(expr.getOpcode() == WhileyFile.EXPR_logicalor) {
+						range = range.union(other);		
+					}
+					else {
+						range = range.intersection(other);
+					}
+				}
+			}
+			return range;
 		case WhileyFile.EXPR_integerlessthan:
 		case WhileyFile.EXPR_integerlessequal:
 		case WhileyFile.EXPR_integergreaterthan:

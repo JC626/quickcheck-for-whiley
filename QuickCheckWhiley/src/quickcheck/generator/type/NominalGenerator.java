@@ -52,23 +52,20 @@ public class NominalGenerator implements Generator{
 	public RValue generate() {
 		// TODO after ranges generated, need to be able to pass it into the integer generator?
 		// TODO remove invariants that have already been applied as ranges?
-		if(!(generator instanceof IntegerGenerator)) {
-			RValue.Bool isValid = RValue.Bool.False;
-			int i = 1;
-			RValue value = null;
-			while(isValid == RValue.Bool.False) {
-				value = generator.generate();
-				isValid = value.checkInvariant(decl.getVariableDeclaration(), decl.getInvariant(), interpreter);
-				i++;
-				// No valid values
-				if(i > generator.size()) {
-					// TODO Change this to a different exception
-					throw new Error("No possible values can be generated for the nominal type: " + decl.getName());
-				}
+		RValue.Bool isValid = RValue.Bool.False;
+		int i = 1;
+		RValue value = null;
+		while(isValid == RValue.Bool.False) {
+			value = generator.generate();
+			isValid = value.checkInvariant(decl.getVariableDeclaration(), decl.getInvariant(), interpreter);
+			i++;
+			// No valid values
+			if(i > generator.size()) {
+				// TODO Change this to a different exception
+				throw new Error("No possible values can be generated for the nominal type: " + decl.getName());
 			}
-			return value;
 		}
-		return generator.generate();
+		return value;
 	}
 	
 	/**
@@ -117,21 +114,23 @@ public class NominalGenerator implements Generator{
 		// TODO check order of operations for equal and not equal
 //		RValue val;
 		IntegerRange range = null;
-		switch (expr.getOpcode()) {
+		int operator = expr.getOpcode();
+		switch (operator) {
 //		case WhileyFile.EXPR_equal:
 //		case WhileyFile.EXPR_notequal:
 //			break;
 		case WhileyFile.EXPR_logicalnot:
-			range = discoverRanges(expr, nomName, frame, instance);
+			Expr.UnaryOperator unary = (Expr.UnaryOperator) expr;
+			range = discoverRanges(unary.getOperand(), nomName, frame, instance);
 			// Flip the ranges around
 			if(range != null) {
-				return new IntegerRange(range.upperBound(), range.lowerBound());
+				BigInteger upper = range.upperBound() == null ? null : range.upperBound();
+				BigInteger lower = range.lowerBound() == null ? null : range.lowerBound();
+				return new IntegerRange(upper, lower);
 			}
 			break;
 		case WhileyFile.EXPR_logicalor:
 		case WhileyFile.EXPR_logicaland:
-		case WhileyFile.EXPR_logiaclimplication:
-		case WhileyFile.EXPR_logicaliff:
 			Expr.NaryOperator nary = (Expr.NaryOperator) expr;
 			Tuple<Expr> operands = nary.getOperands();
 			for(int i=0;i!=operands.size();++i) {
@@ -140,7 +139,7 @@ public class NominalGenerator implements Generator{
 					range = other;
 				}
 				else if(other != null) {
-					if(expr.getOpcode() == WhileyFile.EXPR_logicalor) {
+					if(operator == WhileyFile.EXPR_logicalor) {
 						range = range.union(other);		
 					}
 					else {
@@ -149,6 +148,8 @@ public class NominalGenerator implements Generator{
 				}
 			}
 			return range;
+		case WhileyFile.EXPR_logiaclimplication:
+		case WhileyFile.EXPR_logicaliff:
 		case WhileyFile.EXPR_integerlessthan:
 		case WhileyFile.EXPR_integerlessequal:
 		case WhileyFile.EXPR_integergreaterthan:
@@ -156,7 +157,12 @@ public class NominalGenerator implements Generator{
 			Expr.BinaryOperator binary = (Expr.BinaryOperator) expr;
 			Expr first = binary.getFirstOperand();
 			Expr second = binary.getSecondOperand();
-			
+			if(operator == WhileyFile.EXPR_logiaclimplication || operator == WhileyFile.EXPR_logicaliff) {
+				IntegerRange other = discoverRanges(first, nomName, frame, instance);
+				range = discoverRanges(second, nomName, frame, instance).intersection(other);
+				return range;
+			}
+
 			// TODO check if field is an integer?
 			BigInteger upperLimit = null;
 			BigInteger lowerLimit = null;
@@ -169,34 +175,32 @@ public class NominalGenerator implements Generator{
 			// TODO need to know which side the variable is on.
 			if(first instanceof VariableAccess && ((VariableAccess) first).getVariableDeclaration().getName().equals(nomName)){
 				RValue.Int rhs = instance.executeExpression(RValue.Int.class, second, frame);
-				int op = expr.getOpcode();			
-				if(op == WhileyFile.EXPR_integerlessthan) {
+				if(operator == WhileyFile.EXPR_integerlessthan) {
 					upperLimit = BigInteger.valueOf(rhs.intValue());
 				}
-				else if(op == WhileyFile.EXPR_integerlessequal) {
+				else if(operator == WhileyFile.EXPR_integerlessequal) {
 					upperLimit = BigInteger.valueOf(rhs.intValue() + 1);
 				}
-				else if(op == WhileyFile.EXPR_integergreaterthan) {
+				else if(operator == WhileyFile.EXPR_integergreaterthan) {
 					lowerLimit = BigInteger.valueOf(rhs.intValue() + 1);
 				}
-				else if(op == WhileyFile.EXPR_integergreaterequal) {
+				else if(operator == WhileyFile.EXPR_integergreaterequal) {
 					lowerLimit = BigInteger.valueOf(rhs.intValue());
 				}	
 				return new IntegerRange(lowerLimit, upperLimit);
 			}
 			else if(second instanceof VariableAccess && ((VariableAccess) second).getVariableDeclaration().getName().equals(nomName)){
 				RValue.Int lhs = instance.executeExpression(RValue.Int.class, first, frame);
-				int op = expr.getOpcode();
-				if(op == WhileyFile.EXPR_integerlessthan) {
+				if(operator == WhileyFile.EXPR_integerlessthan) {
 					lowerLimit = BigInteger.valueOf(lhs.intValue() + 1);
 				}
-				else if(op == WhileyFile.EXPR_integerlessequal) {
+				else if(operator == WhileyFile.EXPR_integerlessequal) {
 					lowerLimit = BigInteger.valueOf(lhs.intValue());
 				}
-				else if(op == WhileyFile.EXPR_integergreaterthan) {
+				else if(operator == WhileyFile.EXPR_integergreaterthan) {
 					upperLimit = BigInteger.valueOf(lhs.intValue());
 				}
-				else if(op == WhileyFile.EXPR_integergreaterequal) {
+				else if(operator == WhileyFile.EXPR_integergreaterequal) {
 					upperLimit = BigInteger.valueOf(lhs.intValue() + 1);
 				}
 				return new IntegerRange(lowerLimit, upperLimit);

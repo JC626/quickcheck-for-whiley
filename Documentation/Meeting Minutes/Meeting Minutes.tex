@@ -184,6 +184,41 @@ None
  \item When generating union types, need to fairly select values of each type. E.g. for int|bool, select an int then a bool then an int etc.
 \end{itemize}
 
+\section{May 7th 2018}
+\subsection{Present}
+\begin{itemize}
+	\item David Pearce
+\end{itemize}
+
+\subsection{Action points were achieved since the last meeting}
+\begin{itemize}
+	\item Completed union generation
+	\item Fixed some bugs with nominal invariants not being applied
+	\item Completed integer range analysis ONLY for nominal types that wrap an integer. I.e. nat is (int x) where x \textgreater 0.  
+\end{itemize}
+
+\subsection{Action points have yet to be achieved since the last meeting}
+None
+\subsection{Action points were agreed to for the next meeting}
+\begin{itemize}
+	\item Run the valid and invalid tests written for testing the Whiley compiler.  To see what your tool does and to check that: valid tests don't produce counter examples, and invalid tests (ideally) do.  Don't expect every invalid test will find a counter example though.
+	\item Continue working on integer range analysis
+\end{itemize}
+\subsection{Discussion Points}
+\begin{itemize}
+ \item Whiley does implicit casting. E.g. type nat is (int x) where 'a' \textgreater x will verify. In Whiley, a char is an integer from 0 to 255.
+ \item A nominal type can have multiple invariants due to multiple where clauses.
+ \item Implies (== \textgreater) is a 
+ 
+ \item Each type could have a range. This means that the Generators for types would mirror the hierarchy for Ranges. An array would have a range for the elements itself and the length of the array. 
+ \item Trying to add integer ranges for all elements in an array is difficult. For example, type intArr is (int[] x) where all \{ i in 0...\texttt{|x| |} x[i] \textgreater 0 \} .  Could possibly pattern match on this case?
+ 
+ \item implies (== \textgreater) for x ==\textgreater y is !(x) \texttt{||} (x \&\& y)
+ \item iff (\textless== \textgreater) for x \textless== \textgreater y is equality i.e. (x == y) 
+\end{itemize}
+
+
+
 %\section{ 2018}
 %\subsection{Present}
 %\begin{itemize}
@@ -196,7 +231,7 @@ None
 %
 %\subsection{Discussion Points}
 %\begin{itemize}
-% \item EMAIL DAVE Send Latex lstlisting format for Whiley code
+% \item Should integer range be able to do e.g. type weird is (int x) where x+1 > 0 . I have also limited my integer range to the form x ~ c
 %\end{itemize}
 
 

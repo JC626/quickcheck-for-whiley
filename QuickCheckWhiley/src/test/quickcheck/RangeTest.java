@@ -3,13 +3,18 @@ package test.quickcheck;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.math.BigInteger;
 import java.util.List;
 
 import org.junit.Test;
 
+import quickcheck.constraints.IntegerRange;
 import quickcheck.generator.ExhaustiveGenerateTest;
 import quickcheck.generator.GenerateTest;
+import quickcheck.generator.type.Generator;
+import quickcheck.generator.type.IntegerGenerator;
+import quickcheck.generator.type.NominalGenerator;
 import test.utils.TestHelper;
 import wybs.lang.Build;
 import wyc.lang.WhileyFile.Decl;
@@ -34,13 +39,19 @@ public class RangeTest {
 
 	private final static TestHelper helper = new TestHelper(TEST_DIR);
 	
+	
 	/**
 	 * Test when a nominal type wraps an integer,
 	 * and it has a constraint with an && (and) in it
 	 * @throws IOException
+	 * @throws SecurityException 
+	 * @throws NoSuchFieldException 
+	 * @throws IllegalAccessException 
+	 * @throws IllegalArgumentException 
 	 */
+	@SuppressWarnings("unchecked")
 	@Test
-	public void testNominalIntRangeAnd() throws IOException {
+	public void testNominalIntRangeAnd() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 		String testName = "nominal_int_and";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
@@ -50,6 +61,26 @@ public class RangeTest {
 		BigInteger lower = BigInteger.valueOf(-5);
 		BigInteger upper = BigInteger.valueOf(15);
 		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), interpreter, 20, lower, upper);
+		
+		// Get the integer range using reflection
+		Field exhGenField = testGen.getClass().getDeclaredField("parameterGenerators");
+		exhGenField.setAccessible(true);
+		List<Generator> genExhaustive = (List<Generator>) exhGenField.get(testGen);
+		assertTrue(genExhaustive.get(0) instanceof NominalGenerator);
+		NominalGenerator nomGen = (NominalGenerator) genExhaustive.get(0);
+		
+		Field genField = nomGen.getClass().getDeclaredField("generator");
+		genField.setAccessible(true);
+		assertTrue(genField.get(nomGen) instanceof IntegerGenerator);
+		IntegerGenerator gen = (IntegerGenerator) genField.get(nomGen);		
+		
+		// Check the integer range
+		Field rangeField = gen.getClass().getDeclaredField("range");
+		rangeField.setAccessible(true);
+		IntegerRange range = (IntegerRange) rangeField.get(gen);
+		assertEquals(BigInteger.valueOf(1), range.lowerBound());
+		assertEquals(BigInteger.valueOf(10), range.upperBound());
+		
 		for(int i=1; i < 10; i++) {
 			RValue[] generatedParameters = testGen.generateParameters();
 			assertEquals(semantics.Int(BigInteger.valueOf(i)), generatedParameters[0]);
@@ -62,9 +93,14 @@ public class RangeTest {
 	 * Test when a nominal type wraps an integer,
 	 * and it has a constraint with an || (or) in it
 	 * @throws IOException
+	 * @throws SecurityException 
+	 * @throws NoSuchFieldException 
+	 * @throws IllegalAccessException 
+	 * @throws IllegalArgumentException 
 	 */
+	@SuppressWarnings("unchecked")
 	@Test
-	public void testNominalIntRangeOr() throws IOException {
+	public void testNominalIntRangeOr() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 		String testName = "nominal_int_or";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
@@ -74,6 +110,26 @@ public class RangeTest {
 		BigInteger lower = BigInteger.valueOf(-5);
 		BigInteger upper = BigInteger.valueOf(15);
 		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), interpreter, 20, lower, upper);
+		
+		// Get the integer range using reflection
+		Field exhGenField = testGen.getClass().getDeclaredField("parameterGenerators");
+		exhGenField.setAccessible(true);
+		List<Generator> genExhaustive = (List<Generator>) exhGenField.get(testGen);
+		assertTrue(genExhaustive.get(0) instanceof NominalGenerator);
+		NominalGenerator nomGen = (NominalGenerator) genExhaustive.get(0);
+		
+		Field genField = nomGen.getClass().getDeclaredField("generator");
+		genField.setAccessible(true);
+		assertTrue(genField.get(nomGen) instanceof IntegerGenerator);
+		IntegerGenerator gen = (IntegerGenerator) genField.get(nomGen);		
+		
+		// Check the integer range
+		Field rangeField = gen.getClass().getDeclaredField("range");
+		rangeField.setAccessible(true);
+		IntegerRange range = (IntegerRange) rangeField.get(gen);
+		assertEquals(lower, range.lowerBound());
+		assertEquals(upper, range.upperBound());
+		
 		for(int i=-5; i < 0; i++) {
 			RValue[] generatedParameters = testGen.generateParameters();
 			assertEquals(semantics.Int(BigInteger.valueOf(i)), generatedParameters[0]);
@@ -92,9 +148,14 @@ public class RangeTest {
 	 * Test when a nominal type wraps an integer,
 	 * and it has a constraint with an ! (not) in it
 	 * @throws IOException
+	 * @throws SecurityException 
+	 * @throws NoSuchFieldException 
+	 * @throws IllegalAccessException 
+	 * @throws IllegalArgumentException 
 	 */
+	@SuppressWarnings("unchecked")
 	@Test
-	public void testNominalIntRangeNot() throws IOException {
+	public void testNominalIntRangeNot() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 		String testName = "nominal_int_not";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
@@ -104,6 +165,26 @@ public class RangeTest {
 		BigInteger lower = BigInteger.valueOf(-5);
 		BigInteger upper = BigInteger.valueOf(15);
 		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), interpreter, 20, lower, upper);
+		
+		// Get the integer range using reflection
+		Field exhGenField = testGen.getClass().getDeclaredField("parameterGenerators");
+		exhGenField.setAccessible(true);
+		List<Generator> genExhaustive = (List<Generator>) exhGenField.get(testGen);
+		assertTrue(genExhaustive.get(0) instanceof NominalGenerator);
+		NominalGenerator nomGen = (NominalGenerator) genExhaustive.get(0);
+		
+		Field genField = nomGen.getClass().getDeclaredField("generator");
+		genField.setAccessible(true);
+		assertTrue(genField.get(nomGen) instanceof IntegerGenerator);
+		IntegerGenerator gen = (IntegerGenerator) genField.get(nomGen);		
+		
+		// Check the integer range
+		Field rangeField = gen.getClass().getDeclaredField("range");
+		rangeField.setAccessible(true);
+		IntegerRange range = (IntegerRange) rangeField.get(gen);
+		assertEquals(lower, range.lowerBound());
+		assertEquals(BigInteger.valueOf(1), range.upperBound());
+
 		for(int i=-5; i < 1; i++) {
 			RValue[] generatedParameters = testGen.generateParameters();
 			assertEquals(semantics.Int(BigInteger.valueOf(i)), generatedParameters[0]);

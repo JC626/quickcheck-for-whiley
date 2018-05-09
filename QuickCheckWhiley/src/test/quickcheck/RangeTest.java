@@ -111,54 +111,5 @@ public class RangeTest {
 		RValue[] generatedParameters = testGen.generateParameters();
 		assertEquals(semantics.Int(BigInteger.valueOf(-5)), generatedParameters[0]);
 	}
-	
-	/**
-	 * Test when a nominal type wraps an integer,
-	 * and it has a constraint with an ==> (implies) in it
-	 * @throws IOException
-	 */
-	@Test
-	public void testNominalIntRangeImplies() throws IOException {
-		String testName = "nominal_int_implies";
-		helper.compile(testName);
-		Build.Project project = helper.createProject();
-		Interpreter interpreter = new Interpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctions(testName, project);
 		
-		BigInteger lower = BigInteger.valueOf(-5);
-		BigInteger upper = BigInteger.valueOf(15);
-		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), interpreter, 20, lower, upper);
-		for(int i=1; i < 10; i++) {
-			RValue[] generatedParameters = testGen.generateParameters();
-			assertEquals(semantics.Int(BigInteger.valueOf(i)), generatedParameters[0]);
-		}
-		RValue[] generatedParameters = testGen.generateParameters();
-		assertEquals(semantics.Int(BigInteger.valueOf(1)), generatedParameters[0]);
-	}
-	
-	/**
-	 * Test when a nominal type wraps an integer,
-	 * and it has a constraint with an <==> (iff) in it
-	 * @throws IOException
-	 */
-	@Test
-	public void testNominalIntRangeIff() throws IOException {
-		String testName = "nominal_int_iff";
-		helper.compile(testName);
-		Build.Project project = helper.createProject();
-		Interpreter interpreter = new Interpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctions(testName, project);
-		
-		BigInteger lower = BigInteger.valueOf(-5);
-		BigInteger upper = BigInteger.valueOf(15);
-		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), interpreter, 20, lower, upper);
-		for(int i=1; i < 10; i++) {
-			RValue[] generatedParameters = testGen.generateParameters();
-			assertEquals(semantics.Int(BigInteger.valueOf(i)), generatedParameters[0]);
-		}
-		RValue[] generatedParameters = testGen.generateParameters();
-		assertEquals(semantics.Int(BigInteger.valueOf(1)), generatedParameters[0]);
-	}
-	
-	
 }

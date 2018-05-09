@@ -148,8 +148,6 @@ public class NominalGenerator implements Generator{
 				}
 			}
 			return range;
-		case WhileyFile.EXPR_logiaclimplication:
-		case WhileyFile.EXPR_logicaliff:
 		case WhileyFile.EXPR_integerlessthan:
 		case WhileyFile.EXPR_integerlessequal:
 		case WhileyFile.EXPR_integergreaterthan:
@@ -157,12 +155,7 @@ public class NominalGenerator implements Generator{
 			Expr.BinaryOperator binary = (Expr.BinaryOperator) expr;
 			Expr first = binary.getFirstOperand();
 			Expr second = binary.getSecondOperand();
-			if(operator == WhileyFile.EXPR_logiaclimplication || operator == WhileyFile.EXPR_logicaliff) {
-				IntegerRange other = discoverRanges(first, nomName, frame, instance);
-				range = discoverRanges(second, nomName, frame, instance).intersection(other);
-				return range;
-			}
-
+			
 			// TODO check if field is an integer?
 			BigInteger upperLimit = null;
 			BigInteger lowerLimit = null;

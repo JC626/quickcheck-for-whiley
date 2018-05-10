@@ -240,5 +240,32 @@ public class RangeTest {
 		RValue[] generatedParameters = testGen.generateParameters();
 		assertEquals(semantics.Int(BigInteger.valueOf(1)), generatedParameters[0]);
 	}
+	
+	/**
+	 * Test when a nominal type wraps an integer,
+	 * but cannot generate any integers as the upper range is 
+	 * smaller or the same as the lower range
+	 * @throws IOException
+	 * @throws SecurityException 
+	 * @throws NoSuchFieldException 
+	 * @throws IllegalAccessException 
+	 * @throws IllegalArgumentException 
+	 */
+	@Test(expected = Error.class)
+	public void testNominalIntRangeInvalid() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+		String testName = "nominal_int_invalid";
+		helper.compile(testName);
+		Build.Project project = helper.createProject();
+		Interpreter interpreter = new Interpreter(project, System.out);
+		List<Decl.Function> functions = helper.getFunctions(testName, project);
 		
+		BigInteger lower = BigInteger.valueOf(-5);
+		BigInteger upper = BigInteger.valueOf(15);
+		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), interpreter, 20, lower, upper);
+		
+		IntegerRange range = getIntegerRange(testGen);
+		assertEquals(BigInteger.valueOf(1), range.lowerBound());
+		assertEquals(BigInteger.valueOf(1), range.upperBound());
+	}
+	
 }

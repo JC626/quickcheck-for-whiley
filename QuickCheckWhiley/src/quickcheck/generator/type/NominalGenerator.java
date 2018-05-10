@@ -72,21 +72,22 @@ public class NominalGenerator implements Generator{
 	 * or not. This requires physically evaluating the invariant to see whether
 	 * or not it holds true.
 	 *
-	 * @param var
-	 * @param invariant
-	 * @param instance
-	 * @return
+	 * @param var The variable the nominal type wraps
+	 * @param invariant The invariants applied on the nominal type
+	 * @param instance The interpreter
 	 */
 	public void checkInvariant(Generator gen, Decl.Variable var, Tuple<Expr> invariant, Interpreter instance) {
 		// Can have multiple invariants
 		if (invariant.size() > 0) {
-			// One or more type invariants to check. Therefore, we need
-			// to execute the invariant and determine whether or not it
-			// returns true.
+			/*
+			 * One or more type invariants to check. 
+			 * Therefore, we need to execute the invariant and
+			 * determine whether or not it returns true.
+			 */
 			Interpreter.CallStack frame = instance.new CallStack();
 //			frame.putLocal(var.getName(), val);
 			for (int i = 0; i != invariant.size(); ++i) {
-				IntegerRange b = discoverRanges(invariant.get(i), var.getName(), frame, interpreter);
+				IntegerRange b = findRange(invariant.get(i), var.getName(), frame, interpreter);
 				if (b != null) {
 					if(gen instanceof IntegerGenerator) {
 						((IntegerGenerator) gen).joinRange(b);
@@ -96,19 +97,19 @@ public class NominalGenerator implements Generator{
 		}
 	}
 
-	// TODO create own version of executeExpression for the integer ranges
+
 	/**
-	 * Execute a single expression which is expected to return a single result
-	 * of an expected type. If a result of an incorrect type is returned, then
-	 * an exception is raised.
-	 *
-	 * @param expr
-	 *            The expression to be executed
-	 * @param frame
-	 *            The frame in which the expression is executing
-	 * @return
+	 * 
+	 * Find the integer range for a given invariant 
+	 * by executing expressions in the invariant.
+	 * 
+	 * @param expr - The expression to be executed
+	 * @param nomName - The name of the field the invariant is applied to
+	 * @param frame - The frame in which the expression is executing
+	 * @param instance - The interpreter in which the expressions are executed
+	 * @return The IntegerRange discovered from the invariant
 	 */
-	public IntegerRange discoverRanges(Expr expr, Identifier nomName, CallStack frame, Interpreter instance) {
+	public IntegerRange findRange(Expr expr, Identifier nomName, CallStack frame, Interpreter instance) {
 //		RValue val;
 		IntegerRange range = null;
 		int operator = expr.getOpcode();
@@ -136,7 +137,7 @@ public class NominalGenerator implements Generator{
 			break;
 		case WhileyFile.EXPR_logicalnot:
 			Expr.UnaryOperator unary = (Expr.UnaryOperator) expr;
-			range = discoverRanges(unary.getOperand(), nomName, frame, instance);
+			range = findRange(unary.getOperand(), nomName, frame, instance);
 			// Flip the ranges around
 			if(range != null) {
 				BigInteger upper = range.upperBound() == null ? null : range.upperBound();
@@ -149,7 +150,7 @@ public class NominalGenerator implements Generator{
 			Expr.NaryOperator nary = (Expr.NaryOperator) expr;
 			Tuple<Expr> operands = nary.getOperands();
 			for(int i=0;i!=operands.size();++i) {
-				IntegerRange other = discoverRanges(operands.get(i), nomName, frame, instance);
+				IntegerRange other = findRange(operands.get(i), nomName, frame, instance);
 				if(range == null) {
 					range = other;
 				}
@@ -213,26 +214,6 @@ public class NominalGenerator implements Generator{
 			}
 			// normal expression
 			break;
-//			case WhileyFile.EXPR_notequal:
-//			break;
-//			case WhileyFile.EXPR_bitwisenot:
-//				val = executeBitwiseNot((Expr.BitwiseComplement) expr, frame);
-//				break;
-//			case WhileyFile.EXPR_bitwiseor:
-//				val = executeBitwiseOr((Expr.BitwiseOr) expr, frame);
-//				break;
-//			case WhileyFile.EXPR_bitwisexor:
-//				val = executeBitwiseXor((Expr.BitwiseXor) expr, frame);
-//				break;
-//			case WhileyFile.EXPR_bitwiseand:
-//				val = executeBitwiseAnd((Expr.BitwiseAnd) expr, frame);
-//				break;
-//			case WhileyFile.EXPR_bitwiseshl:
-//				val = executeBitwiseShiftLeft((Expr.BitwiseShiftLeft) expr, frame);
-//				break;
-//			case WhileyFile.EXPR_bitwiseshr:
-//				val = executeBitwiseShiftRight((Expr.BitwiseShiftRight) expr, frame);
-//				break;
 		default:
 			return null;
 		}

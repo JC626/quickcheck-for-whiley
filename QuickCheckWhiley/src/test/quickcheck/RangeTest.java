@@ -268,4 +268,36 @@ public class RangeTest {
 		assertEquals(BigInteger.valueOf(1), range.upperBound());
 	}
 	
+	/**
+	 * Test when a nominal type wraps an integer,
+	 * and has a equals clause
+	 * @throws IOException
+	 * @throws SecurityException 
+	 * @throws NoSuchFieldException 
+	 * @throws IllegalAccessException 
+	 * @throws IllegalArgumentException 
+	 */
+	@Test
+	public void testNominalIntRangeEquals() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+		String testName = "nominal_int_equals";
+		helper.compile(testName);
+		Build.Project project = helper.createProject();
+		Interpreter interpreter = new Interpreter(project, System.out);
+		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		
+		BigInteger lower = BigInteger.valueOf(-5);
+		BigInteger upper = BigInteger.valueOf(15);
+		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), interpreter, 20, lower, upper);
+		
+		IntegerRange range = getIntegerRange(testGen);
+		assertEquals(BigInteger.valueOf(10), range.lowerBound());
+		assertEquals(BigInteger.valueOf(11), range.upperBound());
+
+		RValue[] generatedParameters = testGen.generateParameters();
+		assertEquals(semantics.Int(BigInteger.valueOf(10)), generatedParameters[0]);
+		
+		generatedParameters = testGen.generateParameters();
+		assertEquals(semantics.Int(BigInteger.valueOf(10)), generatedParameters[0]);
+	}
+	
 }

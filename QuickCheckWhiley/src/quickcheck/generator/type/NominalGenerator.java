@@ -10,6 +10,7 @@ import wyc.lang.WhileyFile.Decl;
 import wyc.lang.WhileyFile.Expr;
 import wyc.lang.WhileyFile.Expr.VariableAccess;
 import wyil.interpreter.ConcreteSemantics.RValue;
+import wyil.interpreter.ConcreteSemantics.RValue.Int;
 import wyil.interpreter.Interpreter.CallStack;
 import wyil.interpreter.Interpreter;
 
@@ -80,7 +81,7 @@ public class NominalGenerator implements Generator{
 	 */
 	public void checkInvariant(Generator gen, Decl.Variable var, Tuple<Expr> invariant, Interpreter instance) {
 		// TODO might need dummy value for the nominal type to be able to check invariant.
-		// TODO Only one invariant?
+		// Can have multiple invariants
 		if (invariant.size() > 0) {
 			// One or more type invariants to check. Therefore, we need
 			// to execute the invariant and determine whether or not it
@@ -111,14 +112,31 @@ public class NominalGenerator implements Generator{
 	 * @return
 	 */
 	public IntegerRange discoverRanges(Expr expr, Identifier nomName, CallStack frame, Interpreter instance) {
-		// TODO check order of operations for equal and not equal
 //		RValue val;
 		IntegerRange range = null;
 		int operator = expr.getOpcode();
 		switch (operator) {
-//		case WhileyFile.EXPR_equal:
-//		case WhileyFile.EXPR_notequal:
-//			break;
+		case WhileyFile.EXPR_equal:
+			Expr.BinaryOperator binaryEq = (Expr.BinaryOperator) expr;
+			Expr firstEq = binaryEq.getFirstOperand();
+			Expr secondEq = binaryEq.getSecondOperand();
+			
+			if(firstEq instanceof VariableAccess && ((VariableAccess) firstEq).getVariableDeclaration().getName().equals(nomName)){
+				RValue rhs = instance.executeExpression(RValue.class, secondEq, frame);
+				if(rhs instanceof RValue.Int) {
+					RValue.Int val = (Int) rhs;
+					return new IntegerRange(val.intValue(), val.intValue() + 1);
+				}
+			}
+			else if(secondEq instanceof VariableAccess && ((VariableAccess) secondEq).getVariableDeclaration().getName().equals(nomName)){
+				RValue lhs = instance.executeExpression(RValue.class, firstEq, frame);
+				if(lhs instanceof RValue.Int) {
+					RValue.Int val = (Int) lhs;
+					return new IntegerRange(val.intValue(), val.intValue() + 1);
+				}
+			}
+			// normal expression
+			break;
 		case WhileyFile.EXPR_logicalnot:
 			Expr.UnaryOperator unary = (Expr.UnaryOperator) expr;
 			range = discoverRanges(unary.getOperand(), nomName, frame, instance);
@@ -156,7 +174,6 @@ public class NominalGenerator implements Generator{
 			Expr first = binary.getFirstOperand();
 			Expr second = binary.getSecondOperand();
 			
-			// TODO check if field is an integer?
 			BigInteger upperLimit = null;
 			BigInteger lowerLimit = null;
 			/* TODO Would fail for x + 2 < 10 as 
@@ -165,7 +182,6 @@ public class NominalGenerator implements Generator{
 			 * operations applied to the x to the other side
 			 * i.e. x + 2 < 10 ==> x < 10 - 2
 			 */
-			// TODO need to know which side the variable is on.
 			if(first instanceof VariableAccess && ((VariableAccess) first).getVariableDeclaration().getName().equals(nomName)){
 				RValue.Int rhs = instance.executeExpression(RValue.Int.class, second, frame);
 				if(operator == WhileyFile.EXPR_integerlessthan) {
@@ -198,10 +214,10 @@ public class NominalGenerator implements Generator{
 				}
 				return new IntegerRange(lowerLimit, upperLimit);
 			}
-			else {
-				// normal expression
-				return null;
-			}
+			// normal expression
+			break;
+//			case WhileyFile.EXPR_notequal:
+//			break;
 //			case WhileyFile.EXPR_bitwisenot:
 //				val = executeBitwiseNot((Expr.BitwiseComplement) expr, frame);
 //				break;

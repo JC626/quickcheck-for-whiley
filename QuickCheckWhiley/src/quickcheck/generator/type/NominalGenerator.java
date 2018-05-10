@@ -51,20 +51,18 @@ public class NominalGenerator implements Generator{
 
 	@Override
 	public RValue generate() {
-		// TODO after ranges generated, need to be able to pass it into the integer generator?
-		// TODO remove invariants that have already been applied as ranges?
 		RValue.Bool isValid = RValue.Bool.False;
 		int i = 1;
 		RValue value = null;
 		while(isValid == RValue.Bool.False) {
 			value = generator.generate();
 			isValid = value.checkInvariant(decl.getVariableDeclaration(), decl.getInvariant(), interpreter);
-			i++;
 			// No valid values
 			if(i > generator.size()) {
 				// TODO Change this to a different exception
 				throw new Error("No possible values can be generated for the nominal type: " + decl.getName());
 			}
+			i++;
 		}
 		return value;
 	}
@@ -80,7 +78,6 @@ public class NominalGenerator implements Generator{
 	 * @return
 	 */
 	public void checkInvariant(Generator gen, Decl.Variable var, Tuple<Expr> invariant, Interpreter instance) {
-		// TODO might need dummy value for the nominal type to be able to check invariant.
 		// Can have multiple invariants
 		if (invariant.size() > 0) {
 			// One or more type invariants to check. Therefore, we need
@@ -237,7 +234,6 @@ public class NominalGenerator implements Generator{
 //				val = executeBitwiseShiftRight((Expr.BitwiseShiftRight) expr, frame);
 //				break;
 		default:
-			// TODO Do we really care about the other invariants?
 			return null;
 		}
 		return null;

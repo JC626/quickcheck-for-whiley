@@ -174,5 +174,71 @@ public class RangeTest {
 		RValue[] generatedParameters = testGen.generateParameters();
 		assertEquals(semantics.Int(BigInteger.valueOf(-5)), generatedParameters[0]);
 	}
+	
+	/**
+	 * Test when a nominal type wraps an integer,
+	 * and has one where clause with multiple constraints
+	 * @throws IOException
+	 * @throws SecurityException 
+	 * @throws NoSuchFieldException 
+	 * @throws IllegalAccessException 
+	 * @throws IllegalArgumentException 
+	 */
+	@Test
+	public void testNominalIntRangeSingleMulti() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+		String testName = "nominal_int_multi_1";
+		helper.compile(testName);
+		Build.Project project = helper.createProject();
+		Interpreter interpreter = new Interpreter(project, System.out);
+		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		
+		BigInteger lower = BigInteger.valueOf(-5);
+		BigInteger upper = BigInteger.valueOf(15);
+		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), interpreter, 20, lower, upper);
+		
+		IntegerRange range = getIntegerRange(testGen);
+		assertEquals(BigInteger.valueOf(-5), range.lowerBound());
+		assertEquals(BigInteger.valueOf(5), range.upperBound());
+
+		for(int i=-5; i < 5; i++) {
+			RValue[] generatedParameters = testGen.generateParameters();
+			assertEquals(semantics.Int(BigInteger.valueOf(i)), generatedParameters[0]);
+		}
+		RValue[] generatedParameters = testGen.generateParameters();
+		assertEquals(semantics.Int(BigInteger.valueOf(-5)), generatedParameters[0]);
+	}
+	
+	/**
+	 * Test when a nominal type wraps an integer,
+	 * and has multiple where clauses
+	 * @throws IOException
+	 * @throws SecurityException 
+	 * @throws NoSuchFieldException 
+	 * @throws IllegalAccessException 
+	 * @throws IllegalArgumentException 
+	 */
+	@Test
+	public void testNominalIntRangeMulti() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+		String testName = "nominal_int_multi_2";
+		helper.compile(testName);
+		Build.Project project = helper.createProject();
+		Interpreter interpreter = new Interpreter(project, System.out);
+		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		
+		BigInteger lower = BigInteger.valueOf(-5);
+		BigInteger upper = BigInteger.valueOf(15);
+		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), interpreter, 20, lower, upper);
+		
+		IntegerRange range = getIntegerRange(testGen);
+		assertEquals(BigInteger.valueOf(1), range.lowerBound());
+		assertEquals(BigInteger.valueOf(5), range.upperBound());
+
+		for(int i=1; i < 5; i++) {
+			RValue[] generatedParameters = testGen.generateParameters();
+			assertEquals(semantics.Int(BigInteger.valueOf(i)), generatedParameters[0]);
+		}
+		RValue[] generatedParameters = testGen.generateParameters();
+		assertEquals(semantics.Int(BigInteger.valueOf(1)), generatedParameters[0]);
+	}
 		
 }

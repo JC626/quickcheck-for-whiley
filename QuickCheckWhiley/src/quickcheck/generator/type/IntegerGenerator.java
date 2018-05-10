@@ -3,6 +3,7 @@ package quickcheck.generator.type;
 import java.math.BigInteger;
 import java.util.Random;
 
+import quickcheck.constraints.IntegerRange;
 import quickcheck.util.TestType;
 import wyil.interpreter.ConcreteSemantics;
 import wyil.interpreter.ConcreteSemantics.RValue;
@@ -27,42 +28,61 @@ public final class IntegerGenerator implements Generator {
 	private TestType testType;
 	
 	/** Lower limit (inclusive) for the integer generated */
-	private BigInteger lowerLimit; // Lower limit is inclusive
 	/** Upper limit (exclusive) for the integer generated */
-	private BigInteger upperLimit; 
-	
+
+	private IntegerRange range;
+
 	private int size;
 	private int count = 1;
 
 	public IntegerGenerator(TestType testType, BigInteger lower, BigInteger upper) {
 		this.testType = testType;
-		this.lowerLimit = lower;
-		this.upperLimit = upper;
-		this.size = upperLimit.subtract(lowerLimit).intValue();
+		this.range = new IntegerRange(lower, upper);
+		this.size = upper.subtract(lower).intValue();
+		checkValidRange();
 	}
 	
 	@Override
 	public RValue generate() {
 		BigInteger value;
 		if(testType == TestType.EXHAUSTIVE) {
-			value = lowerLimit.add(BigInteger.valueOf(count-1));
-			if(value.compareTo(upperLimit) >= 0) {
+			value = range.lowerBound().add(BigInteger.valueOf(count-1));
+			if(value.compareTo(range.upperBound()) >= 0) {
 				resetCount();
-				value = lowerLimit.add(BigInteger.valueOf(count-1));
+				value = range.lowerBound().add(BigInteger.valueOf(count-1));
 			}
 			count++;
 			return semantics.Int(value);
 		}
 		else {
-			boolean negateValue = lowerLimit.compareTo(new BigInteger("0")) < 0;
+			boolean negateValue = range.lowerBound().compareTo(new BigInteger("0")) < 0;
 			do {
-			    value = new BigInteger(upperLimit.bitLength(), randomiser);
+			    value = new BigInteger(range.upperBound().bitLength(), randomiser);
 				if(negateValue && !randomiser.nextBoolean()) {
 					value = value.negate();
 				}
-			} while (value.compareTo(upperLimit) >= 0 || value.compareTo(lowerLimit) < 0);
+			} while (value.compareTo(range.upperBound()) >= 0 || value.compareTo(range.lowerBound()) < 0);
 			return semantics.Int(value);
 		}
+	}
+	
+	private void checkValidRange() {
+		// Throw an error if the range is bigger than the other
+		if(range.lowerBound().compareTo(range.upperBound()) >= 0) {
+			throw new Error("Upper integer limit is greater than the lower integer limit");
+		}
+	}
+	
+	/**
+	 * Intersect the range of this generator with
+	 * another generator if it hasn't generated any values yet.
+	 * 
+	 * @param other An integer range to intersect with
+	 */
+	public void joinRange(IntegerRange other) {
+		assert count == 1;
+		this.range = range.intersection(other);
+		checkValidRange();
 	}
 
 	@Override
@@ -84,10 +104,10 @@ public final class IntegerGenerator implements Generator {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((lowerLimit == null) ? 0 : lowerLimit.hashCode());
+		result = prime * result + ((range.lowerBound() == null) ? 0 : range.lowerBound().hashCode());
 		result = prime * result + size;
 		result = prime * result + ((testType == null) ? 0 : testType.hashCode());
-		result = prime * result + ((upperLimit == null) ? 0 : upperLimit.hashCode());
+		result = prime * result + ((range.upperBound() == null) ? 0 : range.upperBound().hashCode());
 		return result;
 	}
 
@@ -100,19 +120,19 @@ public final class IntegerGenerator implements Generator {
 		if (getClass() != obj.getClass())
 			return false;
 		IntegerGenerator other = (IntegerGenerator) obj;
-		if (lowerLimit == null) {
-			if (other.lowerLimit != null)
+		if (range.lowerBound() == null) {
+			if (other.range.lowerBound() != null)
 				return false;
-		} else if (!lowerLimit.equals(other.lowerLimit))
+		} else if (!range.lowerBound().equals(other.range.lowerBound()))
 			return false;
 		if (size != other.size)
 			return false;
 		if (testType != other.testType)
 			return false;
-		if (upperLimit == null) {
-			if (other.upperLimit != null)
+		if (range.upperBound() == null) {
+			if (other.range.upperBound()  != null)
 				return false;
-		} else if (!upperLimit.equals(other.upperLimit))
+		} else if (!range.upperBound() .equals(other.range.upperBound()))
 			return false;
 		return true;
 	}

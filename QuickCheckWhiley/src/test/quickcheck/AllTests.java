@@ -11,7 +11,8 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({ 
 	GenerateRandomTest.class,
-	GenerateExhaustiveTest.class
+	GenerateExhaustiveTest.class,
+	RangeTest.class
 })
 public class AllTests {
 }

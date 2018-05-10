@@ -39,28 +39,17 @@ public class RangeTest {
 
 	private final static TestHelper helper = new TestHelper(TEST_DIR);
 	
-	
 	/**
-	 * Test when a nominal type wraps an integer,
-	 * and it has a constraint with an && (and) in it
-	 * @throws IOException
-	 * @throws SecurityException 
-	 * @throws NoSuchFieldException 
-	 * @throws IllegalAccessException 
-	 * @throws IllegalArgumentException 
+	 * Get the integer range for an integer generator using reflection
+	 * @param testGen
+	 * @return
+	 * @throws NoSuchFieldException
+	 * @throws SecurityException
+	 * @throws IllegalArgumentException
+	 * @throws IllegalAccessException
 	 */
 	@SuppressWarnings("unchecked")
-	@Test
-	public void testNominalIntRangeAnd() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
-		String testName = "nominal_int_and";
-		helper.compile(testName);
-		Build.Project project = helper.createProject();
-		Interpreter interpreter = new Interpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctions(testName, project);
-		
-		BigInteger lower = BigInteger.valueOf(-5);
-		BigInteger upper = BigInteger.valueOf(15);
-		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), interpreter, 20, lower, upper);
+	public IntegerRange getIntegerRange(GenerateTest testGen) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 		
 		// Get the integer range using reflection
 		Field exhGenField = testGen.getClass().getDeclaredField("parameterGenerators");
@@ -77,7 +66,32 @@ public class RangeTest {
 		// Check the integer range
 		Field rangeField = gen.getClass().getDeclaredField("range");
 		rangeField.setAccessible(true);
-		IntegerRange range = (IntegerRange) rangeField.get(gen);
+		return (IntegerRange) rangeField.get(gen);
+	}
+	
+	
+	/**
+	 * Test when a nominal type wraps an integer,
+	 * and it has a constraint with an && (and) in it
+	 * @throws IOException
+	 * @throws SecurityException 
+	 * @throws NoSuchFieldException 
+	 * @throws IllegalAccessException 
+	 * @throws IllegalArgumentException 
+	 */
+	@Test
+	public void testNominalIntRangeAnd() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+		String testName = "nominal_int_and";
+		helper.compile(testName);
+		Build.Project project = helper.createProject();
+		Interpreter interpreter = new Interpreter(project, System.out);
+		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		
+		BigInteger lower = BigInteger.valueOf(-5);
+		BigInteger upper = BigInteger.valueOf(15);
+		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), interpreter, 20, lower, upper);
+		
+		IntegerRange range = getIntegerRange(testGen);
 		assertEquals(BigInteger.valueOf(1), range.lowerBound());
 		assertEquals(BigInteger.valueOf(10), range.upperBound());
 		
@@ -98,7 +112,6 @@ public class RangeTest {
 	 * @throws IllegalAccessException 
 	 * @throws IllegalArgumentException 
 	 */
-	@SuppressWarnings("unchecked")
 	@Test
 	public void testNominalIntRangeOr() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 		String testName = "nominal_int_or";
@@ -110,23 +123,8 @@ public class RangeTest {
 		BigInteger lower = BigInteger.valueOf(-5);
 		BigInteger upper = BigInteger.valueOf(15);
 		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), interpreter, 20, lower, upper);
-		
-		// Get the integer range using reflection
-		Field exhGenField = testGen.getClass().getDeclaredField("parameterGenerators");
-		exhGenField.setAccessible(true);
-		List<Generator> genExhaustive = (List<Generator>) exhGenField.get(testGen);
-		assertTrue(genExhaustive.get(0) instanceof NominalGenerator);
-		NominalGenerator nomGen = (NominalGenerator) genExhaustive.get(0);
-		
-		Field genField = nomGen.getClass().getDeclaredField("generator");
-		genField.setAccessible(true);
-		assertTrue(genField.get(nomGen) instanceof IntegerGenerator);
-		IntegerGenerator gen = (IntegerGenerator) genField.get(nomGen);		
-		
-		// Check the integer range
-		Field rangeField = gen.getClass().getDeclaredField("range");
-		rangeField.setAccessible(true);
-		IntegerRange range = (IntegerRange) rangeField.get(gen);
+	
+		IntegerRange range = getIntegerRange(testGen);
 		assertEquals(lower, range.lowerBound());
 		assertEquals(upper, range.upperBound());
 		
@@ -153,7 +151,6 @@ public class RangeTest {
 	 * @throws IllegalAccessException 
 	 * @throws IllegalArgumentException 
 	 */
-	@SuppressWarnings("unchecked")
 	@Test
 	public void testNominalIntRangeNot() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 		String testName = "nominal_int_not";
@@ -166,22 +163,7 @@ public class RangeTest {
 		BigInteger upper = BigInteger.valueOf(15);
 		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), interpreter, 20, lower, upper);
 		
-		// Get the integer range using reflection
-		Field exhGenField = testGen.getClass().getDeclaredField("parameterGenerators");
-		exhGenField.setAccessible(true);
-		List<Generator> genExhaustive = (List<Generator>) exhGenField.get(testGen);
-		assertTrue(genExhaustive.get(0) instanceof NominalGenerator);
-		NominalGenerator nomGen = (NominalGenerator) genExhaustive.get(0);
-		
-		Field genField = nomGen.getClass().getDeclaredField("generator");
-		genField.setAccessible(true);
-		assertTrue(genField.get(nomGen) instanceof IntegerGenerator);
-		IntegerGenerator gen = (IntegerGenerator) genField.get(nomGen);		
-		
-		// Check the integer range
-		Field rangeField = gen.getClass().getDeclaredField("range");
-		rangeField.setAccessible(true);
-		IntegerRange range = (IntegerRange) rangeField.get(gen);
+		IntegerRange range = getIntegerRange(testGen);
 		assertEquals(lower, range.lowerBound());
 		assertEquals(BigInteger.valueOf(1), range.upperBound());
 

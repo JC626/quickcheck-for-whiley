@@ -55,6 +55,9 @@ public class NominalGenerator implements Generator{
 		int i = 1;
 		RValue value = null;
 		while(isValid == RValue.Bool.False) {
+			if (generator.exceedCount()) {
+				generator.resetCount();
+			}
 			value = generator.generate();
 			isValid = value.checkInvariant(decl.getVariableDeclaration(), decl.getInvariant(), interpreter);
 			// No valid values

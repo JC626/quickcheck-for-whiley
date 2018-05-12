@@ -1,5 +1,7 @@
 package test.quickcheck;
 
+import static org.junit.Assert.fail;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -106,24 +108,64 @@ public class WhileyValidTest {
 		System.setOut(stream);
 		
 		// Run tests
-		// Negative
-		try {
-			String[] args = new String[] {TEST_DIR + "/" + this.testName, "exhaustive", "100", "-5", "0"};
-			QuickCheck.main(args);
-			
-			// Positive
-			args = new String[] {TEST_DIR + "/" + this.testName, "exhaustive", "100", "0", "5"};
-			QuickCheck.main(args);
-			
-		}
+		
+        try {
+            String[] args = new String[] {TEST_DIR + "/" + this.testName, "exhaustive", "100", "-5", "0"};
+            QuickCheck.main(args);
+            
+            // Positive
+            args = new String[] {TEST_DIR + "/" + this.testName, "exhaustive", "100", "0", "5"};
+            QuickCheck.main(args);
+        }
 		finally {
 			stream.close();
-
 			// Delete file if it is empty
 			if(file.length() == 0) {
 				file.delete();
 			}
 		}
+
+//		// Check which limits pass
+//		boolean negative = true;
+//		boolean positive = true;
+//		try {
+//			// Negative limits
+//			try {
+//				String[] args = new String[] {TEST_DIR + "/" + this.testName, "exhaustive", "100", "-5", "0"};
+//				QuickCheck.main(args);
+//			}
+//			catch (Error e) {
+//				if(e.getMessage().equals("Upper integer limit is less than or equal to the lower integer limit")) {
+//					negative = false;
+//				}
+//				else {
+//					throw e;
+//				}
+//			}
+//			try {
+//				// Positive
+//				String[] args = new String[] {TEST_DIR + "/" + this.testName, "exhaustive", "100", "0", "5"};
+//				QuickCheck.main(args);
+//			}
+//			catch (Error e) {
+//				if(e.getMessage().equals("Upper integer limit is less than or equal to the lower integer limit")) {
+//					positive = false;
+//				}
+//				else {
+//					throw e;
+//				}
+//			}
+//		}
+//		finally {
+//			stream.close();
+//			// Delete file if it is empty
+//			if(file.length() == 0) {
+//				file.delete();
+//			}
+//		}
+//		if(!positive && !negative) {
+//			fail("No possible values could be generated at all");
+//		}
 	}
 
 }

@@ -69,7 +69,7 @@ public final class IntegerGenerator implements Generator {
 	private void checkValidRange() {
 		// Throw an error if the range is bigger than the other
 		if(range.lowerBound().compareTo(range.upperBound()) >= 0) {
-			throw new Error("Upper integer limit is greater than the lower integer limit");
+			throw new Error("Upper integer limit is less than or equal to the lower integer limit");
 		}
 	}
 	

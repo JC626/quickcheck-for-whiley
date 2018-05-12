@@ -21,7 +21,7 @@ import test.utils.TestHelper;
 import wyc.util.TestUtils;
 
 /**
- * Execute all the Whiley Valid tests using QuickCheck for Whiley.
+ * Execute all the Whiley Invalid tests using QuickCheck for Whiley.
  * 
  * Uses code from the Whiley Compiler, wyc.testing by David J. Pearce
  * @author Janice Chin
@@ -153,48 +153,6 @@ public class WhileyInvalidTest {
 		}
         
         fail("Was able to test this file");
-
-//		// Check which limits pass
-//		boolean negative = true;
-//		boolean positive = true;
-//		try {
-//			// Negative limits
-//			try {
-//				String[] args = new String[] {TEST_DIR + "/" + this.testName, "exhaustive", "100", "-5", "0"};
-//				QuickCheck.main(args);
-//			}
-//			catch (Error e) {
-//				if(e.getMessage().equals("Upper integer limit is less than or equal to the lower integer limit")) {
-//					negative = false;
-//				}
-//				else {
-//					throw e;
-//				}
-//			}
-//			try {
-//				// Positive
-//				String[] args = new String[] {TEST_DIR + "/" + this.testName, "exhaustive", "100", "0", "5"};
-//				QuickCheck.main(args);
-//			}
-//			catch (Error e) {
-//				if(e.getMessage().equals("Upper integer limit is less than or equal to the lower integer limit")) {
-//					positive = false;
-//				}
-//				else {
-//					throw e;
-//				}
-//			}
-//		}
-//		finally {
-//			stream.close();
-//			// Delete file if it is empty
-//			if(file.length() == 0) {
-//				file.delete();
-//			}
-//		}
-//		if(!positive && !negative) {
-//			fail("No possible values could be generated at all");
-//		}
 	}
 
 }

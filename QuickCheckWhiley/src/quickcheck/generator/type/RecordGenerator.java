@@ -103,7 +103,7 @@ public class RecordGenerator implements Generator{
 			for(int i=0; i < fields.size(); i++) {
 				if(fields.get(i).getType() instanceof WhileyFile.Type.Int || 
 						fields.get(i).getType() instanceof WhileyFile.Type.Array) {
-					RangeHelper.checkInvariant(generators.get(i), fields.get(i).getName(), invariants, interpreter);
+					RangeHelper.checkInvariantRange(generators.get(i), fields.get(i).getName(), invariants, interpreter);
 				}
 			}
 			calculateSize();

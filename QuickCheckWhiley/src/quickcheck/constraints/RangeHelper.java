@@ -24,15 +24,15 @@ import wyil.interpreter.Interpreter.CallStack;
 public class RangeHelper {
 	
 	/**
-	 * Check whether the invariant holds for this value or not. 
+	 * Check the ranges on the invariants against the generators.
 	 * This requires physically evaluating the invariant to see whether
-	 * or not it holds true.
+	 * or not it can be applied to the generators.
 	 *
 	 * @param name The name of the field the invariant should apply to
 	 * @param invariant The invariants applied on the nominal type
 	 * @param instance The interpreter
 	 */
-	public static void checkInvariant(Generator gen, Identifier name, Tuple<Expr> invariant, Interpreter instance) {
+	public static void checkInvariantRange(Generator gen, Identifier name, Tuple<Expr> invariant, Interpreter instance) {
 		// Can have multiple invariants (such as multiple where clauses for a nominal type)
 		if (invariant.size() > 0) {
 			/*
@@ -57,7 +57,6 @@ public class RangeHelper {
 
 
 	/**
-	 * 
 	 * Find the integer range for a given invariant 
 	 * by executing expressions in the invariant.
 	 * 
@@ -68,7 +67,6 @@ public class RangeHelper {
 	 * @return The IntegerRange discovered from the invariant
 	 */
 	public static IntegerRange findRange(Expr expr, Identifier name, CallStack frame, Interpreter instance) {
-//		RValue val;
 		IntegerRange range = null;
 		int operator = expr.getOpcode();
 		switch (operator) {

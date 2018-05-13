@@ -65,14 +65,14 @@ public class NominalGenerator implements Generator{
 	 */
 	private void checkInvariantRange(Tuple<Expr> invariants) {
 		if(generator instanceof IntegerGenerator) {
-			RangeHelper.checkInvariant(generator, decl.getVariableDeclaration().getName(), invariants, interpreter);
+			RangeHelper.checkInvariantRange(generator, decl.getVariableDeclaration().getName(), invariants, interpreter);
 		}
 		else if(generator instanceof RecordGenerator) {
 			RecordGenerator recordGen = (RecordGenerator) generator;
-			recordGen.checkInvariant(invariants, interpreter);
+			recordGen.checkInvariantRange(invariants, interpreter);
 		}
 		else if(generator instanceof ArrayGenerator) {
-			RangeHelper.checkInvariant(generator, decl.getVariableDeclaration().getName(), decl.getInvariant(), interpreter);
+			RangeHelper.checkInvariantRange(generator, decl.getVariableDeclaration().getName(), decl.getInvariant(), interpreter);
 		}
 		// TODO if nominal type, need to pass invariant down?
 		// then each generator needs to know it's name (within the nominal?)

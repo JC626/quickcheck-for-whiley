@@ -9,6 +9,7 @@ import wybs.util.AbstractCompilationUnit.Identifier;
 import wybs.util.AbstractCompilationUnit.Tuple;
 import wyc.lang.WhileyFile;
 import wyc.lang.WhileyFile.Expr;
+import wyc.lang.WhileyFile.Expr.VariableAccess;
 import wyil.interpreter.Interpreter;
 import wyil.interpreter.ConcreteSemantics.RValue;
 import wyil.interpreter.ConcreteSemantics.RValue.Int;
@@ -185,9 +186,9 @@ public class RangeHelper {
 	private static boolean isExpForIntegerRange(Expr exp, Identifier name) {
 		if(exp instanceof Expr.ArrayLength) {
 			Expr array = ((Expr.ArrayLength) exp).getOperand();
-			return array instanceof Expr.VariableAccess && ((Expr.VariableAccess) array).getVariableDeclaration().getName().equals(name);
+			return isExpForIntegerRange(array, name);
 		}
-		return (exp instanceof Expr.RecordAccess && ((Expr.RecordAccess) exp).getField().equals(name)) || 
+		return (exp instanceof Expr.RecordAccess && ((Expr.RecordAccess) exp).toString().equals(name.get())) || 
 				(exp instanceof Expr.VariableAccess && ((Expr.VariableAccess) exp).getVariableDeclaration().getName().equals(name));
 	}
 }

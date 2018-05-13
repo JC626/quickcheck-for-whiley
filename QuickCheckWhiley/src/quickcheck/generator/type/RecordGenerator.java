@@ -97,6 +97,26 @@ public class RecordGenerator implements Generator{
 			return semantics.Record(recordFields.clone());
 		}
 	}
+	
+	List<Decl.Variable> getIntegerFields(){
+		List<Decl.Variable> intFields = new ArrayList<Decl.Variable>();
+		for(Decl.Variable field : fields) {
+			if(field.getType() instanceof WhileyFile.Type.Int) {
+				intFields.add(field);
+			}
+		}
+		return intFields;
+	}
+	
+	List<IntegerGenerator> getIntegerGenerators(){
+		List<IntegerGenerator> intGen = new ArrayList<IntegerGenerator>();
+		for(Generator gen : generators) {
+			if(gen instanceof IntegerGenerator) {
+				intGen.add((IntegerGenerator) gen);
+			}
+		}
+		return intGen;
+	}
 
 	@Override
 	public int size() {

@@ -34,7 +34,7 @@ public class ArrayGenerator implements Generator{
 	/** Current array elements generated */
 	private RValue[] arrElements;
 	
-	/** Lower and upper limit for the size of the array generated */
+	/** Lower limit (inclusive) and upper limit (exclusive) for the size of the array generated */
 	private IntegerRange range;
 	
 	private int size = 0;
@@ -47,6 +47,7 @@ public class ArrayGenerator implements Generator{
 		this.testType = testType;
 		this.range = new IntegerRange(lower, upper + 1);
 		this.currentCombinations = 0;
+		checkValidRange();
 		calculateSize();
 	}
 	
@@ -59,7 +60,7 @@ public class ArrayGenerator implements Generator{
 				return semantics.Array(new RValue[0]);
 			}
 			else {
-				int size = range.lowerBound().intValue();
+				int size = range.lowerBound().intValue() > 0 ? range.lowerBound().intValue() : 1;
 				// Get the size of the array
 				if(arrElements != null) {
 					if(currentCombinations >= Math.pow(generators.get(0).size(), arrElements.length)) {
@@ -130,12 +131,20 @@ public class ArrayGenerator implements Generator{
 	
 	private void calculateSize(){
 		// Calculate size
-		this.size = 1;
+		int start = range.lowerBound().intValue();
+		if(start == 0) {
+			this.size = 1;
+			start++;
+		}
+		else {
+			this.size = 0;
+		}
 		int generatorRange = generators.get(0).size();
-		for(int i=1; i <= range.upperBound().intValue(); i++) {
+		for(int i=start; i < range.upperBound().intValue(); i++) {
 			this.size += Math.pow(generatorRange, i);
 		}
 	}
+	
 	@Override
 	public int size() {
 		return size;

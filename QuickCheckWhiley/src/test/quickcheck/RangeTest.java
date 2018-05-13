@@ -15,6 +15,7 @@ import org.junit.Test;
 import quickcheck.constraints.IntegerRange;
 import quickcheck.generator.ExhaustiveGenerateTest;
 import quickcheck.generator.GenerateTest;
+import quickcheck.generator.type.ArrayGenerator;
 import quickcheck.generator.type.Generator;
 import quickcheck.generator.type.IntegerGenerator;
 import quickcheck.generator.type.NominalGenerator;
@@ -68,26 +69,34 @@ public class RangeTest {
 		
 		Field genField = nomGen.getClass().getDeclaredField("generator");
 		genField.setAccessible(true);
-		
-		Field rangeField = IntegerGenerator.class.getDeclaredField("range");
-		rangeField.setAccessible(true);
-		
+				
 		List<IntegerRange> ranges = new ArrayList<IntegerRange>();
 		if(genField.get(nomGen) instanceof IntegerGenerator) {
 			IntegerGenerator gen = (IntegerGenerator) genField.get(nomGen);
 			// Check the integer range
+			Field rangeField = IntegerGenerator.class.getDeclaredField("range");
+			rangeField.setAccessible(true);
+
 			ranges.add((IntegerRange) rangeField.get(gen));
 			return ranges;
 		}
 		else if(genField.get(nomGen) instanceof RecordGenerator) {
-			RecordGenerator generator = (RecordGenerator) genField.get(nomGen);
-			Method m = generator.getClass().getDeclaredMethod("getIntegerGenerators");
+			RecordGenerator recordGen = (RecordGenerator) genField.get(nomGen);
+			Method m = recordGen.getClass().getDeclaredMethod("getIntegerGenerators");
 			m.setAccessible(true);
-			List<IntegerGenerator> generators = (List<IntegerGenerator>) m.invoke(generator);
-			
+			List<IntegerGenerator> generators = (List<IntegerGenerator>) m.invoke(recordGen);
+			Field rangeField = IntegerGenerator.class.getDeclaredField("range");
+			rangeField.setAccessible(true);
 			for(IntegerGenerator intGen : generators) {
 				ranges.add((IntegerRange) rangeField.get(intGen));
 			}
+			return ranges;
+		}
+		else if(genField.get(nomGen) instanceof ArrayGenerator) {
+			ArrayGenerator arrayGen = (ArrayGenerator) genField.get(nomGen);
+			Field rangeField = arrayGen.getClass().getDeclaredField("range");
+			rangeField.setAccessible(true);
+			ranges.add((IntegerRange) rangeField.get(arrayGen));
 			return ranges;
 		}
 		fail("No integer range could be generated for " + genField.get(nomGen));
@@ -404,7 +413,6 @@ public class RangeTest {
 		BigInteger upper = BigInteger.valueOf(10);
 		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), interpreter, 50, lower, upper);
 		
-		
 		List<IntegerRange> ranges = getIntegerRange(testGen);
 		assertEquals(1, ranges.size());
 		assertEquals(BigInteger.valueOf(1), ranges.get(0).lowerBound());
@@ -419,6 +427,47 @@ public class RangeTest {
 				assertEquals(semantics.Int(BigInteger.valueOf(i)), first);
 				RValue second = recordPoint.read(new Identifier("isCell"));
 				assertEquals(semantics.Bool(j==0), second);
+			}
+		}
+	}
+	
+	@Test
+	public void testNominalArray() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+		String testName = "nominal_array";
+		helper.compile(testName);
+		Build.Project project = helper.createProject();
+		Interpreter interpreter = new Interpreter(project, System.out);
+		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		
+		BigInteger lower = BigInteger.valueOf(0);
+		BigInteger upper = BigInteger.valueOf(3);
+		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), interpreter, 50, lower, upper);
+		
+		List<IntegerRange> ranges = getIntegerRange(testGen);
+		assertEquals(1, ranges.size());
+		assertEquals(BigInteger.valueOf(2), ranges.get(0).lowerBound());
+		assertEquals(BigInteger.valueOf(4), ranges.get(0).upperBound());
+	
+		RValue[] generatedParameters;
+		// 2 elements
+		for(int i=lower.intValue(); i < upper.intValue(); i++) {
+			for(int j=lower.intValue(); j < upper.intValue(); j++) {
+				generatedParameters = testGen.generateParameters();
+				assertEquals(1, generatedParameters.length);
+				RValue[] expected = {semantics.Int(BigInteger.valueOf(i)), semantics.Int(BigInteger.valueOf(j))};
+				assertEquals(semantics.Array(expected), generatedParameters[0]);
+			}
+	
+		}
+		// 3 elements
+		for(int i=lower.intValue(); i < upper.intValue(); i++) {
+			for(int j=lower.intValue(); j < upper.intValue(); j++) {
+				for(int k=lower.intValue(); k < upper.intValue(); k++) {
+					generatedParameters = testGen.generateParameters();
+					assertEquals(1, generatedParameters.length);
+					RValue[] expected = {semantics.Int(BigInteger.valueOf(i)), semantics.Int(BigInteger.valueOf(j)), semantics.Int(BigInteger.valueOf(k))};
+					assertEquals(semantics.Array(expected), generatedParameters[0]);
+				}
 			}
 		}
 	}

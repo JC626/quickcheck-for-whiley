@@ -5,7 +5,6 @@ import static org.junit.Assert.*;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +14,7 @@ import org.junit.Test;
 import quickcheck.constraints.IntegerRange;
 import quickcheck.generator.ExhaustiveGenerateTest;
 import quickcheck.generator.GenerateTest;
+import quickcheck.generator.type.ArrayGenerator;
 import quickcheck.generator.type.Generator;
 import quickcheck.generator.type.IntegerGenerator;
 import quickcheck.generator.type.NominalGenerator;
@@ -57,7 +57,7 @@ public class RangeTest {
 	 * @throws InvocationTargetException 
 	 */
 	@SuppressWarnings("unchecked")
-	public List<IntegerRange>  getIntegerRange(GenerateTest testGen) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+	public List<IntegerRange>  getIntegerRange(GenerateTest testGen) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 		
 		// Get the integer range using reflection
 		Field exhGenField = testGen.getClass().getDeclaredField("parameterGenerators");
@@ -68,29 +68,43 @@ public class RangeTest {
 		
 		Field genField = nomGen.getClass().getDeclaredField("generator");
 		genField.setAccessible(true);
-		
-		Field rangeField = IntegerGenerator.class.getDeclaredField("range");
-		rangeField.setAccessible(true);
-		
+				
 		List<IntegerRange> ranges = new ArrayList<IntegerRange>();
-		if(genField.get(nomGen) instanceof IntegerGenerator) {
-			IntegerGenerator gen = (IntegerGenerator) genField.get(nomGen);
-			// Check the integer range
-			ranges.add((IntegerRange) rangeField.get(gen));
-			return ranges;
-		}
-		else if(genField.get(nomGen) instanceof RecordGenerator) {
-			RecordGenerator generator = (RecordGenerator) genField.get(nomGen);
-			Method m = generator.getClass().getDeclaredMethod("getIntegerGenerators");
-			m.setAccessible(true);
-			List<IntegerGenerator> generators = (List<IntegerGenerator>) m.invoke(generator);
-			
-			for(IntegerGenerator intGen : generators) {
-				ranges.add((IntegerRange) rangeField.get(intGen));
+		if(genField.get(nomGen) instanceof RecordGenerator) {
+			RecordGenerator recordGen = (RecordGenerator) genField.get(nomGen);
+			Field recordGenField = recordGen.getClass().getDeclaredField("generators");
+			recordGenField.setAccessible(true);
+			List<Generator> generators = (List<Generator>) recordGenField.get(recordGen);
+			for(Generator g : generators) {
+				if(g instanceof IntegerGenerator || g instanceof ArrayGenerator) {
+					IntegerRange range = getIntegerRange(g);
+					ranges.add(range);
+				}
 			}
 			return ranges;
 		}
-		fail("No integer range could be generated for " + genField.get(nomGen));
+		else {
+			IntegerRange range = getIntegerRange((Generator) genField.get(nomGen));
+			ranges.add(range);
+			return ranges;
+		}
+	}
+	
+	public IntegerRange getIntegerRange(Generator gen) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+		if(gen instanceof IntegerGenerator) {
+			IntegerGenerator intGen = (IntegerGenerator) gen;
+			// Check the integer range
+			Field rangeField = gen.getClass().getDeclaredField("range");
+			rangeField.setAccessible(true);
+			return (IntegerRange) rangeField.get(intGen);
+		}
+		else if(gen instanceof ArrayGenerator) {
+			ArrayGenerator arrayGen = (ArrayGenerator) gen;
+			Field rangeField = arrayGen.getClass().getDeclaredField("range");
+			rangeField.setAccessible(true);
+			return (IntegerRange) rangeField.get(arrayGen);
+		}
+		fail("No integer range could be generated for " + gen);
 		return null;
 	}
 	
@@ -103,11 +117,9 @@ public class RangeTest {
 	 * @throws NoSuchFieldException 
 	 * @throws IllegalAccessException 
 	 * @throws IllegalArgumentException 
-	 * @throws InvocationTargetException 
-	 * @throws NoSuchMethodException 
 	 */
 	@Test
-	public void testNominalIntRangeAnd() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+	public void testNominalIntRangeAnd() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException{
 		String testName = "nominal_int_and";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
@@ -138,11 +150,9 @@ public class RangeTest {
 	 * @throws NoSuchFieldException 
 	 * @throws IllegalAccessException 
 	 * @throws IllegalArgumentException 
-	 * @throws InvocationTargetException 
-	 * @throws NoSuchMethodException 
 	 */
 	@Test
-	public void testNominalIntRangeOr() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+	public void testNominalIntRangeOr() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException{
 		String testName = "nominal_int_or";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
@@ -179,11 +189,9 @@ public class RangeTest {
 	 * @throws NoSuchFieldException 
 	 * @throws IllegalAccessException 
 	 * @throws IllegalArgumentException 
-	 * @throws InvocationTargetException 
-	 * @throws NoSuchMethodException 
 	 */
 	@Test
-	public void testNominalIntRangeNot() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+	public void testNominalIntRangeNot() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 		String testName = "nominal_int_not";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
@@ -214,11 +222,9 @@ public class RangeTest {
 	 * @throws NoSuchFieldException 
 	 * @throws IllegalAccessException 
 	 * @throws IllegalArgumentException 
-	 * @throws InvocationTargetException 
-	 * @throws NoSuchMethodException 
 	 */
 	@Test
-	public void testNominalIntRangeSingleMulti() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+	public void testNominalIntRangeSingleMulti() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 		String testName = "nominal_int_multi_1";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
@@ -249,11 +255,9 @@ public class RangeTest {
 	 * @throws NoSuchFieldException 
 	 * @throws IllegalAccessException 
 	 * @throws IllegalArgumentException 
-	 * @throws InvocationTargetException 
-	 * @throws NoSuchMethodException 
 	 */
 	@Test
-	public void testNominalIntRangeMulti() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+	public void testNominalIntRangeMulti() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 		String testName = "nominal_int_multi_2";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
@@ -285,11 +289,9 @@ public class RangeTest {
 	 * @throws NoSuchFieldException 
 	 * @throws IllegalAccessException 
 	 * @throws IllegalArgumentException 
-	 * @throws InvocationTargetException 
-	 * @throws NoSuchMethodException 
 	 */
 	@Test(expected = Error.class)
-	public void testNominalIntRangeInvalid() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+	public void testNominalIntRangeInvalid() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 		String testName = "nominal_int_invalid";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
@@ -313,11 +315,9 @@ public class RangeTest {
 	 * @throws NoSuchFieldException 
 	 * @throws IllegalAccessException 
 	 * @throws IllegalArgumentException 
-	 * @throws InvocationTargetException 
-	 * @throws NoSuchMethodException 
 	 */
 	@Test
-	public void testNominalIntRangeEquals() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+	public void testNominalIntRangeEquals() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 		String testName = "nominal_int_equals";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
@@ -349,11 +349,9 @@ public class RangeTest {
 	 * @throws NoSuchFieldException 
 	 * @throws IllegalAccessException 
 	 * @throws IllegalArgumentException 
-	 * @throws InvocationTargetException 
-	 * @throws NoSuchMethodException 
 	 */
 	@Test
-	public void testNominalRecordNoName() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+	public void testNominalRecordNoName() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 		String testName = "record_invariant_1";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
@@ -393,7 +391,7 @@ public class RangeTest {
 	 * The record also has 2 different fields, integer and boolean.
 	 */
 	@Test
-	public void testNominalRecordName() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+	public void testNominalRecordName() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 		String testName = "record_invariant_2";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
@@ -403,7 +401,6 @@ public class RangeTest {
 		BigInteger lower = BigInteger.valueOf(-5);
 		BigInteger upper = BigInteger.valueOf(10);
 		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), interpreter, 50, lower, upper);
-		
 		
 		List<IntegerRange> ranges = getIntegerRange(testGen);
 		assertEquals(1, ranges.size());
@@ -423,4 +420,116 @@ public class RangeTest {
 		}
 	}
 	
+	/**
+	 * Test when the nominal type wraps a array
+	 * restricted by size.
+	 *
+	 * @throws IOException
+	 * @throws NoSuchFieldException
+	 * @throws SecurityException
+	 * @throws IllegalArgumentException
+	 * @throws IllegalAccessException
+	 */
+	@Test
+	public void testNominalArraySize() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+		String testName = "nominal_array_1";
+		helper.compile(testName);
+		Build.Project project = helper.createProject();
+		Interpreter interpreter = new Interpreter(project, System.out);
+		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		
+		BigInteger lower = BigInteger.valueOf(0);
+		BigInteger upper = BigInteger.valueOf(3);
+		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), interpreter, 50, lower, upper);
+		
+		List<IntegerRange> ranges = getIntegerRange(testGen);
+		assertEquals(1, ranges.size());
+		assertEquals(BigInteger.valueOf(2), ranges.get(0).lowerBound());
+		assertEquals(BigInteger.valueOf(4), ranges.get(0).upperBound());
+	
+		RValue[] generatedParameters;
+		// 2 elements
+		for(int i=lower.intValue(); i < upper.intValue(); i++) {
+			for(int j=lower.intValue(); j < upper.intValue(); j++) {
+				generatedParameters = testGen.generateParameters();
+				assertEquals(1, generatedParameters.length);
+				RValue[] expected = {semantics.Int(BigInteger.valueOf(i)), semantics.Int(BigInteger.valueOf(j))};
+				assertEquals(semantics.Array(expected), generatedParameters[0]);
+			}
+	
+		}
+		// 3 elements
+		for(int i=lower.intValue(); i < upper.intValue(); i++) {
+			for(int j=lower.intValue(); j < upper.intValue(); j++) {
+				for(int k=lower.intValue(); k < upper.intValue(); k++) {
+					generatedParameters = testGen.generateParameters();
+					assertEquals(1, generatedParameters.length);
+					RValue[] expected = {semantics.Int(BigInteger.valueOf(i)), semantics.Int(BigInteger.valueOf(j)), semantics.Int(BigInteger.valueOf(k))};
+					assertEquals(semantics.Array(expected), generatedParameters[0]);
+				}
+			}
+		}
+	}
+	/**
+	 * Test when the nominal type wraps a record that contains
+	 * an array restricted by size and a constrained integer.
+	 *
+	 * @throws IOException
+	 * @throws NoSuchFieldException
+	 * @throws SecurityException
+	 * @throws IllegalArgumentException
+	 * @throws IllegalAccessException
+	 */
+	@Test
+	public void testNominalRecordArray() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+		String testName = "nominal_record_array";
+		helper.compile(testName);
+		Build.Project project = helper.createProject();
+		Interpreter interpreter = new Interpreter(project, System.out);
+		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		
+		BigInteger lower = BigInteger.valueOf(-5);
+		BigInteger upper = BigInteger.valueOf(5);
+		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), interpreter, 50, lower, upper);
+		
+		List<IntegerRange> ranges = getIntegerRange(testGen);
+		assertEquals(2, ranges.size());
+		assertEquals(BigInteger.valueOf(1), ranges.get(0).lowerBound());
+		assertEquals(BigInteger.valueOf(5), ranges.get(0).upperBound());
+		assertEquals(BigInteger.valueOf(2), ranges.get(1).lowerBound());
+		assertEquals(BigInteger.valueOf(4), ranges.get(1).upperBound());
+
+		for(int count=1; count < 5; count++) {
+			RValue[] generatedParameters;
+			// 2 elements
+			for(int i=0; i < 2; i++) {
+				for(int j=0; j < 2; j++) {					
+					generatedParameters = testGen.generateParameters();
+					assertEquals(1, generatedParameters.length);
+					RValue.Record recordPoint = (Record) generatedParameters[0];
+					RValue first = recordPoint.read(new Identifier("arr"));
+					RValue[] expected = {semantics.Bool(i==0), semantics.Bool(j==0)};
+					assertEquals(semantics.Array(expected), first);
+					RValue second = recordPoint.read(new Identifier("count"));
+					assertEquals(semantics.Int(BigInteger.valueOf(count)), second);
+				}
+		
+			}
+			// 3 elements
+			for(int i=0; i < 2; i++) {
+				for(int j=0; j < 2; j++) {
+					for(int k=0; k < 2; k++) {
+						generatedParameters = testGen.generateParameters();
+						assertEquals(1, generatedParameters.length);
+						RValue.Record recordPoint = (Record) generatedParameters[0];
+						RValue first = recordPoint.read(new Identifier("arr"));
+						RValue[] expected = {semantics.Bool(i==0), semantics.Bool(j==0), semantics.Bool(k==0)};
+						assertEquals(semantics.Array(expected), first);
+						RValue second = recordPoint.read(new Identifier("count"));
+						assertEquals(semantics.Int(BigInteger.valueOf(count)), second);
+					}
+				}
+			}
+		}
+	}
 }

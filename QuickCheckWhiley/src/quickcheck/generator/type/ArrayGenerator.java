@@ -1,8 +1,10 @@
 package quickcheck.generator.type;
 
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Random;
 
+import quickcheck.constraints.IntegerRange;
 import quickcheck.util.TestType;
 import wyil.interpreter.ConcreteSemantics;
 import wyil.interpreter.ConcreteSemantics.RValue;
@@ -32,10 +34,8 @@ public class ArrayGenerator implements Generator{
 	/** Current array elements generated */
 	private RValue[] arrElements;
 	
-	/** Lower limit for the size of the array generated */
-	private int lowerLimit;
-	/** Upper limit for the size of the array generated */
-	private int upperLimit;
+	/** Lower limit (inclusive) and upper limit (exclusive) for the size of the array generated */
+	private IntegerRange range;
 	
 	private int size = 0;
 	/** Number of combinations completed so far for the current size of the array */
@@ -45,27 +45,22 @@ public class ArrayGenerator implements Generator{
 	public ArrayGenerator(List<Generator> generators, TestType testType, int lower, int upper) {
 		this.generators = generators;
 		this.testType = testType;
-		this.lowerLimit = lower;
-		this.upperLimit = upper;
+		this.range = new IntegerRange(lower, upper + 1);
 		this.currentCombinations = 0;
-		// Calculate size
-		this.size = 1;
-		int generatorRange = generators.get(0).size();
-		for(int i=1; i <= upperLimit; i++) {
-			this.size += Math.pow(generatorRange, i);
-		}
+		checkValidRange();
+		calculateSize();
 	}
 	
 	@Override
 	public RValue generate() {
 		if(testType == TestType.EXHAUSTIVE) {
 			// Empty array
-			if(count == 1) {
+			if(count == 1 && range.lowerBound().equals(BigInteger.valueOf(0))) {
 				count++;
 				return semantics.Array(new RValue[0]);
 			}
 			else {
-				int size = 1;
+				int size = range.lowerBound().intValue() > 0 ? range.lowerBound().intValue() : 1;
 				// Get the size of the array
 				if(arrElements != null) {
 					if(currentCombinations >= Math.pow(generators.get(0).size(), arrElements.length)) {
@@ -76,6 +71,7 @@ public class ArrayGenerator implements Generator{
 				// Resetting as it is a new array size
 				if(arrElements == null || arrElements.length < size) {
 					arrElements = new RValue[size];
+					assert size < range.upperBound().intValue();
 					for(int i=0; i < arrElements.length; i++) {
 						Generator gen = generators.get(i);
 						gen.resetCount();
@@ -102,7 +98,7 @@ public class ArrayGenerator implements Generator{
 			}
 		}
 		else {
-			int size = randomiser.nextInt(upperLimit - lowerLimit + 1) + lowerLimit;
+			int size = randomiser.nextInt(range.upperBound().intValue() - range.lowerBound().intValue() + 1) + range.lowerBound().intValue();
 			RValue[] array = new RValue[size];
 			for(int i=0; i < array.length; i++) {
 				array[i] = generators.get(0).generate();
@@ -111,7 +107,43 @@ public class ArrayGenerator implements Generator{
 			return semantics.Array(array);
 		}
 	}
-
+	
+	private void checkValidRange() {
+		// Throw an error if the range is bigger than the other
+		if(range.lowerBound().compareTo(range.upperBound()) >= 0) {
+			throw new Error("Upper integer limit is less than or equal to the lower integer limit");
+		}
+	}
+	
+	/**
+	 * Intersect the range of this generator with
+	 * another generator if it hasn't generated any values yet.
+	 * 
+	 * @param other An integer range to intersect with
+	 */
+	public void joinRange(IntegerRange other) {
+		assert count == 1;
+		this.range = range.intersection(other);
+		checkValidRange();
+		calculateSize();
+	}
+	
+	private void calculateSize(){
+		// Calculate size
+		int start = range.lowerBound().intValue();
+		if(start == 0) {
+			this.size = 1;
+			start++;
+		}
+		else {
+			this.size = 0;
+		}
+		int generatorRange = generators.get(0).size();
+		for(int i=start; i < range.upperBound().intValue(); i++) {
+			this.size += Math.pow(generatorRange, i);
+		}
+	}
+	
 	@Override
 	public int size() {
 		return size;
@@ -134,10 +166,10 @@ public class ArrayGenerator implements Generator{
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((generators == null) ? 0 : generators.hashCode());
-		result = prime * result + lowerLimit;
+		result = prime * result + range.lowerBound().intValue();
 		result = prime * result + size;
 		result = prime * result + ((testType == null) ? 0 : testType.hashCode());
-		result = prime * result + upperLimit;
+		result = prime * result + range.upperBound().intValue();
 		return result;
 	}
 
@@ -155,13 +187,11 @@ public class ArrayGenerator implements Generator{
 				return false;
 		} else if (!generators.equals(other.generators))
 			return false;
-		if (lowerLimit != other.lowerLimit)
+		if (range != other.range)
 			return false;
 		if (size != other.size)
 			return false;
 		if (testType != other.testType)
-			return false;
-		if (upperLimit != other.upperLimit)
 			return false;
 		return true;
 	}

@@ -1,12 +1,16 @@
 package quickcheck.generator.type;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import quickcheck.constraints.RangeHelper;
 import quickcheck.util.TestType;
+import wybs.util.AbstractCompilationUnit.Identifier;
+import wybs.util.AbstractCompilationUnit.Tuple;
 import wyc.lang.WhileyFile;
 import wyc.lang.WhileyFile.Decl;
+import wyc.lang.WhileyFile.Expr;
 import wyil.interpreter.ConcreteSemantics;
+import wyil.interpreter.Interpreter;
 import wyil.interpreter.ConcreteSemantics.RValue;
 import wyil.interpreter.ConcreteSemantics.RValue.Field;
 
@@ -88,24 +92,24 @@ public class RecordGenerator implements Generator{
 		}
 	}
 	
-	List<Decl.Variable> getIntegerFields(){
-		List<Decl.Variable> intFields = new ArrayList<Decl.Variable>();
-		for(Decl.Variable field : fields) {
-			if(field.getType() instanceof WhileyFile.Type.Int) {
-				intFields.add(field);
+	/**
+	 * Check the ranges on the invariants against the generators.
+	 * @param invariants The invariants to check against the generator on the nominal type
+	 * @param interpreter The interpreter used
+	 */
+	public void checkInvariantRange(Tuple<Expr> invariants, Interpreter interpreter, String prefix) {
+		// Can have multiple invariants
+		if (invariants.size() > 0 && !fields.isEmpty()) {
+			assert fields.size() == generators.size();
+			for(int i=0; i < fields.size(); i++) {
+				if(fields.get(i).getType() instanceof WhileyFile.Type.Int || 
+						fields.get(i).getType() instanceof WhileyFile.Type.Array) {
+					String name = prefix + fields.get(i).getName().get();
+					RangeHelper.checkInvariantRange(generators.get(i), new Identifier(name), invariants, interpreter);
+				}
 			}
+			calculateSize();
 		}
-		return intFields;
-	}
-	
-	List<IntegerGenerator> getIntegerGenerators(){
-		List<IntegerGenerator> intGen = new ArrayList<IntegerGenerator>();
-		for(Generator gen : generators) {
-			if(gen instanceof IntegerGenerator) {
-				intGen.add((IntegerGenerator) gen);
-			}
-		}
-		return intGen;
 	}
 	
 	public void calculateSize() {

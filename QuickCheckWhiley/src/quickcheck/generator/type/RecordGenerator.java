@@ -1,9 +1,11 @@
 package quickcheck.generator.type;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import quickcheck.util.TestType;
-import wybs.util.AbstractCompilationUnit.Identifier;
+import wyc.lang.WhileyFile;
+import wyc.lang.WhileyFile.Decl;
 import wyil.interpreter.ConcreteSemantics;
 import wyil.interpreter.ConcreteSemantics.RValue;
 import wyil.interpreter.ConcreteSemantics.RValue.Field;
@@ -28,7 +30,8 @@ public class RecordGenerator implements Generator{
 	/** Generators corresponding to each field */
 	private List<Generator> generators;
 	/** Field names for the record */
-	private List<Identifier> fieldNames;
+	private List<Decl.Variable> fields;
+	
 	/** Current field elements generated */
 	private Field[] elements;
 	
@@ -37,9 +40,9 @@ public class RecordGenerator implements Generator{
 	private int size;
 	private int count = 1;
 	
-	public RecordGenerator(List<Generator> generators, List<Identifier> names, TestType testType) {
+	public RecordGenerator(List<Generator> generators, List<Decl.Variable> fields, TestType testType) {
 		this.generators = generators;
-		this.fieldNames = names;
+		this.fields = fields;
 		this.testType = testType;
 		//Calculate size
 		if(generators.size() > 0) {
@@ -62,7 +65,7 @@ public class RecordGenerator implements Generator{
 				for(int i=0; i < elements.length; i++) {
 					Generator gen = generators.get(i);
 					gen.resetCount();
-					elements[i] = semantics.Field(fieldNames.get(i), gen.generate());
+					elements[i] = semantics.Field(fields.get(i).getName(), gen.generate());
 				}
 			}
 			else {
@@ -70,12 +73,12 @@ public class RecordGenerator implements Generator{
 				for(int i=elements.length - 1; i >= 0 ; i--) {
 					Generator gen = generators.get(i);
 					if(!gen.exceedCount()) {
-						elements[i] = semantics.Field(fieldNames.get(i), gen.generate());
+						elements[i] = semantics.Field(fields.get(i).getName(), gen.generate());
 						break;
 					}
 					else {
 						gen.resetCount();
-						elements[i] = semantics.Field(fieldNames.get(i), gen.generate());
+						elements[i] = semantics.Field(fields.get(i).getName(), gen.generate());
 					}
 				}
 			}
@@ -87,7 +90,7 @@ public class RecordGenerator implements Generator{
 			Field[] recordFields = new Field[generators.size()];
 			for(int i=0; i < recordFields.length; i++) {
 				Generator gen = generators.get(i);
-				recordFields[i] = semantics.Field(fieldNames.get(i), gen.generate());
+				recordFields[i] = semantics.Field(fields.get(i).getName(), gen.generate());
 			}
 			count++;
 			// Need to clone (shallow is fine) so the elements array doesn't get sorted
@@ -115,7 +118,7 @@ public class RecordGenerator implements Generator{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((fieldNames == null) ? 0 : fieldNames.hashCode());
+		result = prime * result + ((fields == null) ? 0 : fields.hashCode());
 		result = prime * result + ((generators == null) ? 0 : generators.hashCode());
 		result = prime * result + size;
 		result = prime * result + ((testType == null) ? 0 : testType.hashCode());
@@ -131,10 +134,10 @@ public class RecordGenerator implements Generator{
 		if (getClass() != obj.getClass())
 			return false;
 		RecordGenerator other = (RecordGenerator) obj;
-		if (fieldNames == null) {
-			if (other.fieldNames != null)
+		if (fields == null) {
+			if (other.fields != null)
 				return false;
-		} else if (!fieldNames.equals(other.fieldNames))
+		} else if (!fields.equals(other.fields))
 			return false;
 		if (generators == null) {
 			if (other.generators != null)

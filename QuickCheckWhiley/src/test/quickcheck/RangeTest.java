@@ -5,7 +5,6 @@ import static org.junit.Assert.*;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
@@ -82,13 +81,17 @@ public class RangeTest {
 		}
 		else if(genField.get(nomGen) instanceof RecordGenerator) {
 			RecordGenerator recordGen = (RecordGenerator) genField.get(nomGen);
-			Method m = recordGen.getClass().getDeclaredMethod("getIntegerGenerators");
-			m.setAccessible(true);
-			List<IntegerGenerator> generators = (List<IntegerGenerator>) m.invoke(recordGen);
+			Field recordGenField = recordGen.getClass().getDeclaredField("generators");
+			recordGenField.setAccessible(true);
+			List<Generator> generators = (List<Generator>) recordGenField.get(recordGen);
 			Field rangeField = IntegerGenerator.class.getDeclaredField("range");
 			rangeField.setAccessible(true);
-			for(IntegerGenerator intGen : generators) {
-				ranges.add((IntegerRange) rangeField.get(intGen));
+			for(Generator intGen : generators) {
+				if(intGen instanceof IntegerGenerator) {
+					IntegerGenerator gen = (IntegerGenerator) intGen;
+					// Check the integer range
+					ranges.add((IntegerRange) rangeField.get(gen));
+				}
 			}
 			return ranges;
 		}

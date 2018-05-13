@@ -502,25 +502,31 @@ public class RangeTest {
 		for(int count=1; count < 5; count++) {
 			RValue[] generatedParameters;
 			// 2 elements
-			for(int i=lower.intValue(); i < upper.intValue(); i++) {
-				for(int j=lower.intValue(); j < upper.intValue(); j++) {
+			for(int i=0; i < 2; i++) {
+				for(int j=0; j < 2; j++) {					
 					generatedParameters = testGen.generateParameters();
 					assertEquals(1, generatedParameters.length);
+					RValue.Record recordPoint = (Record) generatedParameters[0];
+					RValue first = recordPoint.read(new Identifier("arr"));
 					RValue[] expected = {semantics.Bool(i==0), semantics.Bool(j==0)};
-					assertEquals(semantics.Int(BigInteger.valueOf(count)), generatedParameters[0]);
-					assertEquals(semantics.Array(expected), generatedParameters[1]);
+					assertEquals(semantics.Array(expected), first);
+					RValue second = recordPoint.read(new Identifier("count"));
+					assertEquals(semantics.Int(BigInteger.valueOf(count)), second);
 				}
 		
 			}
 			// 3 elements
-			for(int i=lower.intValue(); i < upper.intValue(); i++) {
-				for(int j=lower.intValue(); j < upper.intValue(); j++) {
-					for(int k=lower.intValue(); k < upper.intValue(); k++) {
+			for(int i=0; i < 2; i++) {
+				for(int j=0; j < 2; j++) {
+					for(int k=0; k < 2; k++) {
 						generatedParameters = testGen.generateParameters();
 						assertEquals(1, generatedParameters.length);
+						RValue.Record recordPoint = (Record) generatedParameters[0];
+						RValue first = recordPoint.read(new Identifier("arr"));
 						RValue[] expected = {semantics.Bool(i==0), semantics.Bool(j==0), semantics.Bool(k==0)};
-						assertEquals(semantics.Int(BigInteger.valueOf(count)), generatedParameters[0]);
-						assertEquals(semantics.Array(expected), generatedParameters[1]);
+						assertEquals(semantics.Array(expected), first);
+						RValue second = recordPoint.read(new Identifier("count"));
+						assertEquals(semantics.Int(BigInteger.valueOf(count)), second);
 					}
 				}
 			}

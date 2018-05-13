@@ -70,39 +70,41 @@ public class RangeTest {
 		genField.setAccessible(true);
 				
 		List<IntegerRange> ranges = new ArrayList<IntegerRange>();
-		if(genField.get(nomGen) instanceof IntegerGenerator) {
-			IntegerGenerator gen = (IntegerGenerator) genField.get(nomGen);
-			// Check the integer range
-			Field rangeField = IntegerGenerator.class.getDeclaredField("range");
-			rangeField.setAccessible(true);
-
-			ranges.add((IntegerRange) rangeField.get(gen));
-			return ranges;
-		}
-		else if(genField.get(nomGen) instanceof RecordGenerator) {
+		if(genField.get(nomGen) instanceof RecordGenerator) {
 			RecordGenerator recordGen = (RecordGenerator) genField.get(nomGen);
 			Field recordGenField = recordGen.getClass().getDeclaredField("generators");
 			recordGenField.setAccessible(true);
 			List<Generator> generators = (List<Generator>) recordGenField.get(recordGen);
-			Field rangeField = IntegerGenerator.class.getDeclaredField("range");
-			rangeField.setAccessible(true);
-			for(Generator intGen : generators) {
-				if(intGen instanceof IntegerGenerator) {
-					IntegerGenerator gen = (IntegerGenerator) intGen;
-					// Check the integer range
-					ranges.add((IntegerRange) rangeField.get(gen));
+			for(Generator g : generators) {
+				if(g instanceof IntegerGenerator || g instanceof ArrayGenerator) {
+					IntegerRange range = getIntegerRange(g);
+					ranges.add(range);
 				}
 			}
 			return ranges;
 		}
-		else if(genField.get(nomGen) instanceof ArrayGenerator) {
-			ArrayGenerator arrayGen = (ArrayGenerator) genField.get(nomGen);
-			Field rangeField = arrayGen.getClass().getDeclaredField("range");
-			rangeField.setAccessible(true);
-			ranges.add((IntegerRange) rangeField.get(arrayGen));
+		else {
+			IntegerRange range = getIntegerRange((Generator) genField.get(nomGen));
+			ranges.add(range);
 			return ranges;
 		}
-		fail("No integer range could be generated for " + genField.get(nomGen));
+	}
+	
+	public IntegerRange getIntegerRange(Generator gen) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+		if(gen instanceof IntegerGenerator) {
+			IntegerGenerator intGen = (IntegerGenerator) gen;
+			// Check the integer range
+			Field rangeField = gen.getClass().getDeclaredField("range");
+			rangeField.setAccessible(true);
+			return (IntegerRange) rangeField.get(intGen);
+		}
+		else if(gen instanceof ArrayGenerator) {
+			ArrayGenerator arrayGen = (ArrayGenerator) gen;
+			Field rangeField = arrayGen.getClass().getDeclaredField("range");
+			rangeField.setAccessible(true);
+			return (IntegerRange) rangeField.get(arrayGen);
+		}
+		fail("No integer range could be generated for " + gen);
 		return null;
 	}
 	
@@ -468,5 +470,60 @@ public class RangeTest {
 			}
 		}
 	}
-	
+	/**
+	 * Test when the nominal type wraps a record that contains
+	 * an array restricted by size and a constrained integer.
+	 *
+	 * @throws IOException
+	 * @throws NoSuchFieldException
+	 * @throws SecurityException
+	 * @throws IllegalArgumentException
+	 * @throws IllegalAccessException
+	 */
+	@Test
+	public void testNominalRecordArray() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+		String testName = "nominal_record_array";
+		helper.compile(testName);
+		Build.Project project = helper.createProject();
+		Interpreter interpreter = new Interpreter(project, System.out);
+		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		
+		BigInteger lower = BigInteger.valueOf(-5);
+		BigInteger upper = BigInteger.valueOf(5);
+		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), interpreter, 50, lower, upper);
+		
+		List<IntegerRange> ranges = getIntegerRange(testGen);
+		assertEquals(2, ranges.size());
+		assertEquals(BigInteger.valueOf(1), ranges.get(0).lowerBound());
+		assertEquals(BigInteger.valueOf(5), ranges.get(0).upperBound());
+		assertEquals(BigInteger.valueOf(2), ranges.get(1).lowerBound());
+		assertEquals(BigInteger.valueOf(4), ranges.get(1).upperBound());
+
+		for(int count=1; count < 5; count++) {
+			RValue[] generatedParameters;
+			// 2 elements
+			for(int i=lower.intValue(); i < upper.intValue(); i++) {
+				for(int j=lower.intValue(); j < upper.intValue(); j++) {
+					generatedParameters = testGen.generateParameters();
+					assertEquals(1, generatedParameters.length);
+					RValue[] expected = {semantics.Bool(i==0), semantics.Bool(j==0)};
+					assertEquals(semantics.Int(BigInteger.valueOf(count)), generatedParameters[0]);
+					assertEquals(semantics.Array(expected), generatedParameters[1]);
+				}
+		
+			}
+			// 3 elements
+			for(int i=lower.intValue(); i < upper.intValue(); i++) {
+				for(int j=lower.intValue(); j < upper.intValue(); j++) {
+					for(int k=lower.intValue(); k < upper.intValue(); k++) {
+						generatedParameters = testGen.generateParameters();
+						assertEquals(1, generatedParameters.length);
+						RValue[] expected = {semantics.Bool(i==0), semantics.Bool(j==0), semantics.Bool(k==0)};
+						assertEquals(semantics.Int(BigInteger.valueOf(count)), generatedParameters[0]);
+						assertEquals(semantics.Array(expected), generatedParameters[1]);
+					}
+				}
+			}
+		}
+	}
 }

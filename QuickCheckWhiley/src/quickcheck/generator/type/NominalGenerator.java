@@ -69,7 +69,8 @@ public class NominalGenerator implements Generator{
 		}
 		else if(generator instanceof RecordGenerator) {
 			RecordGenerator recordGen = (RecordGenerator) generator;
-			recordGen.checkInvariantRange(invariants, interpreter);
+			String prefix = decl.getVariableDeclaration().getName().get() + ".";
+			recordGen.checkInvariantRange(invariants, interpreter, prefix);
 		}
 		else if(generator instanceof ArrayGenerator) {
 			RangeHelper.checkInvariantRange(generator, decl.getVariableDeclaration().getName(), decl.getInvariant(), interpreter);

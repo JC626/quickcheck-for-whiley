@@ -4,6 +4,7 @@ import java.util.List;
 
 import quickcheck.constraints.RangeHelper;
 import quickcheck.util.TestType;
+import wybs.util.AbstractCompilationUnit.Identifier;
 import wybs.util.AbstractCompilationUnit.Tuple;
 import wyc.lang.WhileyFile;
 import wyc.lang.WhileyFile.Decl;
@@ -96,14 +97,15 @@ public class RecordGenerator implements Generator{
 	 * @param invariants The invariants to check against the generator on the nominal type
 	 * @param interpreter The interpreter used
 	 */
-	public void checkInvariantRange(Tuple<Expr> invariants, Interpreter interpreter) {
+	public void checkInvariantRange(Tuple<Expr> invariants, Interpreter interpreter, String prefix) {
 		// Can have multiple invariants
 		if (invariants.size() > 0 && !fields.isEmpty()) {
 			assert fields.size() == generators.size();
 			for(int i=0; i < fields.size(); i++) {
 				if(fields.get(i).getType() instanceof WhileyFile.Type.Int || 
 						fields.get(i).getType() instanceof WhileyFile.Type.Array) {
-					RangeHelper.checkInvariantRange(generators.get(i), fields.get(i).getName(), invariants, interpreter);
+					String name = prefix + fields.get(i).getName().get();
+					RangeHelper.checkInvariantRange(generators.get(i), new Identifier(name), invariants, interpreter);
 				}
 			}
 			calculateSize();

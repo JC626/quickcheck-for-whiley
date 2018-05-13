@@ -9,8 +9,6 @@ import wybs.util.AbstractCompilationUnit.Tuple;
 import wyc.lang.WhileyFile;
 import wyc.lang.WhileyFile.Decl;
 import wyc.lang.WhileyFile.Expr;
-import wyc.lang.WhileyFile.Expr.RecordAccess;
-import wyc.lang.WhileyFile.Expr.VariableAccess;
 import wyil.interpreter.ConcreteSemantics.RValue;
 import wyil.interpreter.ConcreteSemantics.RValue.Int;
 import wyil.interpreter.Interpreter.CallStack;
@@ -57,6 +55,9 @@ public class NominalGenerator implements Generator{
 					}
 					recordGen.calculateSize();
 				}
+			}
+			else if(generator instanceof ArrayGenerator) {
+				 checkInvariant(generator, decl.getVariableDeclaration().getName(), decl.getInvariant(), interpreter);
 			}
 			// TODO if nominal type, need to pass invariant down?
 			// then each generator needs to know it's name (within the nominal?)
@@ -112,6 +113,9 @@ public class NominalGenerator implements Generator{
 					if(gen instanceof IntegerGenerator) {
 						((IntegerGenerator) gen).joinRange(b);
 					}
+					if(gen instanceof ArrayGenerator) {
+						((ArrayGenerator) gen).joinRange(b);
+					}
 				}
 			}
 		}
@@ -139,14 +143,14 @@ public class NominalGenerator implements Generator{
 			Expr firstEq = binaryEq.getFirstOperand();
 			Expr secondEq = binaryEq.getSecondOperand();
 			
-			if(firstEq instanceof VariableAccess && ((VariableAccess) firstEq).getVariableDeclaration().getName().equals(nomName)){
+			if(isExpForIntegerRange(firstEq, nomName)){
 				RValue rhs = instance.executeExpression(RValue.class, secondEq, frame);
 				if(rhs instanceof RValue.Int) {
 					RValue.Int val = (Int) rhs;
 					return new IntegerRange(val.intValue(), val.intValue() + 1);
 				}
 			}
-			else if(secondEq instanceof VariableAccess && ((VariableAccess) secondEq).getVariableDeclaration().getName().equals(nomName)){
+			else if(isExpForIntegerRange(secondEq, nomName)){
 				RValue lhs = instance.executeExpression(RValue.class, firstEq, frame);
 				if(lhs instanceof RValue.Int) {
 					RValue.Int val = (Int) lhs;
@@ -247,8 +251,12 @@ public class NominalGenerator implements Generator{
 	 * @return Whether the variable's name is in the expression
 	 */
 	private boolean isExpForIntegerRange(Expr exp, Identifier name) {
-		return (exp instanceof RecordAccess && ((RecordAccess) exp).getField().equals(name)) || 
-				exp instanceof VariableAccess && ((VariableAccess) exp).getVariableDeclaration().getName().equals(name);
+		if(exp instanceof Expr.ArrayLength) {
+			Expr array = ((Expr.ArrayLength) exp).getOperand();
+			return array instanceof Expr.VariableAccess && ((Expr.VariableAccess) array).getVariableDeclaration().getName().equals(name);
+		}
+		return (exp instanceof Expr.RecordAccess && ((Expr.RecordAccess) exp).getField().equals(name)) || 
+				(exp instanceof Expr.VariableAccess && ((Expr.VariableAccess) exp).getVariableDeclaration().getName().equals(name));
 	}
 	
 	@Override

@@ -1,6 +1,7 @@
 package quickcheck.generator.type;
 
 import java.math.BigInteger;
+import java.util.List;
 
 import quickcheck.constraints.IntegerRange;
 import wybs.util.AbstractCompilationUnit.Identifier;
@@ -8,6 +9,7 @@ import wybs.util.AbstractCompilationUnit.Tuple;
 import wyc.lang.WhileyFile;
 import wyc.lang.WhileyFile.Decl;
 import wyc.lang.WhileyFile.Expr;
+import wyc.lang.WhileyFile.Expr.RecordAccess;
 import wyc.lang.WhileyFile.Expr.VariableAccess;
 import wyil.interpreter.ConcreteSemantics.RValue;
 import wyil.interpreter.ConcreteSemantics.RValue.Int;
@@ -39,12 +41,26 @@ public class NominalGenerator implements Generator{
 		this.interpreter = interpreter;
 		this.decl = decl;
 		
-		// TODO need to know the field/type
-		// If record, need to know the record's field names
-		
-		// When nominal type wraps an integer
-		if(generator instanceof IntegerGenerator) {
-			 checkInvariant(generator, decl.getVariableDeclaration(), decl.getInvariant(), interpreter);
+		if(decl.getInvariant().size() > 0) {
+			if(generator instanceof IntegerGenerator) {
+				 checkInvariant(generator, decl.getVariableDeclaration().getName(), decl.getInvariant(), interpreter);
+			}
+			else if(generator instanceof RecordGenerator) {
+				RecordGenerator recordGen = (RecordGenerator) generator;
+				List<Decl.Variable> fields = recordGen.getIntegerFields();
+				List<IntegerGenerator> intGens = recordGen.getIntegerGenerators();
+				if(!fields.isEmpty()) {
+					assert fields.size() == intGens.size();
+					// Apply invariant
+					for(int i=0; i < fields.size(); i++) {
+						checkInvariant(intGens.get(i), fields.get(i).getName(), decl.getInvariant(), interpreter);
+					}
+				}
+			}
+			// TODO if nominal type, need to pass invariant down?
+			// then each generator needs to know it's name (within the nominal?)
+			
+			// TODO array as well (limit array size?)
 		}
 
 	}
@@ -75,11 +91,11 @@ public class NominalGenerator implements Generator{
 	 * or not. This requires physically evaluating the invariant to see whether
 	 * or not it holds true.
 	 *
-	 * @param var The variable the nominal type wraps
+	 * @param nomName The name of the field the invariant should apply to
 	 * @param invariant The invariants applied on the nominal type
 	 * @param instance The interpreter
 	 */
-	public void checkInvariant(Generator gen, Decl.Variable var, Tuple<Expr> invariant, Interpreter instance) {
+	private void checkInvariant(Generator gen, Identifier nomName, Tuple<Expr> invariant, Interpreter instance) {
 		// Can have multiple invariants
 		if (invariant.size() > 0) {
 			/*
@@ -90,7 +106,7 @@ public class NominalGenerator implements Generator{
 			Interpreter.CallStack frame = instance.new CallStack();
 //			frame.putLocal(var.getName(), val);
 			for (int i = 0; i != invariant.size(); ++i) {
-				IntegerRange b = findRange(invariant.get(i), var.getName(), frame, interpreter);
+				IntegerRange b = findRange(invariant.get(i), nomName, frame, interpreter);
 				if (b != null) {
 					if(gen instanceof IntegerGenerator) {
 						((IntegerGenerator) gen).joinRange(b);
@@ -112,7 +128,7 @@ public class NominalGenerator implements Generator{
 	 * @param instance - The interpreter in which the expressions are executed
 	 * @return The IntegerRange discovered from the invariant
 	 */
-	public IntegerRange findRange(Expr expr, Identifier nomName, CallStack frame, Interpreter instance) {
+	private IntegerRange findRange(Expr expr, Identifier nomName, CallStack frame, Interpreter instance) {
 //		RValue val;
 		IntegerRange range = null;
 		int operator = expr.getOpcode();
@@ -183,7 +199,7 @@ public class NominalGenerator implements Generator{
 			 * operations applied to the x to the other side
 			 * i.e. x + 2 < 10 ==> x < 10 - 2
 			 */
-			if(first instanceof VariableAccess && ((VariableAccess) first).getVariableDeclaration().getName().equals(nomName)){
+			if(isExpForIntegerRange(first, nomName)){
 				RValue.Int rhs = instance.executeExpression(RValue.Int.class, second, frame);
 				if(operator == WhileyFile.EXPR_integerlessthan) {
 					upperLimit = BigInteger.valueOf(rhs.intValue());
@@ -199,7 +215,7 @@ public class NominalGenerator implements Generator{
 				}	
 				return new IntegerRange(lowerLimit, upperLimit);
 			}
-			else if(second instanceof VariableAccess && ((VariableAccess) second).getVariableDeclaration().getName().equals(nomName)){
+			else if(isExpForIntegerRange(second, nomName)){
 				RValue.Int lhs = instance.executeExpression(RValue.Int.class, first, frame);
 				if(operator == WhileyFile.EXPR_integerlessthan) {
 					lowerLimit = BigInteger.valueOf(lhs.intValue() + 1);
@@ -221,6 +237,17 @@ public class NominalGenerator implements Generator{
 			return null;
 		}
 		return null;
+	}
+	
+	/**
+	 * Checks if the variable's name is contained, solely in the expression.
+	 * @param exp The expression to check if the name is contained in it
+	 * @param name The name of the variable to check
+	 * @return Whether the variable's name is in the expression
+	 */
+	private boolean isExpForIntegerRange(Expr exp, Identifier name) {
+		return (exp instanceof RecordAccess && ((RecordAccess) exp).getField().equals(name)) || 
+				exp instanceof VariableAccess && ((VariableAccess) exp).getVariableDeclaration().getName().equals(name);
 	}
 	
 	@Override

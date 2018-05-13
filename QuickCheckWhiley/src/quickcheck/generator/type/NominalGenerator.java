@@ -77,8 +77,6 @@ public class NominalGenerator implements Generator{
 		}
 		// TODO if nominal type, need to pass invariant down?
 		// then each generator needs to know it's name (within the nominal?)
-		
-		// TODO array as well (limit array size?)
 	}
 
 	

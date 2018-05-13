@@ -431,9 +431,21 @@ public class RangeTest {
 		}
 	}
 	
+	/**
+	 * Test when the nominal type wraps a array
+	 * restricted by size.
+	 *
+	 * @throws IOException
+	 * @throws NoSuchFieldException
+	 * @throws SecurityException
+	 * @throws IllegalArgumentException
+	 * @throws IllegalAccessException
+	 * @throws InvocationTargetException
+	 * @throws NoSuchMethodException
+	 */
 	@Test
-	public void testNominalArray() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
-		String testName = "nominal_array";
+	public void testNominalArraySize() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+		String testName = "nominal_array_1";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new Interpreter(project, System.out);

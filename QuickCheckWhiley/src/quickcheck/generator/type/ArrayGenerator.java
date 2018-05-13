@@ -126,7 +126,6 @@ public class ArrayGenerator implements Generator{
 		this.range = range.intersection(other);
 		checkValidRange();
 		calculateSize();
-		System.out.println(this.range);
 	}
 	
 	private void calculateSize(){

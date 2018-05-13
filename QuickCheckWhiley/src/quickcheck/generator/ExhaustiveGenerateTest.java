@@ -16,7 +16,6 @@ import wyc.lang.WhileyFile.Decl.FunctionOrMethod;
 import wyc.lang.WhileyFile.Decl.Variable;
 import wyil.interpreter.Interpreter;
 import wyil.interpreter.ConcreteSemantics.RValue;
-import wyil.type.TypeSystem;
 
 /**
  * Generate candidate test parameters exhaustively from a function.
@@ -121,13 +120,13 @@ public class ExhaustiveGenerateTest implements GenerateTest{
 			WhileyFile.Type.Record record = (WhileyFile.Type.Record) paramType;
 			Tuple<Decl.Variable> tuple = record.getFields();
 			List<Generator> generators = new ArrayList<Generator>();
-			List<Identifier> names = new ArrayList<Identifier>();
+			List<Decl.Variable> fields = new ArrayList<Decl.Variable>();
 			for(Decl.Variable var : tuple) {
 				Generator gen = getGenerator(var.getType());
-				names.add(var.getName());
+				fields.add(var);
 				generators.add(gen);
 			}
-			return new RecordGenerator(generators, names, TestType.EXHAUSTIVE);
+			return new RecordGenerator(generators, fields, TestType.EXHAUSTIVE);
 		}
 		else if(paramType instanceof WhileyFile.Type.Union) {
 			WhileyFile.Type.Union union = (WhileyFile.Type.Union) paramType;

@@ -38,8 +38,8 @@ public final class IntegerGenerator implements Generator {
 	public IntegerGenerator(TestType testType, BigInteger lower, BigInteger upper) {
 		this.testType = testType;
 		this.range = new IntegerRange(lower, upper);
-		this.size = upper.subtract(lower).intValue();
 		checkValidRange();
+		calculateSize();
 	}
 	
 	@Override
@@ -83,6 +83,11 @@ public final class IntegerGenerator implements Generator {
 		assert count == 1;
 		this.range = range.intersection(other);
 		checkValidRange();
+		calculateSize();
+	}
+	
+	private void calculateSize() {
+		this.size = range.upperBound().subtract(range.lowerBound()).intValue();
 	}
 
 	@Override

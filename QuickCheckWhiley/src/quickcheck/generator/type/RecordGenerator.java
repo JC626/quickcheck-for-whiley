@@ -44,17 +44,7 @@ public class RecordGenerator implements Generator{
 		this.generators = generators;
 		this.fields = fields;
 		this.testType = testType;
-		//Calculate size
-		if(generators.size() > 0) {
-			this.size = 1;
-			for(int i=0; i < generators.size(); i++) {
-				size *= generators.get(i).size();
-			}
-		}
-		else {
-			this.size = 0;
-		}
-
+		calculateSize();
 	}
 	
 	@Override
@@ -116,6 +106,19 @@ public class RecordGenerator implements Generator{
 			}
 		}
 		return intGen;
+	}
+	
+	public void calculateSize() {
+		//Calculate size
+		if(generators.size() > 0) {
+			this.size = 1;
+			for(int i=0; i < generators.size(); i++) {
+				size *= generators.get(i).size();
+			}
+		}
+		else {
+			this.size = 0;
+		}
 	}
 
 	@Override

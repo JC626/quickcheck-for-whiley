@@ -55,6 +55,7 @@ public class NominalGenerator implements Generator{
 					for(int i=0; i < fields.size(); i++) {
 						checkInvariant(intGens.get(i), fields.get(i).getName(), decl.getInvariant(), interpreter);
 					}
+					recordGen.calculateSize();
 				}
 			}
 			// TODO if nominal type, need to pass invariant down?

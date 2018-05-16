@@ -1,6 +1,7 @@
 package quickcheck.generator.type;
 
 import quickcheck.constraints.RangeHelper;
+import wybs.util.AbstractCompilationUnit.Identifier;
 import wybs.util.AbstractCompilationUnit.Tuple;
 import wyc.lang.WhileyFile.Decl;
 import wyc.lang.WhileyFile.Expr;
@@ -33,7 +34,7 @@ public class NominalGenerator implements Generator{
 		this.decl = decl;
 
 		if(decl.getInvariant().size() > 0) {
-			checkInvariantRange(decl.getInvariant());
+			checkInvariantRange(decl.getInvariant(), decl.getVariableDeclaration().getName());
 		}
 
 	}
@@ -62,22 +63,23 @@ public class NominalGenerator implements Generator{
 	/**
 	 * Check the ranges on the invariants against the generators.
 	 * @param invariants The invariants to check against the generator on the nominal type
+	 * @param name The name of the variable to check the invariant ranges
 	 */
-	private void checkInvariantRange(Tuple<Expr> invariants) {
+	private void checkInvariantRange(Tuple<Expr> invariants, Identifier name) {
 		if(generator instanceof IntegerGenerator) {
-			RangeHelper.checkInvariantRange(generator, decl.getVariableDeclaration().getName(), invariants, interpreter);
+			RangeHelper.checkInvariantRange(generator, name, invariants, interpreter);
 		}
 		else if(generator instanceof RecordGenerator) {
 			RecordGenerator recordGen = (RecordGenerator) generator;
-			String prefix = decl.getVariableDeclaration().getName().get() + ".";
+			String prefix = name.get() + ".";
 			recordGen.checkInvariantRange(invariants, interpreter, prefix);
 		}
 		else if(generator instanceof ArrayGenerator) {
-			RangeHelper.checkInvariantRange(generator, decl.getVariableDeclaration().getName(), decl.getInvariant(), interpreter);
+			RangeHelper.checkInvariantRange(generator, name, decl.getInvariant(), interpreter);
 		}
 		else if(generator instanceof NominalGenerator) {
 			NominalGenerator nomGen = (NominalGenerator) generator;
-			nomGen.checkInvariantRange(decl.getInvariant());
+			nomGen.checkInvariantRange(decl.getInvariant(), name);
 		}
 	}
 

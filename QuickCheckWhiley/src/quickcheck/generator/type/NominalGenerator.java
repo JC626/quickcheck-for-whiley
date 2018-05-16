@@ -1,5 +1,6 @@
 package quickcheck.generator.type;
 
+import quickcheck.constraints.IntegerRange;
 import quickcheck.constraints.RangeHelper;
 import wybs.util.AbstractCompilationUnit.Identifier;
 import wybs.util.AbstractCompilationUnit.Tuple;
@@ -77,6 +78,15 @@ public class NominalGenerator implements Generator{
 		else if(generator instanceof NominalGenerator) {
 			NominalGenerator nomGen = (NominalGenerator) generator;
 			nomGen.checkInvariantRange(invariants, name);
+		}
+	}
+	
+	public void joinRange(IntegerRange range) {
+		if(generator instanceof IntegerGenerator) {
+			((IntegerGenerator) generator).joinRange(range);
+		}
+		else if(generator instanceof ArrayGenerator) {
+			((ArrayGenerator) generator).joinRange(range);
 		}
 	}
 

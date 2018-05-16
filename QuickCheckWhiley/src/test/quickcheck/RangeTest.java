@@ -554,7 +554,7 @@ public class RangeTest {
 	 */
 	@Test
 	public void testDoubleNominalNoConstraint() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
-		String testName = "nominal_same_1";
+		String testName = "nominal_double_1";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new Interpreter(project, System.out);
@@ -587,7 +587,7 @@ public class RangeTest {
 	 */
 	@Test
 	public void testDoubleNominalConstraint() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
-		String testName = "nominal_same_2";
+		String testName = "nominal_double_2";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new Interpreter(project, System.out);
@@ -629,7 +629,7 @@ public class RangeTest {
 	 */
 	@Test(expected = Error.class)
 	public void testDoubleNominalInvalid() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
-		String testName = "nominal_same_invalid";
+		String testName = "nominal_double_invalid";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new Interpreter(project, System.out);

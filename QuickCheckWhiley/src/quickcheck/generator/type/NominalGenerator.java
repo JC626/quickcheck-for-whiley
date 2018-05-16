@@ -81,12 +81,18 @@ public class NominalGenerator implements Generator{
 		}
 	}
 	
-	public void joinRange(IntegerRange range) {
+	/**
+	 * Intersect the range of the wrapped generator with
+	 * another generator if it hasn't generated any values yet.
+	 * 
+	 * @param other An integer range to intersect with
+	 */
+	public void joinRange(IntegerRange other) {
 		if(generator instanceof IntegerGenerator) {
-			((IntegerGenerator) generator).joinRange(range);
+			((IntegerGenerator) generator).joinRange(other);
 		}
 		else if(generator instanceof ArrayGenerator) {
-			((ArrayGenerator) generator).joinRange(range);
+			((ArrayGenerator) generator).joinRange(other);
 		}
 	}
 

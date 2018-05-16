@@ -9,14 +9,14 @@ import wyil.interpreter.Interpreter;
 
 /**
  * Generate values for a nominal type.
- * Since a nominal type renames an existing type, 
- * it takes another generator to generate values 
+ * Since a nominal type renames an existing type,
+ * it takes another generator to generate values
  * for the existing type.
- * 
+ *
  * e.g. type nat is int where x > 0
- * Would require an IntegerGenerator 
+ * Would require an IntegerGenerator
  * and could return a value of 20.
- * 
+ *
  * @author Janice Chin
  *
  */
@@ -25,13 +25,13 @@ public class NominalGenerator implements Generator{
 	private Generator generator;
 	private Interpreter interpreter;
 	private Decl.Type decl;
-	
+
 	public NominalGenerator(Generator generator, Interpreter interpreter, Decl.Type decl) {
 		super();
 		this.generator = generator;
 		this.interpreter = interpreter;
 		this.decl = decl;
-		
+
 		if(decl.getInvariant().size() > 0) {
 			checkInvariantRange(decl.getInvariant());
 		}
@@ -58,7 +58,7 @@ public class NominalGenerator implements Generator{
 		}
 		return value;
 	}
-	
+
 	/**
 	 * Check the ranges on the invariants against the generators.
 	 * @param invariants The invariants to check against the generator on the nominal type
@@ -75,11 +75,13 @@ public class NominalGenerator implements Generator{
 		else if(generator instanceof ArrayGenerator) {
 			RangeHelper.checkInvariantRange(generator, decl.getVariableDeclaration().getName(), decl.getInvariant(), interpreter);
 		}
-		// TODO if nominal type, need to pass invariant down?
-		// then each generator needs to know it's name (within the nominal?)
+		else if(generator instanceof NominalGenerator) {
+			NominalGenerator nomGen = (NominalGenerator) generator;
+			nomGen.checkInvariantRange(decl.getInvariant());
+		}
 	}
 
-	
+
 	@Override
 	public int size() {
 		return generator.size();

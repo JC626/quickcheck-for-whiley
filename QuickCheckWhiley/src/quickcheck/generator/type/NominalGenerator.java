@@ -75,11 +75,11 @@ public class NominalGenerator implements Generator{
 			recordGen.checkInvariantRange(invariants, interpreter, prefix);
 		}
 		else if(generator instanceof ArrayGenerator) {
-			RangeHelper.checkInvariantRange(generator, name, decl.getInvariant(), interpreter);
+			RangeHelper.checkInvariantRange(generator, name, invariants, interpreter);
 		}
 		else if(generator instanceof NominalGenerator) {
 			NominalGenerator nomGen = (NominalGenerator) generator;
-			nomGen.checkInvariantRange(decl.getInvariant(), name);
+			nomGen.checkInvariantRange(invariants, name);
 		}
 	}
 

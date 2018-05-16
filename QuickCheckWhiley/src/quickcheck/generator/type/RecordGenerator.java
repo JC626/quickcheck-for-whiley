@@ -103,7 +103,8 @@ public class RecordGenerator implements Generator{
 			assert fields.size() == generators.size();
 			for(int i=0; i < fields.size(); i++) {
 				if(fields.get(i).getType() instanceof WhileyFile.Type.Int || 
-						fields.get(i).getType() instanceof WhileyFile.Type.Array) {
+						fields.get(i).getType() instanceof WhileyFile.Type.Array
+						|| fields.get(i).getType() instanceof WhileyFile.Type.Nominal) {
 					String name = prefix + fields.get(i).getName().get();
 					RangeHelper.checkInvariantRange(generators.get(i), new Identifier(name), invariants, interpreter);
 				}

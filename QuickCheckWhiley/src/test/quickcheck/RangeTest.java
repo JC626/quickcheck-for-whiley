@@ -57,39 +57,52 @@ public class RangeTest {
 	 * @throws InvocationTargetException 
 	 */
 	@SuppressWarnings("unchecked")
-	public List<IntegerRange>  getIntegerRange(GenerateTest testGen) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+	public List<IntegerRange> getIntegerRange(GenerateTest testGen) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 		
 		// Get the integer range using reflection
 		Field exhGenField = testGen.getClass().getDeclaredField("parameterGenerators");
 		exhGenField.setAccessible(true);
 		List<Generator> genExhaustive = (List<Generator>) exhGenField.get(testGen);
-		assertTrue(genExhaustive.get(0) instanceof NominalGenerator);
-		NominalGenerator nomGen = (NominalGenerator) genExhaustive.get(0);
-		
-		Field genField = nomGen.getClass().getDeclaredField("generator");
-		genField.setAccessible(true);
-				
 		List<IntegerRange> ranges = new ArrayList<IntegerRange>();
-		if(genField.get(nomGen) instanceof RecordGenerator) {
-			RecordGenerator recordGen = (RecordGenerator) genField.get(nomGen);
-			Field recordGenField = recordGen.getClass().getDeclaredField("generators");
-			recordGenField.setAccessible(true);
-			List<Generator> generators = (List<Generator>) recordGenField.get(recordGen);
-			for(Generator g : generators) {
-				if(g instanceof IntegerGenerator || g instanceof ArrayGenerator) {
-					IntegerRange range = getIntegerRange(g);
+		
+		for(int i=0; i < genExhaustive.size(); i++) {
+			if(genExhaustive.get(i) instanceof NominalGenerator) {
+				NominalGenerator nomGen = (NominalGenerator) genExhaustive.get(i);
+				
+				Field genField = nomGen.getClass().getDeclaredField("generator");
+				genField.setAccessible(true);
+						
+				// Replace the nominal generator with the underlying nominal generator
+				if(genField.get(nomGen) instanceof NominalGenerator) {
+					nomGen = (NominalGenerator) genField.get(nomGen);
+					genField = nomGen.getClass().getDeclaredField("generator");
+					genField.setAccessible(true);
+				}
+				if(genField.get(nomGen) instanceof RecordGenerator) {
+					RecordGenerator recordGen = (RecordGenerator) genField.get(nomGen);
+					Field recordGenField = recordGen.getClass().getDeclaredField("generators");
+					recordGenField.setAccessible(true);
+					List<Generator> generators = (List<Generator>) recordGenField.get(recordGen);
+					for(Generator g : generators) {
+						if(g instanceof NominalGenerator) {
+							g = (Generator) genField.get(g);
+						}
+						if(g instanceof IntegerGenerator || g instanceof ArrayGenerator) {
+							IntegerRange range = getIntegerRange(g);
+							ranges.add(range);
+						}
+					}
+				}
+				else {
+					IntegerRange range = getIntegerRange((Generator) genField.get(nomGen));
 					ranges.add(range);
 				}
 			}
-			return ranges;
 		}
-		else {
-			IntegerRange range = getIntegerRange((Generator) genField.get(nomGen));
-			ranges.add(range);
-			return ranges;
-		}
+		assertFalse(ranges.isEmpty());
+		return ranges;
 	}
-	
+		
 	public IntegerRange getIntegerRange(Generator gen) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 		if(gen instanceof IntegerGenerator) {
 			IntegerGenerator intGen = (IntegerGenerator) gen;
@@ -532,4 +545,158 @@ public class RangeTest {
 			}
 		}
 	}
+	
+	/**
+	 * Test when a nominal type wraps another nominal type
+	 * but does not have any constraints.
+	 * @throws IOException
+	 * @throws SecurityException 
+	 * @throws NoSuchFieldException 
+	 * @throws IllegalAccessException 
+	 * @throws IllegalArgumentException 
+	 */
+	@Test
+	public void testDoubleNominalNoConstraint() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+		String testName = "nominal_double_1";
+		helper.compile(testName);
+		Build.Project project = helper.createProject();
+		Interpreter interpreter = new Interpreter(project, System.out);
+		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		
+		BigInteger lower = BigInteger.valueOf(-5);
+		BigInteger upper = BigInteger.valueOf(10);
+		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), interpreter, 20, lower, upper);
+		
+		IntegerRange range = getIntegerRange(testGen).get(0);
+		assertEquals(BigInteger.valueOf(1), range.lowerBound());
+		assertEquals(upper, range.upperBound());
+
+		for(int i=1; i < 10; i++) {
+			RValue[] generatedParameters = testGen.generateParameters();
+			assertEquals(semantics.Int(BigInteger.valueOf(i)), generatedParameters[0]);
+		}
+		RValue[] generatedParameters = testGen.generateParameters();
+		assertEquals(semantics.Int(BigInteger.valueOf(1)), generatedParameters[0]);
+	}
+		
+	/**
+	 * Test when a nominal type wraps another nominal type
+	 * that also has an additional constraint.
+	 * @throws IOException
+	 * @throws SecurityException 
+	 * @throws NoSuchFieldException 
+	 * @throws IllegalAccessException 
+	 * @throws IllegalArgumentException 
+	 */
+	@Test
+	public void testDoubleNominalConstraint() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+		String testName = "nominal_double_2";
+		helper.compile(testName);
+		Build.Project project = helper.createProject();
+		Interpreter interpreter = new Interpreter(project, System.out);
+		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		
+		BigInteger lower = BigInteger.valueOf(-5);
+		BigInteger upper = BigInteger.valueOf(15);
+		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), interpreter, 50, lower, upper);
+		
+		List<IntegerRange> ranges = getIntegerRange(testGen);
+		assertEquals(2, ranges.size());
+		assertEquals(BigInteger.valueOf(1), ranges.get(0).lowerBound());
+		assertEquals(BigInteger.valueOf(10), ranges.get(0).upperBound());
+		assertEquals(BigInteger.valueOf(1), ranges.get(1).lowerBound());
+		assertEquals(upper, ranges.get(1).upperBound());
+		
+		for(int i=1; i < 10; i++) {
+			for(int j=1; j < 15; j++) {
+				RValue[] generatedParameters = testGen.generateParameters();
+				assertEquals(semantics.Int(BigInteger.valueOf(i)), generatedParameters[0]);
+				assertEquals(semantics.Int(BigInteger.valueOf(j)), generatedParameters[1]);
+
+			}
+		}
+		RValue[] generatedParameters = testGen.generateParameters();
+		assertEquals(semantics.Int(BigInteger.valueOf(1)), generatedParameters[0]);
+		assertEquals(semantics.Int(BigInteger.valueOf(1)), generatedParameters[1]);
+	}
+	
+	/**
+	 * Test when a nominal type wraps another nominal type
+	 * that has a constraint that makes it invalid
+	 * @throws IOException
+	 * @throws SecurityException 
+	 * @throws NoSuchFieldException 
+	 * @throws IllegalAccessException 
+	 * @throws IllegalArgumentException 
+	 */
+	@Test(expected = Error.class)
+	public void testDoubleNominalInvalid() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+		String testName = "nominal_double_invalid";
+		helper.compile(testName);
+		Build.Project project = helper.createProject();
+		Interpreter interpreter = new Interpreter(project, System.out);
+		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		
+		BigInteger lower = BigInteger.valueOf(-5);
+		BigInteger upper = BigInteger.valueOf(15);
+		new ExhaustiveGenerateTest(functions.get(0), interpreter, 50, lower, upper);
+	}
+	
+	/**
+	 * Test when a record contains a nominal type with constraints.
+	 * @throws IOException
+	 * @throws SecurityException 
+	 * @throws NoSuchFieldException 
+	 * @throws IllegalAccessException 
+	 * @throws IllegalArgumentException 
+	 */
+	@Test
+	public void testRecordNominal() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+		String testName = "nominal_double_record";
+		helper.compile(testName);
+		Build.Project project = helper.createProject();
+		Interpreter interpreter = new Interpreter(project, System.out);
+		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		
+		BigInteger lower = BigInteger.valueOf(-5);
+		BigInteger upper = BigInteger.valueOf(10);
+		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), interpreter, 20, lower, upper);
+		
+		List<IntegerRange> ranges = getIntegerRange(testGen);
+		assertEquals(4, ranges.size());
+		assertEquals(BigInteger.valueOf(1), ranges.get(0).lowerBound());
+		assertEquals(BigInteger.valueOf(5), ranges.get(0).upperBound());
+		assertEquals(BigInteger.valueOf(1), ranges.get(1).lowerBound());
+		assertEquals(BigInteger.valueOf(8), ranges.get(1).upperBound());
+		
+		assertEquals(BigInteger.valueOf(1), ranges.get(2).lowerBound());
+		assertEquals(BigInteger.valueOf(5), ranges.get(2).upperBound());
+		assertEquals(BigInteger.valueOf(1), ranges.get(3).lowerBound());
+		assertEquals(BigInteger.valueOf(8), ranges.get(3).upperBound());
+		
+		for(int i=1; i < 5; i++) {
+			for(int j=1; j < 8; j++) {
+				for(int m=1; m < 5; m++) {
+					for(int n=1; n < 8; n++) {
+						RValue[] generatedParameters = testGen.generateParameters();
+						assertEquals(2, generatedParameters.length);
+						
+						RValue.Record recordInput = (Record) generatedParameters[0];
+						RValue inputFirst = recordInput.read(new Identifier("x"));
+						assertEquals(semantics.Int(BigInteger.valueOf(i)), inputFirst);
+						RValue inputSecond = recordInput.read(new Identifier("y"));
+						assertEquals(semantics.Int(BigInteger.valueOf(j)), inputSecond);
+						
+						RValue.Record recordBounds = (Record) generatedParameters[1];
+						RValue boundsFirst = recordBounds.read(new Identifier("x"));
+						assertEquals(semantics.Int(BigInteger.valueOf(m)), boundsFirst);
+						RValue boundsSecond = recordBounds.read(new Identifier("y"));
+						assertEquals(semantics.Int(BigInteger.valueOf(n)), boundsSecond);
+						
+					}
+				}
+			}
+		}
+	}
+	
 }

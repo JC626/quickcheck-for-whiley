@@ -5,6 +5,7 @@ import java.math.BigInteger;
 import quickcheck.generator.type.ArrayGenerator;
 import quickcheck.generator.type.Generator;
 import quickcheck.generator.type.IntegerGenerator;
+import quickcheck.generator.type.NominalGenerator;
 import wybs.util.AbstractCompilationUnit.Identifier;
 import wybs.util.AbstractCompilationUnit.Tuple;
 import wyc.lang.WhileyFile;
@@ -50,6 +51,9 @@ public class RangeHelper {
 					}
 					else if(gen instanceof ArrayGenerator) {
 						((ArrayGenerator) gen).joinRange(b);
+					}
+					else if(gen instanceof NominalGenerator) {
+						((NominalGenerator) gen).joinRange(b);
 					}
 				}
 			}

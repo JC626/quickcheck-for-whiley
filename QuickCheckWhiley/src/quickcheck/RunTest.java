@@ -201,15 +201,10 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 				for(int j=0; j < outputParameters.size(); j++) {
 					Decl.Variable parameter = outputParameters.get(j);
 					Type paramType = parameter.getType();
-					// Check the nominal type postcondition
-					if(paramType instanceof Type.Nominal) {
-						Type.Nominal nom = (Type.Nominal) paramType;
-						Decl.Type decl = interpreter.getTypeSystem().resolveExactly(nom.getName(), Decl.Type.class);
-						RValue.Bool valid = returns[j].checkInvariant(decl.getVariableDeclaration(), decl.getInvariant(), interpreter);
-						if(valid == RValue.Bool.False) {
-							System.out.println("Post condition for " + parameter  + " failed");
-							throw new AssertionError("");
-						}
+					boolean valid = checkInvariant(interpreter, paramType, returns[j]);
+					if(!valid) {
+						System.out.println("Post condition for " + parameter  + " failed");
+						throw new AssertionError("");
 					}
 					frame.putLocal(parameter.getName(), returns[j]);
 				}				
@@ -222,11 +217,7 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 			}
 			catch(AssertionError e) {
 				System.out.printf("Failed Input: %s Output: %s%n", Arrays.toString(paramValues), Arrays.toString(returns));
-			} catch (ResolutionError e) {
-				// FIXME
-				e.printStackTrace();
-				assert false;
-			}
+			} 
 		}
 		// Overall test statistics
 		if(numPassed == numTest) {
@@ -237,6 +228,63 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 			System.out.printf("Failed: %d passed (%.2f %%), %d failed (%.2f %%), ran %d tests%n",
 					numPassed, (double) 100 * numPassed/numTest, numFailed, (double) 100 * numFailed/numTest, numTest);
 		}
+	}
+	
+	/**
+	 * Check the postcondition of all types,
+	 * including invariants within unions and nominals.
+	 * @param interpreter Whiley interpreter used to check the invariant on the function/method
+	 * @param paramType The type of the output parameter
+	 * @param returnVal The return value from the function/method
+	 * @return If the invariant was valid or not
+	 */
+	private boolean checkInvariant(Interpreter interpreter, Type paramType, RValue returnVal) {
+		// Check the nominal type postcondition
+		if(paramType instanceof Type.Nominal) {
+			Type.Nominal nom = (Type.Nominal) paramType;
+			try {
+				Decl.Type decl = interpreter.getTypeSystem().resolveExactly(nom.getName(), Decl.Type.class);
+				// If nominal wraps a union/record then need to go deeper!
+				if(decl.getInvariant().size() > 0) {
+					RValue.Bool valid = returnVal.checkInvariant(decl.getVariableDeclaration(), decl.getInvariant(), interpreter);
+					if(valid == RValue.Bool.False) {
+						return false;
+					}
+				}
+				return checkInvariant(interpreter, decl.getVariableDeclaration().getType(), returnVal);
+			} 
+			catch (ResolutionError e) {
+				// FIXME resolution error
+				e.printStackTrace();
+				assert false;
+			}
+		}
+		else if(paramType instanceof Type.Union) {
+			boolean isValid = false;
+			Type.Union union = (Type.Union) paramType;
+			// Check if there is a valid value in the union
+			for(Type t : union.getAll()) {
+				boolean valid = checkInvariant(interpreter, t, returnVal);
+				if(valid) {
+					isValid = true;
+					break;
+				}
+			}
+			if(!isValid) {
+				return false;
+			}
+		} 
+		else {
+			try {
+				return returnVal.is(paramType, interpreter) == RValue.Bool.True;
+			} catch (ResolutionError e) {
+				// FIXME resolution error
+				e.printStackTrace();
+				assert false;
+			}
+		}
+
+		return true;
 	}
 		
 	/**

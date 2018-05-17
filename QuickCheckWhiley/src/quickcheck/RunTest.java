@@ -217,6 +217,10 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 			}
 			catch(AssertionError e) {
 				System.out.printf("Failed Input: %s Output: %s%n", Arrays.toString(paramValues), Arrays.toString(returns));
+			} catch (ResolutionError e) {
+				// FIXME resolution error
+				e.printStackTrace();
+				assert false;
 			} 
 		}
 		// Overall test statistics
@@ -237,53 +241,52 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 	 * @param paramType The type of the output parameter
 	 * @param returnVal The return value from the function/method
 	 * @return If the invariant was valid or not
+	 * @throws ResolutionError 
 	 */
-	private boolean checkInvariant(Interpreter interpreter, Type paramType, RValue returnVal) {
+	private boolean checkInvariant(Interpreter interpreter, Type paramType, RValue returnVal) throws ResolutionError {
 		// Check the nominal type postcondition
 		if(paramType instanceof Type.Nominal) {
 			Type.Nominal nom = (Type.Nominal) paramType;
-			try {
-				Decl.Type decl = interpreter.getTypeSystem().resolveExactly(nom.getName(), Decl.Type.class);
-				// If nominal wraps a union/record then need to go deeper!
-				if(decl.getInvariant().size() > 0) {
-					RValue.Bool valid = returnVal.checkInvariant(decl.getVariableDeclaration(), decl.getInvariant(), interpreter);
-					if(valid == RValue.Bool.False) {
-						return false;
-					}
+			Decl.Type decl = interpreter.getTypeSystem().resolveExactly(nom.getName(), Decl.Type.class);			
+			if(decl.getInvariant().size() > 0) {
+				RValue.Bool valid = returnVal.checkInvariant(decl.getVariableDeclaration(), decl.getInvariant(), interpreter);
+				if(valid == RValue.Bool.False) {
+					return false;
 				}
-				return checkInvariant(interpreter, decl.getVariableDeclaration().getType(), returnVal);
-			} 
-			catch (ResolutionError e) {
-				// FIXME resolution error
-				e.printStackTrace();
-				assert false;
 			}
+			// Need to go deeper as nominal wraps another type!
+			return checkInvariant(interpreter, decl.getVariableDeclaration().getType(), returnVal);
 		}
 		else if(paramType instanceof Type.Union) {
 			boolean isValid = false;
 			Type.Union union = (Type.Union) paramType;
-			// Check if there is a valid value in the union
+			// Need to check all values in the union to see if any of the types are valid
 			for(Type t : union.getAll()) {
-				boolean valid = checkInvariant(interpreter, t, returnVal);
-				if(valid) {
-					isValid = true;
-					break;
+				if(returnVal.is(t, interpreter) == RValue.Bool.True) {
+					boolean valid = checkInvariant(interpreter, t, returnVal);
+					if(valid) {
+						isValid = true;
+						break;
+					}
 				}
 			}
 			if(!isValid) {
 				return false;
 			}
 		} 
-		else {
-			try {
-				return returnVal.is(paramType, interpreter) == RValue.Bool.True;
-			} catch (ResolutionError e) {
-				// FIXME resolution error
-				e.printStackTrace();
-				assert false;
+		else if(returnVal.is(paramType, interpreter) == RValue.Bool.True){
+			if(paramType instanceof Type.Array) {
+				Type.Array arr = (Type.Array) paramType;
+				// Check if the return value adheres to the array's type and value
+				Type elementType = arr.getElement();
+				if(returnVal.is(elementType, interpreter) == RValue.Bool.True) {
+					return checkInvariant(interpreter, elementType, returnVal);
+				}
 			}
 		}
-
+		else {
+			return false;
+		}
 		return true;
 	}
 		

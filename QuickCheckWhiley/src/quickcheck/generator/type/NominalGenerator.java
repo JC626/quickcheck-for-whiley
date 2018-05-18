@@ -80,10 +80,8 @@ public class NominalGenerator implements Generator{
 			nomGen.checkInvariantRange(invariants, name);
 		}
 		else if(generator instanceof UnionGenerator) {
-			// TODO check
 			UnionGenerator unionGen = (UnionGenerator) generator;
-			String prefix = name.get() + ".";
-			unionGen.checkInvariantRange(invariants, interpreter, prefix);
+			unionGen.checkInvariantRange(invariants, interpreter, name.get());
 		}
 	}
 

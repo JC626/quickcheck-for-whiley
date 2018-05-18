@@ -81,28 +81,28 @@ public final class UnionGenerator implements Generator {
 	 * @param invariants The invariants to check against the generator on the nominal type
 	 * @param interpreter The interpreter used
 	 */
-	public void checkInvariantRange(Tuple<Expr> invariants, Interpreter interpreter, String prefix) {
+	public void checkInvariantRange(Tuple<Expr> invariants, Interpreter interpreter, String name) {
 		// TODO pass the invariants down
 		if (invariants.size() > 0 && generators.size() > 0) {
 			for(Generator gen : generators) {
 				if(gen instanceof ArrayGenerator || gen instanceof IntegerGenerator) {
 					// TODO do normal
-					RangeHelper.checkInvariantRange(gen, new Identifier(prefix), invariants, interpreter);
+					RangeHelper.checkInvariantRange(gen, new Identifier(name), invariants, interpreter);
 				}
 				else if(gen instanceof NominalGenerator) {
 					// TODO check
 					NominalGenerator nomGen = (NominalGenerator) gen;
-					nomGen.checkInvariantRange(invariants, new Identifier(prefix));
+					nomGen.checkInvariantRange(invariants, new Identifier(name));
 				}
 				else if(gen instanceof RecordGenerator) {
 					// TODO check
 					RecordGenerator recordGen = (RecordGenerator) gen;
-					recordGen.checkInvariantRange(invariants, interpreter, prefix);
+					recordGen.checkInvariantRange(invariants, interpreter, name);
 				}
 				else if(gen instanceof UnionGenerator) {
 					// TODO check
 					UnionGenerator unionGen = (UnionGenerator) gen;
-					unionGen.checkInvariantRange(invariants, interpreter, prefix);
+					unionGen.checkInvariantRange(invariants, interpreter, name);
 				}
 			}
 			calculateSize();

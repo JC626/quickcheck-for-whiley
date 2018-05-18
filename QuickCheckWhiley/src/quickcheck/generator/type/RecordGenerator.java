@@ -110,9 +110,9 @@ public class RecordGenerator implements Generator{
 					RangeHelper.checkInvariantRange(generators.get(i), new Identifier(name), invariants, interpreter);
 				}
 				else if(gen instanceof NominalGenerator) {
-					// TODO check
 					NominalGenerator nomGen = (NominalGenerator) gen;
-					nomGen.checkInvariantRange(invariants, new Identifier(prefix));
+					String name = prefix + fields.get(i).getName().get();
+					nomGen.checkInvariantRange(invariants, new Identifier(name));
 				}
 				else if(gen instanceof RecordGenerator) {
 					// TODO check

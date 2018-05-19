@@ -12,8 +12,26 @@
 
 \usepackage{float} % lets you have non-floating floats
 
+\usepackage[usenames, dvipsnames]{color}
 \usepackage{url} % for typesetting urls
-\usepackage{pdfpages}
+\usepackage{pdfpages} % for importing the project proposal
+\usepackage{listings}  % for code
+
+\lstdefinelanguage{Whiley}{
+	keywords={assert, for, while, switch, is, if, case, return,
+		else, process, define, as, requires, ensures, where, no,
+		all, bool, int, byte, void, real, in, any, null, char,
+		string, function, var, method, type, some, reduce, import
+	},
+	keywordstyle=\color{Plum},
+	basicstyle=\ttfamily,
+	commentstyle=\rmfamily\itshape\color{gray},
+	stringstyle=\small\itshape,
+	moredelim=*[s][commentstyle]{/*}{*/}, % allows keyword highlighting inside comments
+	morecomment=[l][commentstyle]{//},      % single line comments are set by...
+	moredelim=*[s][\color{blue}]{"}{"}, % highlighting print statement
+}
+
 %
 %  We don't want figures to float so we define
 %
@@ -89,7 +107,6 @@ A short description of the project goes here.
 \include{workCompleted}
 \include{futurePlan}
 \include{feedback}
-\include{conclusion}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

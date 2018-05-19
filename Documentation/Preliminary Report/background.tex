@@ -2,3 +2,51 @@
 
 %This should discuss any existing solutions to the given problem, and may reference academic papers, books and other sources as appropriate. Care should be taken to identify key differences between these solutions, and that being
 %developed in the project.
+
+QuickCheck for Whiley stems from the original QuickCheck tool in Haskell and from other automatic test case generation tools including .... 
+
+QuickCheck for Whiley is specifically created for the Whiley programming language. An interesting aspect of this language is the ....
+
+% Something about Whiley, verification and formal specs
+
+Another key difference while making QuickCheck for Whiley is that different techniques are used to generate test data instead of just one technique.
+
+% Do 2-3 different test case generation tools
+\section{Whiley}
+Whiley is a programming language developed by .... 
+Whiley is a hybrid imperative and functional language ....
+
+
+\section{QuickCheck}
+
+An automated test-case generator called QuickCheck was implemented in Haskell by Koen Claessen and John Hughes \cite{QClightweight} which alleviates these issues.
+
+This lightweight tool employs two testing ideas.
+Firstly, QuickCheck uses property-based testing which uses conditions that will always hold true. Users define the conditions in terms of formal specifications to validate functions under test.
+
+Secondly, QuickCheck generates test cases automatically using random testing. Input values are randomly generated for each test (within a range) using generators that correspond to the input value's type. QuickCheck contains generators for most of Haskell's predefined types and for functions. It requires the developer to specify their own generators for user-defined types \cite{QClightweight}. 
+
+An example of using QuickCheck would be reversing a list.
+
+Firstly, a property is defined where the list xs, should be the same as reversing xs twice.
+
+\begin{lstlisting}[language=haskell]
+propReverseTwice xs = reverse (reverse xs) == xs
+\end{lstlisting}
+
+QuickCheck is then executed by importing the property and passing into the interpreter:
+
+\begin{lstlisting}
+Main:> quickCheck propReverseTwice
+Ok: passed 100 tests.
+\end{lstlisting}
+
+This will create a large number of test cases by using the user-defined property and random input values to check the property holds. QuickCheck reports various test statistics including the number of tests that have passed or failed \cite{QClightweight}.
+
+QuickCheck has been re-implemented in other languages including Scala, Java and C++. A commercial version of QuickCheck in Erlang called Quviq QuickCheck is co-founded by one of the original developers, John Hughes and is an extension of the original QuickCheck for Haskell \cite{QCFunProfit}.
+
+% Quviq? Erlang
+% Randoop
+% Symbolic regression and other techniques?
+% JCrasher?
+% CUTE

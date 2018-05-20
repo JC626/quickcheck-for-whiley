@@ -3,20 +3,51 @@
 %This should discuss what progress has been made on designing, implementing and evaluating the artifact. Care must be taken to ensure that any discussion of technical points are clearly explained, with diagrams being used where appropriate.
 %In many cases, the evaluation proper will not yet have begun. However, it is important to demonstrate that sufficient thought has been given to the evaluation.
 
-\section{Techniques to generate test data}
+% Consideration of test generation techniques used
+% Trade off => Performance vs accuracy?
+% Needed to create test cases that adhered to the pre-conditon
 
-\subsection{Random}
+An implementation of the tool has been created with generation of core data types. The tool has also been extended to use integer range analysis.
 
-\subsection{Exhaustive}
+For a user to use the tool, a user must pass in a WYIL file and specify the test case generation technique to use, number of tests they wish to generate and ranges for generating integers.
+% TODO ranges
+Ranges are used to bound the integers generated so that ...
 
-\section{Types of test data generated}
+\section{Test Case Generation Techniques}
+
+QuickCheck for Whiley currently employs two different techniques to generate test cases: random test-case and exhaustive test case generation.
+
+\subsection{Random Test Case Generation}
+
+A fixed number of tests determined by the user is randomly generated. Previous inputs are not considered which may lead to the same inputs being generated. 
+% TODO refer Knuth Algorithm S
+Algorithm ... was considered to generate unique inputs but has not been implemented yet.
+
+\subsection{Exhaustive Test Case Generation}
+A fixed number of tests determined by the user are exhaustively generated within a bounded range from the minimum bound to the maximum bound. All possible input combinations for a function are tested starting from the combination generated from the minimum bound.
+
+\section{Data types generated}
+Different generators are created for the different types defined in Whiley.
+Figure XXX illustrates the structure of the generators used.
+
+% TODO add class diagram for generators
+
+% TODO make a list of the types used
+
 % Talk about generators here
 % Class diagram of the ranges
 % Talk about the different types
 
+The size of arrays are currently limited to a maximum size of three elements due to the performance cost of generating larger arrays.
+
 \section{Integer Range Analysis}
 
-\section{Executing the tool}
+Integer range analysis is ... 
+% Refer to paper 
+
+\section{Evaluating the tool}
+The tool has been evaluated by executing a variety of tests notably, the test suite for the Whiley Compiler.
+%As a result, ... 
 % Talk about how the tool is run
 % Talk about evaluating the tool using the Whiley valid and invalid tests
 % How to evaluate the tool

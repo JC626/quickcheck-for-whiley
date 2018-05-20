@@ -3,7 +3,7 @@
 %This should discuss any existing solutions to the given problem, and may reference academic papers, books and other sources as appropriate. Care should be taken to identify key differences between these solutions, and that being
 %developed in the project.
 
-There exists a number of different test-case generation tools for different languages such as QuickCheck for Haskell, Quviq QuickCheck for Erlang, CUTE for C and Randoop for Java and .NET.
+There exists a number of different test-case generation tools for different languages such as QuickCheck for Haskell, Quviq QuickCheck for Erlang, Concolic Unit Testing Engine (CUTE) for C and Randoop for Java and .NET.
 
 
 QuickCheck for Whiley is specifically created for the Whiley programming language.
@@ -48,6 +48,17 @@ Ok: passed 100 tests.
 
 This will create a large number of test cases by using the user-defined property and random input values to check the property holds. QuickCheck reports various test statistics including the number of tests that have passed or failed \cite{QClightweight}.
 
+% Shrinking?
+
+\section{Concolic Unit Testing Engine (CUTE)}
+Concolic Unit Testing Engine (CUTE) generates test inputs using a combination of symbolic and concrete execution \cite{CUTE}. The aim of CUTE is to provide input values to explore all feasible execution paths of a program and thus achieve high path coverage \cite{CUTE}. CUTE has been applied to C programs \cite{CUTE}.
+
+Random testing may generate inputs with the same behaviour leading to its redundancy \cite{CUTE}. Furthermore, the probability of selecting inputs that will detect errors using random testing is small \cite{CUTE}. 
+Therefore, CUTE incrementally generates concrete inputs using symbolic execution to discover feasible paths \cite{CUTE}.
+
+Firstly, CUTE executes the program with arbitrary inputs using concrete and symbolic execution concurrently \cite{CUTE}.
+In concrete execution, the program is executed normally with the input values \cite{CUTE}. At the same time, symbolic execution is run through the same path. Using the symbolic variables, constraints from branching expressions are discovered and stored \cite{CUTE}. The last constraint applied is negated so that the next test run will explore a different feasible path \cite{CUTE}. The constraint is solved to limit and determine the possible inputs to execute in the next test \cite{CUTE}.
+	
 %A commercial version of QuickCheck in Erlang called Quviq QuickCheck is co-founded by one of the original developers, John Hughes and is an extension of the original QuickCheck for Haskell \cite{QCFunProfit}.
 
 % Quviq QuickCheck? Erlang

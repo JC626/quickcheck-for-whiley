@@ -1,7 +1,6 @@
 \chapter{Background Survey}\label{chapter:background}
 
-%This should discuss any existing solutions to the given problem, and may reference academic papers, books and other sources as appropriate. Care should be taken to identify key differences between these solutions, and that being
-%developed in the project.
+%This should discuss any existing solutions to the given problem, and may reference academic papers, books and other sources as appropriate. Care should be taken to identify key differences between these solutions, and that being developed in the project.
 
 There exists a number of different test-case generation tools for different languages such as QuickCheck for Haskell, Quviq QuickCheck for Erlang, Concolic Unit Testing Engine (CUTE) for C and Randoop for Java and .NET.
 
@@ -10,13 +9,16 @@ QuickCheck for Whiley is specifically created for the Whiley programming languag
 Another key difference while making QuickCheck for Whiley is that different techniques are used to generate test data instead of just one technique.
 
 % Something about Whiley, verification and formal specs
-
-
-% Do 2-3 different test case generation tools
+% TODO 
 \section{Whiley}
 Whiley is a hybrid imperative and functional programming language developed by David Pearce.
 
 A notable aspect about Whiley is the verifying compiler used in conjunction with explicit specifications to verify programs are correct.
+
+
+Whiley files are compiled with or without static verification into a WyIL file which is a binary form of the Whiley program in an intermediate language.
+
+% Talk about theorem prover?
 
 % Talk about the data types that exist?
 
@@ -58,7 +60,17 @@ Therefore, CUTE incrementally generates concrete inputs using symbolic execution
 
 Firstly, CUTE executes the program with arbitrary inputs using concrete and symbolic execution concurrently \cite{CUTE}.
 In concrete execution, the program is executed normally with the input values \cite{CUTE}. At the same time, symbolic execution is run through the same path. Using the symbolic variables, constraints from branching expressions are discovered and stored \cite{CUTE}. The last constraint applied is negated so that the next test run will explore a different feasible path \cite{CUTE}. The constraint is solved to limit and determine the possible inputs to execute in the next test \cite{CUTE}.
-	
+
+\section{Randoop}
+Randoop generates unit tests using feedback-directed random test generation \cite{randoopAll}, \cite{randoopJava}. Method sequences from previous tests are used to help generate subsequent tests \cite{randoopAll}, \cite{randoopJava}.
+As a result, a test suite is outputted with successful and unsuccessful tests \cite{randoopAll}, \cite{randoopJava}.
+
+Randoop tests classes by executing a sequence of methods as a test \cite{randoopJava}. Method sequences are created incrementally by randomly selecting method calls and using arguments from previous sequences \cite{randoopJava}.
+The sequence is then executed and checked against contracts \cite{randoopAll}.
+Contracts are built into Randoop or optionally defined by the user \cite{randoopAll}.
+If a sequence breaks a contract then the test is outputted as a contract-violating test \cite{randoopAll}. If sequence was successful, then the test is outputted as a regression test \cite{randoopAll}.
+Successful sequences that can be extended or are not redundant are then used in subsequent tests \cite{randoopAll}.
+
 %A commercial version of QuickCheck in Erlang called Quviq QuickCheck is co-founded by one of the original developers, John Hughes and is an extension of the original QuickCheck for Haskell \cite{QCFunProfit}.
 
 % Quviq QuickCheck? Erlang

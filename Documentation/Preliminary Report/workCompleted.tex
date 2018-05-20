@@ -28,7 +28,16 @@ A fixed number of tests determined by the user are exhaustively generated within
 
 \section{Data types generated}
 Different generators are created for the different types defined in Whiley. 
-Figure XXX illustrates the structure of the generators used.
+Figure \ref{fig:qc-generators} illustrates the structure of the generators used.
+Each generator generates a value. It also has a size for the number of input combinations and \texttt{resetCount()} and \texttt{exceedCount()} methods for monitoring input combinations generated for test-case generation.
+ 
+\begin{figure}
+	\caption{Class diagram of Generators in QuickCheck for Whiley}
+	\label{fig:qc-generators}
+	\includegraphics[width=\textwidth]{qc-generators}
+	\centering
+\end{figure}
+
 
 % TODO add class diagram for generators
 

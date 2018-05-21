@@ -47,8 +47,8 @@ Each generator generates a value. It also has a size for the number of input com
 \end{figure}
 
 \begin{description}
-	\item[Null] Generate a null value.
-	\item[Boolean] Generates a boolean which is either true or false.
+	\item[Null] Generate a \texttt{null} value.
+	\item[Boolean] Generates a boolean which is either \texttt{true} or \texttt{false}.
 	\item[Integer] Generates an integer between a bounded range. This range may be modified based on constraints applied to the integer.
 	\item[Array] Generates an array with a specific element type between a bounded size range.
 	The size of arrays are currently limited to a maximum size of three elements due to the performance cost of generating larger arrays.
@@ -66,7 +66,22 @@ Each generator generates a value. It also has a size for the number of input com
 
 \section{Integer Range Analysis}
 
-Integer range analysis is ... 
+% TODO complete properly!
+Generating and checking for invalid inputs is costly in terms of performance. 
+Therefore, it would be beneficial to reduce the number of invalid inputs generated and thus improve performance.
+One method to remove invalid inputs for integers is to shrink the ranges used during generation thus no longer generate invalid inputs.
+
+%For example, you have a type \texttt{type nat is (int x) where x >= 0} and test for an integer range between -5 and 5. Invalid inputs are numbers below 
+
+% TODO create example to explain?
+% TODO add link to integer range code 
+This is implemented by evaluating the constraints within a nominal type to discover the integer range generated from the constraint. Existing code from ... was used to create the integer ranges. 
+The integer range is then passed down in the nominal generator until it reaches the relevant integer or array generator. 
+The ranges are then joined with the ranges within the generator to get the new range. 
+If the ranges are invalid, i.e. the lower range is greater than the upper range then an error is thrown.
+% TODO fix symbols
+Integer ranges only work for constraints that follow the format of x op c where x is the named variable in the nominal type, op is an operator out of the set (<, <=. >=, > \&\&, ||, ==) and c is a constant number.
+
 % Refer to paper 
 
 \section{Evaluating the tool}

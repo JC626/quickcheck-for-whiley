@@ -251,6 +251,50 @@ None
 \end{itemize}
 
 
+\section{May 21st 2018}
+\subsection{Present}
+\begin{itemize}
+	\item David Pearce
+\end{itemize}
+
+\subsection{Action points were achieved since the last meeting}
+\begin{itemize}
+	\item Integer range analysis for nominals
+	\item Started preliminary report - currently done 5 pages. 1 page introduction, 2 pages of background, 2 pages work completed.
+\end{itemize}
+\subsection{Action points have yet to be achieved since the last meeting}
+None
+\subsection{Action points were agreed to for the next meeting}
+\begin{enumerate}
+	\item Complete preliminary report
+\end{enumerate}
+\subsection{Discussion Points}
+\begin{itemize}
+	\item Introduction - Include what have you done so far? What you are doing? Could consider including objectives.
+	\item Background 
+	\begin{itemize}
+		\item Should write about tools similar to QuickCheck. Consider looking into and writing about JCrasher.
+		\item Write more about Whiley - relate how specifications can be used in testing. Static verification. Do not write about theorem prover but could specify about counter examples. Assume reader has never heard of and/or used Whiley before. 
+	\end{itemize}
+	\item Future plan
+	\begin{enumerate}
+		\item Evaluation of the tool needs to be done.
+		\item Method/function calls within methods/functions are expensive. Therefore, need to optimise the performance of calling these functions/methods - call optimisation. One technique is instead of calling the function/method, is to just generate a return value. Problem if it is a method call as a method could modify a variable without returning it e.g. sorting an array without returning it.
+		\item Performance comparision between executing functions/methods normally VS call optimisation approach.
+		\item Mutation testing - mutating existing Whiley files. Mutating a file means to change some aspect of the file. Examples: changing operators, change forall to a sum, change if to a while statement, delete statements. This is to be able to check that the mutated file would have a different result than the original file. Where to apply mutation, on the .whiley or the .wyil file? Could do this on the .wyil file but then need to convert back into the .whiley file? 
+		\item Could do recursive type generation, would need to limit the size of the value generated.
+		\item Don't need to do function generation and open record generation. A possible future extension to the tool.
+	\end{enumerate} 
+	\item Sent draft of preliminary report to Dave, who has given feedback about it.
+	
+%	\item Check structure of report
+%	\item Do I need to introduce the scope within the introduction i.e. objectives of the project? 
+%	\item Description about Whiley in background?
+%	\item Should I explain more tools in the background or go into more depth about the existing tools? Could expand more about QuickCheck as QuickCheck does shrinking and has been extended (MoreBugs).
+%	\item Add example use of existing tools in background?
+%	\item Future plan? 
+\end{itemize}
+
 %\section{ 2018}
 %\subsection{Present}
 %\begin{itemize}

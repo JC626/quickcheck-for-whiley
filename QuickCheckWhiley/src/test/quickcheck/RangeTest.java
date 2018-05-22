@@ -691,4 +691,57 @@ public class RangeTest {
 		}
 	}
 
+	/**
+	 * Test when a record wraps another record.
+	 * Both records have constraints applied to them/
+	 */
+	@Test
+	public void testDoubleRecord() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+		String testName = "record_double";
+		helper.compile(testName);
+		Build.Project project = helper.createProject();
+		Interpreter interpreter = new Interpreter(project, System.out);
+		List<Decl.Function> functions = helper.getFunctions(testName, project);
+
+		BigInteger lower = BigInteger.valueOf(-5);
+		BigInteger upper = BigInteger.valueOf(15);
+		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), interpreter, 50, lower, upper);
+
+		List<IntegerRange> ranges = getIntegerRange(testGen);
+		assertEquals(2, ranges.size());
+		assertEquals(BigInteger.valueOf(0), ranges.get(0).lowerBound());
+		assertEquals(BigInteger.valueOf(10), ranges.get(0).upperBound());
+		assertEquals(BigInteger.valueOf(0), ranges.get(1).lowerBound());
+		assertEquals(BigInteger.valueOf(5), ranges.get(1).upperBound());
+
+		for(int i=0; i < 10; i++) {
+			for(int j=0; j < 2; j++) {
+				for(int m=0; m < 5; m++) {
+					for(int n=0; n < 2; n++) {
+						RValue[] generatedParameters = testGen.generateParameters();
+						RValue.Record recordBoard = (Record) generatedParameters[0];
+						RValue first = recordBoard.read(new Identifier("width"));
+						assertTrue(first instanceof RValue.Record);
+						RValue.Record widthRecord = (RValue.Record) first;
+						RValue widthValue = widthRecord.read(new Identifier("value"));
+						RValue widthPositive = widthRecord.read(new Identifier("positive"));
+						assertEquals(semantics.Int(BigInteger.valueOf(i)), widthValue);
+						assertEquals(semantics.Bool(j == 0), widthPositive);
+
+						RValue second = recordBoard.read(new Identifier("height"));
+						assertTrue(second instanceof RValue.Record);
+						RValue.Record heightRecord = (RValue.Record) second;
+						RValue heightValue = heightRecord.read(new Identifier("value"));
+						RValue heightPositive = heightRecord.read(new Identifier("positive"));
+						assertEquals(semantics.Int(BigInteger.valueOf(m)), heightValue);
+						assertEquals(semantics.Bool(n == 0), heightPositive);
+					}
+				}
+			}
+		}
+	}
+
+
+	// TODO record, union?
+
 }

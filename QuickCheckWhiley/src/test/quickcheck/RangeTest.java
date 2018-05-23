@@ -881,5 +881,58 @@ public class RangeTest {
 		}
 	}
 
+	/**
+	 * Test when a union wraps arrays and a
+	 * constraint is applied to its size
+	 */
+	@Test
+	public void testUnionArray() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+		String testName = "union_array";
+		helper.compile(testName);
+		Build.Project project = helper.createProject();
+		Interpreter interpreter = new Interpreter(project, System.out);
+		List<Decl.Function> functions = helper.getFunctions(testName, project);
 
+		BigInteger lower = BigInteger.valueOf(-5);
+		BigInteger upper = BigInteger.valueOf(5);
+		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), interpreter, 50, lower, upper);
+
+		List<IntegerRange> ranges = getIntegerRange(testGen);
+		assertEquals(2, ranges.size());
+		assertEquals(BigInteger.valueOf(0), ranges.get(0).lowerBound());
+		assertEquals(BigInteger.valueOf(2), ranges.get(0).upperBound());
+		assertEquals(BigInteger.valueOf(0), ranges.get(1).lowerBound());
+		assertEquals(BigInteger.valueOf(2), ranges.get(1).upperBound());
+
+		// Check the empty array first
+		for(int i=0; i < 2; i++) {
+			RValue[] generatedParameters = testGen.generateParameters();
+			assertEquals(1, generatedParameters.length);
+			RValue[] expected = new RValue[0];
+			assertEquals(semantics.Array(expected), generatedParameters[0]);
+		}
+
+		// Go between the union types
+		int i = -5;
+		int j = 0;
+		boolean isInt = true;
+		while(i < 5 && j < 2) {
+			RValue[] generatedParameters = testGen.generateParameters();
+			assertEquals(1, generatedParameters.length);
+			if(isInt) {
+				RValue[] expected = new RValue[] {semantics.Int(BigInteger.valueOf(i))};
+				assertEquals(semantics.Array(expected), generatedParameters[0]);
+				i++;
+				if(j >= 2) {
+					continue;
+				}
+			}
+			else {
+				RValue[] expected = new RValue[] {semantics.Bool(j==0)};
+				assertEquals(semantics.Array(expected), generatedParameters[0]);
+				j++;
+			}
+			isInt = !isInt;
+		}
+	}
 }

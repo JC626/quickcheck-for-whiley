@@ -839,4 +839,47 @@ public class RangeTest {
 			isNat = !isNat;
 		}
 	}
+
+	/**
+	 * Test when another nominal wraps a union type.
+	 * The nominal applies an additional constraint on the
+	 * union.
+	 */
+	@Test
+	public void testNominalUnion() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+		String testName = "nominal_union";
+		helper.compile(testName);
+		Build.Project project = helper.createProject();
+		Interpreter interpreter = new Interpreter(project, System.out);
+		List<Decl.Function> functions = helper.getFunctions(testName, project);
+
+		BigInteger lower = BigInteger.valueOf(-5);
+		BigInteger upper = BigInteger.valueOf(15);
+		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), interpreter, 50, lower, upper);
+
+		List<IntegerRange> ranges = getIntegerRange(testGen);
+		assertEquals(2, ranges.size());
+		assertEquals(BigInteger.valueOf(0), ranges.get(0).lowerBound());
+		assertEquals(BigInteger.valueOf(5), ranges.get(0).upperBound());
+		assertEquals(BigInteger.valueOf(-5), ranges.get(1).lowerBound());
+		assertEquals(BigInteger.valueOf(5), ranges.get(1).upperBound());
+		int i = 0;
+		int j = -5;
+		boolean isNat = true;
+		while(i < 5 && j < 5) {
+			RValue[] generatedParameters = testGen.generateParameters();
+			RValue value =  generatedParameters[0];
+			if(isNat) {
+				assertEquals(semantics.Int(BigInteger.valueOf(i)), value);
+				i++;
+			}
+			else {
+				assertEquals(semantics.Int(BigInteger.valueOf(j)), value);
+				j++;
+			}
+			isNat = !isNat;
+		}
+	}
+
+
 }

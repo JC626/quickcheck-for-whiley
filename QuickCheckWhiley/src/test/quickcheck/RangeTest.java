@@ -19,6 +19,7 @@ import quickcheck.generator.type.Generator;
 import quickcheck.generator.type.IntegerGenerator;
 import quickcheck.generator.type.NominalGenerator;
 import quickcheck.generator.type.RecordGenerator;
+import quickcheck.generator.type.UnionGenerator;
 import test.utils.TestHelper;
 import wybs.lang.Build;
 import wybs.util.AbstractCompilationUnit.Identifier;
@@ -106,6 +107,15 @@ public class RangeTest {
 			Field recordGenField = recordGen.getClass().getDeclaredField("generators");
 			recordGenField.setAccessible(true);
 			List<Generator> generators = (List<Generator>) recordGenField.get(recordGen);
+			for(Generator g : generators) {
+				getIntegerRange(g, ranges);
+			}
+		}
+		else if(gen instanceof UnionGenerator) {
+			UnionGenerator unionGen = (UnionGenerator) gen;
+			Field unionGenField = unionGen.getClass().getDeclaredField("generators");
+			unionGenField.setAccessible(true);
+			List<Generator> generators = (List<Generator>) unionGenField.get(unionGen);
 			for(Generator g : generators) {
 				getIntegerRange(g, ranges);
 			}
@@ -693,7 +703,7 @@ public class RangeTest {
 
 	/**
 	 * Test when a record wraps another record.
-	 * Both records have constraints applied to them/
+	 * Both records have constraints applied to them
 	 */
 	@Test
 	public void testDoubleRecord() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
@@ -741,7 +751,92 @@ public class RangeTest {
 		}
 	}
 
+	/**
+	 * Test when a record wraps a union.
+	 * The record has a constraint applied to it.
+	 */
+	@Test
+	public void testRecordUnion() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+		String testName = "record_double";
+		helper.compile(testName);
+		Build.Project project = helper.createProject();
+		Interpreter interpreter = new Interpreter(project, System.out);
+		List<Decl.Function> functions = helper.getFunctions(testName, project);
 
-	// TODO record, union?
+		BigInteger lower = BigInteger.valueOf(-5);
+		BigInteger upper = BigInteger.valueOf(15);
+		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), interpreter, 50, lower, upper);
 
+		List<IntegerRange> ranges = getIntegerRange(testGen);
+		assertEquals(2, ranges.size());
+		assertEquals(BigInteger.valueOf(0), ranges.get(0).lowerBound());
+		assertEquals(BigInteger.valueOf(10), ranges.get(0).upperBound());
+		assertEquals(BigInteger.valueOf(0), ranges.get(1).lowerBound());
+		assertEquals(BigInteger.valueOf(5), ranges.get(1).upperBound());
+
+		for(int i=0; i < 10; i++) {
+			for(int j=0; j < 2; j++) {
+				for(int m=0; m < 5; m++) {
+					for(int n=0; n < 2; n++) {
+						RValue[] generatedParameters = testGen.generateParameters();
+						RValue.Record recordBoard = (Record) generatedParameters[0];
+						RValue first = recordBoard.read(new Identifier("width"));
+						assertTrue(first instanceof RValue.Record);
+						RValue.Record widthRecord = (RValue.Record) first;
+						RValue widthValue = widthRecord.read(new Identifier("value"));
+						RValue widthPositive = widthRecord.read(new Identifier("positive"));
+						assertEquals(semantics.Int(BigInteger.valueOf(i)), widthValue);
+						assertEquals(semantics.Bool(j == 0), widthPositive);
+
+						RValue second = recordBoard.read(new Identifier("height"));
+						assertTrue(second instanceof RValue.Record);
+						RValue.Record heightRecord = (RValue.Record) second;
+						RValue heightValue = heightRecord.read(new Identifier("value"));
+						RValue heightPositive = heightRecord.read(new Identifier("positive"));
+						assertEquals(semantics.Int(BigInteger.valueOf(m)), heightValue);
+						assertEquals(semantics.Bool(n == 0), heightPositive);
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * Test when a union has a constraint.
+	 */
+	@Test
+	public void testUnion() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+		String testName = "union_constraint";
+		helper.compile(testName);
+		Build.Project project = helper.createProject();
+		Interpreter interpreter = new Interpreter(project, System.out);
+		List<Decl.Function> functions = helper.getFunctions(testName, project);
+
+		BigInteger lower = BigInteger.valueOf(-5);
+		BigInteger upper = BigInteger.valueOf(15);
+		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), interpreter, 50, lower, upper);
+
+		List<IntegerRange> ranges = getIntegerRange(testGen);
+		assertEquals(2, ranges.size());
+		assertEquals(BigInteger.valueOf(0), ranges.get(0).lowerBound());
+		assertEquals(BigInteger.valueOf(10), ranges.get(0).upperBound());
+		assertEquals(BigInteger.valueOf(-5), ranges.get(1).lowerBound());
+		assertEquals(BigInteger.valueOf(10), ranges.get(1).upperBound());
+		int i = 0;
+		int j = -5;
+		boolean isNat = true;
+		while(i < 10 && j < 10) {
+			RValue[] generatedParameters = testGen.generateParameters();
+			RValue value =  generatedParameters[0];
+			if(isNat) {
+				assertEquals(semantics.Int(BigInteger.valueOf(i)), value);
+				i++;
+			}
+			else {
+				assertEquals(semantics.Int(BigInteger.valueOf(j)), value);
+				j++;
+			}
+			isNat = !isNat;
+		}
+	}
 }

@@ -9,7 +9,7 @@
 
 An implementation of the tool has been created with generation of core and more complex data types. The tool has also been extended to use integer range analysis to constrain input values generated for better performance.
 
-For a user to use the tool, a user must pass in a WyIL file and specify the test case generation technique to use, number of tests they wish to generate and ranges for generating integer values. Ranges are used to limit the integers generated between a inclusive, minimum number and a exclusive, upper number.
+To use the tool, a user must pass in a WyIL file and specify the test case generation technique to use, number of tests they wish to generate and ranges for generating integer values. Ranges are used to limit the integers generated between a inclusive, minimum number and a exclusive, upper number.
 
 Whiley's interpreter is used to validate inputs and outputs from tests. Valid inputs are based on verifying pre-conditions and constraints on the input type used. Only valid inputs are used in tests. A successful test is checked by verifying outputs with the function's post-conditions and constraints on the outputs' type.
 
@@ -61,26 +61,22 @@ Each generator generates a value. It also has a size for the number of input com
 
 \section{Integer Range Analysis}
 
-% TODO complete properly!
 Generating and checking for invalid inputs is costly in terms of performance. 
-Therefore, it would be beneficial to reduce the number of invalid inputs generated and thus improve performance.
+Therefore, it would be beneficial to reduce the number of invalid inputs generated to improve the performance of the tool.
 One method to remove invalid inputs for integers is to shrink the ranges used during generation thus no longer generate invalid inputs.
 
-%For example, you have a type \texttt{type nat is (int x) where x >= 0} and test for an integer range between -5 and 5. Invalid inputs are numbers below 
+For example, define the nominal type, \texttt{type nat is (int x) where x \textgreater= 0} and execute the tool for an integer range between -5 and 5. Invalid inputs are numbers below 0. An integer generator for this input will only generate numbers between 0 and 5, removing the need to generate then discard invalid inputs below 0.
 
-% TODO add an example to explain
-% TODO add link to integer range code 
-This is implemented by evaluating the constraints within a nominal type to discover the integer range generated from the constraint. Existing code from ... was used to create the integer ranges. 
-The integer range is then passed down in the nominal generator until it reaches the relevant integer or array generator. 
-The ranges are then joined with the ranges within the generator to get the new range. 
+This is implemented by evaluating the constraints within a nominal type to discover integer range generated from the constraint.
+Existing code from \cite{whileyIntegerRangeCode} was used to create the integer ranges which is based off \cite{whileyIntegerRange}.
+The discovered integer range is passed down in the nominal generator until it reaches the relevant integer or array generator where it is intersected with an existing range.
 If the ranges are invalid, i.e. the lower range is greater than the upper range then an error is thrown.
 
-Integer ranges only work for constraints that follow the format of \texttt{x op c} where x is the named variable in the nominal type, op is an operator out of the set (\textgreater, \textless, \textgreater=, \textless=, \&\&, $||$, ==) and c is a constant number.
-
-% TODO Refer to paper 
+Integer ranges are only applied to constraints that follow the format: \texttt{x op c} where x is the named variable in the nominal type, op is an operator out of the set \{\textgreater, \textless, \textgreater=, \textless=, \&\&, $||$, ==\} and c is a constant number.
 
 \section{Evaluating the tool}
 The tool has been evaluated by executing a variety of tests notably, the test suite for the Whiley Compiler.
+
 %As a result, ... 
 % Talk about how the tool is run
 % Talk about evaluating the tool using the Whiley valid and invalid tests

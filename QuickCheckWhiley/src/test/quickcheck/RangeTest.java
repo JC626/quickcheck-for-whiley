@@ -935,4 +935,64 @@ public class RangeTest {
 			isInt = !isInt;
 		}
 	}
+
+	/**
+	 * Test when a union wraps another union
+	 * where both unions have constraints applied.
+	 */
+	@Test
+	public void testUnionUnion() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+		String testName = "union_union";
+		helper.compile(testName);
+		Build.Project project = helper.createProject();
+		Interpreter interpreter = new Interpreter(project, System.out);
+		List<Decl.Function> functions = helper.getFunctions(testName, project);
+
+		BigInteger lower = BigInteger.valueOf(-5);
+		BigInteger upper = BigInteger.valueOf(10);
+		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), interpreter, 50, lower, upper);
+
+		List<IntegerRange> ranges = getIntegerRange(testGen);
+		assertEquals(3, ranges.size());
+		assertEquals(BigInteger.valueOf(0), ranges.get(0).lowerBound());
+		assertEquals(BigInteger.valueOf(2), ranges.get(0).upperBound());
+		assertEquals(BigInteger.valueOf(-5), ranges.get(1).lowerBound());
+		assertEquals(BigInteger.valueOf(2), ranges.get(1).upperBound());
+		assertEquals(BigInteger.valueOf(-5), ranges.get(2).lowerBound());
+		assertEquals(BigInteger.valueOf(5), ranges.get(2).upperBound());
+
+		int i = 0;
+		int j = -5;
+		int k = -5;
+		boolean innerUnion = true;
+		while(i < 2 || j < 5 || k < 2) {
+			if(i < 2 || k < 2) {
+				if(innerUnion) {
+					RValue[] generatedParameters = testGen.generateParameters();
+					RValue value =  generatedParameters[0];
+					assertEquals(semantics.Int(BigInteger.valueOf(i)), value);
+					i++;
+					innerUnion = !innerUnion;
+				}
+				else {
+					RValue[] generatedParameters = testGen.generateParameters();
+					RValue value =  generatedParameters[0];
+					assertEquals(semantics.Int(BigInteger.valueOf(k)), value);
+					k++;
+					if(i < 2) {
+						innerUnion = !innerUnion;
+					}
+				}
+			}
+
+			if(j < 5) {
+				RValue[] generatedParameters = testGen.generateParameters();
+				RValue value =  generatedParameters[0];
+				assertEquals(semantics.Int(BigInteger.valueOf(j)), value);
+				j++;
+			}
+		}
+	}
+
+	// TODO union => record
 }

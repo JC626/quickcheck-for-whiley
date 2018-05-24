@@ -28,7 +28,7 @@ Whiley files are compiled with or without static verification into a WyIL file w
 % TODO talk about functions (pure) and methods (impure)
 
 \section{QuickCheck}
-QuickCheck is a tool implemneted by Koen Claessen and John Hughes \cite{QClightweight} to test Haskell programs.
+QuickCheck is a tool implemented by Koen Claessen and John Hughes \cite{QClightweight} to test Haskell programs.
 
 To check if a program is correct, QuickCheck uses property-based testing which uses conditions that will always hold true. Users define the conditions as Haskell functions in terms of formal specifications to validate functions under test. 
 
@@ -66,7 +66,41 @@ Random testing may generate inputs with the same behaviour leading to its redund
 Therefore, CUTE incrementally generates concrete inputs using symbolic execution to discover feasible paths \cite{CUTE}.
 
 Firstly, CUTE executes the program with arbitrary inputs using concrete and symbolic execution concurrently \cite{CUTE}.
-In concrete execution, the program is executed normally with the input values \cite{CUTE}. At the same time, symbolic execution is run through the same path. Using the symbolic variables, constraints from branching expressions are discovered and stored \cite{CUTE}. The last constraint applied is negated so that the next test run will explore a different feasible path \cite{CUTE}. The constraint is solved to limit and determine the possible inputs to execute in the next test \cite{CUTE}.
+In concrete execution, the program is executed normally with the input values \cite{CUTE}.
+At the same time, symbolic execution is run through the same path  \cite{CUTE}. 
+Using the symbolic variables, constraints from branching expressions are discovered and stored \cite{CUTE}.
+The last constraint applied is negated so that the next test run will explore a different feasible path \cite{CUTE}. 
+The constraint is solved to limit and determine the possible inputs to execute in the next test \cite{CUTE}.
+
+For example, we execute Listing \ref{lst:cuteExample} and create the random values \texttt{x = y = 1}. 
+In concrete execution, \texttt{z} is set to 1 whereas in symbolic execution, \texttt{z} is set to \texttt{x * y}.
+At line 2, \texttt{x != 2} so the condition fails. 
+As the program went through one path where \texttt{x != 2}, the condition is then negated and solved so the next test goes through a different path by setting \texttt{x} to 2 and y to 1. 
+The test will then fail at line 4 as \texttt{x >=z}. Therefore, CUTE will then find values that solve the constraints \texttt{x == 2} and \texttt{x < z} such as \texttt{x = 2} and \texttt{y = 2}. 
+Running this test will then exhibit the error on line 5. 
+
+
+%Firstly, CUTE executes the program with arbitrary inputs using concrete and symbolic execution concurrently \cite{CUTE}.
+%For example, we execute Listing \ref{lst:cuteExample} and create the random values \texttt{x = y = 1}. 
+%In concrete execution, the program is executed normally with the input values \cite{CUTE}.
+%At the same time, symbolic execution is run through the same path  \cite{CUTE}. 
+%In concrete execution, \texttt{z} is set to 1 whereas in symbolic execution, \texttt{z} is set to \texttt{x * y}.
+%Using the symbolic variables, constraints from branching expressions are discovered and stored \cite{CUTE}. At line 2 in the example, \texttt{x != 2} so the condition fails. 
+%The last constraint applied is negated so that the next test run will explore a different feasible path \cite{CUTE}. 
+%The constraint is solved to limit and determine the possible inputs to execute in the next test \cite{CUTE}.
+%As the test failed the last condition as \texttt{x != 2}, the condition is negated and solved so in the next test, \texttt{x} is set 2 and y remains set to 1. The test will fail at line 4 as \texttt{x >=z}. Therefore, CUTE will then find values that solve the constraints \texttt{x == 2} and \texttt{x < z} such as \texttt{x = 2} and \texttt{ y = 2}. Running this test will then exhibit the error on line 5. 
+
+\begin{lstlisting}[language=C, tabsize=3, numbers=left,
+label={lst:cuteExample}, caption={Example C program}]
+void foo(int x, int y) {
+	int z = x * y;
+	if(x == 2){
+		if(x < z){
+			ERROR;
+		}
+	}
+}
+\end{lstlisting}
 
 % TODO add example of CUTE with the above paragraph
 
@@ -84,8 +118,6 @@ Successful sequences that can be extended or are not redundant are then used in 
 
 %A commercial version of QuickCheck in Erlang called Quviq QuickCheck is co-founded by one of the original developers, John Hughes and is an extension of the original QuickCheck for Haskell \cite{QCFunProfit}.
 
-% Quviq QuickCheck? Erlang
-% Randoop
-% Symbolic regression and other techniques?
 % JCrasher?
-% CUTE
+% EvoSuite?
+% Quviq QuickCheck? Erlang

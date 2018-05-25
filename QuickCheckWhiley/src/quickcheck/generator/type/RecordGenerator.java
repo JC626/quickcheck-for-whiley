@@ -6,7 +6,6 @@ import quickcheck.constraints.RangeHelper;
 import quickcheck.util.TestType;
 import wybs.util.AbstractCompilationUnit.Identifier;
 import wybs.util.AbstractCompilationUnit.Tuple;
-import wyc.lang.WhileyFile;
 import wyc.lang.WhileyFile.Decl;
 import wyc.lang.WhileyFile.Expr;
 import wyil.interpreter.ConcreteSemantics;
@@ -19,38 +18,38 @@ import wyil.interpreter.ConcreteSemantics.RValue.Field;
  * Since a record is made up of a number of fields of varying types,
  * multiple generators of varying types are required
  * to correspond to each field.
- * 
+ *
  * e.g. type Point {int x, int y}
  * would require two IntegerGenerators
  * and could return a possible value of {x: 10, y: 6}.
- * 
+ *
  * @author Janice Chin
  *
  */
 public class RecordGenerator implements Generator{
 	/** Used for generating appropriate values */
 	private static final ConcreteSemantics semantics = new ConcreteSemantics();
-	
+
 	/** Generators corresponding to each field */
 	private List<Generator> generators;
 	/** Field names for the record */
 	private List<Decl.Variable> fields;
-	
+
 	/** Current field elements generated */
 	private Field[] elements;
-	
+
 	private TestType testType;
-	
+
 	private int size;
 	private int count = 1;
-	
+
 	public RecordGenerator(List<Generator> generators, List<Decl.Variable> fields, TestType testType) {
 		this.generators = generators;
 		this.fields = fields;
 		this.testType = testType;
 		calculateSize();
 	}
-	
+
 	@Override
 	public RValue generate() {
 		if(testType == TestType.EXHAUSTIVE) {
@@ -63,7 +62,7 @@ public class RecordGenerator implements Generator{
 				}
 			}
 			else {
-				// Generate the array elements backwards 
+				// Generate the array elements backwards
 				for(int i=elements.length - 1; i >= 0 ; i--) {
 					Generator gen = generators.get(i);
 					if(!gen.exceedCount()) {
@@ -78,7 +77,7 @@ public class RecordGenerator implements Generator{
 			}
 			count++;
 			// Need to clone (shallow is fine) so the elements array doesn't get sorted
-			return semantics.Record(elements.clone());		
+			return semantics.Record(elements.clone());
 		}
 		else {
 			Field[] recordFields = new Field[generators.size()];
@@ -91,7 +90,7 @@ public class RecordGenerator implements Generator{
 			return semantics.Record(recordFields.clone());
 		}
 	}
-	
+
 	/**
 	 * Check the ranges on the invariants against the generators.
 	 * @param invariants The invariants to check against the generator on the nominal type
@@ -102,17 +101,31 @@ public class RecordGenerator implements Generator{
 		if (invariants.size() > 0 && !fields.isEmpty()) {
 			assert fields.size() == generators.size();
 			for(int i=0; i < fields.size(); i++) {
-				if(fields.get(i).getType() instanceof WhileyFile.Type.Int || 
-						fields.get(i).getType() instanceof WhileyFile.Type.Array
-						|| fields.get(i).getType() instanceof WhileyFile.Type.Nominal) {
+				Generator gen = generators.get(i);
+				if(gen instanceof ArrayGenerator || gen instanceof IntegerGenerator) {
 					String name = prefix + fields.get(i).getName().get();
 					RangeHelper.checkInvariantRange(generators.get(i), new Identifier(name), invariants, interpreter);
+				}
+				else if(gen instanceof NominalGenerator) {
+					NominalGenerator nomGen = (NominalGenerator) gen;
+					String name = prefix + fields.get(i).getName().get();
+					nomGen.checkInvariantRange(invariants, new Identifier(name));
+				}
+				else if(gen instanceof RecordGenerator) {
+					RecordGenerator recordGen = (RecordGenerator) gen;
+					prefix = prefix + ".";
+					recordGen.checkInvariantRange(invariants, interpreter, prefix);
+				}
+				else if(gen instanceof UnionGenerator) {
+					UnionGenerator unionGen = (UnionGenerator) gen;
+					prefix = prefix + ".";
+					unionGen.checkInvariantRange(invariants, interpreter, prefix);
 				}
 			}
 			calculateSize();
 		}
 	}
-	
+
 	public void calculateSize() {
 		//Calculate size
 		if(generators.size() > 0) {
@@ -178,6 +191,6 @@ public class RecordGenerator implements Generator{
 			return false;
 		return true;
 	}
-	
-	
+
+
 }

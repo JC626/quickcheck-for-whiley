@@ -5,26 +5,24 @@ import java.math.BigInteger;
 import quickcheck.generator.type.ArrayGenerator;
 import quickcheck.generator.type.Generator;
 import quickcheck.generator.type.IntegerGenerator;
-import quickcheck.generator.type.NominalGenerator;
 import wybs.util.AbstractCompilationUnit.Identifier;
 import wybs.util.AbstractCompilationUnit.Tuple;
 import wyc.lang.WhileyFile;
 import wyc.lang.WhileyFile.Expr;
-import wyc.lang.WhileyFile.Expr.VariableAccess;
 import wyil.interpreter.Interpreter;
 import wyil.interpreter.ConcreteSemantics.RValue;
 import wyil.interpreter.ConcreteSemantics.RValue.Int;
 import wyil.interpreter.Interpreter.CallStack;
 
 /**
- * Helper method for calculating ranges and invariants 
+ * Helper method for calculating ranges and invariants
  * for the type generators.
- * 
+ *
  * @author Janice Chin
  *
  */
 public class RangeHelper {
-	
+
 	/**
 	 * Check the ranges on the invariants against the generators.
 	 * This requires physically evaluating the invariant to see whether
@@ -38,7 +36,7 @@ public class RangeHelper {
 		// Can have multiple invariants (such as multiple where clauses for a nominal type)
 		if (invariant.size() > 0) {
 			/*
-			 * One or more type invariants to check. 
+			 * One or more type invariants to check.
 			 * Therefore, we need to execute the invariant and
 			 * determine whether or not it returns true.
 			 */
@@ -52,9 +50,6 @@ public class RangeHelper {
 					else if(gen instanceof ArrayGenerator) {
 						((ArrayGenerator) gen).joinRange(b);
 					}
-					else if(gen instanceof NominalGenerator) {
-						((NominalGenerator) gen).joinRange(b);
-					}
 				}
 			}
 		}
@@ -62,9 +57,9 @@ public class RangeHelper {
 
 
 	/**
-	 * Find the integer range for a given invariant 
+	 * Find the integer range for a given invariant
 	 * by executing expressions in the invariant.
-	 * 
+	 *
 	 * @param expr - The expression to be executed
 	 * @param name - The name of the field the invariant is applied to
 	 * @param frame - The frame in which the expression is executing
@@ -79,7 +74,7 @@ public class RangeHelper {
 			Expr.BinaryOperator binaryEq = (Expr.BinaryOperator) expr;
 			Expr firstEq = binaryEq.getFirstOperand();
 			Expr secondEq = binaryEq.getSecondOperand();
-			
+
 			if(isExpForIntegerRange(firstEq, name)){
 				RValue rhs = instance.executeExpression(RValue.class, secondEq, frame);
 				if(rhs instanceof RValue.Int) {
@@ -117,7 +112,7 @@ public class RangeHelper {
 				}
 				else if(other != null) {
 					if(operator == WhileyFile.EXPR_logicalor) {
-						range = range.union(other);		
+						range = range.union(other);
 					}
 					else {
 						range = range.intersection(other);
@@ -132,12 +127,12 @@ public class RangeHelper {
 			Expr.BinaryOperator binary = (Expr.BinaryOperator) expr;
 			Expr first = binary.getFirstOperand();
 			Expr second = binary.getSecondOperand();
-			
+
 			BigInteger upperLimit = null;
 			BigInteger lowerLimit = null;
-			/* TODO Would fail for x + 2 < 10 as 
+			/* TODO Would fail for x + 2 < 10 as
 			 * the lhs is not checked for the extra + 2
-			 * To make the range x < 8 , we want to flip all the 
+			 * To make the range x < 8 , we want to flip all the
 			 * operations applied to the x to the other side
 			 * i.e. x + 2 < 10 ==> x < 10 - 2
 			 */
@@ -154,7 +149,7 @@ public class RangeHelper {
 				}
 				else if(operator == WhileyFile.EXPR_integergreaterequal) {
 					lowerLimit = BigInteger.valueOf(rhs.intValue());
-				}	
+				}
 				return new IntegerRange(lowerLimit, upperLimit);
 			}
 			else if(isExpForIntegerRange(second, name)){
@@ -180,7 +175,7 @@ public class RangeHelper {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Checks if the variable's name is contained, solely in the expression.
 	 * @param exp The expression to check if the name is contained in it
@@ -192,7 +187,7 @@ public class RangeHelper {
 			Expr array = ((Expr.ArrayLength) exp).getOperand();
 			return isExpForIntegerRange(array, name);
 		}
-		return (exp instanceof Expr.RecordAccess && ((Expr.RecordAccess) exp).toString().equals(name.get())) || 
+		return (exp instanceof Expr.RecordAccess && ((Expr.RecordAccess) exp).toString().equals(name.get())) ||
 				(exp instanceof Expr.VariableAccess && ((Expr.VariableAccess) exp).getVariableDeclaration().getName().equals(name));
 	}
 }

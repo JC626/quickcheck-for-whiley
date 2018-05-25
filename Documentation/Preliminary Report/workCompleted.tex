@@ -1,4 +1,4 @@
-\chapter{Work Completed}\label{chapter:work}
+\section{Work Completed}\label{section:work}
 
 %This should discuss what progress has been made on designing, implementing and evaluating the artifact. Care must be taken to ensure that any discussion of technical points are clearly explained, with diagrams being used where appropriate.
 %In many cases, the evaluation proper will not yet have begun. However, it is important to demonstrate that sufficient thought has been given to the evaluation.
@@ -17,28 +17,28 @@ Whiley's interpreter is used to validate inputs and outputs from tests. Valid in
 
 Currently, only functions within the program with a post-condition can be tested as they can be verified.
 
-\section{Test Case Generation Techniques}
+\subsection{Test Case Generation Techniques}
 
 QuickCheck for Whiley currently employs random test-case and exhaustive test case generation to generate test cases: 
 
-\subsection{Random Test Case Generation}
+\subsubsection{Random Test Case Generation}
 
 A fixed number of tests determined by the user is randomly generated. Previous inputs are not considered which may lead to the same inputs being generated.
 Knuth's Algorithm S from \cite{artProgv2} was considered to generate unique inputs to solve this problem but has not been implemented yet.
 
-\subsection{Exhaustive Test Case Generation}
+\subsubsection{Exhaustive Test Case Generation}
 A fixed number of tests determined by the user are exhaustively generated, where ranges are used to limit integers and the size of arrays during generation. This is so that a feasible number of combinations can be generated. Integers are generated starting from the lower limit. Arrays are generated starting from the smallest possible array size, which is usually an empty array.
 
-\section{Data types generated}
+\subsection{Data types generated}
 Different generators are created for the different types defined in Whiley. 
 Figure \ref{fig:qc-generators} illustrates the structure of the generators used.
 Each generator generates a value. It also has a size for the number of input combinations and \texttt{resetCount()} and \texttt{exceedCount()} methods for monitoring input combinations generated for test-case generation.
  
 \begin{figure}
+	\caption{Class diagram of Generators in QuickCheck for Whiley}
 	\label{fig:qc-generators}
 	\includegraphics[width=\textwidth]{qc-generators}
 	\centering
-	\caption{Class diagram of Generators in QuickCheck for Whiley}
 \end{figure}
 
 \begin{description}
@@ -59,7 +59,7 @@ Each generator generates a value. It also has a size for the number of input com
 
 \end{description}
 
-\section{Integer Range Analysis}
+\subsection{Integer Range Analysis}
 
 Generating and checking for invalid inputs is costly in terms of performance. 
 Therefore, it would be beneficial to reduce the number of invalid inputs generated to improve the performance of the tool.
@@ -74,7 +74,7 @@ If the ranges are invalid, i.e. the lower range is greater than the upper range 
 
 Integer ranges are only applied to constraints that follow the format: \texttt{x op c} where \texttt{x} is the named variable in the nominal type, \texttt{op} is an operator out of the set \{\textgreater, \textless, \textgreater=, \textless=, \&\&, $||$, ==\} and \texttt{c} is a constant number.
 
-\section{Evaluating the tool}
+\subsection{Evaluating the tool}
 The tool has been evaluated by executing a variety of tests notably, the test suite for the Whiley Compiler containing tests for valid inputs and outputs and tests for invalid inputs and outputs. 
 Valid tests should always pass for valid inputs whereas invalid tests should always fail for some valid input. 
 A successful implementation of the tool should pass all tests.

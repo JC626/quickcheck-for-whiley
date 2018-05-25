@@ -1,4 +1,4 @@
-\chapter{Background Survey}\label{chapter:background}
+\section{Background Survey}\label{section:background}
 
 %This should discuss any existing solutions to the given problem, and may reference academic papers, books and other sources as appropriate. Care should be taken to identify key differences between these solutions, and that being developed in the project.
 
@@ -11,7 +11,7 @@ Another key difference while making QuickCheck for Whiley is that different tech
 
 % Something about Whiley, verification and formal specs
 % TODO 
-\section{Whiley}
+\subsection{Whiley}
 Whiley is a hybrid imperative and functional programming language developed by David Pearce.
 
 A notable aspect about Whiley is the verifying compiler used in conjunction with explicit specifications to verify programs are correct.
@@ -27,7 +27,7 @@ Whiley files are compiled with or without static verification into a WyIL file w
 
 % TODO talk about functions (pure) and methods (impure)
 
-\section{QuickCheck}
+\subsection{QuickCheck}
 QuickCheck is a tool implemented by Koen Claessen and John Hughes \cite{QClightweight} to test Haskell programs.
 
 To check if a program is correct, QuickCheck uses property-based testing which uses conditions that will always hold true. Users define the conditions as Haskell functions in terms of formal specifications to validate functions under test. 
@@ -59,7 +59,7 @@ This will create a large number of test cases by using the user-defined property
 
 % Shrinking?
 
-\section{Concolic Unit Testing Engine (CUTE)}
+\subsection{Concolic Unit Testing Engine (CUTE)}
 Concolic Unit Testing Engine (CUTE) generates test inputs using a combination of symbolic and concrete execution \cite{CUTE}. The aim of CUTE is to provide input values to explore all feasible execution paths of a program and thus achieve high path coverage \cite{CUTE}. CUTE has been applied to C programs \cite{CUTE}.
 
 Random testing may generate inputs with the same behaviour leading to its redundancy \cite{CUTE}. Furthermore, the probability of selecting inputs that will detect errors using random testing is small \cite{CUTE}. 
@@ -104,7 +104,7 @@ void foo(int x, int y) {
 
 % TODO add example of CUTE with the above paragraph
 
-\section{Randoop}
+\subsection{Randoop}
 Randoop which stands for random tester for object-oriented programs, generates unit tests using feedback-directed random test generation \cite{randoopAll}, \cite{randoopJava}. Method sequences from previous tests are used to help generate subsequent tests \cite{randoopAll}, \cite{randoopJava}.
 As a result, a test suite is outputted with successful and unsuccessful tests \cite{randoopAll}, \cite{randoopJava}.
 

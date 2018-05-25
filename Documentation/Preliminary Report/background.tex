@@ -6,8 +6,7 @@ There exists a number of different test-case generation tools for different lang
 
 % TODO maybe explain more differences?
 
-QuickCheck for Whiley is specifically created for the Whiley programming language.
-Another key difference while making QuickCheck for Whiley is that different techniques are used to generate test data instead of just one technique.
+QuickCheck for Whiley is specifically created for the Whiley programming language and uses different techniques to generate test data instead of just one technique.
 
 % Something about Whiley, verification and formal specs
 % TODO 
@@ -105,8 +104,6 @@ void foo(int x, int y) {
 }
 \end{lstlisting}
 
-% TODO add example of CUTE with the above paragraph
-
 \subsection{Randoop}
 Randoop which stands for random tester for object-oriented programs, generates unit tests using feedback-directed random test generation \cite{randoopAll}, \cite{randoopJava}. Method sequences from previous tests are used to help generate subsequent tests \cite{randoopAll}, \cite{randoopJava}.
 As a result, a test suite is outputted with successful and unsuccessful tests \cite{randoopAll}, \cite{randoopJava}.
@@ -121,17 +118,21 @@ Successful sequences that are not redundant and can be extended are used in subs
 For example, executing Randoop on the Java program in Listing \ref{lst:randoopJavaProg} will produce several tests based on different method sequences.
 One successful list of method sequences could be Listing \ref{lst:randoopSuccess},  which can be re-used in subsequent sequences. It is outputted into a regression test as shown in Listing \ref{lst:randoopSuccessTest}.
 By extending the method sequences, another list of method sequences is created such as Listing \ref{lst:randoopError}.
-This list of method sequences throws an error as the \texttt{equals()} method is incorrect and thus, is a contract-violating test that will be outputted.
+This list of method sequences throws an error as the \texttt{equals()} method is incorrect as \texttt{a1} is not equal to \texttt{b1} and thus, is a contract-violating test that will be outputted.
 
 \begin{lstlisting}[language=Java, tabsize=3, numbers=left,
 label={lst:randoopJavaProg}, caption={Example Java class}]
 public class A {
-	public A() { }
+	public A(){ }
 		
 	@Override
 	public boolean equals(Object obj){
-		return obj == this;
+		return true;
 	}
+}
+
+public class B{
+	public B(){ }
 }
 \end{lstlisting}
 
@@ -154,8 +155,8 @@ public void test1() {
 label={lst:randoopError}, caption={Contract violating method sequence for testing Listing \ref{lst:randoopJavaProg}}]
 A a1 = new A();
 a1.equals(a1);
-A a2 = new A();
-a1.equals(a2);
+B b1 = new B();
+a1.equals(b1);
 \end{lstlisting}
 
 %A commercial version of QuickCheck in Erlang called Quviq QuickCheck is co-founded by one of the original developers, John Hughes and is an extension of the original QuickCheck for Haskell \cite{QCFunProfit}.

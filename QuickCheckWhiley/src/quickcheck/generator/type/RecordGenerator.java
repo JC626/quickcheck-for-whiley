@@ -114,7 +114,6 @@ public class RecordGenerator implements Generator{
 				else if(gen instanceof RecordGenerator) {
 					RecordGenerator recordGen = (RecordGenerator) gen;
 					prefix = prefix + ".";
-					System.out.println("Prefix within record " + prefix);
 					recordGen.checkInvariantRange(invariants, interpreter, prefix);
 				}
 				else if(gen instanceof UnionGenerator) {

@@ -13,15 +13,38 @@ Unit tests have also been written to check the tool generates the values expecte
 
 The tool can be executed via the command line with several arguments. To use the tool, a user must pass in the path of a WyIL file and specify the test case generation technique to use, number of tests they wish to generate and ranges for generating integer values. Ranges are used to limit the integers generated between an inclusive, minimum number and an exclusive, upper number.
 
-% TODO example of the tool
-%An example use of the tool would be to execute:
-%\texttt{}
-
 Whiley's interpreter is used to validate inputs and outputs from tests. Valid inputs are based on verifying pre-conditions and constraints on the input type used. Only valid inputs are used in tests. A successful test is checked by verifying outputs with the function's post-conditions and constraints on the outputs' type.
 
 % These invalid inputs should be discarded and replaced by generating new input data.
 
 Currently, only functions within the program with a post-condition can be tested as they can be verified.
+
+An example of using the tool would be to execute a file \texttt{abs.wyil} which contains the following code in Listing \ref{lst:whileyAbs}.
+To execute the tool, we run in the command line: 
+\begin{verbatim}
+java QuickCheck abs.wyil exhaustive 10 -5 5
+\end{verbatim}
+
+This tells QuickCheck for Whiley to generate 10 tests using exhaustive test generation with an integer range between -5 and 5. 
+When the tool is executed, it outputs several statistics for the user as shown in Listing \ref{lst:whileyQCResults}.
+
+\begin{lstlisting}[language=Whiley, tabsize=3, numbers=left,
+label={lst:whileyAbs}, caption={Whiley program for an incorrect implementation of the abs function}]
+function abs(int x) -> (int r)
+ensures r >= 0
+ensures r == x || r == -x:
+	return x
+\end{lstlisting}
+
+\begin{lstlisting}[label={lst:whileyQCResults},
+caption={Results of executing the tool on Listing \ref{lst:whileyAbs}}, ]
+Failed Input: [-5] Output: [-5]
+Failed Input: [-4] Output: [-4]
+Failed Input: [-3] Output: [-3]
+Failed Input: [-2] Output: [-2]
+Failed Input: [-1] Output: [-1]
+Failed: 5 passed (50.00 %), 5 failed (50.00 %), ran 10 tests
+\end{lstlisting}
 
 \subsection{Test Case Generation Techniques}
 
@@ -33,7 +56,7 @@ A fixed number of tests determined by the user is randomly generated. Previous i
 Knuth's Algorithm S from \cite{artProgv2} was considered to generate unique inputs to solve this problem but has not been implemented yet.
 
 \subsubsection{Exhaustive Test Case Generation}
-A fixed number of tests determined by the user are exhaustively generated, where ranges are used to limit integers and the size of arrays during generation. This is so that a feasible number of combinations can be generated. Integers are generated starting from the lower limit. Arrays are generated starting from the smallest possible array size, which is usually an empty array.
+A fixed number of tests determined by the user are exhaustively generated, where ranges are used to limit integers and the size of arrays during generation. This is so that a feasible number of combinations can be generated. If the number of tests exceed the number of input combinations, the tool will cycle around and generate inputs exhaustively from the starting input. Integers are generated starting from the lower limit. Arrays are generated starting from the smallest possible array size, which is usually an empty array. 
 
 \subsection{Data types generated}
 Different generators are created for the different types defined in Whiley. 

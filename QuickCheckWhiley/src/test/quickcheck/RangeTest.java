@@ -994,5 +994,60 @@ public class RangeTest {
 		}
 	}
 
-	// TODO union => record
+	/**
+	 * Test when a union wraps a record which has constraints.
+	 */
+	@Test
+	public void testUnionRecord() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+		String testName = "union_record";
+		helper.compile(testName);
+		Build.Project project = helper.createProject();
+		Interpreter interpreter = new Interpreter(project, System.out);
+		List<Decl.Function> functions = helper.getFunctions(testName, project);
+
+		BigInteger lower = BigInteger.valueOf(-5);
+		BigInteger upper = BigInteger.valueOf(10);
+		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), interpreter, 50, lower, upper);
+
+		List<IntegerRange> ranges = getIntegerRange(testGen);
+		assertEquals(3, ranges.size());
+		assertEquals(BigInteger.valueOf(1), ranges.get(0).lowerBound());
+		assertEquals(BigInteger.valueOf(5), ranges.get(0).upperBound());
+		assertEquals(BigInteger.valueOf(1), ranges.get(1).lowerBound());
+		assertEquals(BigInteger.valueOf(9), ranges.get(1).upperBound());
+		assertEquals(BigInteger.valueOf(-5), ranges.get(2).lowerBound());
+		assertEquals(BigInteger.valueOf(10), ranges.get(2).upperBound());
+
+		int width = 1;
+		int height = 1;
+		int i = -5;
+		boolean isRecord = true;
+		while((height < 9 && width < 5) || i < 10) {
+			if(isRecord) {
+				RValue[] generatedParameters = testGen.generateParameters();
+				assertEquals(1, generatedParameters.length);
+				RValue.Record recordInput = (Record) generatedParameters[0];
+				RValue first = recordInput.read(new Identifier("width"));
+				assertEquals(semantics.Int(BigInteger.valueOf(width)), first);
+				RValue second = recordInput.read(new Identifier("height"));
+				assertEquals(semantics.Int(BigInteger.valueOf(height)), second);
+				height++;
+				if(height >= 9) {
+					height = 1;
+					width++;
+				}
+			}
+			else {
+				RValue[] generatedParameters = testGen.generateParameters();
+				assertEquals(semantics.Int(BigInteger.valueOf(i)), generatedParameters[0]);
+				i++;
+			}
+			if(i < 10) {
+				isRecord = !isRecord;
+			}
+			else {
+				isRecord = true;
+			}
+		}
+	}
 }

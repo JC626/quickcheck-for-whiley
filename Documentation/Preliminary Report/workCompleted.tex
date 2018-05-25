@@ -13,6 +13,10 @@ Unit tests have also been written to check the tool generates the values expecte
 
 The tool can be executed via the command line with several arguments. To use the tool, a user must pass in the path of a WyIL file and specify the test case generation technique to use, number of tests they wish to generate and ranges for generating integer values. Ranges are used to limit the integers generated between an inclusive, minimum number and an exclusive, upper number.
 
+% TODO example of the tool
+%An example use of the tool would be to execute:
+%\texttt{}
+
 Whiley's interpreter is used to validate inputs and outputs from tests. Valid inputs are based on verifying pre-conditions and constraints on the input type used. Only valid inputs are used in tests. A successful test is checked by verifying outputs with the function's post-conditions and constraints on the outputs' type.
 
 % These invalid inputs should be discarded and replaced by generating new input data.
@@ -77,16 +81,13 @@ If the ranges are invalid, i.e. the lower range is greater than the upper range 
 Integer ranges are only applied to constraints that follow the format: \texttt{x op c} where \texttt{x} is the named variable in the nominal type, \texttt{op} is an operator out of the set \{\textgreater, \textless, \textgreater=, \textless=, \&\&, $||$, ==\} and \texttt{c} is a constant number.
 
 \subsection{Evaluating the tool}
-The tool has been evaluated by executing a variety of tests notably, the test suite for the Whiley Compiler containing tests for valid inputs and outputs and tests for invalid inputs and outputs. 
+The tool has been evaluated by executing a variety of tests notably, the test suite for the Whiley Compiler containing tests for valid inputs and outputs and tests for invalid inputs and outputs \cite{whileyCompilerTests}. 
 Valid tests should always pass for valid inputs whereas invalid tests should always fail for some valid input. 
 A successful implementation of the tool should pass all tests.
 
-% TODO current results of testing
-%Currently, the tool passes ... % (X/X) of the valid tests and ... % (X/X) of the invalid tests.
+To evaluate the Whiley Compiler test suite, the tool is executed twice using exhaustive test generation for each test. The first execution is with integer ranges between -5 (inclusive) and 0  (exclusive) whereas the second execution is for integer ranges between 0 (inclusive) and 5 (exclusive).
+Currently, the tool passes 80.69\% (4 s.f) (422 out of 523 tests) of the valid tests and 93.49 (4 s.f.)\% (316 out of 338 tests) of the invalid tests \cite{qcWhileyStatistics}. Some of the tests may be falsely pass by the tool due to the small domain of integer ranges used. Therefore, some tweaking will be required to determine a suitable integer range across all tests.
 
-% TODO Explanation about evaluation by showing an example of using the tool?
-
-%As a result, ... 
 % Talk about how the tool is run
 % Talk about evaluating the tool using the Whiley valid and invalid tests
 % How to evaluate the tool

@@ -105,16 +105,55 @@ void foo(int x, int y) {
 % TODO add example of CUTE with the above paragraph
 
 \section{Randoop}
-Randoop generates unit tests using feedback-directed random test generation \cite{randoopAll}, \cite{randoopJava}. Method sequences from previous tests are used to help generate subsequent tests \cite{randoopAll}, \cite{randoopJava}.
+Randoop which stands for random tester for object-oriented programs, generates unit tests using feedback-directed random test generation \cite{randoopAll}, \cite{randoopJava}. Method sequences from previous tests are used to help generate subsequent tests \cite{randoopAll}, \cite{randoopJava}.
 As a result, a test suite is outputted with successful and unsuccessful tests \cite{randoopAll}, \cite{randoopJava}.
 
 Randoop tests classes by executing a sequence of methods as a test \cite{randoopJava}. Method sequences are created incrementally by randomly selecting method calls and using arguments from previous sequences \cite{randoopJava}.
 The sequence is then executed and checked against contracts \cite{randoopAll}.
 Contracts are built into Randoop or optionally defined by the user \cite{randoopAll}.
 If a sequence breaks a contract then the test is outputted as a contract-violating test \cite{randoopAll}. If sequence was successful, then the test is outputted as a regression test \cite{randoopAll}.
-Successful sequences that can be extended or are not redundant are then used in subsequent tests \cite{randoopAll}.
+Successful sequences that are not redundant and can be extended are used in subsequent tests \cite{randoopAll}.
 
-% TODO add example of Randoop to help explain above method
+
+For example, executing Randoop on the Java program in Listing \ref{lst:randoopJavaProg} will produce several tests based on different method sequences.
+One successful list of method sequences could be Listing \ref{lst:randoopSuccess},  which can be re-used in subsequent sequences. It is outputted into a regression test as shown in Listing \ref{lst:randoopSuccessTest}.
+By extending the method sequences, another list of method sequences is created such as Listing \ref{lst:randoopError}.
+This list of method sequences throws an error as the \texttt{equals()} method is incorrect and thus, is a contract-violating test that will be outputted.
+
+\begin{lstlisting}[language=Java, tabsize=3, numbers=left,
+label={lst:randoopJavaProg}, caption={Example Java class}]
+public class A {
+	public A() { }
+		
+	@Override
+	public boolean equals(Object obj){
+		return obj == this;
+	}
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=Java, tabsize=3, numbers=left,
+label={lst:randoopSuccess}, caption={Successful method sequence for testing Listing \ref{lst:randoopJavaProg}}]
+A a1 = new A();
+a1.equals(a1);
+\end{lstlisting}
+
+\begin{lstlisting}[language=Java, tabsize=3, numbers=left,
+label={lst:randoopSuccessTest}, caption={Test output for the successful method sequence in Listing \ref{lst:randoopSuccess}}]
+@Test
+public void test1() {
+	A a1 = new A();
+	assertTrue(a1.equals(a1));
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=Java, tabsize=3, numbers=left,
+label={lst:randoopError}, caption={Contract violating method sequence for testing Listing \ref{lst:randoopJavaProg}}]
+A a1 = new A();
+a1.equals(a1);
+A a2 = new A();
+a1.equals(a2);
+\end{lstlisting}
 
 %A commercial version of QuickCheck in Erlang called Quviq QuickCheck is co-founded by one of the original developers, John Hughes and is an extension of the original QuickCheck for Haskell \cite{QCFunProfit}.
 

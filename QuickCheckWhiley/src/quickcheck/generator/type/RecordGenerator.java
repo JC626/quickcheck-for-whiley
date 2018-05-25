@@ -101,11 +101,8 @@ public class RecordGenerator implements Generator{
 		if (invariants.size() > 0 && !fields.isEmpty()) {
 			assert fields.size() == generators.size();
 			for(int i=0; i < fields.size(); i++) {
-				// TODO also check if field is union?
-				// TODO also check if there is another record within
 				Generator gen = generators.get(i);
 				if(gen instanceof ArrayGenerator || gen instanceof IntegerGenerator) {
-					// TODO do normal
 					String name = prefix + fields.get(i).getName().get();
 					RangeHelper.checkInvariantRange(generators.get(i), new Identifier(name), invariants, interpreter);
 				}
@@ -115,14 +112,12 @@ public class RecordGenerator implements Generator{
 					nomGen.checkInvariantRange(invariants, new Identifier(name));
 				}
 				else if(gen instanceof RecordGenerator) {
-					// TODO check
 					RecordGenerator recordGen = (RecordGenerator) gen;
 					prefix = prefix + ".";
 					System.out.println("Prefix within record " + prefix);
 					recordGen.checkInvariantRange(invariants, interpreter, prefix);
 				}
 				else if(gen instanceof UnionGenerator) {
-					// TODO check
 					UnionGenerator unionGen = (UnionGenerator) gen;
 					prefix = prefix + ".";
 					unionGen.checkInvariantRange(invariants, interpreter, prefix);

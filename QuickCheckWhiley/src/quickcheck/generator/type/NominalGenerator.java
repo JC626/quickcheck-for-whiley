@@ -1,6 +1,5 @@
 package quickcheck.generator.type;
 
-import quickcheck.constraints.IntegerRange;
 import quickcheck.constraints.RangeHelper;
 import wybs.util.AbstractCompilationUnit.Identifier;
 import wybs.util.AbstractCompilationUnit.Tuple;
@@ -84,23 +83,6 @@ public class NominalGenerator implements Generator{
 			unionGen.checkInvariantRange(invariants, interpreter, name.get());
 		}
 	}
-
-	// FIXME might remove?
-	/**
-	 * Intersect the range of the wrapped generator with
-	 * another generator if it hasn't generated any values yet.
-	 *
-	 * @param other An integer range to intersect with
-	 */
-	public void joinRange(IntegerRange other) {
-		if(generator instanceof IntegerGenerator) {
-			((IntegerGenerator) generator).joinRange(other);
-		}
-		else if(generator instanceof ArrayGenerator) {
-			((ArrayGenerator) generator).joinRange(other);
-		}
-	}
-
 
 	@Override
 	public int size() {

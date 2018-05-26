@@ -9,22 +9,21 @@ There exists a number of different test-case generation tools for different lang
 QuickCheck for Whiley is specifically created for the Whiley programming language and uses different techniques to generate test data instead of just one technique.
 
 % Something about Whiley, verification and formal specs
-% TODO 
 \subsection{Whiley}
-Whiley is a hybrid imperative and functional programming language developed by David Pearce.
+Whiley is a hybrid imperative and functional programming language developed by David Pearce \cite{WhileyPlatform}. The presentation of Whiley resembles an imperative language like Python whereas the core structure is functional and pure \cite{WhileyPlatform}. 
 
-A notable aspect about Whiley is the verifying compiler used in conjunction with explicit specifications to verify programs are correct.
+Functions in Whiley are pure therefore, an input will always result in the same output without any observable side effects \cite{WhileyLang}.
+Methods are impure so may have side effects on input parameters or other aspects of the program \cite{WhileyLang}. Functions, methods and other compound data types are passed by value meaning they are a copy of the original variable when they are passed in an argument to a function or method \cite{WhileyPlatform}.
 
 
-Whiley files are compiled with or without static verification into a WyIL file which is a binary form of the Whiley program in an intermediate language.
+A key component of Whiley is the automatic verifying compiler
+which is used in conjunction with explicit specifications to verify programs are correct \cite{WhileyPlatform}.
+Specifications can be written as pre-conditions (\texttt{requires} clauses) and post-conditions (\texttt{ensures} clauses) in a function or method declaration \cite{WhileyPlatform}.
+Specifications can also be written as an invariant on user defined types (nominal type) or as an invariant on a loop using \texttt{where} clauses \cite{WhileyPlatform}. 
 
-% Talk about theorem prover?
-
-% Talk about the data types that exist?
-
-%Formal specifications are built into Whiley
-
-% TODO talk about functions (pure) and methods (impure)
+To be able to execute a Whiley file, it must first be compiled into a WyIL file which is the bytecode form of Whiley in the Whiley intermediate language \cite{WhileyPlatform}.
+During compilation, the verifying compiler checks all specifications are met and checks for common errors such as division by zero \cite{WhileyPlatform}. Any specifications that fail or errors detected are reported. Counter examples are also used within Whiley to notify how the specification can fail however, this functionality is limited to examples within a small range.
+The WyIL file can then be executed if it verifies successfully or compiled without verification.
 
 \subsection{QuickCheck}
 QuickCheck is a tool implemented by Koen Claessen and John Hughes \cite{QClightweight} to test Haskell programs.

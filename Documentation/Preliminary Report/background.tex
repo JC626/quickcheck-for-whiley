@@ -49,6 +49,7 @@ Firstly, a property is defined in Listing \ref{lst:quickcheckProperty} where the
 caption={Property for reversing a list in QuickCheck}, captionpos=b, frame = single]
 propReverseTwice xs = reverse (reverse xs) == xs
 \end{lstlisting}
+
 QuickCheck is then executed by importing the property and passing it into the interpreter as shown in Listing \ref{lst:quickcheckExecute}.
 
 \begin{lstlisting}[label={lst:quickcheckExecute}, caption={Executing tests to check a list is reversed}, captionpos=b,
@@ -56,6 +57,7 @@ frame = single]
 Main:> quickCheck propReverseTwice
 Ok: passed 100 tests.
 \end{lstlisting}
+
 A large number of test cases is created where random input values are generated to check the user-defined property holds. QuickCheck reports various test statistics including the number of tests that have passed or failed \cite{QClightweight}.
 
 \subsection{Concolic Unit Testing Engine (CUTE)}

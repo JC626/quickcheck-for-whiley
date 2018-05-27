@@ -2,7 +2,7 @@
 
 %This should discuss any existing solutions to the given problem, and may reference academic papers, books and other sources as appropriate. Care should be taken to identify key differences between these solutions, and that being developed in the project.
 
-There exists a number of different test-case generation tools for different languages such as QuickCheck for Haskell \cite{QClightweight}, Concolic Unit Testing Engine (CUTE) for C \cite{CUTE} and Randoop for Java \cite{randoopJava} and .NET \cite{randoopAll}.
+There exists a number of different test case generation tools for different languages such as QuickCheck for Haskell \cite{QClightweight}, Concolic Unit Testing Engine (CUTE) for C \cite{CUTE} and Randoop for Java \cite{randoopJava} and .NET \cite{randoopAll}.
 
 % TODO maybe explain more differences?
 
@@ -14,7 +14,7 @@ Whiley is a hybrid imperative and functional programming language developed by D
 
 Functions in Whiley are pure therefore, an input will always result in the same output without any observable side effects \cite{WhileyLang}.
 Methods are impure so may have side effects on input parameters or other aspects of the program \cite{WhileyLang}. 
-Functions, methods and other compound data types are passed by value meaning they are a copy of the original variable when they are passed in an argument to a function or method \cite{WhileyPlatform}.
+Functions, methods and other compound data types are passed by value meaning they are a copy of the original variable when they are passed as an argument to a function or method \cite{WhileyPlatform}.
 
 
 A key component in Whiley is the automatic verifying compiler
@@ -77,8 +77,8 @@ The constraint is solved to limit and determine the possible inputs to execute i
 For example, we execute Listing \ref{lst:cuteExample} and create the random values \texttt{x = y = 1}. 
 In concrete execution, \texttt{z} is set to 1 whereas in symbolic execution, \texttt{z} is set to \texttt{x * y}.
 At line 2, \texttt{x != 2} so the condition fails. 
-As the program went through one path where \texttt{x != 2}, the condition is then negated and solved so the next test goes through a different path by setting \texttt{x} to 2 and y to 1. 
-The test will then fail at line 4 as \texttt{x >=z}. Therefore, CUTE will then find values that solve the constraints \texttt{x == 2} and \texttt{x < z} such as \texttt{x = 2} and \texttt{y = 2}. 
+As the program went through the path where \texttt{x != 2}, a different path will be taken in the next test. This is by negating and solving the condition by setting \texttt{x} to 2 and y to 1. 
+The test will then fail at line 4 as \texttt{x >= z}. Therefore, CUTE will then find values that solve the constraints \texttt{x == 2} and \texttt{x < z} such as \texttt{x = 2} and \texttt{y = 2}. 
 Running this test will then exhibit the error on line 5. 
 
 
@@ -111,7 +111,7 @@ As a result, a test suite is outputted with successful and unsuccessful tests \c
 Randoop tests classes by executing a sequence of methods as a test \cite{randoopJava}. Method sequences are created incrementally by randomly selecting method calls and using arguments from previous sequences \cite{randoopJava}.
 The sequence is then executed and checked against contracts \cite{randoopAll}.
 Contracts are built into Randoop or optionally defined by the user \cite{randoopAll}.
-If a sequence breaks a contract, then the test is outputted as a contract-violating test \cite{randoopAll}. If sequence was successful, then the test is outputted as a regression test \cite{randoopAll}.
+If a sequence breaks a contract, then the test is outputted as a contract-violating test \cite{randoopAll}. If a sequence was successful, then the test is outputted as a regression test \cite{randoopAll}.
 Successful sequences that are not redundant and can be extended are used in subsequent tests \cite{randoopAll}.
 
 

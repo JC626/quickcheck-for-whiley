@@ -1,4 +1,166 @@
-\chapter{Background Survey}\label{chapter:background}
+\section{Background Survey}\label{section:background}
 
-%This should discuss any existing solutions to the given problem, and may reference academic papers, books and other sources as appropriate. Care should be taken to identify key differences between these solutions, and that being
-%developed in the project.
+%This should discuss any existing solutions to the given problem, and may reference academic papers, books and other sources as appropriate. Care should be taken to identify key differences between these solutions, and that being developed in the project.
+
+There exists a number of different test case generation tools for different languages such as QuickCheck for Haskell \cite{QClightweight}, Concolic Unit Testing Engine (CUTE) for C \cite{CUTE} and Randoop for Java \cite{randoopJava} and .NET \cite{randoopAll}.
+
+% TODO maybe explain more differences?
+
+QuickCheck for Whiley is specifically created for the Whiley programming language and uses different techniques to generate test data instead of just one technique.
+
+% Something about Whiley, verification and formal specs
+\subsection{Whiley}
+Whiley is a hybrid imperative and functional programming language developed by David Pearce \cite{WhileyPlatform}. The presentation of Whiley resembles an imperative language like Python whereas the core structure is functional and pure \cite{WhileyPlatform}. 
+
+Functions in Whiley are pure therefore, an input will always result in the same output without any observable side effects \cite{WhileyLang}.
+Methods are impure so may have side effects on input parameters or other aspects of the program \cite{WhileyLang}. 
+Functions, methods and other compound data types are passed by value meaning they are a copy of the original variable when they are passed as an argument to a function or method \cite{WhileyPlatform}.
+
+
+A key component in Whiley is the automatic verifying compiler
+which is used in conjunction with explicit specifications to verify programs are correct \cite{WhileyPlatform}.
+Specifications can be written as pre-conditions (\texttt{requires} clauses) and post-conditions (\texttt{ensures} clauses) in a function or method declaration \cite{WhileyPlatform}.
+Specifications can also be written as invariants using \texttt{where} clauses on user defined types (nominal type) or as an invariant on a loop \cite{WhileyPlatform}. 
+
+To be able to execute a Whiley file, it must first be compiled into a WyIL file which is the bytecode form of Whiley in the Whiley Intermediate Language \cite{WhileyPlatform}.
+During compilation, the verifying compiler checks all specifications are met and checks for common errors such as division by zero \cite{WhileyPlatform}. Any errors or failed specifications are detected are reported to the developer to fix. Counter examples are also used within Whiley to notify how the specification can fail however, this functionality is limited to examples within a small range.
+The WyIL file can then be executed if it verifies successfully or compiled without verification.
+
+\subsection{QuickCheck}
+QuickCheck is a tool implemented by Koen Claessen and John Hughes \cite{QClightweight} to test Haskell programs.
+
+To check if a program is correct, QuickCheck uses property-based testing which uses conditions that will always hold true \cite{QClightweight}.
+Users define the conditions as Haskell functions in terms of formal specifications to validate functions under test \cite{QClightweight}. 
+
+QuickCheck then generates a large number of test cases automatically using random testing \cite{QClightweight}. 
+Input values are randomly generated for each test (within a range) using generators that correspond to the input value's type \cite{QClightweight}. 
+QuickCheck contains generators for most of Haskell's predefined types and for functions \cite{QClightweight}. 
+User-defined types require the tester to specify their own custom generators with a bounded size if the type is recursive such as a binary tree. \cite{QClightweight}. 
+
+A problem with random testing is the distribution of test data. Ideally, the distribution should adhere to the distribution of actual data which is often uniformly distributed \cite{QClightweight}. 
+For example, executing tests for Listing \ref{lst:quickcheckExecute} could be skewed towards test data with short lists. 
+The distribution of data is controlled by the tester by creating a custom generator for the data type with weighted frequencies on the methods used to generate the data \cite{QClightweight}.
+
+An example of using QuickCheck would be reversing a list.
+
+Firstly, a property is defined in Listing \ref{lst:quickcheckProperty} where the list \texttt{xs}, should be the same as reversing \texttt{xs} twice.
+
+\begin{lstlisting}[language=haskell, label={lst:quickcheckProperty},
+caption={Property for reversing a list in QuickCheck}, captionpos=b, frame = single]
+propReverseTwice xs = reverse (reverse xs) == xs
+\end{lstlisting}
+
+QuickCheck is then executed by importing the property and passing it into the interpreter as shown in Listing \ref{lst:quickcheckExecute}.
+
+\begin{lstlisting}[label={lst:quickcheckExecute}, caption={Executing tests to check a list is reversed}, captionpos=b,
+frame = single]
+Main:> quickCheck propReverseTwice
+Ok: passed 100 tests.
+\end{lstlisting}
+
+A large number of test cases is created where random input values are generated to check the user-defined property holds. QuickCheck reports various test statistics including the number of tests that have passed or failed \cite{QClightweight}.
+
+\subsection{Concolic Unit Testing Engine (CUTE)}
+Concolic Unit Testing Engine (CUTE) generates test inputs using a combination of symbolic and concrete execution \cite{CUTE}. 
+The aim of CUTE is to provide input values to explore all feasible execution paths of a program and thus achieve high path coverage \cite{CUTE}. CUTE has been applied to C programs \cite{CUTE}.
+
+Random testing may generate inputs with the same behaviour leading to its redundancy \cite{CUTE}. Furthermore, the probability of selecting inputs that will detect errors using random testing is small \cite{CUTE}. 
+Therefore, CUTE incrementally generates concrete inputs using symbolic execution to discover feasible paths \cite{CUTE}.
+
+Firstly, CUTE executes the program with arbitrary inputs using concrete and symbolic execution concurrently \cite{CUTE}.
+In concrete execution, the program is executed normally with the input values \cite{CUTE}.
+At the same time, symbolic execution is run through the same path  \cite{CUTE}. 
+Using the symbolic variables, constraints from branching expressions are discovered and stored \cite{CUTE}.
+The last constraint applied is negated so that the next test run will explore a different feasible path \cite{CUTE}. 
+The constraint is solved to limit and determine the possible inputs to execute in the next test \cite{CUTE}.
+
+For example, we execute Listing \ref{lst:cuteExample} and create the random values \texttt{x = y = 1}. 
+In concrete execution, \texttt{z} is set to 1 whereas in symbolic execution, \texttt{z} is set to \texttt{x * y}.
+At line 2, \texttt{x != 2} so the condition fails. 
+As the program went through the path where \texttt{x != 2}, a different path will be taken in the next test. This is by negating and solving the condition by setting \texttt{x} to 2 and y to 1. 
+The test will then fail at line 4 as \texttt{x >= z}. Therefore, CUTE will then find values that solve the constraints \texttt{x == 2} and \texttt{x < z} such as \texttt{x = 2} and \texttt{y = 2}. 
+Running this test will then exhibit the error on line 5. 
+
+
+%Firstly, CUTE executes the program with arbitrary inputs using concrete and symbolic execution concurrently \cite{CUTE}.
+%For example, we execute Listing \ref{lst:cuteExample} and create the random values \texttt{x = y = 1}. 
+%In concrete execution, the program is executed normally with the input values \cite{CUTE}.
+%At the same time, symbolic execution is run through the same path  \cite{CUTE}. 
+%In concrete execution, \texttt{z} is set to 1 whereas in symbolic execution, \texttt{z} is set to \texttt{x * y}.
+%Using the symbolic variables, constraints from branching expressions are discovered and stored \cite{CUTE}. At line 2 in the example, \texttt{x != 2} so the condition fails. 
+%The last constraint applied is negated so that the next test run will explore a different feasible path \cite{CUTE}. 
+%The constraint is solved to limit and determine the possible inputs to execute in the next test \cite{CUTE}.
+%As the test failed the last condition as \texttt{x != 2}, the condition is negated and solved so in the next test, \texttt{x} is set 2 and y remains set to 1. The test will fail at line 4 as \texttt{x >=z}. Therefore, CUTE will then find values that solve the constraints \texttt{x == 2} and \texttt{x < z} such as \texttt{x = 2} and \texttt{ y = 2}. Running this test will then exhibit the error on line 5. 
+
+\begin{lstlisting}[language=C, tabsize=3, numbers=left,
+label={lst:cuteExample}, caption={Example C program}]
+void foo(int x, int y) {
+	int z = x * y;
+	if(x == 2){
+		if(x < z){
+			ERROR;
+		}
+	}
+}
+\end{lstlisting}
+
+\subsection{Randoop}
+Randoop which stands for random tester for object-oriented programs, generates unit tests using feedback-directed random test generation \cite{randoopAll}, \cite{randoopJava}. Method sequences from previous tests are used to help generate subsequent tests \cite{randoopAll}, \cite{randoopJava}.
+As a result, a test suite is outputted with successful and unsuccessful tests \cite{randoopAll}, \cite{randoopJava}.
+
+Randoop tests classes by executing a sequence of methods as a test \cite{randoopJava}. Method sequences are created incrementally by randomly selecting method calls and using arguments from previous sequences \cite{randoopJava}.
+The sequence is then executed and checked against contracts \cite{randoopAll}.
+Contracts are built into Randoop or optionally defined by the user \cite{randoopAll}.
+If a sequence breaks a contract, then the test is outputted as a contract-violating test \cite{randoopAll}. If a sequence was successful, then the test is outputted as a regression test \cite{randoopAll}.
+Successful sequences that are not redundant and can be extended are used in subsequent tests \cite{randoopAll}.
+
+
+For example, executing Randoop on the Java program in Listing \ref{lst:randoopJavaProg} will produce several tests based on different method sequences.
+One successful list of method sequences could be Listing \ref{lst:randoopSuccess},  which can be re-used in subsequent sequences. It is outputted into a regression test as shown in Listing \ref{lst:randoopSuccessTest}.
+By extending the method sequences, another list of method sequences is created such as Listing \ref{lst:randoopError}.
+This list of method sequences throws an error as the \texttt{equals()} method is incorrect as \texttt{a1} is not equal to \texttt{b1} and thus, is a contract-violating test that will be outputted.
+
+\begin{lstlisting}[language=Java, tabsize=3, numbers=left,
+label={lst:randoopJavaProg}, caption={Example Java class}]
+public class A {
+	public A(){ }
+		
+	@Override
+	public boolean equals(Object obj){
+		return true;
+	}
+}
+
+public class B{
+	public B(){ }
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=Java, tabsize=3, numbers=left,
+label={lst:randoopSuccess}, caption={Successful method sequence for testing Listing \ref{lst:randoopJavaProg}}]
+A a1 = new A();
+a1.equals(a1);
+\end{lstlisting}
+
+\begin{lstlisting}[language=Java, tabsize=3, numbers=left,
+label={lst:randoopSuccessTest}, caption={Test output for the successful method sequence in Listing \ref{lst:randoopSuccess}}]
+@Test
+public void test1() {
+	A a1 = new A();
+	assertTrue(a1.equals(a1));
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=Java, tabsize=3, numbers=left,
+label={lst:randoopError}, caption={Contract violating method sequence for testing Listing \ref{lst:randoopJavaProg}}]
+A a1 = new A();
+a1.equals(a1);
+B b1 = new B();
+a1.equals(b1);
+\end{lstlisting}
+
+%A commercial version of QuickCheck in Erlang called Quviq QuickCheck is co-founded by one of the original developers, John Hughes and is an extension of the original QuickCheck for Haskell \cite{QCFunProfit}.
+
+% JCrasher?
+% EvoSuite?
+% Quviq QuickCheck

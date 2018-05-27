@@ -7,17 +7,35 @@
               , a4paper
               , oneside
               , openright
-              ]{report}
+              ]{article}
 
 
 \usepackage{float} % lets you have non-floating floats
 
+\usepackage[usenames, dvipsnames]{color}
 \usepackage{url} % for typesetting urls
-\usepackage{pdfpages}
+\usepackage{pdfpages} % for importing the project proposal
+\usepackage{listings}  % for code
+
+\lstdefinelanguage{Whiley}{
+	keywords={assert, for, while, switch, is, if, case, return,
+		else, process, define, as, requires, ensures, where, no,
+		all, bool, int, byte, void, real, in, any, null, char,
+		string, function, var, method, type, some, reduce, import
+	},
+	keywordstyle=\color{Plum},
+	basicstyle=\ttfamily,
+	commentstyle=\rmfamily\itshape\color{gray},
+	stringstyle=\small\itshape,
+	moredelim=*[s][commentstyle]{/*}{*/}, % allows keyword highlighting inside comments
+	morecomment=[l][commentstyle]{//},      % single line comments are set by...
+	moredelim=*[s][\color{blue}]{"}{"}, % highlighting print statement
+}
+
 %
 %  We don't want figures to float so we define
 %
-\newfloat{fig}{thp}{lof}[chapter]
+\newfloat{fig}{thp}{lof}[section]
 \floatname{fig}{Figure}
 
 %% These are standard LaTeX definitions for the document
@@ -63,9 +81,13 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{abstract}
-
-A short description of the project goes here.
-
+%A short description of the project goes here.
+This report is about the progress accomplished in the project: QuickCheck for Whiley. 
+The project aims to improve software quality of Whiley programs by implementing automated test-case generation. 
+The Whiley language and the automatic test-case generation tools: QuickCheck, Concholic Unit Testing Engine and Randoop are investigated.
+QuickCheck for Whiley has been implemented for random and exhaustive test-case generation with different data types generated and integer range analysis applied using constraints.
+A timeline is created for completing the implementation of function/method call optimisation, mutation testing and evaluation of the tool. 
+Feedback for evaluating the tool is requested.
 \end{abstract}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -89,7 +111,6 @@ A short description of the project goes here.
 \include{workCompleted}
 \include{futurePlan}
 \include{feedback}
-\include{conclusion}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

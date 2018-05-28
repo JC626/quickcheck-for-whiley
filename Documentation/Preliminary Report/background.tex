@@ -3,12 +3,8 @@
 %This should discuss any existing solutions to the given problem, and may reference academic papers, books and other sources as appropriate. Care should be taken to identify key differences between these solutions, and that being developed in the project.
 
 There exists a number of different test case generation tools for different languages such as QuickCheck for Haskell \cite{QClightweight}, Concolic Unit Testing Engine (CUTE) for C \cite{CUTE} and Randoop for Java \cite{randoopJava} and .NET \cite{randoopAll}.
-
-% TODO maybe explain more differences?
-
 QuickCheck for Whiley is specifically created for the Whiley programming language and uses different techniques to generate test data instead of just one technique.
 
-% Something about Whiley, verification and formal specs
 \subsection{Whiley}
 Whiley is a hybrid imperative and functional programming language developed by David Pearce \cite{WhileyPlatform}. The presentation of Whiley resembles an imperative language like Python whereas the core structure is functional and pure \cite{WhileyPlatform}. 
 
@@ -23,12 +19,11 @@ Specifications can be written as pre-conditions (\texttt{requires} clauses) and 
 Specifications can also be written as invariants using \texttt{where} clauses on user defined types (nominal type) or as an invariant on a loop \cite{WhileyPlatform}. 
 
 To be able to execute a Whiley file, it must first be compiled into a WyIL file which is the bytecode form of Whiley in the Whiley Intermediate Language \cite{WhileyPlatform}.
-During compilation, the verifying compiler checks all specifications are met and checks for common errors such as division by zero \cite{WhileyPlatform}. Any errors or failed specifications are detected are reported to the developer to fix. Counter examples are also used within Whiley to notify how the specification can fail however, this functionality is limited to examples within a small range.
+During compilation, the verifying compiler checks all specifications are met and checks for common errors such as division by zero \cite{WhileyPlatform}. Any errors or failed specifications are detected and reported to the developer to fix. Counter examples are also used within Whiley to notify how the specification can fail however, this functionality is limited to examples within a small range.
 The WyIL file can then be executed if it verifies successfully or compiled without verification.
 
 \subsection{QuickCheck}
 QuickCheck is a tool implemented by Koen Claessen and John Hughes \cite{QClightweight} to test Haskell programs.
-
 To check if a program is correct, QuickCheck uses property-based testing which uses conditions that will always hold true \cite{QClightweight}.
 Users define the conditions as Haskell functions in terms of formal specifications to validate functions under test \cite{QClightweight}. 
 
@@ -42,7 +37,6 @@ For example, executing tests for Listing \ref{lst:quickcheckExecute} could be sk
 The distribution of data is controlled by the tester by creating a custom generator for the data type with weighted frequencies on the methods used to generate the data \cite{QClightweight}.
 
 An example of using QuickCheck would be reversing a list.
-
 Firstly, a property is defined in Listing \ref{lst:quickcheckProperty} where the list \texttt{xs}, should be the same as reversing \texttt{xs} twice.
 
 \begin{lstlisting}[language=haskell, label={lst:quickcheckProperty},
@@ -58,7 +52,7 @@ Main:> quickCheck propReverseTwice
 Ok: passed 100 tests.
 \end{lstlisting}
 
-A large number of test cases is created where random input values are generated to check the user-defined property holds. QuickCheck reports various test statistics including the number of tests that have passed or failed \cite{QClightweight}.
+A large number of test cases are created where random input values are generated to check the user-defined property holds. QuickCheck reports various test statistics including the number of tests that have passed or failed \cite{QClightweight}.
 
 \subsection{Concolic Unit Testing Engine (CUTE)}
 Concolic Unit Testing Engine (CUTE) generates test inputs using a combination of symbolic and concrete execution \cite{CUTE}. 

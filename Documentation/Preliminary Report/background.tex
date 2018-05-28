@@ -87,7 +87,8 @@ Running this test will then exhibit the error on line 5.
 %As the test failed the last condition as \texttt{x != 2}, the condition is negated and solved so in the next test, \texttt{x} is set 2 and y remains set to 1. The test will fail at line 4 as \texttt{x >=z}. Therefore, CUTE will then find values that solve the constraints \texttt{x == 2} and \texttt{x < z} such as \texttt{x = 2} and \texttt{ y = 2}. Running this test will then exhibit the error on line 5. 
 
 \begin{lstlisting}[language=C, tabsize=3, numbers=left,
-label={lst:cuteExample}, caption={Example C program}]
+label={lst:cuteExample}, caption={Example C program}, captionpos=b,
+frame=single]
 void foo(int x, int y) {
 	int z = x * y;
 	if(x == 2){
@@ -115,29 +116,30 @@ By extending the method sequences, another list of method sequences is created s
 This list of method sequences throws an error as the \texttt{equals()} method is incorrect as \texttt{a1} is not equal to \texttt{b1} and thus, is a contract-violating test that will be outputted.
 
 \begin{lstlisting}[language=Java, tabsize=3, numbers=left,
-label={lst:randoopJavaProg}, caption={Example Java class}]
+label={lst:randoopJavaProg}, caption={Example Java class},
+captionpos=b, frame=single]
 public class A {
 	public A(){ }
-		
 	@Override
 	public boolean equals(Object obj){
 		return true;
 	}
 }
-
 public class B{
 	public B(){ }
 }
 \end{lstlisting}
 
 \begin{lstlisting}[language=Java, tabsize=3, numbers=left,
-label={lst:randoopSuccess}, caption={Successful method sequence for testing Listing \ref{lst:randoopJavaProg}}]
+label={lst:randoopSuccess}, caption={Successful method sequence for testing Listing \ref{lst:randoopJavaProg}},
+captionpos=b, frame=single]
 A a1 = new A();
 a1.equals(a1);
 \end{lstlisting}
 
 \begin{lstlisting}[language=Java, tabsize=3, numbers=left,
-label={lst:randoopSuccessTest}, caption={Test output for the successful method sequence in Listing \ref{lst:randoopSuccess}}]
+label={lst:randoopSuccessTest}, caption={Test output for the successful method sequence in Listing \ref{lst:randoopSuccess}},
+captionpos=b, frame=single]
 @Test
 public void test1() {
 	A a1 = new A();
@@ -146,7 +148,8 @@ public void test1() {
 \end{lstlisting}
 
 \begin{lstlisting}[language=Java, tabsize=3, numbers=left,
-label={lst:randoopError}, caption={Contract violating method sequence for testing Listing \ref{lst:randoopJavaProg}}]
+label={lst:randoopError}, caption={Contract violating method sequence for testing Listing \ref{lst:randoopJavaProg}},
+captionpos=b, frame=single]
 A a1 = new A();
 a1.equals(a1);
 B b1 = new B();

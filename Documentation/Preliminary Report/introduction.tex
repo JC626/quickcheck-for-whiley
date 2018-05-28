@@ -16,7 +16,7 @@ To achieve this goal, Whiley contains a verifying compiler which employs the use
 Listing \ref{lst:whileyMin} illustrates an example of a Whiley program with a function,  \texttt{min()} which finds the minimum value of two integers. Executing \texttt{min(2, 3)} will return the integer, 2.
 
 \begin{lstlisting}[language=Whiley, tabsize=3, numbers=left,
-label={lst:whileyMin}, caption={Whiley program for the min function}]
+label={lst:whileyMin}, caption={Whiley program for the min function}, captionpos=b]
 function min(int x, int y) -> (int r)
 ensures r == x ==> x <= y
 ensures r == y ==> y <= x:
@@ -30,7 +30,7 @@ Currently, the verifying compiler has limitations when evaluating complex pre- a
 For example in Listing \ref{lst:whileySquare}, the post-condition is falsely identified as not holding by the verifying compiler even though the program does meet the post-condition.
 
 \begin{lstlisting}[language=Whiley, tabsize=3, numbers=left,
-label={lst:whileySquare}, caption={Whiley program for the square function}]
+label={lst:whileySquare}, caption={Whiley program for the square function}, captionpos=b]
 function square(int x) -> (int r)
 	ensures r >= 0:
 	return x*x

@@ -27,7 +27,8 @@ This tells QuickCheck for Whiley to generate 10 tests using exhaustive test case
 When the tool is executed, it outputs several statistics for the user as shown in Listing \ref{lst:whileyQCResults} including the number and percentage of tests that passed and failed and the inputs that failed.
 
 \begin{lstlisting}[language=Whiley, tabsize=3, numbers=left,
-label={lst:whileyAbs}, caption={Whiley program for an incorrect implementation of the abs function}]
+label={lst:whileyAbs}, caption={Whiley program for an incorrect implementation of the abs function},
+captionpos=b]
 function abs(int x) -> (int r)
 ensures r >= 0
 ensures r == x || r == -x:
@@ -35,7 +36,8 @@ ensures r == x || r == -x:
 \end{lstlisting}
 
 \begin{lstlisting}[label={lst:whileyQCResults},
-caption={Results of executing the tool on Listing \ref{lst:whileyAbs}}, ]
+caption={Results of executing the tool on Listing \ref{lst:whileyAbs}},
+captionpos=b, frame=single ]
 Failed Input: [-5] Output: [-5]
 Failed Input: [-4] Output: [-4]
 Failed Input: [-3] Output: [-3]
@@ -62,9 +64,9 @@ Figure \ref{fig:qc-generators} illustrates the structure of the generators used.
 Each generator generates a value. It also has a size for the number of input combinations and \texttt{resetCount()} and \texttt{exceedCount()} methods for monitoring input combinations generated for test case generation.
  
 \begin{figure}
+	\includegraphics[width=\textwidth]{qc-generators}
 	\caption{Class diagram of Generators in QuickCheck for Whiley}
 	\label{fig:qc-generators}
-	\includegraphics[width=\textwidth]{qc-generators}
 	\centering
 \end{figure}
 

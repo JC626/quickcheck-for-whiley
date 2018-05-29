@@ -96,16 +96,22 @@ Each generator generates a value. It also has a size for the number of input com
 
 Generating and checking for invalid inputs is costly in terms of performance. 
 Therefore, it would be beneficial to reduce the number of invalid inputs generated to improve the performance of the tool.
-One method to remove invalid inputs for integers is to shrink the ranges used during generation thus no longer generate invalid inputs.
+One method to remove invalid inputs for integers is to shrink the ranges used during generation, thus preventing the generation of invalid inputs.
 
-For example, define the nominal type, \texttt{type nat is (int x) where x \textgreater= 0} and execute the tool for an integer range between -5 and 5. An integer generator for this input will only generate numbers between 0 and 5; removing the need to generate then discard invalid inputs which are numbers below 0.
+For example, a nominal type is defined, \texttt{type nat is (int x) where x \textgreater= 0} and the tool is executed for an integer range between -5 and 5. An integer generator for this input will only generate numbers between 0 and 5; removing the need to generate then discard invalid inputs which are numbers below 0.
 
 This is implemented by evaluating the constraints within a nominal type to discover integer range generated from the constraint.
-Existing code from \cite{whileyIntegerRangeCode} was used to create the integer ranges which is based off \cite{whileyIntegerRange}.
+Existing code from \cite{whileyIntegerRangeCode} from the work in \cite{whileyIntegerRange} was used to create the integer ranges.
 The discovered integer range is passed down in the nominal generator until it reaches the relevant integer or array generator where it is intersected with an existing range.
 If the ranges are invalid, i.e. the lower range is greater than the upper range then an error is thrown.
 
-Integer ranges are only applied to constraints that follow the format: \texttt{x op c} where \texttt{x} is the named variable in the nominal type, \texttt{op} is an operator out of the set \{\textgreater, \textless, \textgreater=, \textless=, \&\&, $||$, ==\} and \texttt{c} is a constant number.
+A number of issues were encountered when evaluating constraints.
+Constraints with multiple parameters such as \texttt{x < y}, cannot be evaluated as there are no constant values to limit the parameters. 
+Another constraint that is difficult to evaluate is when a constant has additional terms for example, \texttt{x - 2 > 10}. 
+This requires reversing operations so that all constants are evaluated on one side of the constraint (i.e. \texttt{x > 10 + 2}). 
+Therefore, only constraints of the following format is evaluated: \texttt{x op c} where \texttt{x} is the named variable in the nominal type, \texttt{op} is an operator out of the set \{\textgreater, \textless, \textgreater=, \textless=, \&\&, $||$, ==\} and \texttt{c} is a constant number. 
+Currently, integer ranges are only applied to constraints on nominal types. 
+However, this could be extended to arguments using a function or method's precondition.
 
 \subsection{Evaluating the tool}
 \label{subsec:toolEval}

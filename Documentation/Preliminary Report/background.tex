@@ -27,8 +27,10 @@ QuickCheck is a tool implemented by Koen Claessen and John Hughes \cite{QClightw
 To check if a program is correct, QuickCheck uses property-based testing which uses conditions that will always hold true \cite{QClightweight}.
 Users define the conditions as Haskell functions in terms of formal specifications to validate functions under test \cite{QClightweight}. 
 
-QuickCheck then generates a large number of test cases automatically using random testing \cite{QClightweight}. 
-Input values are randomly generated for each test (within a range) using generators that correspond to the input value's type \cite{QClightweight}. 
+QuickCheck then generates a large number of test cases automatically with random testing \cite{QClightweight}. 
+Input values are randomly generated for each test by using generators that correspond to the input value's type \cite{QClightweight}. 
+For quantitative types, a generator generates a value within a defined range such as between -5 and 5 for integers \cite{QClightweight}. 
+For qualitative types, the generator uniformly selects a value that can be generated for that type such as generating true or false for a Boolean \cite{QClightweight}.
 QuickCheck contains generators for most of Haskell's predefined types and for functions \cite{QClightweight}. 
 User-defined types require the tester to specify their own custom generators with a bounded size if the type is recursive such as a binary tree. \cite{QClightweight}. 
 

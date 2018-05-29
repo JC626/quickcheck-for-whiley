@@ -48,11 +48,14 @@ Failed: 5 passed (50.00 %), 5 failed (50.00 %), ran 10 tests
 
 \subsection{Test Case Generation Techniques}
 
-QuickCheck for Whiley currently employs random test case and exhaustive test case generation to generate test cases: 
+QuickCheck for Whiley currently employs random test case and exhaustive test case generation to generate test cases. A test case in QuickCheck for Whiley tests one function or method using a set of generated input values.
 
 \subsubsection{Random Test Case Generation}
 
-A fixed number of tests determined by the user is randomly generated. Previous inputs are not considered which may lead to the same inputs being generated.
+A fixed number of tests determined by the user is randomly generated.
+To randomly generate a value for a particular type, the type is quantified into a numeric range of valid values. 
+A random integer value is pseudorandomly created from a seed and used to select a value out of the range of valid values.
+A problem encountered using random generation is that previous inputs are not considered which may lead to the same inputs being generated.
 Knuth's Algorithm S from \cite{artProgv2} was considered to generate unique inputs to solve this problem but has not been implemented yet.
 
 \subsubsection{Exhaustive Test Case Generation}

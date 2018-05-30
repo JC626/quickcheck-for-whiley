@@ -102,33 +102,34 @@ void foo(int x, int y) {
 \end{lstlisting}
 
 \subsection{Randoop}
-Randoop which stands for random tester for object-oriented programs, generates unit tests using feedback-directed random test generation \cite{randoopAll}, \cite{randoopJava}. Method sequences from previous tests are used to help generate subsequent tests \cite{randoopAll}, \cite{randoopJava}.
+Randoop which stands for random tester for object-oriented programs, generates unit tests using feedback-directed random test generation \cite{randoopAll}, \cite{randoopJava}. 
+Feedback-directed random test generation involves using instances or returned method values from previous successful tests in subsequent tests \cite{randoopJava}.
 As a result, a test suite is outputted with successful and unsuccessful tests \cite{randoopAll}, \cite{randoopJava}.
 
-Randoop tests classes by executing a sequence of methods as a test \cite{randoopJava}. Method sequences are created incrementally by randomly selecting method calls and using arguments from previous sequences \cite{randoopJava}.
-The sequence is then executed and checked against contracts \cite{randoopAll}.
-Contracts are built into Randoop or optionally defined by the user \cite{randoopAll}.
-If a sequence breaks a contract, then the test is outputted as a contract-violating test \cite{randoopAll}. If a sequence was successful, then the test is outputted as a regression test \cite{randoopAll}.
-Successful sequences that are not redundant and can be extended are used in subsequent tests \cite{randoopAll}.
+Randoop creates a unit test incrementally by randomly generating a sequence of methods \cite{randoopAll}.
+Method sequences consist of randomly generated instances from constructors or randomly selected methods from public classes \cite{randoopAll}.
+Input arguments are either randomly generated primitive values, values from the current test, values from previous successful tests or \texttt{null} \cite{randoopAll}.
+Values from previous successful tests are only used if they are not filtered out by user defined filters or Randoop's inbuilt filters \cite{randoopAll}.
+Assertions based on contracts built into Randoop or optionally defined by the user, are created at the end of the test to verify if the test was successful \cite{randoopAll}.
+If the test failed, then the test is outputted as a contract-violating test \cite{randoopAll}. 
+If the test was successful, then the test is outputted as a regression test \cite{randoopAll}.
 
 
 For example, executing Randoop on the Java program in Listing \ref{lst:randoopJavaProg} will produce several tests based on different method sequences.
 One successful list of method sequences could be Listing \ref{lst:randoopSuccess},  which can be re-used in subsequent sequences. It is outputted into a regression test as shown in Listing \ref{lst:randoopSuccessTest}.
 By extending the method sequences, another list of method sequences is created such as Listing \ref{lst:randoopError}.
-This list of method sequences throws an error as the \texttt{equals()} method is incorrect as \texttt{a1} is not equal to \texttt{b1} and thus, is a contract-violating test that will be outputted.
+This list of method sequences throws an error as the \texttt{equals()} method is incorrect as \texttt{a1} is not equal to \texttt{null} and thus, is a contract-violating test that will be outputted.
 
 \begin{lstlisting}[language=Java, tabsize=3, numbers=left,
 label={lst:randoopJavaProg}, caption={Example Java class},
 captionpos=b, frame=single]
 public class A {
 	public A(){ }
+	
 	@Override
 	public boolean equals(Object obj){
 		return true;
 	}
-}
-public class B{
-	public B(){ }
 }
 \end{lstlisting}
 
@@ -153,9 +154,7 @@ public void test1() {
 label={lst:randoopError}, caption={Contract violating method sequence for testing Listing \ref{lst:randoopJavaProg}},
 captionpos=b, frame=single]
 A a1 = new A();
-a1.equals(a1);
-B b1 = new B();
-a1.equals(b1);
+a1.equals(null);
 \end{lstlisting}
 
 %A commercial version of QuickCheck in Erlang called Quviq QuickCheck is co-founded by one of the original developers, John Hughes and is an extension of the original QuickCheck for Haskell \cite{QCFunProfit}.

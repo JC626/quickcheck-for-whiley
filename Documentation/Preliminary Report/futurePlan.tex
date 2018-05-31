@@ -6,9 +6,9 @@
 A working implementation of QuickCheck for Whiley has been completed halfway through the project. However, there are still several components that need to be completed. The key components are described in the following paragraphs.
 
 \begin{description}
-	\item[Optimising function and method calls]
-	Often functions and methods call other functions and methods.
-	However, executing a function or method is expensive.
+	\item[Optimise function and method calls]
+	During execution, functions and methods often call other functions and methods.
+	However, calling and executing a function or method is expensive.
 	Therefore, it would be beneficial to skip execution by generating the return value of the function or method based on its post-condition.
 	As a result of optimising these calls, the performance of the tool will be improved.
 	\item[Mutation testing]

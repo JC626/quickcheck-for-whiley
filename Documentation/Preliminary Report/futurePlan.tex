@@ -3,8 +3,23 @@
 %This should highlight the main components which remain to be done, and provide a proposed time-line in which this will happen. In putting together a time line, students must take into account upcoming examinations, coursework deadlines
 %and other disruptions.
 
-A working implementation of QuickCheck for Whiley has been completed halfway through the project. However, there are still several components that need to be completed.
-A timeline of these components is shown in Table \ref{table:timeline}.
+A working implementation of QuickCheck for Whiley has been completed halfway through the project. However, there are still several components that need to be completed. The key components are described in the following paragraphs.
+
+\begin{description}
+	\item[Optimising function and method calls]
+	Often functions and methods call other functions and methods.
+	However, executing a function or method is expensive.
+	Therefore, it would be beneficial to skip execution by generating the return value of the function or method based on its post-condition.
+	As a result of optimising these calls, the performance of the tool will be improved.
+	\item[Mutation testing]
+	To check if a test can correctly validate a program, a developer would modify a correct implementation of the program and rerun the test.
+	Instead of a developer having to do this manually, it would be helpful to automate this process.
+	This would involve modifying aspects of a Whiley function or method such as changing a operator in an if statement and then executing a test to see if it is able to detect the error in the mutated function or method.
+	The test should pass for a correct implementation of the function or method and fail for the mutated versions.
+	\item[Evaluation of the tool] The automatic test case generator will be evaluated against the Whiley Compiler test suite as indicated in Subsection \ref{subsec:toolEval}. Different test techniques implemented such as random and exhaustive test case generation will be used to generate tests for the test suite. Various statistics from test case generation will then be compared across the different test techniques including speed of execution, number of successive tests and number of errors detected.
+\end{description}
+
+A timeline of the components that need to be completed is shown in Table \ref{table:timeline}.
 
 \begin{table}[H]
 	  \centering
@@ -12,19 +27,19 @@ A timeline of these components is shown in Table \ref{table:timeline}.
 \hline
 \textbf{Output} & \textbf{Estimated Time} & \textbf{Start Date} & \textbf{Complete by}\\
 \hline
-Optimise function and method calls when testing a specific function or method. Executing a function or method is expensive therefore, optimising these calls will improve the performance of the tool. & 3 weeks & 11/6/18 & 2/7/18 (Exam period) \\
+Optimise function and method calls. & 3 weeks & 11/6/18 & 2/7/18 \\
 \hline
-Produce slides for presentation of preliminary report. & 1 week & 2/7/18 & 9/7/18 (Break)\\
+Produce slides for presentation of preliminary report. & 1 week & 2/7/18 & 9/7/18\\
 \hline
-Add mutation testing by mutating aspects of a Whiley file and testing the mutated file. Then compare the results from the mutated files with the original file. & 3 weeks & 9/7/18 & 30/7/18 (Week 3)\\
+Add mutation testing & 3 weeks & 9/7/18 & 30/7/18 \\
 \hline
-Produce draft of final report. & 6 weeks & 30/7/18 & 15/9/18 (Week 7)\\
+Produce draft of final report. & 6 weeks & 30/7/18 & 15/9/18\\
 \hline
-Evaluate the automatic test-case generator using the different test-case generation techniques against a test suite. & 3 weeks & 15/9/18 & 5/10/18 (Week 10) \\
+Evaluate the automatic test case generator. & 3 weeks & 15/9/18 & 5/10/18 \\
 \hline
-Finalise final report. & 2 weeks & 6/10/18 & 21/10/18 (Week 12) \\
+Finalise final report. & 2 weeks & 6/10/18 & 21/10/18\\
 \hline
-Prepare slides for final presentation. & 3 weeks & 22/10/18 & 16/11/18 (Exam period)\\
+Prepare slides for final presentation. & 3 weeks & 22/10/18 & 16/11/18\\
 \hline
 \end{tabular}
 

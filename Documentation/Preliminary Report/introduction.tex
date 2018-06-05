@@ -9,7 +9,6 @@
 % What is automatic test case generation
 
 The detection and elimination of bugs is important in software development as it improves the quality and reliability of software.
-
 To help eliminate errors in code, the Whiley programming language was developed to verify code using formal specifications \cite{WhileyLang}.
 Ideally, programs written in Whiley should be error free \cite{WhileyLang}.
 To achieve this goal, Whiley contains a verifying compiler which employs the use of specifications written by a developer to check for common errors such as accessing an index of an array which is outside its boundaries \cite{WhileyLang}.
@@ -17,7 +16,7 @@ To achieve this goal, Whiley contains a verifying compiler which employs the use
 Listing \ref{lst:whileyMin} illustrates an example of a Whiley program with a function,  \texttt{min()} which finds the minimum value of two integers. Executing \texttt{min(2, 3)} will return the integer, 2.
 
 \begin{lstlisting}[language=Whiley, tabsize=3, numbers=left,
-label={lst:whileyMin}, caption={Whiley program for the min function}]
+label={lst:whileyMin}, caption={Whiley program for the min function}, captionpos=b]
 function min(int x, int y) -> (int r)
 ensures r == x ==> x <= y
 ensures r == y ==> y <= x:
@@ -31,7 +30,7 @@ Currently, the verifying compiler has limitations when evaluating complex pre- a
 For example in Listing \ref{lst:whileySquare}, the post-condition is falsely identified as not holding by the verifying compiler even though the program does meet the post-condition.
 
 \begin{lstlisting}[language=Whiley, tabsize=3, numbers=left,
-label={lst:whileySquare}, caption={Whiley program for the square function}]
+label={lst:whileySquare}, caption={Whiley program for the square function}, captionpos=b]
 function square(int x) -> (int r)
 	ensures r >= 0:
 	return x*x
@@ -40,7 +39,6 @@ function square(int x) -> (int r)
 Consequently, tests would need to be created to detect if there are further problems within the program. However, writing and running tests can be tedious and costly. Furthermore, it is difficult to write tests for all possible cases and be able to detect all bugs. Instead of manually creating tests, a tool could be created that automatically generates and executes tests on a program such as QuickCheck which was implemented in Haskell by Koen Claessen and John Hughes \cite{QClightweight}.
 
 QuickCheck uses property-based testing and random testing \cite{QClightweight}. Properties defined by the user are used to randomly generate and execute an arbitrary number of tests \cite{QClightweight}. 
-
 Random testing has been widely studied in the literature, leading to the creation of new variants and testing techniques including concolic testing \cite{CUTE}, feedback-directed testing \cite{randoopAll}, \cite{randoopJava} and mutation testing \cite{evoSuite}.
 
 %Other tools have drawn inspiration from QuickCheck with variations in testing techniques including concolic testing \cite{CUTE}, feedback-directed testing \cite{randoopAll}, \cite{randoopJava} and mutation testing \cite{evoSuite}.

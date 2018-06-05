@@ -17,6 +17,8 @@
 \usepackage{pdfpages} % for importing the project proposal
 \usepackage{listings}  % for code
 
+\definecolor{light-gray}{gray}{0.93}
+
 \lstdefinelanguage{Whiley}{
 	keywords={assert, for, while, switch, is, if, case, return,
 		else, process, define, as, requires, ensures, where, no,
@@ -24,6 +26,8 @@
 		string, function, var, method, type, some, reduce, import
 	},
 	keywordstyle=\color{Plum},
+	backgroundcolor = \color{light-gray},
+	frame=single,
 	basicstyle=\ttfamily,
 	commentstyle=\rmfamily\itshape\color{gray},
 	stringstyle=\small\itshape,

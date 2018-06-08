@@ -8,7 +8,6 @@ import quickcheck.RunTest;
 import quickcheck.generator.type.*;
 import quickcheck.util.TestType;
 import wybs.lang.NameResolver.ResolutionError;
-import wybs.util.AbstractCompilationUnit.Identifier;
 import wybs.util.AbstractCompilationUnit.Tuple;
 import wyc.lang.WhileyFile;
 import wyc.lang.WhileyFile.Decl;
@@ -89,6 +88,9 @@ public class ExhaustiveGenerateTest implements GenerateTest{
 		}
 		else if(paramType instanceof WhileyFile.Type.Bool) {
 			return new BooleanGenerator(TestType.EXHAUSTIVE);
+		}
+		else if(paramType instanceof WhileyFile.Type.Byte) {
+			return new ByteGenerator(TestType.EXHAUSTIVE);
 		}
 		else if(paramType instanceof WhileyFile.Type.Null) {
 			return new NullGenerator();

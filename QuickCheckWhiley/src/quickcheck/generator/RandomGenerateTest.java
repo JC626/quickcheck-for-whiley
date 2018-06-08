@@ -8,16 +8,13 @@ import quickcheck.RunTest;
 import quickcheck.generator.type.*;
 import quickcheck.util.TestType;
 import wybs.lang.NameResolver.ResolutionError;
-import wybs.util.AbstractCompilationUnit.Identifier;
 import wybs.util.AbstractCompilationUnit.Tuple;
 import wyc.lang.WhileyFile;
 import wyc.lang.WhileyFile.Decl;
 import wyc.lang.WhileyFile.Decl.FunctionOrMethod;
 import wyc.lang.WhileyFile.Decl.Variable;
-import wyc.lang.WhileyFile.Expr;
 import wyil.interpreter.ConcreteSemantics.RValue;
 import wyil.interpreter.Interpreter;
-import wyil.type.TypeSystem;
 
 /**
  * Generate candidate test parameters for a function randomly.
@@ -63,6 +60,9 @@ public class RandomGenerateTest implements GenerateTest{
 		}
 		else if(paramType instanceof WhileyFile.Type.Bool) {
 			return new BooleanGenerator(TestType.RANDOM);
+		}
+		else if(paramType instanceof WhileyFile.Type.Byte) {
+			return new ByteGenerator(TestType.RANDOM);
 		}
 		else if(paramType instanceof WhileyFile.Type.Null) {
 			return new NullGenerator();

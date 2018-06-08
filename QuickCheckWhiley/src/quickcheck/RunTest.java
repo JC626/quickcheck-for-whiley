@@ -153,7 +153,7 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 			testGen = new ExhaustiveGenerateTest(dec, interpreter, numTest, lower, upper);
 		}
 		else {
-			testGen = new RandomGenerateTest(dec, interpreter, lower, upper);
+            testGen = new RandomGenerateTest(dec, interpreter, numTest, lower, upper);
 		}
 		// Get the function's relevant header information
 		NameID name = new NameID(id, dec.getName().get());

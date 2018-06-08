@@ -1,6 +1,9 @@
 package quickcheck.generator.type;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 import quickcheck.constraints.IntegerRange;
@@ -34,12 +37,41 @@ public final class IntegerGenerator implements Generator {
 
 	private int size;
 	private int count = 1;
+	
+    private int numTests;
+    private int numTested;
+    
+    private List<BigInteger> testValues;
 
-	public IntegerGenerator(TestType testType, BigInteger lower, BigInteger upper) {
+    public IntegerGenerator(TestType testType, int numTests, BigInteger lower, BigInteger upper) {
 		this.testType = testType;
+        this.numTests = numTests;
 		this.range = new IntegerRange(lower, upper);
 		checkValidRange();
 		calculateSize();
+
+		// Random inputs use Knuth's Algorithm S
+		if(testType == TestType.RANDOM) {
+			testValues = new ArrayList<BigInteger>();
+			BigInteger count = range.lowerBound();
+			int selected = 0; 
+			while(selected < numTests) {
+				double uniform = randomiser.nextDouble();
+				if((size - count.intValue())*uniform >= numTests - selected) {
+					count = count.add(BigInteger.valueOf(1));
+				}
+				else {
+					testValues.add(count);
+					count = count.add(BigInteger.valueOf(1));
+					selected++;
+				}
+				if(count.compareTo(range.upperBound()) >= 0) {
+					count = lower;
+				}
+			}
+			//  Shuffle test values so they are not in order
+			Collections.shuffle(testValues);
+		}
 	}
 	
 	@Override
@@ -54,15 +86,18 @@ public final class IntegerGenerator implements Generator {
 			count++;
 			return semantics.Int(value);
 		}
-		else {
-			boolean negateValue = range.lowerBound().compareTo(new BigInteger("0")) < 0;
-			do {
-			    value = new BigInteger(range.upperBound().bitLength(), randomiser);
-				if(negateValue && !randomiser.nextBoolean()) {
-					value = value.negate();
-				}
-			} while (value.compareTo(range.upperBound()) >= 0 || value.compareTo(range.lowerBound()) < 0);
-			return semantics.Int(value);
+		else {			
+			int index = count - 1;
+			count++;
+			return semantics.Int(testValues.get(index));
+//			boolean negateValue = range.lowerBound().compareTo(new BigInteger("0")) < 0;
+//			do {
+//			    value = new BigInteger(range.upperBound().bitLength(), randomiser);
+//				if(negateValue && !randomiser.nextBoolean()) {
+//					value = value.negate();
+//				}
+//			} while (value.compareTo(range.upperBound()) >= 0 || value.compareTo(range.lowerBound()) < 0);
+//			return semantics.Int(value);
 		}
 	}
 	

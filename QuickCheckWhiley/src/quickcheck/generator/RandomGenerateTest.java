@@ -34,10 +34,13 @@ public class RandomGenerateTest implements GenerateTest{
 	
 	private BigInteger lowerLimit;
 	private BigInteger upperLimit;
+	
+    private int numTests;
 		
-	public RandomGenerateTest(FunctionOrMethod dec, Interpreter interpreter, BigInteger lowerLimit, BigInteger upperLimit) {
+    public RandomGenerateTest(FunctionOrMethod dec, Interpreter interpreter, int numTests, BigInteger lowerLimit, BigInteger upperLimit) {
 		super();
 		this.dec = dec;
+        this.numTests = numTests;
 		this.interpreter = interpreter;
 		this.lowerLimit = lowerLimit;
 		this.upperLimit = upperLimit;
@@ -56,7 +59,7 @@ public class RandomGenerateTest implements GenerateTest{
 	 */
 	private Generator getGenerator(WhileyFile.Type paramType) {
 		if(paramType instanceof WhileyFile.Type.Int) {
-			return new IntegerGenerator(TestType.RANDOM, lowerLimit, upperLimit);
+			return new IntegerGenerator(TestType.RANDOM, numTests, lowerLimit, upperLimit);
 		}
 		else if(paramType instanceof WhileyFile.Type.Bool) {
 			return new BooleanGenerator(TestType.RANDOM);

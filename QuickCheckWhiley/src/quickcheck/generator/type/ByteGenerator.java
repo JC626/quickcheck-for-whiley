@@ -43,7 +43,7 @@ public class ByteGenerator implements Generator{
 			int value = -1;
 			do {
 			    value = randomiser.nextInt(UPPER_LIMIT);
-			} while (((Integer) value).compareTo(LOWER_LIMIT) >= 0 || ((Integer) value).compareTo(UPPER_LIMIT) < 0);
+			} while (((Integer) value).compareTo(UPPER_LIMIT) >= 0 || ((Integer) value).compareTo(LOWER_LIMIT) < 0);
 			return semantics.Byte((byte) value);
 		}
 	}

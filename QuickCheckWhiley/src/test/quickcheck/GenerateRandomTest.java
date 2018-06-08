@@ -590,4 +590,22 @@ public class GenerateRandomTest {
 			fail("Generated parameter from Union should be a Int or Bool but was " + generatedParameters[0]);
 		}
 	}
+	
+	/**
+	 * Test when the function has 1 byte parameter
+	 */
+	@Test
+	public void testByte() {
+		Decl.Variable byteParam = new Decl.Variable(null, new Identifier("firstByte"), Type.Byte);
+		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(byteParam);
+		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
+		BigInteger lower = BigInteger.valueOf(-2);
+		BigInteger upper = BigInteger.valueOf(4);
+		GenerateTest testGen = new RandomGenerateTest(func, baseInterpreter, lower, upper);
+		for(int i=0; i < 10; i++) {
+			RValue[] generatedParameters = testGen.generateParameters();
+			assertEquals(1, generatedParameters.length);
+			assertTrue(generatedParameters[0] instanceof RValue.Byte);
+		}
+	}
 }

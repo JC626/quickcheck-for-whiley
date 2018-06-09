@@ -1,6 +1,8 @@
 package quickcheck.generator.type;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -25,14 +27,13 @@ public class ArrayGenerator implements Generator{
 	/** Used for generating appropriate values */
 	private static final ConcreteSemantics semantics = new ConcreteSemantics();
 	
-	/** Randomise values produced */
-	private static Random randomiser = new Random();
-	
 	private TestType testType;
 	/** Generators corresponding to each array element */
 	private List<Generator> generators;
 	/** Current array elements generated */
 	private RValue[] arrElements;
+	/**Array sizes for random test generation*/
+	private List<Integer> testSizes;
 	
 	/** Lower limit (inclusive) and upper limit (exclusive) for the size of the array generated */
 	private IntegerRange range;
@@ -41,14 +42,40 @@ public class ArrayGenerator implements Generator{
 	/** Number of combinations completed so far for the current size of the array */
 	private int currentCombinations;
 	private int count = 1;
+	
 
-	public ArrayGenerator(List<Generator> generators, TestType testType, int lower, int upper) {
+	public ArrayGenerator(List<Generator> generators, TestType testType, int numTests, int lower, int upper) {
 		this.generators = generators;
 		this.testType = testType;
 		this.range = new IntegerRange(lower, upper + 1);
 		this.currentCombinations = 0;
 		checkValidRange();
 		calculateSize();
+		
+		// Random inputs use Knuth's Algorithm S
+		if(testType == TestType.RANDOM) {
+			Random randomiser = new Random(); 
+			testSizes = new ArrayList<Integer>();
+			int nextSize = range.lowerBound().intValue();
+			int selected = 0; 
+			while(selected < numTests) {
+				double uniform = randomiser.nextDouble();
+				if((size() - nextSize)*uniform >= numTests - selected) {
+					nextSize++;
+				}
+				else {
+					assert nextSize < range.upperBound().intValue();
+					testSizes.add(nextSize);
+					nextSize++;
+					selected++;
+				}
+				if(nextSize >= range.upperBound().intValue()) {
+					nextSize = range.lowerBound().intValue();
+				}
+			}
+			//  Shuffle test values so they are not in order
+			Collections.shuffle(testSizes);
+		}
 	}
 	
 	@Override
@@ -98,9 +125,9 @@ public class ArrayGenerator implements Generator{
 			}
 		}
 		else {
-			int size = randomiser.nextInt(range.upperBound().intValue() - range.lowerBound().intValue()) + range.lowerBound().intValue();
-			RValue[] array = new RValue[size];
-			assert size <= generators.size();
+			int index = count - 1;
+			RValue[] array = new RValue[testSizes.get(index)];
+			assert array.length <= generators.size();
 			for(int i=0; i < array.length; i++) {
 				array[i] = generators.get(i).generate();
 			}

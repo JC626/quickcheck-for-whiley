@@ -77,7 +77,7 @@ public class RandomGenerateTest implements GenerateTest{
 				Generator gen = getGenerator(arrEle);
 				generators.add(gen);
 			}
-			return new ArrayGenerator(generators, TestType.RANDOM, RunTest.ARRAY_LOWER_LIMIT, RunTest.ARRAY_UPPER_LIMIT);
+			return new ArrayGenerator(generators, TestType.RANDOM, numTests, RunTest.ARRAY_LOWER_LIMIT, RunTest.ARRAY_UPPER_LIMIT);
 		}
 		else if(paramType instanceof WhileyFile.Type.Nominal) {
 			// Nominal generator takes another generator

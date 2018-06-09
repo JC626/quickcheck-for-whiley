@@ -84,10 +84,10 @@ public class ExhaustiveGenerateTest implements GenerateTest{
 	 */
 	private Generator getGenerator(WhileyFile.Type paramType) {
 		if(paramType instanceof WhileyFile.Type.Int) {
-			return new IntegerGenerator(TestType.EXHAUSTIVE, lowerLimit, upperLimit);
+			return new IntegerGenerator(TestType.EXHAUSTIVE, numTests, lowerLimit, upperLimit);
 		}
 		else if(paramType instanceof WhileyFile.Type.Bool) {
-			return new BooleanGenerator(TestType.EXHAUSTIVE);
+			return new BooleanGenerator(TestType.EXHAUSTIVE, numTests);
 		}
 		else if(paramType instanceof WhileyFile.Type.Byte) {
 			return new ByteGenerator(TestType.EXHAUSTIVE);

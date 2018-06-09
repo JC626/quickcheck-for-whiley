@@ -62,7 +62,7 @@ public class RandomGenerateTest implements GenerateTest{
 			return new IntegerGenerator(TestType.RANDOM, numTests, lowerLimit, upperLimit);
 		}
 		else if(paramType instanceof WhileyFile.Type.Bool) {
-			return new BooleanGenerator(TestType.RANDOM);
+			return new BooleanGenerator(TestType.RANDOM, numTests);
 		}
 		else if(paramType instanceof WhileyFile.Type.Byte) {
 			return new ByteGenerator(TestType.RANDOM);

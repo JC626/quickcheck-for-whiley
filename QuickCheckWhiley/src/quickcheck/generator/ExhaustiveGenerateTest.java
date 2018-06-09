@@ -90,7 +90,7 @@ public class ExhaustiveGenerateTest implements GenerateTest{
 			return new BooleanGenerator(TestType.EXHAUSTIVE, numTests);
 		}
 		else if(paramType instanceof WhileyFile.Type.Byte) {
-			return new ByteGenerator(TestType.EXHAUSTIVE);
+			return new ByteGenerator(TestType.EXHAUSTIVE, numTests);
 		}
 		else if(paramType instanceof WhileyFile.Type.Null) {
 			return new NullGenerator();

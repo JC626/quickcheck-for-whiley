@@ -1,5 +1,8 @@
 package quickcheck.generator.type;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 import quickcheck.util.TestType;
@@ -19,17 +22,40 @@ public class ByteGenerator implements Generator{
 	/** Used for generating appropriate values */
 	private static final ConcreteSemantics semantics = new ConcreteSemantics();
 	
-	/** Randomise values produced */
-	private static Random randomiser = new Random();
-	
 	private TestType testType;
 	private int LOWER_LIMIT = 0;
 	private int UPPER_LIMIT = 256;
 
 	private int count = 1;
 	
-	public ByteGenerator(TestType testType) {
+	private List<Byte> testValues;
+	
+	public ByteGenerator(TestType testType, int numTests) {
 		this.testType = testType;
+		
+		// Random inputs use Knuth's Algorithm S
+		if(testType == TestType.RANDOM) {
+			Random randomiser = new Random();
+			testValues = new ArrayList<Byte>();
+			int nextVal = LOWER_LIMIT;
+			int selected = 0; 
+			while(selected < numTests) {
+				double uniform = randomiser.nextDouble();
+				if((size() - nextVal)*uniform >= numTests - selected) {
+					nextVal++;
+				}
+				else {
+					testValues.add((byte) nextVal);
+					nextVal++;
+					selected++;
+				}
+				if(nextVal >= UPPER_LIMIT) {
+					nextVal = LOWER_LIMIT;
+				}
+			}
+			//  Shuffle test values so they are not in order
+			Collections.shuffle(testValues);
+		}
 	}
 
 	@Override
@@ -40,11 +66,14 @@ public class ByteGenerator implements Generator{
 			return semantics.Byte(binary);
 		}
 		else {
-			int value = -1;
-			do {
-			    value = randomiser.nextInt(UPPER_LIMIT);
-			} while (((Integer) value).compareTo(UPPER_LIMIT) >= 0 || ((Integer) value).compareTo(LOWER_LIMIT) < 0);
-			return semantics.Byte((byte) value);
+			int index = count -1;
+			count++;
+			return semantics.Byte(testValues.get(index));
+//			int value = -1;
+//			do {
+//			    value = randomiser.nextInt(UPPER_LIMIT);
+//			} while (((Integer) value).compareTo(UPPER_LIMIT) >= 0 || ((Integer) value).compareTo(LOWER_LIMIT) < 0);
+//			return semantics.Byte((byte) value);
 		}
 	}
 

@@ -2,6 +2,7 @@ package quickcheck.generator.type;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -33,7 +34,7 @@ public class ArrayGenerator implements Generator{
 	/** Current array elements generated */
 	private RValue[] arrElements;
 	/**Array sizes for random test generation*/
-	private List<Integer> testSizes;
+	private List<Integer> testCombos;
 	
 	/** Lower limit (inclusive) and upper limit (exclusive) for the size of the array generated */
 	private IntegerRange range;
@@ -51,36 +52,35 @@ public class ArrayGenerator implements Generator{
 		this.currentCombinations = 0;
 		checkValidRange();
 		calculateSize();
-		
+				
 		// Random inputs use Knuth's Algorithm S
 		if(testType == TestType.RANDOM) {
 			Random randomiser = new Random(); 
-			testSizes = new ArrayList<Integer>();
-			int nextSize = range.lowerBound().intValue();
+			testCombos = new ArrayList<Integer>();
+			int nextCombo = 1;
 			int selected = 0; 
 			while(selected < numTests) {
 				double uniform = randomiser.nextDouble();
-				if((size() - nextSize)*uniform >= numTests - selected) {
-					nextSize++;
+				if((size() - nextCombo)*uniform >= numTests - selected) {
+					nextCombo++;
 				}
 				else {
-					assert nextSize < range.upperBound().intValue();
-					testSizes.add(nextSize);
-					nextSize++;
+					testCombos.add(nextCombo);
+					nextCombo++;
 					selected++;
 				}
-				if(nextSize >= range.upperBound().intValue()) {
-					nextSize = range.lowerBound().intValue();
+				if(nextCombo >= size()) {
+					nextCombo = 1;
 				}
 			}
 			//  Shuffle test values so they are not in order
-			Collections.shuffle(testSizes);
+			Collections.shuffle(testCombos);
 		}
 	}
 	
 	@Override
 	public RValue generate() {
-		if(testType == TestType.EXHAUSTIVE) {
+ 		if(testType == TestType.EXHAUSTIVE) {
 			// Empty array
 			if(count == 1 && range.lowerBound().equals(BigInteger.valueOf(0))) {
 				count++;
@@ -124,17 +124,66 @@ public class ArrayGenerator implements Generator{
 				return semantics.Array(arrElements);
 			}
 		}
-		else {
+ 		else {
 			int index = count - 1;
-			RValue[] array = new RValue[testSizes.get(index)];
-			assert array.length <= generators.size();
-			for(int i=0; i < array.length; i++) {
-				array[i] = generators.get(i).generate();
-			}
 			count++;
-			return semantics.Array(array);
+			return generateCombination(testCombos.get(index));
+ 			// TODO Apply Algorithm S like it is exhaustive generation? Hmmm
+ 			// TODO then need to know combination buckets each size corresponds to
+ 			// TODO then need to be able to generate the ith combination
+ 		}
+//		else {
+//			int index = count - 1;
+//			RValue[] array = new RValue[testCombos.get(index)];
+//			assert array.length <= generators.size();
+//			for(int i=0; i < array.length; i++) {
+//				array[i] = generators.get(i).generate();
+//			}
+//			count++;
+//			return semantics.Array(array);
+//		}
+
+	}
+	
+	@Override
+	public RValue generateCombination(int comboNum) {
+		if(comboNum == 1) {
+			return semantics.Array(new RValue[0]);
+		}
+		else { 
+//			System.out.println("Combo: " + comboNum);
+			int arrSize = 1;
+			int leftover = comboNum - 2;
+			while(leftover > 0) {
+				int generatorRange = generators.get(arrSize - 1).size();
+				double sub = Math.pow(generatorRange, arrSize);
+//				System.out.println("Sub " + sub);
+				if(leftover - sub < 0) {
+					break;
+				}
+				leftover -= sub;
+				arrSize++;
+			}
+//			System.out.println("Leftover " + leftover);
+//			System.out.println("Array size " + arrSize);
+			RValue[] elements = new RValue[arrSize];
+			for(int i=arrSize - 1; i >= 0 ; i--) {
+				Generator gen = generators.get(i);
+				int divNum = (int) Math.pow(gen.size(), i);
+				int num = leftover;
+				// Note: Num is always rounded down
+				if(divNum != 0) {
+					num /= divNum;
+				}
+//				System.out.println("Div " + divNum);
+//				System.out.println(combo);
+				elements[arrSize-i-1] = gen.generateCombination(num);
+				leftover -= num * divNum;
+			}
+			return semantics.Array(elements);
 		}
 	}
+
 	
 	private void checkValidRange() {
 		// Throw an error if the range is bigger than the other

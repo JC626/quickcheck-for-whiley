@@ -19,6 +19,11 @@ public interface Generator{
 	public RValue generate();
 	
 	/**
+	 * Generate a test value for a type based on the specific combination
+	 */
+	public RValue generateCombination(int comboNum);
+	
+	/**
 	 * Get the number of unique values that could be generated.
 	 * @return The number of unique values/combinations that can be generated.
 	 */

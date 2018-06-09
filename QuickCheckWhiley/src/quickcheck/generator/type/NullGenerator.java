@@ -1,5 +1,7 @@
 package quickcheck.generator.type;
 
+import java.math.BigInteger;
+
 import wyil.interpreter.ConcreteSemantics;
 import wyil.interpreter.ConcreteSemantics.RValue;
 
@@ -22,6 +24,11 @@ public class NullGenerator implements Generator{
 	@Override
 	public RValue generate() {
 		generated = true;
+		return semantics.Null();
+	}
+	
+	@Override
+	public RValue generateCombination(int comboNum) {
 		return semantics.Null();
 	}
 

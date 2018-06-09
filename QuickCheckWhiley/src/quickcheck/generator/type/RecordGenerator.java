@@ -90,6 +90,12 @@ public class RecordGenerator implements Generator{
 			return semantics.Record(recordFields.clone());
 		}
 	}
+	
+	@Override
+	public RValue generateCombination(int comboNum) {
+		// TODO
+		return null;
+	}
 
 	/**
 	 * Check the ranges on the invariants against the generators.

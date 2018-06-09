@@ -75,6 +75,12 @@ public final class UnionGenerator implements Generator {
 			return generators.get(index).generate();
 		}
 	}
+	
+	@Override
+	public RValue generateCombination(int comboNum) {
+		// TODO
+		return null;
+	}
 
 	/**
 	 * Check the ranges on the invariants against the generators.

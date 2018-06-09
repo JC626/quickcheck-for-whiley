@@ -34,15 +34,11 @@ public final class IntegerGenerator implements Generator {
 
 	private int size;
 	private int count = 1;
-	
-    private int numTests;
-    private int numTested;
-    
+	    
     private List<BigInteger> testValues;
 
     public IntegerGenerator(TestType testType, int numTests, BigInteger lower, BigInteger upper) {
 		this.testType = testType;
-        this.numTests = numTests;
 		this.range = new IntegerRange(lower, upper);
 		checkValidRange();
 		calculateSize();
@@ -97,6 +93,12 @@ public final class IntegerGenerator implements Generator {
 //			} while (value.compareTo(range.upperBound()) >= 0 || value.compareTo(range.lowerBound()) < 0);
 //			return semantics.Int(value);
 		}
+	}
+	
+	@Override
+	public RValue generateCombination(int comboNum) {
+		BigInteger value = range.lowerBound().add(BigInteger.valueOf(comboNum));
+		return semantics.Int(value);
 	}
 	
 	private void checkValidRange() {

@@ -45,6 +45,7 @@ public class NominalGenerator implements Generator{
 		int i = 1;
 		RValue value = null;
 		while(isValid == RValue.Bool.False) {
+			// TODO if random test generation and it fails, need to generate another value!
 			value = generator.generate();
 			isValid = value.checkInvariant(decl.getVariableDeclaration(), decl.getInvariant(), interpreter);
 			// No valid values
@@ -55,6 +56,11 @@ public class NominalGenerator implements Generator{
 			i++;
 		}
 		return value;
+	}
+	
+	@Override
+	public RValue generateCombination(int comboNum) {
+		return generator.generateCombination(comboNum);
 	}
 
 	/**

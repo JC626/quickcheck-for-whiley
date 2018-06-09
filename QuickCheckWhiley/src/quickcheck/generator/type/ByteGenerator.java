@@ -76,6 +76,11 @@ public class ByteGenerator implements Generator{
 //			return semantics.Byte((byte) value);
 		}
 	}
+	
+	@Override
+	public RValue generateCombination(int comboNum) {
+		return semantics.Byte((byte) comboNum);
+	}
 
 	@Override
 	public int size() {

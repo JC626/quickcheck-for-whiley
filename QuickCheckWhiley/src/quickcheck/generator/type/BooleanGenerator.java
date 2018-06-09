@@ -65,6 +65,12 @@ public final class BooleanGenerator implements Generator {
 		return semantics.Bool(testValues.get(index));
 //		return semantics.Bool(randomiser.nextBoolean());
 	}
+	
+	@Override
+	public RValue generateCombination(int comboNum) {
+		return semantics.Bool(comboNum == 0);
+	}
+
 
 	@Override
 	public int size() {

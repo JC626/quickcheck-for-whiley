@@ -25,9 +25,6 @@ public final class IntegerGenerator implements Generator {
 	/** Used for generating appropriate values */
 	private static final ConcreteSemantics semantics = new ConcreteSemantics();
 	
-	/** Randomise values produced */
-	private static Random randomiser = new Random();
-	
 	private TestType testType;
 	
 	/** Lower limit (inclusive) for the integer generated */
@@ -52,21 +49,22 @@ public final class IntegerGenerator implements Generator {
 
 		// Random inputs use Knuth's Algorithm S
 		if(testType == TestType.RANDOM) {
+			Random randomiser = new Random();
 			testValues = new ArrayList<BigInteger>();
-			BigInteger count = range.lowerBound();
+			BigInteger nextVal = range.lowerBound();
 			int selected = 0; 
 			while(selected < numTests) {
 				double uniform = randomiser.nextDouble();
-				if((size - count.intValue())*uniform >= numTests - selected) {
-					count = count.add(BigInteger.valueOf(1));
+				if((size - nextVal.intValue())*uniform >= numTests - selected) {
+					nextVal = nextVal.add(BigInteger.valueOf(1));
 				}
 				else {
-					testValues.add(count);
-					count = count.add(BigInteger.valueOf(1));
+					testValues.add(nextVal);
+					nextVal = nextVal.add(BigInteger.valueOf(1));
 					selected++;
 				}
-				if(count.compareTo(range.upperBound()) >= 0) {
-					count = lower;
+				if(nextVal.compareTo(range.upperBound()) >= 0) {
+					nextVal = lower;
 				}
 			}
 			//  Shuffle test values so they are not in order

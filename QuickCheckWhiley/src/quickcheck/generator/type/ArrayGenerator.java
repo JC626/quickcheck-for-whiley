@@ -98,10 +98,11 @@ public class ArrayGenerator implements Generator{
 			}
 		}
 		else {
-			int size = randomiser.nextInt(range.upperBound().intValue() - range.lowerBound().intValue() + 1) + range.lowerBound().intValue();
+			int size = randomiser.nextInt(range.upperBound().intValue() - range.lowerBound().intValue()) + range.lowerBound().intValue();
 			RValue[] array = new RValue[size];
+			assert size <= generators.size();
 			for(int i=0; i < array.length; i++) {
-				array[i] = generators.get(0).generate();
+				array[i] = generators.get(i).generate();
 			}
 			count++;
 			return semantics.Array(array);

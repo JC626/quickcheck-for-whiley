@@ -65,6 +65,23 @@ public class ByteGenerator implements Generator{
 			count++;
 			return semantics.Byte(binary);
 		}
+ 		else if(count >= testValues.size()) {
+ 			Random randomiser = new Random(); 
+			int nextCombo = 0;
+			int selected = 0; 
+			while(true) {
+				double uniform = randomiser.nextDouble();
+				if((size() - nextCombo)*uniform >= 1 - selected) {
+					nextCombo++;
+				}
+				else {
+					return generateCombination(nextCombo);
+				}
+				if(nextCombo >= size()) {
+					nextCombo = 0;
+				}
+			}
+ 		}
 		else {
 			int index = count -1;
 			count++;

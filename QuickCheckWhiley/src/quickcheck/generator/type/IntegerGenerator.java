@@ -80,6 +80,23 @@ public final class IntegerGenerator implements Generator {
 			count++;
 			return semantics.Int(value);
 		}
+ 		else if(count >= testValues.size()) {
+ 			Random randomiser = new Random(); 
+			BigInteger nextVal = range.lowerBound();
+			int selected = 0; 
+			while(true) {
+				double uniform = randomiser.nextDouble();
+				if((size - nextVal.intValue())*uniform >= 1 - selected) {
+					nextVal = nextVal.add(BigInteger.valueOf(1));
+				}
+				else {
+					return semantics.Int(nextVal);
+				}
+				if(nextVal.compareTo(range.upperBound()) >= 0) {
+					nextVal = range.lowerBound();
+				}
+			}
+ 		}
 		else {			
 			int index = count - 1;
 			count++;

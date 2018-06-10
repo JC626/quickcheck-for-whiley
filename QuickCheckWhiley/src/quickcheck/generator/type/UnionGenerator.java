@@ -12,7 +12,6 @@ import wybs.util.AbstractCompilationUnit.Tuple;
 import wyc.lang.WhileyFile.Expr;
 import wyil.interpreter.Interpreter;
 import wyil.interpreter.ConcreteSemantics.RValue;
-import wyil.interpreter.ConcreteSemantics.RValue.Field;
 
 /**
  * Generate values for the union type.
@@ -28,9 +27,6 @@ import wyil.interpreter.ConcreteSemantics.RValue.Field;
  *
  */
 public final class UnionGenerator implements Generator {
-	/** Randomise values produced */
-	private static Random randomiser = new Random();
-
 	/** Generators corresponding to each type in the union*/
 	private List<Generator> generators;
 	/**Index of the next generator used for generating values (exhaustive)*/
@@ -97,6 +93,23 @@ public final class UnionGenerator implements Generator {
 			currentIndex++;
 			count++;
 			return currentGen.generate();
+		}
+		else if(count >= testCombos.size()) {
+			Random randomiser = new Random(); 
+			int nextCombo = 0;
+			int selected = 0; 
+			while(true) {
+				double uniform = randomiser.nextDouble();
+				if((size() - nextCombo)*uniform >= 1 - selected) {
+					nextCombo++;
+				}
+				else {
+					return generateCombination(nextCombo);
+				}
+				if(nextCombo >= size()) {
+					nextCombo = 0;
+				}
+			}
 		}
 		else {
 			int index = count - 1;

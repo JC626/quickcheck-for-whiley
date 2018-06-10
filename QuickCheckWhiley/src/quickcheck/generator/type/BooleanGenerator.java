@@ -60,6 +60,23 @@ public final class BooleanGenerator implements Generator {
 			count++;
 			return semantics.Bool(count % 2 == 0);
 		}
+ 		else if(count >= testValues.size()) {
+ 			Random randomiser = new Random(); 
+			int nextVal = 0;
+			int selected = 0; 
+			while(true) {
+				double uniform = randomiser.nextDouble();
+				if((size() - nextVal)*uniform >= 1 - selected) {
+					nextVal++;
+				}
+				else {
+					return semantics.Bool(nextVal == 0);
+				}
+				if(nextVal > 1) {
+					nextVal = 0;
+				}
+			}
+ 		}
 		int index = count - 1;
 		count++;
 		return semantics.Bool(testValues.get(index));

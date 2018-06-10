@@ -1,7 +1,5 @@
 package quickcheck.generator.type;
 
-import java.math.BigInteger;
-
 import wyil.interpreter.ConcreteSemantics;
 import wyil.interpreter.ConcreteSemantics.RValue;
 

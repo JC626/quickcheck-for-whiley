@@ -53,7 +53,7 @@ public final class UnionGenerator implements Generator {
 		if(testType == TestType.RANDOM) {
 			Random randomiser = new Random(); 
 			testCombos = new ArrayList<Integer>();
-			int nextCombo = 1;
+			int nextCombo = 0;
 			int selected = 0; 
 			while(selected < numTests) {
 				double uniform = randomiser.nextDouble();
@@ -66,7 +66,7 @@ public final class UnionGenerator implements Generator {
 					selected++;
 				}
 				if(nextCombo >= size()) {
-					nextCombo = 1;
+					nextCombo = 0;
 				}
 			}
 			//  Shuffle test values so they are not in order
@@ -112,14 +112,14 @@ public final class UnionGenerator implements Generator {
 	
 	@Override
 	public RValue generateCombination(int comboNum) {
-		int lowerLimit = 1;
+		int lowerLimit = 0;
 		Generator gen = generators.get(0);
 		for(int i=0; i< generators.size(); i++) {
 			gen = generators.get(i);
-			if(lowerLimit <= comboNum && comboNum <= gen.size() + lowerLimit) {
+			if(lowerLimit <= comboNum && comboNum < gen.size() + lowerLimit) {
 				break;
 			}
-			lowerLimit = gen.size() + 1;
+			lowerLimit = gen.size();
 		}
 		return gen.generateCombination(comboNum - lowerLimit);
 	}

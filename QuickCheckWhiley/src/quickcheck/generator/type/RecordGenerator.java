@@ -58,7 +58,7 @@ public class RecordGenerator implements Generator{
 		if(testType == TestType.RANDOM) {
 			Random randomiser = new Random(); 
 			testCombos = new ArrayList<Integer>();
-			int nextCombo = 1;
+			int nextCombo = 0;
 			int selected = 0; 
 			while(selected < numTests) {
 				double uniform = randomiser.nextDouble();
@@ -71,7 +71,7 @@ public class RecordGenerator implements Generator{
 					selected++;
 				}
 				if(nextCombo >= size()) {
-					nextCombo = 1;
+					nextCombo = 0;
 				}
 			}
 			//  Shuffle test values so they are not in order
@@ -128,7 +128,7 @@ public class RecordGenerator implements Generator{
 	@Override
 	public RValue generateCombination(int comboNum) {
 		Field[] recordFields = new Field[generators.size()];
-		int leftover = comboNum - 1;
+		int leftover = comboNum;
 		for(int i=0; i < recordFields.length ; i++) {
 			int divNum = 1;
 			for(int j = i+1; j < recordFields.length; j++ ) {

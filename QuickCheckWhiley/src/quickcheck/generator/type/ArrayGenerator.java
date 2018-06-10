@@ -2,7 +2,6 @@ package quickcheck.generator.type;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -33,7 +32,7 @@ public class ArrayGenerator implements Generator{
 	private List<Generator> generators;
 	/** Current array elements generated */
 	private RValue[] arrElements;
-	/**Array sizes for random test generation*/
+	/**Combinations for random test generation*/
 	private List<Integer> testCombos;
 	
 	/** Lower limit (inclusive) and upper limit (exclusive) for the size of the array generated */
@@ -57,7 +56,7 @@ public class ArrayGenerator implements Generator{
 		if(testType == TestType.RANDOM) {
 			Random randomiser = new Random(); 
 			testCombos = new ArrayList<Integer>();
-			int nextCombo = 1;
+			int nextCombo = 0;
 			int selected = 0; 
 			while(selected < numTests) {
 				double uniform = randomiser.nextDouble();
@@ -70,7 +69,7 @@ public class ArrayGenerator implements Generator{
 					selected++;
 				}
 				if(nextCombo >= size()) {
-					nextCombo = 1;
+					nextCombo = 0;
 				}
 			}
 			//  Shuffle test values so they are not in order
@@ -128,9 +127,6 @@ public class ArrayGenerator implements Generator{
 			int index = count - 1;
 			count++;
 			return generateCombination(testCombos.get(index));
- 			// TODO Apply Algorithm S like it is exhaustive generation? Hmmm
- 			// TODO then need to know combination buckets each size corresponds to
- 			// TODO then need to be able to generate the ith combination
  		}
 //		else {
 //			int index = count - 1;
@@ -147,13 +143,13 @@ public class ArrayGenerator implements Generator{
 	
 	@Override
 	public RValue generateCombination(int comboNum) {
-		if(comboNum == 1) {
+		if(comboNum == 0) {
 			return semantics.Array(new RValue[0]);
 		}
 		else { 
 //			System.out.println("Combo: " + comboNum);
 			int arrSize = 1;
-			int leftover = comboNum - 2;
+			int leftover = comboNum - 1;
 			while(leftover > 0) {
 				int generatorRange = generators.get(arrSize - 1).size();
 				double sub = Math.pow(generatorRange, arrSize);

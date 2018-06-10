@@ -126,7 +126,7 @@ public class RandomGenerateTest implements GenerateTest{
 						continue;
 					}
 				}
-				Generator gen = getGenerator(union.get(i));
+				Generator gen = getGenerator(unionFieldType);
 				if(!generators.contains(gen)) {
 					generators.add(gen);
 				}

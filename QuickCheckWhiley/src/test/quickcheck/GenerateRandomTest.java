@@ -244,7 +244,7 @@ public class GenerateRandomTest {
 	}
 	
 	/**
-	 * Test when the function has a integer array
+	 * Test when the function has a byte array
 	 */
 	@Test
 	public void testArraySingleByte() {

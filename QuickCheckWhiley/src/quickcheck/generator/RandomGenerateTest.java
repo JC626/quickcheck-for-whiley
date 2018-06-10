@@ -116,7 +116,7 @@ public class RandomGenerateTest implements GenerateTest{
 					generators.add(gen);
 				}
 			}
-			return new UnionGenerator(generators, TestType.RANDOM);
+			return new UnionGenerator(generators, TestType.RANDOM, numTests);
 		}
 		assert false;
 		return null;

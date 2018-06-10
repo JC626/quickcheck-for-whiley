@@ -141,7 +141,7 @@ public class ExhaustiveGenerateTest implements GenerateTest{
 					generators.add(gen);
 				}
 			}
-			return new UnionGenerator(generators, TestType.EXHAUSTIVE);
+			return new UnionGenerator(generators, TestType.EXHAUSTIVE, numTests);
 		}
 		assert false;
 		return null;

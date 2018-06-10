@@ -103,7 +103,7 @@ public class RandomGenerateTest implements GenerateTest{
 				fields.add(var);
 				generators.add(gen);
 			}
-			return new RecordGenerator(generators, fields, TestType.EXHAUSTIVE);
+			return new RecordGenerator(generators, fields, TestType.RANDOM, numTests);
 		}
 		else if(paramType instanceof WhileyFile.Type.Union) {
 			WhileyFile.Type.Union union = (WhileyFile.Type.Union) paramType;

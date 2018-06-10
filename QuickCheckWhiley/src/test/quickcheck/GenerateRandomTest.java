@@ -244,6 +244,27 @@ public class GenerateRandomTest {
 	}
 	
 	/**
+	 * Test when the function has a byte array
+	 */
+	@Test
+	public void testArraySingleByte() {
+		Decl.Variable arrayParam = new Decl.Variable(null, new Identifier("byteArr"), new Type.Array(Type.Byte));
+		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(arrayParam);
+		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
+		BigInteger lower = BigInteger.valueOf(-10);
+		BigInteger upper = BigInteger.valueOf(10);
+		GenerateTest testGen = new RandomGenerateTest(func, baseInterpreter, lower, upper);
+		RValue[] generatedParameters = testGen.generateParameters();
+		assertEquals(1, generatedParameters.length);
+		assertTrue(generatedParameters[0] instanceof RValue.Array);
+		RValue.Array arr = (Array) generatedParameters[0];
+		RValue[] elements = arr.getElements();
+		for(int i=0; i < elements.length; i++) {
+			assertTrue(elements[i] instanceof RValue.Byte);
+		}
+	}
+	
+	/**
 	 * Test when the function has multiple arrays,
 	 * a boolean and a integer array
 	 */

@@ -306,6 +306,51 @@ public class GenerateExhaustiveTest {
 	}
 	
 	/**
+	 * Test when the function has a byte array	
+	 */
+	@Test
+	public void testArraySingleByte() {
+		Decl.Variable arrayParam = new Decl.Variable(null, new Identifier("byteArr"), new Type.Array(Type.Byte));
+		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(arrayParam);
+		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
+		BigInteger lower = BigInteger.valueOf(0);
+		BigInteger upper = BigInteger.valueOf(3);
+		GenerateTest testGen = new ExhaustiveGenerateTest(func, baseInterpreter, 40, lower, upper);
+		// Empty
+		RValue[] generatedParameters = testGen.generateParameters();
+		assertEquals(1, generatedParameters.length);
+		assertEquals(semantics.Array(new RValue[0]), generatedParameters[0]);
+		// Single
+		for(int i=0; i < 256; i++) {
+			generatedParameters = testGen.generateParameters();
+			assertEquals(1, generatedParameters.length);
+			RValue[] expected = {semantics.Byte((byte) i)};
+			assertEquals(semantics.Array(expected), generatedParameters[0]);
+		}
+		// 2 elements
+		for(int i=0; i < 256; i++) {
+			for(int j=0; j < 256; j++) {
+				generatedParameters = testGen.generateParameters();
+				assertEquals(1, generatedParameters.length);
+				RValue[] expected = {semantics.Byte((byte) i), semantics.Byte((byte) j)};
+				assertEquals(semantics.Array(expected), generatedParameters[0]);
+			}
+	
+		}
+		// 3 elements
+		for(int i=0; i < 256; i++) {
+			for(int j=0; j < 256; j++) {
+				for(int k=0; k < 256; k++) {
+					generatedParameters = testGen.generateParameters();
+					assertEquals(1, generatedParameters.length);
+					RValue[] expected = {semantics.Byte((byte) i), semantics.Byte((byte) j), semantics.Byte((byte) k)};
+					assertEquals(semantics.Array(expected), generatedParameters[0]);
+				}
+			}
+		}
+	}
+	
+	/**
 	 * Test when the function has multiple arrays,
 	 * a boolean and a integer array
 	 */

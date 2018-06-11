@@ -1,5 +1,8 @@
 package quickcheck.generator.type;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 import quickcheck.util.TestType;
@@ -18,14 +21,37 @@ public final class BooleanGenerator implements Generator {
 	/** Used for generating appropriate values */
 	private static final ConcreteSemantics semantics = new ConcreteSemantics();
 	
-	/** Randomise values produced */
-	private static Random randomiser = new Random();
+	private List<Boolean> testValues;
 	
 	private TestType testType;
 	private int count = 1;
 
-	public BooleanGenerator(TestType testType) {
+	public BooleanGenerator(TestType testType, int numTests) {
 		this.testType = testType;
+		
+		// Random inputs use Knuth's Algorithm S
+		if(testType == TestType.RANDOM) {
+			Random randomiser = new Random(); 
+			testValues = new ArrayList<Boolean>();
+			int nextVal = 0;
+			int selected = 0; 
+			while(selected < numTests) {
+				double uniform = randomiser.nextDouble();
+				if((size() - nextVal)*uniform >= numTests - selected) {
+					nextVal++;
+				}
+				else {
+					testValues.add(nextVal == 0);
+					nextVal++;
+					selected++;
+				}
+				if(nextVal > 1) {
+					nextVal = 0;
+				}
+			}
+			//  Shuffle test values so they are not in order
+			Collections.shuffle(testValues);
+		}
 	}
 
 	@Override
@@ -34,8 +60,34 @@ public final class BooleanGenerator implements Generator {
 			count++;
 			return semantics.Bool(count % 2 == 0);
 		}
-		return semantics.Bool(randomiser.nextBoolean());
+ 		else if(count >= testValues.size()) {
+ 			Random randomiser = new Random(); 
+			int nextVal = 0;
+			int selected = 0; 
+			while(true) {
+				double uniform = randomiser.nextDouble();
+				if((size() - nextVal)*uniform >= 1 - selected) {
+					nextVal++;
+				}
+				else {
+					return semantics.Bool(nextVal == 0);
+				}
+				if(nextVal > 1) {
+					nextVal = 0;
+				}
+			}
+ 		}
+		int index = count - 1;
+		count++;
+		return semantics.Bool(testValues.get(index));
+//		return semantics.Bool(randomiser.nextBoolean());
 	}
+	
+	@Override
+	public RValue generateCombination(int comboNum) {
+		return semantics.Bool(comboNum == 0);
+	}
+
 
 	@Override
 	public int size() {

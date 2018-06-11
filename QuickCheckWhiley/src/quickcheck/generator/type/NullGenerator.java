@@ -24,6 +24,11 @@ public class NullGenerator implements Generator{
 		generated = true;
 		return semantics.Null();
 	}
+	
+	@Override
+	public RValue generateCombination(int comboNum) {
+		return semantics.Null();
+	}
 
 	@Override
 	public int size() {

@@ -56,6 +56,11 @@ public class NominalGenerator implements Generator{
 		}
 		return value;
 	}
+	
+	@Override
+	public RValue generateCombination(int comboNum) {
+		return generator.generateCombination(comboNum);
+	}
 
 	/**
 	 * Check the ranges on the invariants against the generators.

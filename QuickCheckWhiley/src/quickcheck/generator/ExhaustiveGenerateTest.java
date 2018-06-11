@@ -88,13 +88,13 @@ public class ExhaustiveGenerateTest implements GenerateTest{
 	 */
 	private Generator getGenerator(WhileyFile.Type paramType) {
 		if(paramType instanceof WhileyFile.Type.Int) {
-			return new IntegerGenerator(TestType.EXHAUSTIVE, lowerLimit, upperLimit);
+			return new IntegerGenerator(TestType.EXHAUSTIVE, numTests, lowerLimit, upperLimit);
 		}
 		else if(paramType instanceof WhileyFile.Type.Bool) {
-			return new BooleanGenerator(TestType.EXHAUSTIVE);
+			return new BooleanGenerator(TestType.EXHAUSTIVE, numTests);
 		}
 		else if(paramType instanceof WhileyFile.Type.Byte) {
-			return new ByteGenerator(TestType.EXHAUSTIVE);
+			return new ByteGenerator(TestType.EXHAUSTIVE, numTests);
 		}
 		else if(paramType instanceof WhileyFile.Type.Null) {
 			return new NullGenerator();
@@ -106,7 +106,7 @@ public class ExhaustiveGenerateTest implements GenerateTest{
 				Generator gen = getGenerator(arrEle);
 				generators.add(gen);
 			}
-			return new ArrayGenerator(generators, TestType.EXHAUSTIVE, RunTest.ARRAY_LOWER_LIMIT, RunTest.ARRAY_UPPER_LIMIT);
+			return new ArrayGenerator(generators, TestType.EXHAUSTIVE, numTests, RunTest.ARRAY_LOWER_LIMIT, RunTest.ARRAY_UPPER_LIMIT);
 		}
 		else if(paramType instanceof WhileyFile.Type.Nominal) {
 			// Nominal generator takes another generator
@@ -137,7 +137,7 @@ public class ExhaustiveGenerateTest implements GenerateTest{
 				fields.add(var);
 				generators.add(gen);
 			}
-			return new RecordGenerator(generators, fields, TestType.EXHAUSTIVE);
+			return new RecordGenerator(generators, fields, TestType.EXHAUSTIVE, numTests);
 		}
 		else if(paramType instanceof WhileyFile.Type.Union) {
 			WhileyFile.Type.Union union = (WhileyFile.Type.Union) paramType;
@@ -158,7 +158,7 @@ public class ExhaustiveGenerateTest implements GenerateTest{
 					generators.add(gen);
 				}
 			}
-			return new UnionGenerator(generators, TestType.EXHAUSTIVE);
+			return new UnionGenerator(generators, TestType.EXHAUSTIVE, numTests);
 		}
 		assert false;
 		return null;

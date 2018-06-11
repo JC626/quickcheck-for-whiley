@@ -38,11 +38,13 @@ public class RandomGenerateTest implements GenerateTest{
 	private BigInteger lowerLimit;
 	private BigInteger upperLimit;
 	
+    private int numTests;
 	private Map<Name, Integer> recursiveType = new HashMap<Name, Integer>();
 		
-	public RandomGenerateTest(FunctionOrMethod dec, Interpreter interpreter, BigInteger lowerLimit, BigInteger upperLimit) {
+    public RandomGenerateTest(FunctionOrMethod dec, Interpreter interpreter, int numTests, BigInteger lowerLimit, BigInteger upperLimit) {
 		super();
 		this.dec = dec;
+        this.numTests = numTests;
 		this.interpreter = interpreter;
 		this.lowerLimit = lowerLimit;
 		this.upperLimit = upperLimit;
@@ -61,13 +63,13 @@ public class RandomGenerateTest implements GenerateTest{
 	 */
 	private Generator getGenerator(WhileyFile.Type paramType) {
 		if(paramType instanceof WhileyFile.Type.Int) {
-			return new IntegerGenerator(TestType.RANDOM, lowerLimit, upperLimit);
+			return new IntegerGenerator(TestType.RANDOM, numTests, lowerLimit, upperLimit);
 		}
 		else if(paramType instanceof WhileyFile.Type.Bool) {
-			return new BooleanGenerator(TestType.RANDOM);
+			return new BooleanGenerator(TestType.RANDOM, numTests);
 		}
 		else if(paramType instanceof WhileyFile.Type.Byte) {
-			return new ByteGenerator(TestType.RANDOM);
+			return new ByteGenerator(TestType.RANDOM, numTests);
 		}
 		else if(paramType instanceof WhileyFile.Type.Null) {
 			return new NullGenerator();
@@ -79,7 +81,7 @@ public class RandomGenerateTest implements GenerateTest{
 				Generator gen = getGenerator(arrEle);
 				generators.add(gen);
 			}
-			return new ArrayGenerator(generators, TestType.RANDOM, RunTest.ARRAY_LOWER_LIMIT, RunTest.ARRAY_UPPER_LIMIT);
+			return new ArrayGenerator(generators, TestType.RANDOM, numTests, RunTest.ARRAY_LOWER_LIMIT, RunTest.ARRAY_UPPER_LIMIT);
 		}
 		else if(paramType instanceof WhileyFile.Type.Nominal) {
 			// Nominal generator takes another generator
@@ -110,7 +112,7 @@ public class RandomGenerateTest implements GenerateTest{
 				fields.add(var);
 				generators.add(gen);
 			}
-			return new RecordGenerator(generators, fields, TestType.RANDOM);
+			return new RecordGenerator(generators, fields, TestType.RANDOM, numTests);
 		}
 		else if(paramType instanceof WhileyFile.Type.Union) {
 			WhileyFile.Type.Union union = (WhileyFile.Type.Union) paramType;
@@ -131,7 +133,7 @@ public class RandomGenerateTest implements GenerateTest{
 					generators.add(gen);
 				}
 			}
-			return new UnionGenerator(generators, TestType.RANDOM);
+			return new UnionGenerator(generators, TestType.RANDOM, numTests);
 		}
 		assert false;
 		return null;

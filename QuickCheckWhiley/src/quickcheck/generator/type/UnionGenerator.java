@@ -1,5 +1,7 @@
 package quickcheck.generator.type;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -25,24 +27,47 @@ import wyil.interpreter.ConcreteSemantics.RValue;
  *
  */
 public final class UnionGenerator implements Generator {
-	/** Randomise values produced */
-	private static Random randomiser = new Random();
-
 	/** Generators corresponding to each type in the union*/
 	private List<Generator> generators;
 	/**Index of the next generator used for generating values (exhaustive)*/
 	private int currentIndex;
+	/**Combinations for random test generation*/
+	private List<Integer> testCombos;
 
 	private TestType testType;
 
 	private int size = 0;
 	private int count = 1;
 
-	public UnionGenerator(List<Generator> generators, TestType testType) {
+	public UnionGenerator(List<Generator> generators, TestType testType, int numTests) {
 		this.generators = generators;
 		this.testType = testType;
 		currentIndex = 0;
 		calculateSize();
+		
+		// Random inputs use Knuth's Algorithm S
+		if(testType == TestType.RANDOM) {
+			Random randomiser = new Random(); 
+			testCombos = new ArrayList<Integer>();
+			int nextCombo = 0;
+			int selected = 0; 
+			while(selected < numTests) {
+				double uniform = randomiser.nextDouble();
+				if((size() - nextCombo)*uniform >= numTests - selected) {
+					nextCombo++;
+				}
+				else {
+					testCombos.add(nextCombo);
+					nextCombo++;
+					selected++;
+				}
+				if(nextCombo >= size()) {
+					nextCombo = 0;
+				}
+			}
+			//  Shuffle test values so they are not in order
+			Collections.shuffle(testCombos);
+		}
 	}
 
 	@Override
@@ -69,11 +94,47 @@ public final class UnionGenerator implements Generator {
 			count++;
 			return currentGen.generate();
 		}
-		else {
-			// Pick a random generator to generate tests
-			int index = randomiser.nextInt(generators.size());
-			return generators.get(index).generate();
+		else if(count >= testCombos.size()) {
+			Random randomiser = new Random(); 
+			int nextCombo = 0;
+			int selected = 0; 
+			while(true) {
+				double uniform = randomiser.nextDouble();
+				if((size() - nextCombo)*uniform >= 1 - selected) {
+					nextCombo++;
+				}
+				else {
+					return generateCombination(nextCombo);
+				}
+				if(nextCombo >= size()) {
+					nextCombo = 0;
+				}
+			}
 		}
+		else {
+			int index = count - 1;
+			count++;
+			return generateCombination(testCombos.get(index));
+		}
+//		else {
+//			// Pick a random generator to generate tests
+//			int index = randomiser.nextInt(generators.size());
+//			return generators.get(index).generate();
+//		}
+	}
+	
+	@Override
+	public RValue generateCombination(int comboNum) {
+		int lowerLimit = 0;
+		Generator gen = generators.get(0);
+		for(int i=0; i< generators.size(); i++) {
+			gen = generators.get(i);
+			if(lowerLimit <= comboNum && comboNum < gen.size() + lowerLimit) {
+				break;
+			}
+			lowerLimit = gen.size();
+		}
+		return gen.generateCombination(comboNum - lowerLimit);
 	}
 
 	/**

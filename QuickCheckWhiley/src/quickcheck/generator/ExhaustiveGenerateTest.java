@@ -2,12 +2,15 @@ package quickcheck.generator;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import quickcheck.RunTest;
 import quickcheck.generator.type.*;
 import quickcheck.util.TestType;
 import wybs.lang.NameResolver.ResolutionError;
+import wybs.util.AbstractCompilationUnit.Name;
 import wybs.util.AbstractCompilationUnit.Tuple;
 import wyc.lang.WhileyFile;
 import wyc.lang.WhileyFile.Decl;
@@ -54,6 +57,7 @@ public class ExhaustiveGenerateTest implements GenerateTest{
 	private BigInteger lowerLimit;
 	private BigInteger upperLimit;
 
+	private Map<Name, Integer> recursiveType = new HashMap<Name, Integer>();
 	
 	public ExhaustiveGenerateTest(FunctionOrMethod dec, Interpreter interpreter, int numTests, BigInteger lowerLimit, BigInteger upperLimit) {
 		this.dec = dec;
@@ -110,7 +114,12 @@ public class ExhaustiveGenerateTest implements GenerateTest{
 			try {
 				Decl.Type decl = interpreter.getTypeSystem().resolveExactly(nom.getName(), Decl.Type.class);
 				Decl.Variable var = decl.getVariableDeclaration();
+				Name name = nom.getName();
+				recursiveType.put(name, recursiveType.getOrDefault(name, -1) + 1);
 				Generator gen = getGenerator(var.getType());
+				if(recursiveType.get(name) == 0) {
+					recursiveType.remove(name);
+				}
 				return new NominalGenerator(gen, interpreter, decl);
 			} catch (ResolutionError e) {
 				// TODO What to do with resolution error?
@@ -136,7 +145,15 @@ public class ExhaustiveGenerateTest implements GenerateTest{
 			// and it is highly unlikely a user would have a very large union
 			List<Generator> generators = new ArrayList<Generator>();
 			for(int i=0; i < union.size(); i++) {
-				Generator gen = getGenerator(union.get(i));
+				WhileyFile.Type unionFieldType = union.get(i);
+				if(unionFieldType instanceof WhileyFile.Type.Nominal) {
+					WhileyFile.Type.Nominal nom = (WhileyFile.Type.Nominal) unionFieldType;
+					if(recursiveType.getOrDefault(nom.getName(), 0) >= RunTest.RECURSIVE_LIMIT) {
+						// No longer be able to generate the nominal type
+						continue;
+					}
+				}
+				Generator gen = getGenerator(unionFieldType);
 				if(!generators.contains(gen)) {
 					generators.add(gen);
 				}

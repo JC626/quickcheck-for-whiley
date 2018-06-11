@@ -306,6 +306,51 @@ public class GenerateExhaustiveTest {
 	}
 	
 	/**
+	 * Test when the function has a byte array	
+	 */
+	@Test
+	public void testArraySingleByte() {
+		Decl.Variable arrayParam = new Decl.Variable(null, new Identifier("byteArr"), new Type.Array(Type.Byte));
+		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(arrayParam);
+		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
+		BigInteger lower = BigInteger.valueOf(0);
+		BigInteger upper = BigInteger.valueOf(3);
+		GenerateTest testGen = new ExhaustiveGenerateTest(func, baseInterpreter, 40, lower, upper);
+		// Empty
+		RValue[] generatedParameters = testGen.generateParameters();
+		assertEquals(1, generatedParameters.length);
+		assertEquals(semantics.Array(new RValue[0]), generatedParameters[0]);
+		// Single
+		for(int i=0; i < 256; i++) {
+			generatedParameters = testGen.generateParameters();
+			assertEquals(1, generatedParameters.length);
+			RValue[] expected = {semantics.Byte((byte) i)};
+			assertEquals(semantics.Array(expected), generatedParameters[0]);
+		}
+		// 2 elements
+		for(int i=0; i < 256; i++) {
+			for(int j=0; j < 256; j++) {
+				generatedParameters = testGen.generateParameters();
+				assertEquals(1, generatedParameters.length);
+				RValue[] expected = {semantics.Byte((byte) i), semantics.Byte((byte) j)};
+				assertEquals(semantics.Array(expected), generatedParameters[0]);
+			}
+	
+		}
+		// 3 elements
+		for(int i=0; i < 256; i++) {
+			for(int j=0; j < 256; j++) {
+				for(int k=0; k < 256; k++) {
+					generatedParameters = testGen.generateParameters();
+					assertEquals(1, generatedParameters.length);
+					RValue[] expected = {semantics.Byte((byte) i), semantics.Byte((byte) j), semantics.Byte((byte) k)};
+					assertEquals(semantics.Array(expected), generatedParameters[0]);
+				}
+			}
+		}
+	}
+	
+	/**
 	 * Test when the function has multiple arrays,
 	 * a boolean and a integer array
 	 */
@@ -769,6 +814,75 @@ public class GenerateExhaustiveTest {
 		RValue[] generatedParameters = testGen.generateParameters();
 		assertEquals(1, generatedParameters.length);
 		assertEquals(semantics.Byte((byte) 0), generatedParameters[0]);
+	}
+	
+	/**
+	 * Test a recursive type
+	 * @throws IOException 
+	 */
+	@Test
+	public void testRecursiveType() throws IOException {
+		String testName = "recursive_1";
+		helper.compile(testName);
+		Build.Project project = helper.createProject();
+		Interpreter interpreter = new Interpreter(project, System.out);
+		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		
+		BigInteger lower = BigInteger.valueOf(0);
+		BigInteger upper = BigInteger.valueOf(2);	
+		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), interpreter, 40, lower, upper);
+		
+		RValue.Field[] fields = new RValue.Field[2];
+		fields[0] = semantics.Field(new Identifier("data"), semantics.Int(BigInteger.valueOf(0)));
+		fields[1] = semantics.Field(new Identifier("n"), semantics.Null());
+		RValue.Record expectedRecordOne = semantics.Record(fields);
+		fields = new RValue.Field[2];
+		fields[0] = semantics.Field(new Identifier("data"), semantics.Int(BigInteger.valueOf(1)));
+		fields[1] = semantics.Field(new Identifier("n"), semantics.Null());
+		RValue.Record expectedRecordTwo = semantics.Record(fields);
+
+		RValue[] generatedParameters = testGen.generateParameters();
+		assertEquals(1, generatedParameters.length);
+		assertEquals(expectedRecordOne, generatedParameters[0]);
+		
+		generatedParameters = testGen.generateParameters();
+		assertEquals(1, generatedParameters.length);
+		assertEquals(expectedRecordTwo, generatedParameters[0]);
+		
+		// 2 elements
+		for(int i=0; i < 2; i++) {
+			RValue.Record expectedFirst = i == 0 ? expectedRecordOne : expectedRecordTwo;
+			for(int j=0; j < 2; j++) {
+				generatedParameters = testGen.generateParameters();
+				assertEquals(1, generatedParameters.length);
+				RValue.Record record = (Record) generatedParameters[0];
+				RValue first = record.read(new Identifier("n"));
+				assertEquals(expectedFirst, first);
+				RValue second = record.read(new Identifier("data"));
+				assertEquals(semantics.Int(BigInteger.valueOf(j)), second);
+			}
+		}
+		// 3 elements
+		for(int i=0; i < 2; i++) {
+			RValue.Record expectedFirst = i == 0 ? expectedRecordOne : expectedRecordTwo;
+			for(int j=0; j < 2; j++) {
+				for(int k=0; k < 2; k++) {
+					generatedParameters = testGen.generateParameters();
+					assertEquals(1, generatedParameters.length);
+					RValue.Record record = (Record) generatedParameters[0];
+					RValue first = record.read(new Identifier("n"));
+
+					RValue.Record innerRecord = (Record) first;
+					RValue innerFirst = innerRecord.read(new Identifier("n"));
+					assertEquals(expectedFirst, innerFirst);
+					RValue innerSecond = innerRecord.read(new Identifier("data"));
+					assertEquals(semantics.Int(BigInteger.valueOf(j)), innerSecond);
+					
+					RValue second = record.read(new Identifier("data"));
+					assertEquals(semantics.Int(BigInteger.valueOf(k)), second);
+				}
+			}
+		}
 	}
 	
 }

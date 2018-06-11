@@ -1,5 +1,6 @@
 \documentclass[]{article}
 
+\usepackage{hyperref}
 %opening
 \title{ENGR489 Meeting Minutes \\ QuickCheck for Whiley}
 \author{Janice Chin \\ Primary Supervisor: David Pearce \\ Secondary Supervisor: Lindsay Groves}
@@ -315,6 +316,55 @@ None
  \item Talk about issues encountered during implementation e.g. the difficulty of integer range analysis, recursive types, open records.
  \item Add time taken to run the tests. Why are two different integer ranges used in the tests (to limit number of combinations).
  \item Example test techniques in request for feedback
+\end{itemize}
+
+\section{June 11th 2018}
+\subsection{Present}
+\begin{itemize}
+	\item David Pearce
+\end{itemize}
+
+\subsection{Action points were achieved since the last meeting}
+\begin{itemize}
+	\item Byte generator
+	\item Implemented Algorithm S for random test generation. Was not sure if this should be added in as there could be bias in the results due to sampling without replacement.
+	\item Bounded recursive type generation - bounded to a depth of 3
+\end{itemize}
+\subsection{Action points have yet to be achieved since the last meeting}
+None
+\subsection{Action points were agreed to for the next meeting}
+
+\begin{itemize}
+	\item Start optimising function calls. This is by replacing the execution of the function/method with a randomly generated value. If same function is called again with the same arguments, it should ideally return the same value.
+\end{itemize}
+
+\subsection{Discussion Points}
+\begin{itemize}
+	\item Algorithm S - random testing. Would be good to talk about the design and tradeoffs in the final report! Included should be fairness issue, performance cost, how it was implemented. 
+	\item For random testing, it might be good to look at \url{http://homepages.ecs.vuw.ac.nz/%7Edjp/files/GPCE17_preprint.pdf}
+	\item Record returned values for functions. Same inputs == same outputs. executeInvoke should be called. 
+	Override the interpreter.
+	\item How is it affecting the data for function optimisation? Invalid tests - are you finding the bugs?
+	\item Ideally by the end of the mid-tri break (in tri2), should finish experiments for evaluation.
+	\item Mutation testing should be done before the mid-tri break.
+	\item QuickCheck versus verification for finding bugs and performance is interesting.
+	\item Future extensions: References and methods
+	\item This code does not verify, gets empty type error.
+	Due to spaces VS indentation.
+	
+	\begin{verbatim}
+	type Fun is function(int) -> int
+	
+	function map(int[] items, Fun fn) -> int[]
+	requires |items| > 0 
+	requires all { i in 0..|items| | items[i] > 0}:
+	    int i = 0
+	    while i < |items|
+	    where 0 <= i && i <= |items|:
+	        items[i] = fn(items[i])
+	        i = i + 1
+		return items
+	\end{verbatim}
 \end{itemize}
 
 

@@ -11,6 +11,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import quickcheck.QCInterpreter;
 import quickcheck.constraints.IntegerRange;
 import quickcheck.generator.ExhaustiveGenerateTest;
 import quickcheck.generator.GenerateTest;
@@ -138,7 +139,7 @@ public class RangeTest {
 		String testName = "nominal_int_and";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
-		Interpreter interpreter = new Interpreter(project, System.out);
+		Interpreter interpreter = new QCInterpreter(project, System.out);
 		List<Decl.Function> functions = helper.getFunctions(testName, project);
 
 		BigInteger lower = BigInteger.valueOf(-5);
@@ -171,7 +172,7 @@ public class RangeTest {
 		String testName = "nominal_int_or";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
-		Interpreter interpreter = new Interpreter(project, System.out);
+		Interpreter interpreter = new QCInterpreter(project, System.out);
 		List<Decl.Function> functions = helper.getFunctions(testName, project);
 
 		BigInteger lower = BigInteger.valueOf(-5);
@@ -210,7 +211,7 @@ public class RangeTest {
 		String testName = "nominal_int_not";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
-		Interpreter interpreter = new Interpreter(project, System.out);
+		Interpreter interpreter = new QCInterpreter(project, System.out);
 		List<Decl.Function> functions = helper.getFunctions(testName, project);
 
 		BigInteger lower = BigInteger.valueOf(-5);
@@ -243,7 +244,7 @@ public class RangeTest {
 		String testName = "nominal_int_multi_1";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
-		Interpreter interpreter = new Interpreter(project, System.out);
+		Interpreter interpreter = new QCInterpreter(project, System.out);
 		List<Decl.Function> functions = helper.getFunctions(testName, project);
 
 		BigInteger lower = BigInteger.valueOf(-5);
@@ -276,7 +277,7 @@ public class RangeTest {
 		String testName = "nominal_int_multi_2";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
-		Interpreter interpreter = new Interpreter(project, System.out);
+		Interpreter interpreter = new QCInterpreter(project, System.out);
 		List<Decl.Function> functions = helper.getFunctions(testName, project);
 
 		BigInteger lower = BigInteger.valueOf(-5);
@@ -310,7 +311,7 @@ public class RangeTest {
 		String testName = "nominal_int_invalid";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
-		Interpreter interpreter = new Interpreter(project, System.out);
+		Interpreter interpreter = new QCInterpreter(project, System.out);
 		List<Decl.Function> functions = helper.getFunctions(testName, project);
 
 		BigInteger lower = BigInteger.valueOf(-5);
@@ -336,7 +337,7 @@ public class RangeTest {
 		String testName = "nominal_int_equals";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
-		Interpreter interpreter = new Interpreter(project, System.out);
+		Interpreter interpreter = new QCInterpreter(project, System.out);
 		List<Decl.Function> functions = helper.getFunctions(testName, project);
 
 		BigInteger lower = BigInteger.valueOf(-5);
@@ -370,7 +371,7 @@ public class RangeTest {
 		String testName = "record_invariant_1";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
-		Interpreter interpreter = new Interpreter(project, System.out);
+		Interpreter interpreter = new QCInterpreter(project, System.out);
 		List<Decl.Function> functions = helper.getFunctions(testName, project);
 
 		BigInteger lower = BigInteger.valueOf(-5);
@@ -410,7 +411,7 @@ public class RangeTest {
 		String testName = "record_invariant_2";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
-		Interpreter interpreter = new Interpreter(project, System.out);
+		Interpreter interpreter = new QCInterpreter(project, System.out);
 		List<Decl.Function> functions = helper.getFunctions(testName, project);
 
 		BigInteger lower = BigInteger.valueOf(-5);
@@ -450,7 +451,7 @@ public class RangeTest {
 		String testName = "nominal_array_1";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
-		Interpreter interpreter = new Interpreter(project, System.out);
+		Interpreter interpreter = new QCInterpreter(project, System.out);
 		List<Decl.Function> functions = helper.getFunctions(testName, project);
 
 		BigInteger lower = BigInteger.valueOf(0);
@@ -500,7 +501,7 @@ public class RangeTest {
 		String testName = "nominal_record_array";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
-		Interpreter interpreter = new Interpreter(project, System.out);
+		Interpreter interpreter = new QCInterpreter(project, System.out);
 		List<Decl.Function> functions = helper.getFunctions(testName, project);
 
 		BigInteger lower = BigInteger.valueOf(-5);
@@ -562,7 +563,7 @@ public class RangeTest {
 		String testName = "nominal_double_1";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
-		Interpreter interpreter = new Interpreter(project, System.out);
+		Interpreter interpreter = new QCInterpreter(project, System.out);
 		List<Decl.Function> functions = helper.getFunctions(testName, project);
 
 		BigInteger lower = BigInteger.valueOf(-5);
@@ -595,7 +596,7 @@ public class RangeTest {
 		String testName = "nominal_double_2";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
-		Interpreter interpreter = new Interpreter(project, System.out);
+		Interpreter interpreter = new QCInterpreter(project, System.out);
 		List<Decl.Function> functions = helper.getFunctions(testName, project);
 
 		BigInteger lower = BigInteger.valueOf(-5);
@@ -636,7 +637,7 @@ public class RangeTest {
 		String testName = "nominal_double_invalid";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
-		Interpreter interpreter = new Interpreter(project, System.out);
+		Interpreter interpreter = new QCInterpreter(project, System.out);
 		List<Decl.Function> functions = helper.getFunctions(testName, project);
 
 		BigInteger lower = BigInteger.valueOf(-5);
@@ -657,7 +658,7 @@ public class RangeTest {
 		String testName = "nominal_double_record";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
-		Interpreter interpreter = new Interpreter(project, System.out);
+		Interpreter interpreter = new QCInterpreter(project, System.out);
 		List<Decl.Function> functions = helper.getFunctions(testName, project);
 
 		BigInteger lower = BigInteger.valueOf(-5);
@@ -710,7 +711,7 @@ public class RangeTest {
 		String testName = "record_double";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
-		Interpreter interpreter = new Interpreter(project, System.out);
+		Interpreter interpreter = new QCInterpreter(project, System.out);
 		List<Decl.Function> functions = helper.getFunctions(testName, project);
 
 		BigInteger lower = BigInteger.valueOf(-5);
@@ -760,7 +761,7 @@ public class RangeTest {
 		String testName = "record_union";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
-		Interpreter interpreter = new Interpreter(project, System.out);
+		Interpreter interpreter = new QCInterpreter(project, System.out);
 		List<Decl.Function> functions = helper.getFunctions(testName, project);
 
 		BigInteger lower = BigInteger.valueOf(-5);
@@ -809,7 +810,7 @@ public class RangeTest {
 		String testName = "union_constraint";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
-		Interpreter interpreter = new Interpreter(project, System.out);
+		Interpreter interpreter = new QCInterpreter(project, System.out);
 		List<Decl.Function> functions = helper.getFunctions(testName, project);
 
 		BigInteger lower = BigInteger.valueOf(-5);
@@ -850,7 +851,7 @@ public class RangeTest {
 		String testName = "nominal_union";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
-		Interpreter interpreter = new Interpreter(project, System.out);
+		Interpreter interpreter = new QCInterpreter(project, System.out);
 		List<Decl.Function> functions = helper.getFunctions(testName, project);
 
 		BigInteger lower = BigInteger.valueOf(-5);
@@ -890,7 +891,7 @@ public class RangeTest {
 		String testName = "union_array";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
-		Interpreter interpreter = new Interpreter(project, System.out);
+		Interpreter interpreter = new QCInterpreter(project, System.out);
 		List<Decl.Function> functions = helper.getFunctions(testName, project);
 
 		BigInteger lower = BigInteger.valueOf(-5);
@@ -945,7 +946,7 @@ public class RangeTest {
 		String testName = "union_union";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
-		Interpreter interpreter = new Interpreter(project, System.out);
+		Interpreter interpreter = new QCInterpreter(project, System.out);
 		List<Decl.Function> functions = helper.getFunctions(testName, project);
 
 		BigInteger lower = BigInteger.valueOf(-5);
@@ -1002,7 +1003,7 @@ public class RangeTest {
 		String testName = "union_record";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
-		Interpreter interpreter = new Interpreter(project, System.out);
+		Interpreter interpreter = new QCInterpreter(project, System.out);
 		List<Decl.Function> functions = helper.getFunctions(testName, project);
 
 		BigInteger lower = BigInteger.valueOf(-5);

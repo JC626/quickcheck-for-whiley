@@ -9,6 +9,7 @@ import java.util.List;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import quickcheck.QCInterpreter;
 import quickcheck.generator.ExhaustiveGenerateTest;
 import quickcheck.generator.GenerateTest;
 import test.utils.TestHelper;
@@ -55,7 +56,7 @@ public class GenerateExhaustiveTest {
 	@BeforeClass
 	public static void setupClass() throws IOException {
 		Build.Project project = helper.createProject();
-		baseInterpreter = new Interpreter(project, System.out);
+		baseInterpreter = new QCInterpreter(project, System.out);
 	}	
 
 	/**
@@ -414,7 +415,7 @@ public class GenerateExhaustiveTest {
 		String testName = "nominal_1";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
-		Interpreter interpreter = new Interpreter(project, System.out);
+		Interpreter interpreter = new QCInterpreter(project, System.out);
 		List<Decl.Function> functions = helper.getFunctions(testName, project);
 		
 		BigInteger lower = BigInteger.valueOf(-2);
@@ -435,7 +436,7 @@ public class GenerateExhaustiveTest {
 		String testName = "nominal_2";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
-		Interpreter interpreter = new Interpreter(project, System.out);
+		Interpreter interpreter = new QCInterpreter(project, System.out);
 		List<Decl.Function> functions = helper.getFunctions(testName, project);
 		
 		BigInteger lower = BigInteger.valueOf(1);
@@ -456,7 +457,7 @@ public class GenerateExhaustiveTest {
 		String testName = "nominal_multi";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
-		Interpreter interpreter = new Interpreter(project, System.out);
+		Interpreter interpreter = new QCInterpreter(project, System.out);
 		List<Decl.Function> functions = helper.getFunctions(testName, project);
 		BigInteger lower = BigInteger.valueOf(0);
 		BigInteger upper = BigInteger.valueOf(3);
@@ -483,7 +484,7 @@ public class GenerateExhaustiveTest {
 		String testName = "nominal_same";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
-		Interpreter interpreter = new Interpreter(project, System.out);
+		Interpreter interpreter = new QCInterpreter(project, System.out);
 		List<Decl.Function> functions = helper.getFunctions(testName, project);
 		
 		BigInteger lower = BigInteger.valueOf(-3);
@@ -517,7 +518,7 @@ public class GenerateExhaustiveTest {
 		String testName = "record_1";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
-		Interpreter interpreter = new Interpreter(project, System.out);
+		Interpreter interpreter = new QCInterpreter(project, System.out);
 		List<Decl.Function> functions = helper.getFunctions(testName, project);
 		
 		BigInteger lower = BigInteger.valueOf(0);
@@ -548,7 +549,7 @@ public class GenerateExhaustiveTest {
 		String testName = "record_2";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
-		Interpreter interpreter = new Interpreter(project, System.out);
+		Interpreter interpreter = new QCInterpreter(project, System.out);
 		List<Decl.Function> functions = helper.getFunctions(testName, project);
 		
 		BigInteger lower = BigInteger.valueOf(0);
@@ -580,7 +581,7 @@ public class GenerateExhaustiveTest {
 		String testName = "record_multi";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
-		Interpreter interpreter = new Interpreter(project, System.out);
+		Interpreter interpreter = new QCInterpreter(project, System.out);
 		List<Decl.Function> functions = helper.getFunctions(testName, project);
 		
 		BigInteger lower = BigInteger.valueOf(0);
@@ -621,7 +622,7 @@ public class GenerateExhaustiveTest {
 		String testName = "record_same";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
-		Interpreter interpreter = new Interpreter(project, System.out);
+		Interpreter interpreter = new QCInterpreter(project, System.out);
 		List<Decl.Function> functions = helper.getFunctions(testName, project);
 		
 		BigInteger lower = BigInteger.valueOf(0);
@@ -825,7 +826,7 @@ public class GenerateExhaustiveTest {
 		String testName = "recursive_1";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
-		Interpreter interpreter = new Interpreter(project, System.out);
+		Interpreter interpreter = new QCInterpreter(project, System.out);
 		List<Decl.Function> functions = helper.getFunctions(testName, project);
 		
 		BigInteger lower = BigInteger.valueOf(0);

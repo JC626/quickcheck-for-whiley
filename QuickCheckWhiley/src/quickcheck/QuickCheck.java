@@ -1,5 +1,7 @@
 package quickcheck;
 
+import java.util.concurrent.TimeUnit;
+
 import quickcheck.util.TestType;
 import wycc.util.Logger;
 import wyfs.lang.Content;
@@ -34,6 +36,7 @@ public class QuickCheck {
 	}
 	
 	public static void main(String[] args){
+		long startTime = System.nanoTime();
 		if(args.length == 0) {
 			System.out.println("Usage: java QuickCheck <wyilfile> <testtype> <numtests> <lowerintegerlimit> <upperintegerlimit>");
 			System.exit(-1);
@@ -65,5 +68,7 @@ public class QuickCheck {
 		String lowerLimit = args.length >= 4 ? args[3] : Integer.toString(RunTest.INT_LOWER_LIMIT);
 		String upperLimit = args.length >= 5 ? args[4] : Integer.toString(RunTest.INT_UPPER_LIMIT);
 		cmd.execute(relativePath, id.toString(), testType.toString(), numTests, lowerLimit, upperLimit);			
+		long endTime = System.nanoTime();
+		System.out.println("Execution time: "+ TimeUnit.NANOSECONDS.toMillis(endTime - startTime) + " milliseconds"); 
 	}
 }

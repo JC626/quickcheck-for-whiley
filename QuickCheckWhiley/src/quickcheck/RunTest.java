@@ -92,7 +92,7 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 			TestType testType = TestType.valueOf(args[2]);
 			List<Decl.Function> functions = getFunctions(id, project);
 			// Generate tests for each function
-			Interpreter interpreter = new Interpreter(project, System.out);
+			Interpreter interpreter = new QCInterpreter(project, System.out);
 			int numTests = RunTest.NUM_TESTS;
 			try {
 				numTests = Integer.parseInt(args[3]);
@@ -244,7 +244,7 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 	 * @return If the invariant was valid or not
 	 * @throws ResolutionError 
 	 */
-	private boolean checkInvariant(Interpreter interpreter, Type paramType, RValue returnVal) throws ResolutionError {
+	public static boolean checkInvariant(Interpreter interpreter, Type paramType, RValue returnVal) throws ResolutionError {
 		// Check the nominal type postcondition
 		if(paramType instanceof Type.Nominal) {
 			Type.Nominal nom = (Type.Nominal) paramType;

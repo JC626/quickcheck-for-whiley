@@ -8,11 +8,9 @@ import java.util.Map;
 import quickcheck.generator.GenerateTest;
 import quickcheck.generator.RandomGenerateTest;
 import wybs.lang.Build;
-import wybs.lang.NameID;
 import wybs.lang.NameResolver.ResolutionError;
 import wybs.util.AbstractCompilationUnit.Tuple;
 import wybs.lang.SyntacticElement;
-import wyil.interpreter.ConcreteSemantics;
 import wyil.interpreter.Interpreter;
 import wyil.type.TypeSystem;
 
@@ -37,7 +35,7 @@ import wyc.lang.WhileyFile.Type;
  * However, it is not possible to override private methods from 
  * a super class in Java.
  * Ideally, all the private methods would be protected
- * so they can be overriden and called.
+ * so they can be overridden and called.
  *
  */
 public class QCInterpreter extends Interpreter {
@@ -49,32 +47,11 @@ public class QCInterpreter extends Interpreter {
 	private final TypeSystem typeSystem;
 
 	/**
-	 * Provides mechanism for resolving names.
-	 */
-	//private final NameResolver resolver;
-
-	/**
-	 * Determines the underlying semantics used for this interpreter.
-	 */
-	private final ConcreteSemantics semantics;
-
-	/**
 	 * The debug stream provides an I/O stream through which debug bytecodes can
 	 * write their messages.
 	 */
 	private final PrintStream debug;
 	
-	// A map from function name to a map of inputs to outputs
-	private final Map<FunctionOrMethod, Map<RValue[], RValue[]>> functionParameters;
-
-	public QCInterpreter(Build.Project project, PrintStream debug) {
-		super(project, debug);
-		this.debug = debug;
-		this.typeSystem = new TypeSystem(project);
-		this.semantics = new ConcreteSemantics();
-		this.functionParameters = new HashMap<FunctionOrMethod, Map<RValue[], RValue[]>>();
-	}
-
 	private enum Status {
 		RETURN,
 		BREAK,
@@ -82,13 +59,25 @@ public class QCInterpreter extends Interpreter {
 		NEXT
 	}
 	
+	/** A map from function name to a map of inputs to outputs */
+	private final Map<FunctionOrMethod, Map<RValue[], RValue[]>> functionParameters;
 
-	// FIXME
+	public QCInterpreter(Build.Project project, PrintStream debug) {
+		super(project, debug);
+		this.debug = debug;
+		this.typeSystem = new TypeSystem(project);
+		this.functionParameters = new HashMap<FunctionOrMethod, Map<RValue[], RValue[]>>();
+	}	
+
 	/**
+	 * Overriden method
 	 * Execute an Invoke bytecode instruction at a given point in the function
 	 * or method body. This generates a recursive call to execute the given
 	 * function. If the function does not exist, or is provided with the wrong
 	 * number of arguments, then a runtime fault will occur.
+	 * 
+	 * The function/method call is optimised generating a verified, 
+	 * random return value instead of calling the function/method.
 	 *
 	 * @param expr
 	 *            --- The expression to execute
@@ -98,7 +87,6 @@ public class QCInterpreter extends Interpreter {
 	 * @throws ResolutionError
 	 */
 	private RValue[] executeInvoke(Expr.Invoke expr, CallStack frame) throws ResolutionError {
-		// TODO optimise this!
 		// Resolve function or method being invoked to a concrete declaration
 		Decl.Callable decl = typeSystem.resolveExactly(expr.getName(), expr.getSignature(),
 				Decl.Callable.class);
@@ -112,10 +100,10 @@ public class QCInterpreter extends Interpreter {
 		// Generate until the return type meets the postcondition
 		// If it is unable to generate after a certain number of times,
 		// just call the function/method instead 
-		// TODO need the integer limits!
 		frame = frame.enter(fun);
 		extractParameters(frame, arguments, fun);
 		int numGeneration = 10;
+		// TODO need the integer limits!
 		GenerateTest testGen = new RandomGenerateTest(fun, this, numGeneration, BigInteger.valueOf(RunTest.INT_LOWER_LIMIT), BigInteger.valueOf(RunTest.INT_UPPER_LIMIT));
 		RValue[] returns;
 		boolean isValid = false;
@@ -148,6 +136,11 @@ public class QCInterpreter extends Interpreter {
 		// Invoke the function or method in question
 		return execute(decl.getQualifiedName().toNameID(), decl.getType(), frame, arguments);
 	}
+	
+
+	// =============================================================
+	// Remainder is code from wyil.intepreter.Interpreter
+	// =============================================================
 
 	private void extractParameters(CallStack frame, RValue[] args, Decl.Callable decl) {
 		Tuple<Decl.Variable> parameters = decl.getParameters();
@@ -562,320 +555,6 @@ public class QCInterpreter extends Interpreter {
 	}
 
 	// =============================================================
-	// Single expressions
-	// =============================================================
-
-	/**
-	 * Execute a single expression which is expected to return a single result
-	 * of an expected type. If a result of an incorrect type is returned, then
-	 * an exception is raised.
-	 *
-	 * @param expected
-	 *            The expected type of the result
-	 * @param expr
-	 *            The expression to be executed
-	 * @param frame
-	 *            The frame in which the expression is executing
-	 * @return
-	 */
-	public <T extends RValue> T executeExpression(Class<T> expected, Expr expr, CallStack frame) {
-		try {
-			RValue val;
-			switch (expr.getOpcode()) {
-			case WhileyFile.EXPR_constant:
-				val = executeConst((Expr.Constant) expr, frame);
-				break;
-			case WhileyFile.EXPR_cast:
-				val = executeConvert((Expr.Cast) expr, frame);
-				break;
-			case WhileyFile.EXPR_recordinitialiser:
-				val = executeRecordInitialiser((Expr.RecordInitialiser) expr, frame);
-				break;
-			case WhileyFile.EXPR_recordaccess:
-			case WhileyFile.EXPR_recordborrow:
-				val = executeRecordAccess((Expr.RecordAccess) expr, frame);
-				break;
-			case WhileyFile.EXPR_indirectinvoke:
-				val = executeIndirectInvoke((Expr.IndirectInvoke) expr, frame)[0];
-				break;
-			case WhileyFile.EXPR_invoke:
-				val = executeInvoke((Expr.Invoke) expr, frame)[0];
-				break;
-			case WhileyFile.EXPR_variablemove:
-			case WhileyFile.EXPR_variablecopy:
-				val = executeVariableAccess((Expr.VariableAccess) expr, frame);
-				break;
-			case WhileyFile.EXPR_staticvariable:
-				val = executeStaticVariableAccess((Expr.StaticVariableAccess) expr, frame);
-				break;
-			case WhileyFile.EXPR_is:
-				val = executeIs((Expr.Is) expr, frame);
-				break;
-			case WhileyFile.EXPR_logicalnot:
-				val = executeLogicalNot((Expr.LogicalNot) expr, frame);
-				break;
-			case WhileyFile.EXPR_logicaland:
-				val = executeLogicalAnd((Expr.LogicalAnd) expr, frame);
-				break;
-			case WhileyFile.EXPR_logicalor:
-				val = executeLogicalOr((Expr.LogicalOr) expr, frame);
-				break;
-			case WhileyFile.EXPR_logiaclimplication:
-				val = executeLogicalImplication((Expr.LogicalImplication) expr, frame);
-				break;
-			case WhileyFile.EXPR_logicaliff:
-				val = executeLogicalIff((Expr.LogicalIff) expr, frame);
-				break;
-			case WhileyFile.EXPR_logicalexistential:
-			case WhileyFile.EXPR_logicaluniversal:
-				val = executeQuantifier((Expr.Quantifier) expr, frame);
-				break;
-			case WhileyFile.EXPR_equal:
-				val = executeEqual((Expr.Equal) expr, frame);
-				break;
-			case WhileyFile.EXPR_notequal:
-				val = executeNotEqual((Expr.NotEqual) expr, frame);
-				break;
-			case WhileyFile.EXPR_integernegation:
-				val = executeIntegerNegation((Expr.IntegerNegation) expr, frame);
-				break;
-			case WhileyFile.EXPR_integeraddition:
-				val = executeIntegerAddition((Expr.IntegerAddition) expr, frame);
-				break;
-			case WhileyFile.EXPR_integersubtraction:
-				val = executeIntegerSubtraction((Expr.IntegerSubtraction) expr, frame);
-				break;
-			case WhileyFile.EXPR_integermultiplication:
-				val = executeIntegerMultiplication((Expr.IntegerMultiplication) expr, frame);
-				break;
-			case WhileyFile.EXPR_integerdivision:
-				val = executeIntegerDivision((Expr.IntegerDivision) expr, frame);
-				break;
-			case WhileyFile.EXPR_integerremainder:
-				val = executeIntegerRemainder((Expr.IntegerRemainder) expr, frame);
-				break;
-			case WhileyFile.EXPR_integerlessthan:
-				val = executeIntegerLessThan((Expr.IntegerLessThan) expr, frame);
-				break;
-			case WhileyFile.EXPR_integerlessequal:
-				val = executeIntegerLessThanOrEqual((Expr.IntegerLessThanOrEqual) expr, frame);
-				break;
-			case WhileyFile.EXPR_integergreaterthan:
-				val = executeIntegerGreaterThan((Expr.IntegerGreaterThan) expr, frame);
-				break;
-			case WhileyFile.EXPR_integergreaterequal:
-				val = executeIntegerGreaterThanOrEqual((Expr.IntegerGreaterThanOrEqual) expr, frame);
-				break;
-			case WhileyFile.EXPR_bitwisenot:
-				val = executeBitwiseNot((Expr.BitwiseComplement) expr, frame);
-				break;
-			case WhileyFile.EXPR_bitwiseor:
-				val = executeBitwiseOr((Expr.BitwiseOr) expr, frame);
-				break;
-			case WhileyFile.EXPR_bitwisexor:
-				val = executeBitwiseXor((Expr.BitwiseXor) expr, frame);
-				break;
-			case WhileyFile.EXPR_bitwiseand:
-				val = executeBitwiseAnd((Expr.BitwiseAnd) expr, frame);
-				break;
-			case WhileyFile.EXPR_bitwiseshl:
-				val = executeBitwiseShiftLeft((Expr.BitwiseShiftLeft) expr, frame);
-				break;
-			case WhileyFile.EXPR_bitwiseshr:
-				val = executeBitwiseShiftRight((Expr.BitwiseShiftRight) expr, frame);
-				break;
-			case WhileyFile.EXPR_arrayborrow:
-			case WhileyFile.EXPR_arrayaccess:
-				val = executeArrayAccess((Expr.ArrayAccess) expr, frame);
-				break;
-			case WhileyFile.EXPR_arraygenerator:
-				val = executeArrayGenerator((Expr.ArrayGenerator) expr, frame);
-				break;
-			case WhileyFile.EXPR_arraylength:
-				val = executeArrayLength((Expr.ArrayLength) expr, frame);
-				break;
-			case WhileyFile.EXPR_arrayinitialiser:
-				val = executeArrayInitialiser((Expr.ArrayInitialiser) expr, frame);
-				break;
-			case WhileyFile.EXPR_arrayrange:
-				val = executeArrayRange((Expr.ArrayRange) expr, frame);
-				break;
-			case WhileyFile.EXPR_new:
-				val = executeNew((Expr.New) expr, frame);
-				break;
-			case WhileyFile.EXPR_dereference:
-				val = executeDereference((Expr.Dereference) expr, frame);
-				break;
-			case WhileyFile.EXPR_lambdaaccess:
-				val = executeLambdaAccess((Expr.LambdaAccess) expr, frame);
-				break;
-			case WhileyFile.DECL_lambda:
-				val = executeLambdaDeclaration((Decl.Lambda) expr, frame);
-				break;
-			default:
-				return deadCode(expr);
-			}
-			return checkType(val, expr, expected);
-		} catch (ResolutionError e) {
-			error(e.getMessage(), expr);
-			return null;
-		}
-	}
-
-
-	/**
-	 * Execute a Constant expression at a given point in the function or
-	 * method body
-	 *
-	 * @param expr
-	 *            --- The expression to execute
-	 * @param frame
-	 *            --- The current stack frame
-	 * @return
-	 */
-	private RValue executeConst(Expr.Constant expr, CallStack frame) {
-		Value v = expr.getValue();
-		switch (v.getOpcode()) {
-		case ITEM_null:
-			return RValue.Null;
-		case ITEM_bool: {
-			Value.Bool b = (Value.Bool) v;
-			if (b.get()) {
-				return RValue.True;
-			} else {
-				return RValue.False;
-			}
-		}
-		case ITEM_byte: {
-			Value.Byte b = (Value.Byte) v;
-			return semantics.Byte(b.get());
-		}
-		case ITEM_int: {
-			Value.Int i = (Value.Int) v;
-			return semantics.Int(i.get());
-		}
-		case ITEM_utf8: {
-			Value.UTF8 s = (Value.UTF8) v;
-			byte[] bytes = s.get();
-			RValue[] elements = new RValue[bytes.length];
-			for (int i = 0; i != elements.length; ++i) {
-				// FIXME: something tells me this is wrong for signed byte
-				// values?
-				elements[i] = semantics.Int(BigInteger.valueOf(bytes[i]));
-			}
-			return semantics.Array(elements);
-		}
-		default:
-			throw new RuntimeException("unknown value encountered (" + expr + ")");
-		}
-	}
-
-	/**
-	 * Execute a type conversion at a given point in the function or method body
-	 *
-	 * @param expr
-	 *            --- The expression to execute
-	 * @param frame
-	 *            --- The current stack frame
-	 * @return
-	 */
-	private RValue executeConvert(Expr.Cast expr, CallStack frame) {
-		RValue operand = executeExpression(ANY_T, expr.getOperand(), frame);
-		return operand.convert(expr.getType());
-	}
-
-	private RValue executeRecordAccess(Expr.RecordAccess expr, CallStack frame) {
-		RValue.Record rec = executeExpression(RECORD_T, expr.getOperand(), frame);
-		return rec.read(expr.getField());
-	}
-
-	private RValue executeRecordInitialiser(Expr.RecordInitialiser expr, CallStack frame) {
-		Tuple<Identifier> fields = expr.getFields();
-		Tuple<Expr> operands = expr.getOperands();
-		RValue.Field[] values = new RValue.Field[operands.size()];
-		for (int i = 0; i != operands.size(); ++i) {
-			Identifier field = fields.get(i);
-			Expr operand = operands.get(i);
-			RValue value = executeExpression(ANY_T, operand, frame);
-			values[i] = semantics.Field(field, value);
-		}
-		return semantics.Record(values);
-	}
-
-	private RValue executeQuantifier(Expr.Quantifier expr, CallStack frame) {
-		boolean r = executeQuantifier(0, expr, frame);
-		boolean q = (expr instanceof Expr.UniversalQuantifier);
-		return r == q ? RValue.True : RValue.False;
-	}
-
-	/**
-	 * Execute one range of the quantifier, or the body if no ranges remain.
-	 *
-	 * @param index
-	 * @param expr
-	 * @param frame
-	 * @param context
-	 * @return
-	 */
-	private boolean executeQuantifier(int index, Expr.Quantifier expr, CallStack frame) {
-		Tuple<Decl.Variable> vars = expr.getParameters();
-		if (index == vars.size()) {
-			// This is the base case where we evaluate the condition itself.
-			RValue.Bool r = executeExpression(BOOL_T, expr.getOperand(), frame);
-			boolean q = (expr instanceof Expr.UniversalQuantifier);
-			// If this evaluates to true, then we will continue executing the
-			// quantifier.
-			return r.boolValue() == q;
-		} else {
-			Decl.Variable var = vars.get(index);
-			RValue.Array range = executeExpression(ARRAY_T, var.getInitialiser(), frame);
-			RValue[] elements = range.getElements();
-			for (int i = 0; i != elements.length; ++i) {
-				frame.putLocal(var.getName(), elements[i]);
-				boolean r = executeQuantifier(index + 1, expr, frame);
-				if (!r) {
-					// early termination
-					return r;
-				}
-			}
-			return true;
-		}
-	}
-
-	/**
-	 * Execute a variable access expression at a given point in the function or
-	 * method body. This simply loads the value of the given variable from the
-	 * frame.
-	 *
-	 * @param expr
-	 *            --- The expression to execute
-	 * @param frame
-	 *            --- The current stack frame
-	 * @return
-	 */
-	private RValue executeVariableAccess(Expr.VariableAccess expr, CallStack frame) {
-		Decl.Variable decl = expr.getVariableDeclaration();
-		return frame.getLocal(decl.getName());
-	}
-
-	private RValue executeStaticVariableAccess(Expr.StaticVariableAccess expr, CallStack frame) throws ResolutionError {
-		Decl.StaticVariable decl = typeSystem.resolveExactly(expr.getName(), Decl.StaticVariable.class);
-		NameID nid = decl.getQualifiedName().toNameID();
-		return frame.getStatic(nid);
-	}
-
-	private RValue executeIs(Expr.Is expr, CallStack frame) throws ResolutionError {
-		RValue lhs = executeExpression(ANY_T, expr.getOperand(), frame);
-		return lhs.is(expr.getTestType(), this);
-	}
-
-	private RValue executeLambdaDeclaration(Decl.Lambda decl, CallStack frame) {
-		// FIXME: this needs a clone of the frame? Otherwise, it's just
-		// executing in the later environment.
-		return semantics.Lambda(decl, frame.clone(), decl.getBody());
-	}
-
-	// =============================================================
 	// Multiple expressions
 	// =============================================================
 
@@ -1037,7 +716,6 @@ public class QCInterpreter extends Interpreter {
 	private static final Class<RValue.Bool> BOOL_T = RValue.Bool.class;
 	private static final Class<RValue.Int> INT_T = RValue.Int.class;
 	private static final Class<RValue.Array> ARRAY_T = RValue.Array.class;
-	private static final Class<RValue.Record> RECORD_T = RValue.Record.class;
 	private static final Class<RValue.Lambda> LAMBDA_T = RValue.Lambda.class;
 
 	/**

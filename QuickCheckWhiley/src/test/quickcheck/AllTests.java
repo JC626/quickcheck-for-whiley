@@ -12,7 +12,8 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({ 
 	GenerateRandomTest.class,
 	GenerateExhaustiveTest.class,
-	RangeTest.class
+	RangeTest.class,
+	QCInterpreterTest.class
 })
 public class AllTests {
 }

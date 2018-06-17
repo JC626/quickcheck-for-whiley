@@ -1,5 +1,6 @@
 package quickcheck;
 
+import java.io.IOException;
 import java.io.PrintStream;
 import java.math.BigInteger;
 import java.util.HashMap;
@@ -10,6 +11,7 @@ import quickcheck.generator.RandomGenerateTest;
 import wybs.lang.Build;
 import wybs.lang.NameID;
 import wybs.lang.NameResolver.ResolutionError;
+import wybs.util.AbstractCompilationUnit.Identifier;
 import wybs.util.AbstractCompilationUnit.Tuple;
 import wybs.lang.SyntacticElement;
 import wyil.interpreter.ConcreteSemantics;
@@ -23,6 +25,7 @@ import static wyil.interpreter.ConcreteSemantics.RValue;
 import wyc.lang.WhileyFile;
 import wyc.lang.WhileyFile.Decl;
 import wyc.lang.WhileyFile.Decl.FunctionOrMethod;
+import wyfs.lang.Path;
 import wyc.lang.WhileyFile.Expr;
 import wyc.lang.WhileyFile.Type;
 
@@ -41,17 +44,16 @@ import wyc.lang.WhileyFile.Type;
  *
  */
 public class QCInterpreter extends Interpreter {
+	/**
+	 * The build project provides access to compiled WyIL files.
+	 */
+	private final Build.Project project;
 
 	/**
 	 * Provides mechanism for operating on types. For example, expanding them
 	 * and performing subtype tests, etc.
 	 */
 	private final TypeSystem typeSystem;
-
-	/**
-	 * Provides mechanism for resolving names.
-	 */
-	//private final NameResolver resolver;
 
 	/**
 	 * Determines the underlying semantics used for this interpreter.
@@ -64,11 +66,15 @@ public class QCInterpreter extends Interpreter {
 	 */
 	private final PrintStream debug;
 	
-	// A map from function name to a map of inputs to outputs
+	/** A map from function name to a map of inputs to outputs */ 
 	private final Map<FunctionOrMethod, Map<RValue[], RValue[]>> functionParameters;
+	
+	/** The current scope being executed */
+	private FunctionOrMethodScope currentScope;
 
 	public QCInterpreter(Build.Project project, PrintStream debug) {
 		super(project, debug);
+		this.project = project;
 		this.debug = debug;
 		this.typeSystem = new TypeSystem(project);
 		this.semantics = new ConcreteSemantics();
@@ -82,72 +88,232 @@ public class QCInterpreter extends Interpreter {
 		NEXT
 	}
 	
-
-	// FIXME
 	/**
+	 * Overridden method
 	 * Execute an Invoke bytecode instruction at a given point in the function
 	 * or method body. This generates a recursive call to execute the given
 	 * function. If the function does not exist, or is provided with the wrong
 	 * number of arguments, then a runtime fault will occur.
-	 *
+	 * 
+     * The function/method call is optimised generating a verified, 
+     * random return value instead of calling the function/method.
 	 * @param expr
 	 *            --- The expression to execute
 	 * @param frame
 	 *            --- The current stack frame
 	 * @return
 	 * @throws ResolutionError
+	 * 
+	 * 
 	 */
 	private RValue[] executeInvoke(Expr.Invoke expr, CallStack frame) throws ResolutionError {
-		// TODO optimise this!
 		// Resolve function or method being invoked to a concrete declaration
 		Decl.Callable decl = typeSystem.resolveExactly(expr.getName(), expr.getSignature(),
 				Decl.Callable.class);
 		// Evaluate argument expressions
 		RValue[] arguments = executeExpressions(expr.getOperands(), frame);
-		Decl.FunctionOrMethod fun = ((Decl.FunctionOrMethod) decl);
-		Map<RValue[], RValue[]> functionIO = functionParameters.getOrDefault(fun, new HashMap<RValue[], RValue[]>());
-		// Every function should return the same output for the same input
-		Tuple<Expr> postconditions = fun.getEnsures();
-		Tuple<Decl.Variable> outputParameters = fun.getReturns();
-		// Generate until the return type meets the postcondition
-		// If it is unable to generate after a certain number of times,
-		// just call the function/method instead 
-		// TODO need the integer limits!
-		frame = frame.enter(fun);
-		extractParameters(frame, arguments, fun);
-		int numGeneration = 10;
-		GenerateTest testGen = new RandomGenerateTest(fun, this, numGeneration, BigInteger.valueOf(RunTest.INT_LOWER_LIMIT), BigInteger.valueOf(RunTest.INT_UPPER_LIMIT));
-		RValue[] returns;
-		boolean isValid = false;
-		CallStack tempFrame = frame.clone();
-		for(int i=0; i < numGeneration; i++) {
-			// Create a generator for the return type of the function based on the input
-			returns = testGen.generateParameters();
-			try {
-				for(int j=0; j < outputParameters.size(); j++) {
-					Decl.Variable parameter = outputParameters.get(j);
-					Type paramType = parameter.getType();
-					isValid = RunTest.checkInvariant(this, paramType, returns[j]);
-					if(!isValid) {
-						break;
-					}
-					frame.putLocal(parameter.getName(), returns[j]);
-				}	
-				this.checkInvariants(frame, postconditions);
+		if(currentScope != null && !currentScope.getContext().equals(decl)) {
+			Decl.FunctionOrMethod fun = ((Decl.FunctionOrMethod) decl);
+			Map<RValue[], RValue[]> functionIO = functionParameters.getOrDefault(fun, new HashMap<RValue[], RValue[]>());
+			// Every function should return the same output for the same input
+			Tuple<Expr> postconditions = fun.getEnsures();
+			Tuple<Decl.Variable> outputParameters = fun.getReturns();
+			// Generate until the return type meets the postcondition
+			// If it is unable to generate after a certain number of times,
+			// just call the function/method instead 
+			frame = frame.enter(fun);
+			extractParameters(frame, arguments, fun);
+			int numGeneration = 5;
+			// TODO need the integer limits!
+			GenerateTest testGen = new RandomGenerateTest(fun, this, numGeneration, BigInteger.valueOf(RunTest.INT_LOWER_LIMIT), BigInteger.valueOf(RunTest.INT_UPPER_LIMIT));
+			RValue[] returns;
+			boolean isValid = false;
+			CallStack tempFrame = frame.clone();
+			for(int i=0; i < numGeneration; i++) {
+				// Create a generator for the return type of the function based on the input
+				returns = testGen.generateParameters();
+				try {
+					for(int j=0; j < outputParameters.size(); j++) {
+						Decl.Variable parameter = outputParameters.get(j);
+						Type paramType = parameter.getType();
+						isValid = RunTest.checkInvariant(this, paramType, returns[j]);
+						if(!isValid) {
+							break;
+						}
+						frame.putLocal(parameter.getName(), returns[j]);
+					}	
+					this.checkInvariants(frame, postconditions);
+//					System.out.println("HERE");
+				}
+				catch(AssertionError e) {
+//					System.out.println("FAIL");
+					isValid = false;
+				}
+				if(isValid) {
+//					System.out.println("Returned " + Arrays.toString(returns));
+					functionIO.put(arguments, returns);
+					return returns;
+				}
+				// Need to reset frame to remove the old inputs
+				frame = tempFrame.clone();
 			}
-			catch(AssertionError e) {
-				isValid = false;
-			}
-			if(isValid) {
-				functionIO.put(arguments, returns);
-				return returns;
-			}
-			// Need to reset frame to remove the old inputs
-			frame = tempFrame.clone();
 		}
+		
 		// Invoke the function or method in question
 		return execute(decl.getQualifiedName().toNameID(), decl.getType(), frame, arguments);
 	}
+	
+	/**
+	 * Execute a function or method identified by a name and type signature with
+	 * the given arguments, producing a return value or null (if none). If the
+	 * function or method cannot be found, or the number of arguments is
+	 * incorrect then an exception is thrown.
+	 *
+	 * @param nid
+	 *            The fully qualified identifier of the function or method
+	 * @param sig
+	 *            The exact type signature identifying the method.
+	 * @param args
+	 *            The supplied arguments
+	 * @return
+	 */
+	@Override
+	public RValue[] execute(NameID nid, Type.Callable sig, CallStack frame, RValue... args) {
+		// First, find the enclosing WyilFile
+		try {
+			// FIXME: NameID needs to be deprecated
+			Identifier name = new Identifier(nid.name());
+			// NOTE: need to read WyilFile here as, otherwose, it forces a
+			// rereading of the Whiley source file and a loss of all generation
+			// information.
+			Path.Entry<WhileyFile> entry = project.get(nid.module(), WhileyFile.BinaryContentType);
+			if (entry == null) {
+				throw new IllegalArgumentException("no WyIL file found: " + nid.module());
+			}
+			// Second, find the given function or method
+			WhileyFile wyilFile = entry.read();
+			Decl.Callable fmp = wyilFile.getDeclaration(name, sig,
+					Decl.Callable.class);
+			if (fmp == null) {
+				throw new IllegalArgumentException("no function or method found: " + nid + ", " + sig);
+			} else if (sig.getParameters().size() != args.length) {
+				throw new IllegalArgumentException("incorrect number of arguments: " + nid + ", " + sig);
+			}
+			// Fourth, construct the stack frame for execution
+			frame = frame.enter(fmp);
+			extractParameters(frame,args,fmp);
+			// Check the precondition
+			if(fmp instanceof Decl.FunctionOrMethod) {
+				Decl.FunctionOrMethod fm = (Decl.FunctionOrMethod) fmp;
+				checkInvariants(frame,fm.getRequires());
+				// check function or method body exists
+				if (fm.getBody() == null) {
+					// FIXME: Add support for native functions or methods. That is,
+					// allow native functions to be implemented and called from the
+					// interpreter.
+					throw new IllegalArgumentException("no function or method body found: " + nid + ", " + sig);
+				}
+				// Execute the method or function body
+				currentScope = new FunctionOrMethodScope(fm);
+				executeBlock(fm.getBody(), frame, currentScope);
+				// Extra the return values
+				RValue[] returns = packReturns(frame,fmp);
+				// Restore original parameter values
+				extractParameters(frame,args,fmp);
+				// Check the postcondition holds
+				checkInvariants(frame, fm.getEnsures());
+				return returns;
+			} else {
+				// Properties always return true (provided their preconditions hold)
+				return new RValue[]{RValue.True};
+			}
+			//
+		} catch (IOException e) {
+			throw new RuntimeException(e.getMessage(), e);
+		}
+	}
+	
+	/**
+	 * A copy of execute from the Interpreter, except for the addition 
+	 * of whether to enable checking pre and postconditions and reading the scope.
+	 * Execute a function or method identified by a name and type signature with
+	 * the given arguments, producing a return value or null (if none). If the
+	 * function or method cannot be found, or the number of arguments is
+	 * incorrect then an exception is thrown.
+	 *
+	 * @param nid
+	 *            The fully qualified identifier of the function or method
+	 * @param sig
+	 *            The exact type signature identifying the method.
+	 * @param args
+	 *            The supplied arguments
+	 * @return
+	 */
+	public RValue[] execute(NameID nid, Type.Callable sig, CallStack frame, boolean checkPrecondition, boolean checkPostcondition, RValue... args) {
+		// First, find the enclosing WyilFile
+		try {
+			// FIXME: NameID needs to be deprecated
+			Identifier name = new Identifier(nid.name());
+			// NOTE: need to read WyilFile here as, otherwose, it forces a
+			// rereading of the Whiley source file and a loss of all generation
+			// information.
+			Path.Entry<WhileyFile> entry = project.get(nid.module(), WhileyFile.BinaryContentType);
+			if (entry == null) {
+				throw new IllegalArgumentException("no WyIL file found: " + nid.module());
+			}
+			// Second, find the given function or method
+			WhileyFile wyilFile = entry.read();
+			Decl.Callable fmp = wyilFile.getDeclaration(name, sig,
+					Decl.Callable.class);
+			if (fmp == null) {
+				throw new IllegalArgumentException("no function or method found: " + nid + ", " + sig);
+			} else if (sig.getParameters().size() != args.length) {
+				throw new IllegalArgumentException("incorrect number of arguments: " + nid + ", " + sig);
+			}
+			// Fourth, construct the stack frame for execution
+			frame = frame.enter(fmp);
+			extractParameters(frame,args,fmp);
+			// Check the precondition
+			if(fmp instanceof Decl.FunctionOrMethod) {
+				Decl.FunctionOrMethod fm = (Decl.FunctionOrMethod) fmp;
+				if(checkPrecondition) {
+					// Check the precondition holds
+					checkInvariants(frame,fm.getRequires());
+				}
+				// check function or method body exists
+				if (fm.getBody() == null) {
+					// FIXME: Add support for native functions or methods. That is,
+					// allow native functions to be implemented and called from the
+					// interpreter.
+					throw new IllegalArgumentException("no function or method body found: " + nid + ", " + sig);
+				}
+				// Execute the method or function body
+				currentScope = new FunctionOrMethodScope(fm);
+				executeBlock(fm.getBody(), frame, currentScope);
+				// Extra the return values
+				RValue[] returns = packReturns(frame,fmp);
+				// Restore original parameter values
+				extractParameters(frame,args,fmp);
+				if(checkPostcondition) {
+					// Check the postcondition holds
+					checkInvariants(frame, fm.getEnsures());				
+				}
+				return returns;
+			} else {
+				// Properties always return true (provided their preconditions hold)
+				return new RValue[]{RValue.True};
+			}
+			//
+		} catch (IOException e) {
+			throw new RuntimeException(e.getMessage(), e);
+		}
+	}
+    
+
+    // =============================================================
+    // Remainder is code from wyil.intepreter.Interpreter
+    // =============================================================
+
 
 	private void extractParameters(CallStack frame, RValue[] args, Decl.Callable decl) {
 		Tuple<Decl.Variable> parameters = decl.getParameters();
@@ -965,7 +1131,10 @@ public class QCInterpreter extends Interpreter {
 		// Execute the method or function body
 		Stmt body = src.getBody();
 		if(body instanceof Stmt.Block) {
-			executeBlock((Stmt.Block) body, frame, new FunctionOrMethodScope(src.getContext()));
+			FunctionOrMethodScope temp = currentScope;
+			currentScope = new FunctionOrMethodScope(src.getContext());
+			executeBlock((Stmt.Block) body, frame, currentScope);
+			currentScope = temp;
 			// Extra the return values
 			return packReturns(frame,src.getContext());
 		} else {

@@ -18,6 +18,7 @@ import wybs.lang.NameID;
 import wybs.util.AbstractCompilationUnit.Identifier;
 import wybs.util.AbstractCompilationUnit.Tuple;
 import wyc.lang.WhileyFile.Decl;
+import wyc.lang.WhileyFile.Expr;
 import wyc.lang.WhileyFile.Type;
 import wyfs.lang.Path;
 import wyfs.util.Trie;
@@ -132,6 +133,90 @@ public class QCInterpreterTest {
 		}		
 	}
 	
-	// TODO recursive call
-	// TODO nominal
+	/**
+	 * Test recursively calling a function 
+	 * using a factorial
+	 * @throws IOException 
+	 */
+	@Test
+	public void testFunctionOptimisationRecursive1() throws IOException {
+		String testName = "function_op_recursive1";
+		helper.compile(testName);
+		Build.Project project = helper.createProject();
+		Interpreter interpreter = new QCInterpreter(project, System.out);
+		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		
+		BigInteger lower = BigInteger.valueOf(1);
+		BigInteger upper = BigInteger.valueOf(8);
+		Decl.Function func = functions.get(0);
+		Tuple<Expr> empty = new Tuple<Expr>();		
+		func.setOperand(4, empty); // Remove precondition
+		func.setOperand(5, empty); // Remove postcondition
+		GenerateTest testGen = new ExhaustiveGenerateTest(func, interpreter, 25, lower, upper);
+		
+		Tuple<Decl.Variable> inputParameters = func.getParameters();
+		Path.ID id = Trie.fromString(testName);
+		NameID funcName = new NameID(id, func.getName().get());
+		Type.Callable type = functions.get(0).getType();
+
+		Identifier paramName = inputParameters.get(0).getName();
+		int[] answers = new int[] {1, 2, 6, 24, 120, 720, 5040};
+		for(int i=1; i < 9; i++) {
+			CallStack frame = interpreter.new CallStack();
+			RValue[] paramValues = testGen.generateParameters();
+			frame.putLocal(paramName, paramValues[0]);
+
+			RValue[] returns = interpreter.execute(funcName, type, frame, paramValues);
+			if(i == 8) {
+				assertEquals(semantics.Int(BigInteger.valueOf(answers[0])), returns[0]);
+			}
+			else {
+				assertEquals(semantics.Int(BigInteger.valueOf(answers[i-1])), returns[0]);
+			}
+		}		
+	}
+	
+	/**
+	 * Test recursively calling a function 
+	 * by getting the sum of the numbers.
+	 * @throws IOException 
+	 */
+	@Test
+	public void testFunctionOptimisationRecursive() throws IOException {
+		String testName = "function_op_recursive2";
+		helper.compile(testName);
+		Build.Project project = helper.createProject();
+		Interpreter interpreter = new QCInterpreter(project, System.out);
+		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		
+		BigInteger lower = BigInteger.valueOf(1);
+		BigInteger upper = BigInteger.valueOf(8);
+		Decl.Function func = functions.get(0);
+		Tuple<Expr> empty = new Tuple<Expr>();		
+		func.setOperand(4, empty); // Remove precondition
+		func.setOperand(5, empty); // Remove postcondition
+		GenerateTest testGen = new ExhaustiveGenerateTest(func, interpreter, 25, lower, upper);
+		
+		Tuple<Decl.Variable> inputParameters = func.getParameters();
+		Path.ID id = Trie.fromString(testName);
+		NameID funcName = new NameID(id, func.getName().get());
+		Type.Callable type = functions.get(0).getType();
+
+		Identifier paramName = inputParameters.get(0).getName();
+		int ans = 0;
+		for(int i=1; i < 9; i++) {
+			ans += i;
+			CallStack frame = interpreter.new CallStack();
+			RValue[] paramValues = testGen.generateParameters();
+			frame.putLocal(paramName, paramValues[0]);
+
+			RValue[] returns = interpreter.execute(funcName, type, frame, paramValues);
+			if(i == 8) {
+				assertEquals(semantics.Int(BigInteger.valueOf(1)), returns[0]);
+			}
+			else {
+				assertEquals(semantics.Int(BigInteger.valueOf(ans)), returns[0]);
+			}
+		}		
+	}
 }

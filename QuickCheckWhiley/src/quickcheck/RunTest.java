@@ -92,7 +92,7 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 			TestType testType = TestType.valueOf(args[2]);
 			List<Decl.Function> functions = getFunctions(id, project);
 			// Generate tests for each function
-			Interpreter interpreter = new QCInterpreter(project, System.out);
+			QCInterpreter interpreter = new QCInterpreter(project, System.out);
 			int numTests = RunTest.NUM_TESTS;
 			try {
 				numTests = Integer.parseInt(args[3]);
@@ -145,7 +145,7 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 	 * @param lowerLimit The lower constraint used when generating integers
 	 * @param upperLimit The upper constraint used when generating integers
 	 */
-	private void executeTest(Path.ID id, Interpreter interpreter, Decl.FunctionOrMethod dec, TestType testType, int numTest, String lowerLimit, String upperLimit) {
+	private void executeTest(Path.ID id, QCInterpreter interpreter, Decl.FunctionOrMethod dec, TestType testType, int numTest, String lowerLimit, String upperLimit) {
 		// Get the method for generating test values
 		GenerateTest testGen;
 		BigInteger lower = new BigInteger(lowerLimit);
@@ -169,12 +169,12 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 		System.out.println("PRECONDITION "+ preconditions);
 		System.out.println("POSTCONDITION "+ postconditions);
 				
-		// Have to remove the pre and post conditions out of the 
-		// function so the function is executed without validation
-		// Validation will be conducted manually inside the function.
-		Tuple<Expr> empty = new Tuple<Expr>();		
-		dec.setOperand(4, empty); // Remove precondition
-		dec.setOperand(5, empty); // Remove postcondition
+//		// Have to remove the pre and post conditions out of the 
+//		// function so the function is executed without validation
+//		// Validation will be conducted manually inside the function.
+//		Tuple<Expr> empty = new Tuple<Expr>();		
+//		dec.setOperand(4, empty); // Remove precondition
+//		dec.setOperand(5, empty); // Remove postcondition
 
 		int numPassed = 0;
 		for(int i=0; i < numTest; i++) {
@@ -197,7 +197,7 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 			// Checks the postcondition when it is executed
 			RValue[] returns = null;
 			try {
-				returns = interpreter.execute(name, type, frame, paramValues);
+				returns = interpreter.execute(name, type, frame, false, false, paramValues);
 				// Add the return values into the frame for validation
 				for(int j=0; j < outputParameters.size(); j++) {
 					Decl.Variable parameter = outputParameters.get(j);

@@ -368,6 +368,39 @@ None
 \end{itemize}
 
 
+\section{June 18th 2018}
+\subsection{Present}
+\begin{itemize}
+	\item David Pearce
+\end{itemize}
+
+\subsection{Action points were achieved since the last meeting}
+ Created function optimisation for un-recursive functions by random generation.
+\subsection{Action points have yet to be achieved since the last meeting}
+None.
+\subsection{Action points were agreed to for the next meeting}
+
+\begin{itemize}
+	\item Start preliminary work with the experiments. Record statistics when running tests, and compare function call optimisation and caching against Whiley test suite.
+	\item Run Whiley tests to see if there are invalid tests. Also run WyBench tests from the develop branch.
+	\item Add flags for different parameters like whether to enable and disable function optimisation.
+\end{itemize}
+
+\subsection{Discussion Points}
+\begin{itemize}
+ \item Encountered several problems when trying to implement function optimisation
+ \begin{enumerate}
+ 	\item For the Interpreter, I had to copy a lot of methods into my own version of the Interpreter due to the private scope.
+ 	Ideally, the methods would have the protected scope so I would only need to override the methods I require.
+ 	Dave says this should be okay.
+ 	\item Recursive functions are a problem! Especially when the invariants call a recursive function as this causes a StackOverflow due to an infinite loop. Currently, this has been disabled if the function is calling itself (e.g. factorial function).
+ 	Not too sure how to solve this as I need to be able to detect the difference between a normal function call and recursive function call. 
+ 	E.g. if there are two functions foo() and bar() where foo calls bar and bar calls foo until some condition is met.
+ 	Should try and disable this.
+% 	Could possibly keep track of the different scopes, if the functions called within a scope are the same then just execute the function normally?
+ \end{enumerate}
+\end{itemize}
+
 %\section{ 2018}
 %\subsection{Present}
 %\begin{itemize}
@@ -380,6 +413,7 @@ None
 %
 %\subsection{Discussion Points}
 %\begin{itemize}
+% 	\item Similar to the integer range problem: How to generate values that adhere to the function's postconditions? At the moment, just randomly generating and only using the values if it conforms to the postcondition.
 %\end{itemize}
 
 

@@ -71,7 +71,22 @@ public class QCInterpreter extends Interpreter {
 	
 	/** The current scope being executed */
 	private FunctionOrMethodScope currentScope;
-
+	
+	/**Integer limits for test generation between lower limit (inclusive) and upper limit(exclusive)*/
+	private BigInteger lowerLimit;
+	private BigInteger upperLimit;
+	
+	public QCInterpreter(Build.Project project, PrintStream debug, BigInteger lowerLimit, BigInteger upperLimit) {
+		super(project, debug);
+		this.project = project;
+		this.debug = debug;
+		this.typeSystem = new TypeSystem(project);
+		this.semantics = new ConcreteSemantics();
+		this.functionParameters = new HashMap<FunctionOrMethod, Map<RValue[], RValue[]>>();
+		this.lowerLimit = lowerLimit;
+		this.upperLimit = upperLimit;
+	}
+	
 	public QCInterpreter(Build.Project project, PrintStream debug) {
 		super(project, debug);
 		this.project = project;
@@ -79,6 +94,8 @@ public class QCInterpreter extends Interpreter {
 		this.typeSystem = new TypeSystem(project);
 		this.semantics = new ConcreteSemantics();
 		this.functionParameters = new HashMap<FunctionOrMethod, Map<RValue[], RValue[]>>();
+		this.lowerLimit = BigInteger.valueOf(RunTest.INT_LOWER_LIMIT);
+		this.upperLimit = BigInteger.valueOf(RunTest.INT_UPPER_LIMIT);
 	}
 
 	private enum Status {
@@ -112,6 +129,7 @@ public class QCInterpreter extends Interpreter {
 				Decl.Callable.class);
 		// Evaluate argument expressions
 		RValue[] arguments = executeExpressions(expr.getOperands(), frame);
+		// TODO maybe not execute if the invariant is recursive?
 		if(currentScope != null && !currentScope.getContext().equals(decl)) {
 			Decl.FunctionOrMethod fun = ((Decl.FunctionOrMethod) decl);
 			Map<RValue[], RValue[]> functionIO = functionParameters.getOrDefault(fun, new HashMap<RValue[], RValue[]>());
@@ -124,8 +142,7 @@ public class QCInterpreter extends Interpreter {
 			frame = frame.enter(fun);
 			extractParameters(frame, arguments, fun);
 			int numGeneration = 5;
-			// TODO need the integer limits!
-			GenerateTest testGen = new RandomGenerateTest(fun, this, numGeneration, BigInteger.valueOf(RunTest.INT_LOWER_LIMIT), BigInteger.valueOf(RunTest.INT_UPPER_LIMIT));
+			GenerateTest testGen = new RandomGenerateTest(fun, this, numGeneration, lowerLimit, upperLimit);
 			RValue[] returns;
 			boolean isValid = false;
 			CallStack tempFrame = frame.clone();

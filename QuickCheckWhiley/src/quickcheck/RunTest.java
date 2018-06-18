@@ -91,15 +91,17 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 			Path.ID id = Trie.fromString(args[1]);
 			TestType testType = TestType.valueOf(args[2]);
 			List<Decl.Function> functions = getFunctions(id, project);
+			BigInteger lower = new BigInteger(args[4]);
+			BigInteger upper = new BigInteger(args[5]);
 			// Generate tests for each function
-			QCInterpreter interpreter = new QCInterpreter(project, System.out);
+			QCInterpreter interpreter = new QCInterpreter(project, System.out, lower, upper);
 			int numTests = RunTest.NUM_TESTS;
 			try {
 				numTests = Integer.parseInt(args[3]);
 			}
 			catch(NumberFormatException e) {}
 			for(Decl.Function func : functions) {
-				executeTest(id, interpreter, func, testType, numTests, args[4], args[5]);
+				executeTest(id, interpreter, func, testType, numTests, lower, upper);
 			}
 			
 		} catch (IOException e) {
@@ -145,16 +147,14 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 	 * @param lowerLimit The lower constraint used when generating integers
 	 * @param upperLimit The upper constraint used when generating integers
 	 */
-	private void executeTest(Path.ID id, QCInterpreter interpreter, Decl.FunctionOrMethod dec, TestType testType, int numTest, String lowerLimit, String upperLimit) {
+	private void executeTest(Path.ID id, QCInterpreter interpreter, Decl.FunctionOrMethod dec, TestType testType, int numTest, BigInteger lowerLimit, BigInteger upperLimit) {
 		// Get the method for generating test values
 		GenerateTest testGen;
-		BigInteger lower = new BigInteger(lowerLimit);
-		BigInteger upper = new BigInteger(upperLimit);
 		if(testType == TestType.EXHAUSTIVE) {
-			testGen = new ExhaustiveGenerateTest(dec, interpreter, numTest, lower, upper);
+			testGen = new ExhaustiveGenerateTest(dec, interpreter, numTest, lowerLimit, upperLimit);
 		}
 		else {
-            testGen = new RandomGenerateTest(dec, interpreter, numTest, lower, upper);
+            testGen = new RandomGenerateTest(dec, interpreter, numTest, lowerLimit, upperLimit);
 		}
 		// Get the function's relevant header information
 		NameID name = new NameID(id, dec.getName().get());

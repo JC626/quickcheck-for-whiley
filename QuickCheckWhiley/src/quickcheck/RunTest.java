@@ -91,15 +91,20 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 			Path.ID id = Trie.fromString(args[1]);
 			TestType testType = TestType.valueOf(args[2]);
 			List<Decl.Function> functions = getFunctions(id, project);
+			BigInteger lower = new BigInteger(args[4]);
+			BigInteger upper = new BigInteger(args[5]);
+			// Function optimisation parameters
+			boolean funcOpt = args[6].equals(Boolean.toString(true));
+			int numFuncOpGen = Integer.parseInt(args[7]);
 			// Generate tests for each function
-			Interpreter interpreter = new Interpreter(project, System.out);
+			QCInterpreter interpreter = new QCInterpreter(project, System.out, lower, upper, funcOpt, numFuncOpGen);
 			int numTests = RunTest.NUM_TESTS;
 			try {
 				numTests = Integer.parseInt(args[3]);
 			}
 			catch(NumberFormatException e) {}
 			for(Decl.Function func : functions) {
-				executeTest(id, interpreter, func, testType, numTests, args[4], args[5]);
+				executeTest(id, interpreter, func, testType, numTests, lower, upper);
 			}
 			
 		} catch (IOException e) {
@@ -145,16 +150,14 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 	 * @param lowerLimit The lower constraint used when generating integers
 	 * @param upperLimit The upper constraint used when generating integers
 	 */
-	private void executeTest(Path.ID id, Interpreter interpreter, Decl.FunctionOrMethod dec, TestType testType, int numTest, String lowerLimit, String upperLimit) {
+	private void executeTest(Path.ID id, QCInterpreter interpreter, Decl.FunctionOrMethod dec, TestType testType, int numTest, BigInteger lowerLimit, BigInteger upperLimit) {
 		// Get the method for generating test values
 		GenerateTest testGen;
-		BigInteger lower = new BigInteger(lowerLimit);
-		BigInteger upper = new BigInteger(upperLimit);
 		if(testType == TestType.EXHAUSTIVE) {
-			testGen = new ExhaustiveGenerateTest(dec, interpreter, numTest, lower, upper);
+			testGen = new ExhaustiveGenerateTest(dec, interpreter, numTest, lowerLimit, upperLimit);
 		}
 		else {
-            testGen = new RandomGenerateTest(dec, interpreter, numTest, lower, upper);
+            testGen = new RandomGenerateTest(dec, interpreter, numTest, lowerLimit, upperLimit);
 		}
 		// Get the function's relevant header information
 		NameID name = new NameID(id, dec.getName().get());
@@ -169,12 +172,12 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 		System.out.println("PRECONDITION "+ preconditions);
 		System.out.println("POSTCONDITION "+ postconditions);
 				
-		// Have to remove the pre and post conditions out of the 
-		// function so the function is executed without validation
-		// Validation will be conducted manually inside the function.
-		Tuple<Expr> empty = new Tuple<Expr>();		
-		dec.setOperand(4, empty); // Remove precondition
-		dec.setOperand(5, empty); // Remove postcondition
+//		// Have to remove the pre and post conditions out of the 
+//		// function so the function is executed without validation
+//		// Validation will be conducted manually inside the function.
+//		Tuple<Expr> empty = new Tuple<Expr>();		
+//		dec.setOperand(4, empty); // Remove precondition
+//		dec.setOperand(5, empty); // Remove postcondition
 
 		int numPassed = 0;
 		for(int i=0; i < numTest; i++) {
@@ -197,7 +200,7 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 			// Checks the postcondition when it is executed
 			RValue[] returns = null;
 			try {
-				returns = interpreter.execute(name, type, frame, paramValues);
+				returns = interpreter.execute(name, type, frame, false, false, i == 0, paramValues);
 				// Add the return values into the frame for validation
 				for(int j=0; j < outputParameters.size(); j++) {
 					Decl.Variable parameter = outputParameters.get(j);
@@ -244,7 +247,7 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 	 * @return If the invariant was valid or not
 	 * @throws ResolutionError 
 	 */
-	private boolean checkInvariant(Interpreter interpreter, Type paramType, RValue returnVal) throws ResolutionError {
+	public static boolean checkInvariant(Interpreter interpreter, Type paramType, RValue returnVal) throws ResolutionError {
 		// Check the nominal type postcondition
 		if(paramType instanceof Type.Nominal) {
 			Type.Nominal nom = (Type.Nominal) paramType;

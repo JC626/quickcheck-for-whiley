@@ -45,7 +45,11 @@ import wyc.lang.WhileyFile.Type;
  * so they can be overriden and called.
  *
  */
-public class QCInterpreter extends Interpreter {
+public class QCInterpreter extends Interpreter {	
+	/** Number of values generated for function optimisation */
+	public static final int NUM_GEN_FUNC_OPT = 5;
+	public static final boolean FUNCTION_OPTIMISATION = false;
+	
 	/**
 	 * The build project provides access to compiled WyIL files.
 	 */
@@ -75,19 +79,32 @@ public class QCInterpreter extends Interpreter {
 	private Set<Identifier> recursiveInvariantFunctions;
 	
 	/**Integer limits for test generation between lower limit (inclusive) and upper limit(exclusive)*/
-	private BigInteger lowerLimit;
-	private BigInteger upperLimit;
+	private final BigInteger lowerLimit;
+	private final BigInteger upperLimit;
 	
-	public QCInterpreter(Build.Project project, PrintStream debug, BigInteger lowerLimit, BigInteger upperLimit) {
+	/** Number of values generated for function optimisation */
+	private final int numRandomFuncValGen;
+	/**Flag whether function optimisation should be executed or not*/
+	private final boolean funcOptimisation;
+	
+	public QCInterpreter(Build.Project project, PrintStream debug, BigInteger lowerLimit, BigInteger upperLimit, boolean funcOpt,  int numFuncOpGen) {
 		super(project, debug);
 		this.project = project;
 		this.debug = debug;
 		this.typeSystem = new TypeSystem(project);
 		this.semantics = new ConcreteSemantics();
 		this.functionParameters = new HashMap<FunctionOrMethod, Map<RValue[], RValue[]>>();
+		this.recursiveInvariantFunctions = new HashSet<Identifier>();
 		this.lowerLimit = lowerLimit;
 		this.upperLimit = upperLimit;
-		this.recursiveInvariantFunctions = new HashSet<Identifier>();
+		if(numFuncOpGen <= 0) {
+			this.numRandomFuncValGen = NUM_GEN_FUNC_OPT;
+			this.funcOptimisation = false;
+		}
+		else {
+			this.numRandomFuncValGen = numFuncOpGen;
+			this.funcOptimisation = funcOpt;
+		}
 	}
 	
 	public QCInterpreter(Build.Project project, PrintStream debug) {
@@ -97,9 +114,11 @@ public class QCInterpreter extends Interpreter {
 		this.typeSystem = new TypeSystem(project);
 		this.semantics = new ConcreteSemantics();
 		this.functionParameters = new HashMap<FunctionOrMethod, Map<RValue[], RValue[]>>();
+		this.recursiveInvariantFunctions = new HashSet<Identifier>();
 		this.lowerLimit = BigInteger.valueOf(RunTest.INT_LOWER_LIMIT);
 		this.upperLimit = BigInteger.valueOf(RunTest.INT_UPPER_LIMIT);
-		this.recursiveInvariantFunctions = new HashSet<Identifier>();
+		this.numRandomFuncValGen = NUM_GEN_FUNC_OPT;
+		this.funcOptimisation = FUNCTION_OPTIMISATION;
 	}
 
 	private enum Status {
@@ -136,7 +155,7 @@ public class QCInterpreter extends Interpreter {
 		// If there is a recursive invariant, then execute the function normally
 		// instead of generating the value.
 		Identifier funcName = decl.getName();
-		if(!recursiveInvariantFunctions.contains(funcName)) {
+		if(funcOptimisation && !recursiveInvariantFunctions.contains(funcName)) {
 			Decl.FunctionOrMethod fun = ((Decl.FunctionOrMethod) decl);
 			Map<RValue[], RValue[]> functionIO = functionParameters.getOrDefault(fun, new HashMap<RValue[], RValue[]>());
 			// Every function should return the same output for the same input
@@ -147,12 +166,11 @@ public class QCInterpreter extends Interpreter {
 			// just call the function/method instead 
 			frame = frame.enter(fun);
 			extractParameters(frame, arguments, fun);
-			int numGeneration = 5;
-			GenerateTest testGen = new RandomGenerateTest(fun, this, numGeneration, lowerLimit, upperLimit);
+			GenerateTest testGen = new RandomGenerateTest(fun, this, numRandomFuncValGen, lowerLimit, upperLimit);
 			RValue[] returns;
 			boolean isValid = false;
 			CallStack tempFrame = frame.clone();
-			for(int i=0; i < numGeneration; i++) {
+			for(int i=0; i < numRandomFuncValGen; i++) {
 				// Create a generator for the return type of the function based on the input
 				returns = testGen.generateParameters();
 				try {

@@ -93,8 +93,11 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 			List<Decl.Function> functions = getFunctions(id, project);
 			BigInteger lower = new BigInteger(args[4]);
 			BigInteger upper = new BigInteger(args[5]);
+			// Function optimisation parameters
+			boolean funcOpt = args[6].equals(Boolean.toString(true));
+			int numFuncOpGen = Integer.parseInt(args[7]);
 			// Generate tests for each function
-			QCInterpreter interpreter = new QCInterpreter(project, System.out, lower, upper);
+			QCInterpreter interpreter = new QCInterpreter(project, System.out, lower, upper, funcOpt, numFuncOpGen);
 			int numTests = RunTest.NUM_TESTS;
 			try {
 				numTests = Integer.parseInt(args[3]);
@@ -197,7 +200,7 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 			// Checks the postcondition when it is executed
 			RValue[] returns = null;
 			try {
-				returns = interpreter.execute(name, type, frame, false, false, paramValues);
+				returns = interpreter.execute(name, type, frame, false, false, i == 0, paramValues);
 				// Add the return values into the frame for validation
 				for(int j=0; j < outputParameters.size(); j++) {
 					Decl.Variable parameter = outputParameters.get(j);

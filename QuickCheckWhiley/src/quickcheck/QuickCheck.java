@@ -67,7 +67,11 @@ public class QuickCheck {
 		String numTests = args.length >= 3 ? args[2] : Integer.toString(RunTest.NUM_TESTS);
 		String lowerLimit = args.length >= 4 ? args[3] : Integer.toString(RunTest.INT_LOWER_LIMIT);
 		String upperLimit = args.length >= 5 ? args[4] : Integer.toString(RunTest.INT_UPPER_LIMIT);
-		cmd.execute(relativePath, id.toString(), testType.toString(), numTests, lowerLimit, upperLimit);			
+		// Function optimisation flags
+		String functionOptimisation = args.length >= 6 ? args[5] : Boolean.toString(QCInterpreter.FUNCTION_OPTIMISATION);
+		String numFuncOpGen = args.length >= 7 ? args[6] : Integer.toString(QCInterpreter.NUM_GEN_FUNC_OPT);
+
+		cmd.execute(relativePath, id.toString(), testType.toString(), numTests, lowerLimit, upperLimit, functionOptimisation, numFuncOpGen);			
 		long endTime = System.nanoTime();
 		System.out.println("Execution time: "+ TimeUnit.NANOSECONDS.toMillis(endTime - startTime) + " milliseconds"); 
 	}

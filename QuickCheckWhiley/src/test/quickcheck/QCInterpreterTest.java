@@ -182,7 +182,7 @@ public class QCInterpreterTest {
 	 * @throws IOException 
 	 */
 	@Test
-	public void testFunctionOptimisationRecursive() throws IOException {
+	public void testFunctionOptimisationRecursive2() throws IOException {
 		String testName = "function_op_recursive2";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
@@ -195,6 +195,49 @@ public class QCInterpreterTest {
 		Tuple<Expr> empty = new Tuple<Expr>();		
 		func.setOperand(4, empty); // Remove precondition
 		func.setOperand(5, empty); // Remove postcondition
+		GenerateTest testGen = new ExhaustiveGenerateTest(func, interpreter, 25, lower, upper);
+		
+		Tuple<Decl.Variable> inputParameters = func.getParameters();
+		Path.ID id = Trie.fromString(testName);
+		NameID funcName = new NameID(id, func.getName().get());
+		Type.Callable type = functions.get(0).getType();
+
+		Identifier paramName = inputParameters.get(0).getName();
+		int ans = 0;
+		for(int i=1; i < 9; i++) {
+			ans += i;
+			CallStack frame = interpreter.new CallStack();
+			RValue[] paramValues = testGen.generateParameters();
+			frame.putLocal(paramName, paramValues[0]);
+
+			RValue[] returns = interpreter.execute(funcName, type, frame, paramValues);
+			if(i == 8) {
+				assertEquals(semantics.Int(BigInteger.valueOf(1)), returns[0]);
+			}
+			else {
+				assertEquals(semantics.Int(BigInteger.valueOf(ans)), returns[0]);
+			}
+		}		
+	}
+	
+	/**
+	 * Test when two functions call each other recursively.
+	 * I.e. function A calls another function, B
+	 * and the B calls A, recursively.
+	 * @throws IOException 
+	 */
+	@Test
+	public void testFunctionOptimisationRecursiveMulti() throws IOException {
+		String testName = "function_op_recursive_multi";
+		helper.compile(testName);
+		Build.Project project = helper.createProject();
+		Interpreter interpreter = new QCInterpreter(project, System.out);
+		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		
+		BigInteger lower = BigInteger.valueOf(1);
+		BigInteger upper = BigInteger.valueOf(8);
+		Decl.Function func = functions.get(0);
+
 		GenerateTest testGen = new ExhaustiveGenerateTest(func, interpreter, 25, lower, upper);
 		
 		Tuple<Decl.Variable> inputParameters = func.getParameters();

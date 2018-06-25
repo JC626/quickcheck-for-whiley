@@ -71,7 +71,7 @@ public class QCInterpreter extends Interpreter {
 	/** A map from function name to a map of inputs to outputs */ 
 	private final Map<FunctionOrMethod, Map<RValue[], RValue[]>> functionParameters;
 	
-	// Store a list of functions that are called recursively
+	/** Store a list of functions that are called recursively */
 	private Set<Identifier> recursiveInvariantFunctions;
 	
 	/**Integer limits for test generation between lower limit (inclusive) and upper limit(exclusive)*/
@@ -135,7 +135,7 @@ public class QCInterpreter extends Interpreter {
 		RValue[] arguments = executeExpressions(expr.getOperands(), frame);
 		// If there is a recursive invariant, then execute the function normally
 		// instead of generating the value.
-		Identifier funcName = decl.getName();		
+		Identifier funcName = decl.getName();
 		if(!recursiveInvariantFunctions.contains(funcName)) {
 			Decl.FunctionOrMethod fun = ((Decl.FunctionOrMethod) decl);
 			Map<RValue[], RValue[]> functionIO = functionParameters.getOrDefault(fun, new HashMap<RValue[], RValue[]>());
@@ -182,7 +182,6 @@ public class QCInterpreter extends Interpreter {
 				frame = tempFrame.clone();
 			}
 		}		
-		recursiveInvariantFunctions.add(decl.getName());
 		// Invoke the function or method in question
 		return execute(decl.getQualifiedName().toNameID(), decl.getType(), frame, arguments);
 	}
@@ -273,7 +272,7 @@ public class QCInterpreter extends Interpreter {
 	 *            The supplied arguments
 	 * @return
 	 */
-	public RValue[] execute(NameID nid, Type.Callable sig, CallStack frame, boolean checkPrecondition, boolean checkPostcondition, RValue... args) {
+	public RValue[] execute(NameID nid, Type.Callable sig, CallStack frame, boolean checkPrecondition, boolean checkPostcondition, boolean firstTest, RValue... args) {
 		// First, find the enclosing WyilFile
 		try {
 			// FIXME: NameID needs to be deprecated
@@ -312,7 +311,9 @@ public class QCInterpreter extends Interpreter {
 					throw new IllegalArgumentException("no function or method body found: " + nid + ", " + sig);
 				}
 				// Execute the method or function body
-				this.recursiveInvariantFunctions = new HashSet<Identifier>();
+				if(firstTest) {
+					this.recursiveInvariantFunctions = new HashSet<Identifier>();
+				}
 				recursiveInvariantFunctions.add(fm.getName());
 				executeBlock(fm.getBody(), frame, new FunctionOrMethodScope(fm));
 				// Extra the return values

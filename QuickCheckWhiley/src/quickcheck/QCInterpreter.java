@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.math.BigInteger;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import quickcheck.generator.GenerateTest;
 import quickcheck.generator.RandomGenerateTest;
@@ -69,8 +71,8 @@ public class QCInterpreter extends Interpreter {
 	/** A map from function name to a map of inputs to outputs */ 
 	private final Map<FunctionOrMethod, Map<RValue[], RValue[]>> functionParameters;
 	
-	/** The current scope being executed */
-	private FunctionOrMethodScope currentScope;
+	// Store a list of functions that are called recursively
+	private Set<Identifier> recursiveInvariantFunctions;
 	
 	/**Integer limits for test generation between lower limit (inclusive) and upper limit(exclusive)*/
 	private BigInteger lowerLimit;
@@ -85,6 +87,7 @@ public class QCInterpreter extends Interpreter {
 		this.functionParameters = new HashMap<FunctionOrMethod, Map<RValue[], RValue[]>>();
 		this.lowerLimit = lowerLimit;
 		this.upperLimit = upperLimit;
+		this.recursiveInvariantFunctions = new HashSet<Identifier>();
 	}
 	
 	public QCInterpreter(Build.Project project, PrintStream debug) {
@@ -96,6 +99,7 @@ public class QCInterpreter extends Interpreter {
 		this.functionParameters = new HashMap<FunctionOrMethod, Map<RValue[], RValue[]>>();
 		this.lowerLimit = BigInteger.valueOf(RunTest.INT_LOWER_LIMIT);
 		this.upperLimit = BigInteger.valueOf(RunTest.INT_UPPER_LIMIT);
+		this.recursiveInvariantFunctions = new HashSet<Identifier>();
 	}
 
 	private enum Status {
@@ -129,8 +133,10 @@ public class QCInterpreter extends Interpreter {
 				Decl.Callable.class);
 		// Evaluate argument expressions
 		RValue[] arguments = executeExpressions(expr.getOperands(), frame);
-		// TODO maybe not execute if the invariant is recursive?
-		if(currentScope != null && !currentScope.getContext().equals(decl)) {
+		// If there is a recursive invariant, then execute the function normally
+		// instead of generating the value.
+		Identifier funcName = decl.getName();		
+		if(!recursiveInvariantFunctions.contains(funcName)) {
 			Decl.FunctionOrMethod fun = ((Decl.FunctionOrMethod) decl);
 			Map<RValue[], RValue[]> functionIO = functionParameters.getOrDefault(fun, new HashMap<RValue[], RValue[]>());
 			// Every function should return the same output for the same input
@@ -159,6 +165,7 @@ public class QCInterpreter extends Interpreter {
 						}
 						frame.putLocal(parameter.getName(), returns[j]);
 					}	
+					recursiveInvariantFunctions.add(decl.getName());
 					this.checkInvariants(frame, postconditions);
 //					System.out.println("HERE");
 				}
@@ -174,8 +181,8 @@ public class QCInterpreter extends Interpreter {
 				// Need to reset frame to remove the old inputs
 				frame = tempFrame.clone();
 			}
-		}
-		
+		}		
+		recursiveInvariantFunctions.add(decl.getName());
 		// Invoke the function or method in question
 		return execute(decl.getQualifiedName().toNameID(), decl.getType(), frame, arguments);
 	}
@@ -231,8 +238,8 @@ public class QCInterpreter extends Interpreter {
 					throw new IllegalArgumentException("no function or method body found: " + nid + ", " + sig);
 				}
 				// Execute the method or function body
-				currentScope = new FunctionOrMethodScope(fm);
-				executeBlock(fm.getBody(), frame, currentScope);
+				recursiveInvariantFunctions.add(fm.getName());
+				executeBlock(fm.getBody(), frame, new FunctionOrMethodScope(fm));
 				// Extra the return values
 				RValue[] returns = packReturns(frame,fmp);
 				// Restore original parameter values
@@ -305,8 +312,9 @@ public class QCInterpreter extends Interpreter {
 					throw new IllegalArgumentException("no function or method body found: " + nid + ", " + sig);
 				}
 				// Execute the method or function body
-				currentScope = new FunctionOrMethodScope(fm);
-				executeBlock(fm.getBody(), frame, currentScope);
+				this.recursiveInvariantFunctions = new HashSet<Identifier>();
+				recursiveInvariantFunctions.add(fm.getName());
+				executeBlock(fm.getBody(), frame, new FunctionOrMethodScope(fm));
 				// Extra the return values
 				RValue[] returns = packReturns(frame,fmp);
 				// Restore original parameter values
@@ -1148,10 +1156,7 @@ public class QCInterpreter extends Interpreter {
 		// Execute the method or function body
 		Stmt body = src.getBody();
 		if(body instanceof Stmt.Block) {
-			FunctionOrMethodScope temp = currentScope;
-			currentScope = new FunctionOrMethodScope(src.getContext());
-			executeBlock((Stmt.Block) body, frame, currentScope);
-			currentScope = temp;
+			executeBlock((Stmt.Block) body, frame, new FunctionOrMethodScope(src.getContext()));
 			// Extra the return values
 			return packReturns(frame,src.getContext());
 		} else {
@@ -1271,7 +1276,7 @@ public class QCInterpreter extends Interpreter {
 	 *
 	 */
 	private static class FunctionOrMethodScope extends EnclosingScope {
-		private final Decl.Callable context;;
+		private final Decl.Callable context;
 
 		public FunctionOrMethodScope(Decl.Callable context) {
 			super(null);

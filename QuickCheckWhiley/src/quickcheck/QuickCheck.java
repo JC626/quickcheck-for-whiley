@@ -20,7 +20,7 @@ import wyfs.util.Trie;
  *
  */
 public class QuickCheck {
-		
+			
 	/**
 	 * Extract the path ID for the given filename. This is a relative path from the
 	 * project root.
@@ -36,12 +36,12 @@ public class QuickCheck {
 		return id;
 	}
 	
-	public static void main(String[] args){
-		long startTime = System.nanoTime();
+	public static String[] prepareArguments(String[] args) {
 		if(args.length == 0) {
 			System.out.println("Usage: java QuickCheck <wyilfile> <testtype> <numtests> <lowerintegerlimit> <upperintegerlimit>");
 			System.exit(-1);
 		}
+		String[] modified = new String[RunTest.MAX_NUMBER_ARGUMENTS];
 		// Get the filepath e.g test/helloworld.wyil
 		String filepath = args[0];
 		int lastSlash = filepath.lastIndexOf("/");
@@ -53,26 +53,39 @@ public class QuickCheck {
 			relativePath = filepath.substring(0, lastSlash);
 			filename = filepath.substring(lastSlash+1);
 		}
+		modified[0] = relativePath;
 		Path.ID id = extractPathID(filename);
-		// Get the test type
+		modified[1] = id.toString();
+		// Get the test type, Default is random testing
 		TestType testType = TestType.RANDOM;
 		if(args.length >= 2) {
 			String type = args[1];
 			if(type.equalsIgnoreCase("exhaustive")) {
 				 testType = TestType.EXHAUSTIVE;
 			}
-			// Default is random testing
 		}
-		Content.Registry registry = new wyc.Activator.Registry();
-		RunTest cmd = new RunTest(registry,Logger.NULL);
-		String numTests = args.length >= 3 ? args[2] : Integer.toString(RunTest.NUM_TESTS);
-		String lowerLimit = args.length >= 4 ? args[3] : Integer.toString(RunTest.INT_LOWER_LIMIT);
-		String upperLimit = args.length >= 5 ? args[4] : Integer.toString(RunTest.INT_UPPER_LIMIT);
+		modified[2] = testType.toString();
+		modified[3] = args.length >= 3 ? args[2] : Integer.toString(RunTest.NUM_TESTS);
+		modified[4] = args.length >= 4 ? args[3] : Integer.toString(RunTest.INT_LOWER_LIMIT);
+		modified[5] = args.length >= 5 ? args[4] : Integer.toString(RunTest.INT_UPPER_LIMIT);
 		// Function optimisation flags
-		String functionOptimisation = args.length >= 6 ? args[5] : Boolean.toString(QCInterpreter.FUNCTION_OPTIMISATION);
-		String numFuncOpGen = args.length >= 7 ? args[6] : Integer.toString(QCInterpreter.NUM_GEN_FUNC_OPT);
-
-		RunTest.Result result = cmd.execute(relativePath, id.toString(), testType.toString(), numTests, lowerLimit, upperLimit, functionOptimisation, numFuncOpGen);			
+		modified[6] = args.length >= 6 ? args[5] : Boolean.toString(QCInterpreter.FUNCTION_OPTIMISATION);
+		modified[7] = args.length >= 7 ? args[6] : Integer.toString(QCInterpreter.NUM_GEN_FUNC_OPT);
+		return modified;
+	}
+	
+	public static void main(String[] args){
+		long startTime = System.nanoTime();
+		if(args.length == 0) {
+			System.out.println("Usage: java QuickCheck <wyilfile> <testtype> <numtests> <lowerintegerlimit> <upperintegerlimit>");
+			System.exit(-1);
+		}
+		String[] modifiedArgs = prepareArguments(args);
+		Content.Registry registry = new wyc.Activator.Registry();
+		RunTest cmd = new RunTest(registry, Logger.NULL);
+		RunTest.Result result = cmd.execute(modifiedArgs);			
+		long endTime = System.nanoTime();
+		System.out.println("Execution time: "+ TimeUnit.NANOSECONDS.toMillis(endTime - startTime) + " milliseconds"); 
 		if(result == Result.PASSED) {
 			System.out.println("All tests passed.");
 		}
@@ -82,8 +95,5 @@ public class QuickCheck {
 		else {
 			System.out.println("An error occurred during testing.");
 		}
-
-		long endTime = System.nanoTime();
-		System.out.println("Execution time: "+ TimeUnit.NANOSECONDS.toMillis(endTime - startTime) + " milliseconds"); 
 	}
 }

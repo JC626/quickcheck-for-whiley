@@ -1,5 +1,6 @@
 package test.quickcheck;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 import java.io.File;
@@ -16,7 +17,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import quickcheck.QuickCheck;
+import quickcheck.RunTest.Result;
 import test.utils.TestHelper;
 import wyc.util.TestUtils;
 
@@ -128,14 +129,19 @@ public class WhileyInvalidTest {
 		System.setOut(stream);
 		
 		// Run tests
-		
         try {
+        	// Negative
             String[] args = new String[] {TEST_DIR + "/" + this.testName, "exhaustive", "100", "-5", "0"};
-            QuickCheck.main(args);
-            
+            Result result = helper.createRunTest(args);
+            if(result == Result.FAILED) {
+            	// A negative test failed.
+            	return;
+            }
             // Positive
             args = new String[] {TEST_DIR + "/" + this.testName, "exhaustive", "100", "0", "5"};
-            QuickCheck.main(args);
+            result = helper.createRunTest(args);
+            assertEquals("All tests passed when some tests should fail.", Result.FAILED, result);   
+            return;
         }
         catch(Error e) {
         	return;
@@ -146,13 +152,7 @@ public class WhileyInvalidTest {
 			if(file.length() == 0) {
 				file.delete();
 			}
-			else {
-				// Success as there were invalid inputs/outputs
-				return;
-			}
-		}
-        
-        fail("Was able to test this file");
+		}        
 	}
 
 }

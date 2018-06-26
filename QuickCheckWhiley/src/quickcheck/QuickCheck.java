@@ -2,6 +2,7 @@ package quickcheck;
 
 import java.util.concurrent.TimeUnit;
 
+import quickcheck.RunTest.Result;
 import quickcheck.util.TestType;
 import wycc.util.Logger;
 import wyfs.lang.Content;
@@ -71,7 +72,17 @@ public class QuickCheck {
 		String functionOptimisation = args.length >= 6 ? args[5] : Boolean.toString(QCInterpreter.FUNCTION_OPTIMISATION);
 		String numFuncOpGen = args.length >= 7 ? args[6] : Integer.toString(QCInterpreter.NUM_GEN_FUNC_OPT);
 
-		cmd.execute(relativePath, id.toString(), testType.toString(), numTests, lowerLimit, upperLimit, functionOptimisation, numFuncOpGen);			
+		RunTest.Result result = cmd.execute(relativePath, id.toString(), testType.toString(), numTests, lowerLimit, upperLimit, functionOptimisation, numFuncOpGen);			
+		if(result == Result.PASSED) {
+			System.out.println("All tests passed.");
+		}
+		else if(result == Result.PASSED) {
+			System.out.println("Some tests failed.");
+		}
+		else {
+			System.out.println("An error occurred during testing.");
+		}
+
 		long endTime = System.nanoTime();
 		System.out.println("Execution time: "+ TimeUnit.NANOSECONDS.toMillis(endTime - startTime) + " milliseconds"); 
 	}

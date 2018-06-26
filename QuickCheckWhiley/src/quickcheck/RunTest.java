@@ -53,9 +53,10 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 	 *
 	 */
 	public enum Result {
-		SUCCESS,
-		ERRORS,
-		INTERNAL_FAILURE
+		PASSED, // All tests passed
+		FAILED, // Some tests failed
+		ERRORS, // An error occurred before execution
+		INTERNAL_FAILURE // An error occurred during the program
 	}
 
 	public RunTest(Content.Registry registry, Logger logger) {
@@ -103,17 +104,20 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 				numTests = Integer.parseInt(args[3]);
 			}
 			catch(NumberFormatException e) {}
+			Result result = Result.PASSED;
 			for(Decl.Function func : functions) {
-				executeTest(id, interpreter, func, testType, numTests, lower, upper);
+				Result r = executeTest(id, interpreter, func, testType, numTests, lower, upper);
+				if(r == Result.FAILED) {
+					result = r;
+				}
 			}
-			
+			return result;
 		} catch (IOException e) {
 			// FIXME: need a better error reporting mechanism
 			System.err.println("internal failure: " + e.getMessage());
 			e.printStackTrace();
 			return Result.INTERNAL_FAILURE;
 		}
-		return Result.SUCCESS;
 	}
 
 	// =======================================================================
@@ -150,7 +154,7 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 	 * @param lowerLimit The lower constraint used when generating integers
 	 * @param upperLimit The upper constraint used when generating integers
 	 */
-	private void executeTest(Path.ID id, QCInterpreter interpreter, Decl.FunctionOrMethod dec, TestType testType, int numTest, BigInteger lowerLimit, BigInteger upperLimit) {
+	private Result executeTest(Path.ID id, QCInterpreter interpreter, Decl.FunctionOrMethod dec, TestType testType, int numTest, BigInteger lowerLimit, BigInteger upperLimit) {
 		// Get the method for generating test values
 		GenerateTest testGen;
 		if(testType == TestType.EXHAUSTIVE) {
@@ -230,11 +234,13 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 		// Overall test statistics
 		if(numPassed == numTest) {
 			System.out.printf("Ok: ran %d tests%n", numTest);
+			return Result.PASSED;
 		}
 		else {
 			int numFailed = numTest - numPassed;
 			System.out.printf("Failed: %d passed (%.2f %%), %d failed (%.2f %%), ran %d tests%n",
 					numPassed, (double) 100 * numPassed/numTest, numFailed, (double) 100 * numFailed/numTest, numTest);
+			return Result.FAILED;
 		}
 	}
 	

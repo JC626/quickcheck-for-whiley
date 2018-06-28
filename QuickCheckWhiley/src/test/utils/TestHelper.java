@@ -6,8 +6,15 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.TooManyListenersException;
+import java.util.stream.Collectors;
 
 import quickcheck.QuickCheck;
 import quickcheck.RunTest;
@@ -117,4 +124,34 @@ public class TestHelper {
 		fail("Functions could not be found for " + testName);
 		return null;
 	}
+	
+	
+	/**
+	 * Scan a directory to get the names of all the whiley source files
+	 * recursively, in the directory. The list of file names can be used as input
+	 * parameters to a JUnit test.
+	 *
+	 * @param srcDir The path of the directory to scan.
+	 * @throws IOException 
+	 */
+	public static Collection<Object[]> findRecursiveTestNames(String srcDir) throws IOException {
+		final String suffix = ".whiley";
+		List<Object[]> testcases = new ArrayList<>();
+
+		testcases = Files.find(Paths.get(srcDir),
+		           Integer.MAX_VALUE,
+		           (filePath, fileAttr) -> fileAttr.isRegularFile() && filePath.toString().endsWith(suffix))
+				.map(file -> new Object[] { file.toString().substring(srcDir.length(), file.toString().length() - suffix.length()) })		
+		.collect(Collectors.toList());
+		
+		// Sort the result by filename
+		Collections.sort(testcases, new Comparator<Object[]>() {
+				@Override
+				public int compare(Object[] o1, Object[] o2) {
+					return ((String) o1[0]).compareTo((String) o2[0]);
+				}
+		});
+		return testcases;
+	}
+
 }

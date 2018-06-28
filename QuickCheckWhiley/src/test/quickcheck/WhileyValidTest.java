@@ -1,5 +1,7 @@
 package test.quickcheck;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -14,7 +16,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import quickcheck.QuickCheck;
+import quickcheck.RunTest.Result;
 import test.utils.TestHelper;
 import wyc.util.TestUtils;
 
@@ -191,12 +193,14 @@ public class WhileyValidTest {
 		
 		// Run tests
         try {
-            String[] args = new String[] {TEST_DIR + "/" + this.testName, "exhaustive", "100", "-5", "0"};
-            QuickCheck.main(args);
+            String[] args = new String[] {TEST_DIR + "/" + this.testName, "exhaustive", "100", "-5", "0"};            
+            Result result = helper.createRunTest(args);
+            assertEquals("A test failed with negative integer limits", Result.PASSED, result);
             
             // Positive
             args = new String[] {TEST_DIR + "/" + this.testName, "exhaustive", "100", "0", "5"};
-            QuickCheck.main(args);
+            result = helper.createRunTest(args);
+            assertEquals("A test failed with negative integer limits", Result.PASSED, result);
         }
 		finally {
 			stream.close();

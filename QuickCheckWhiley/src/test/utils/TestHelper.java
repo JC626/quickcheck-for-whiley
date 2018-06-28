@@ -9,6 +9,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+import quickcheck.QuickCheck;
 import quickcheck.RunTest;
 import wybs.lang.Build;
 import wybs.util.StdProject;
@@ -61,6 +62,19 @@ public class TestHelper {
 		} else if (r == Compile.Result.INTERNAL_FAILURE) {
 			fail("Test caused internal failure!");
 		}
+	}
+	
+	/**
+	 * Basically, a copy of QuickCheck's main method 
+	 * so that RunTest can be executed
+	 * @param args The command line arguments used to execute the test
+	 * @return Result of executing a test
+	 */
+	public RunTest.Result createRunTest(String[] args) {
+		String[] modifiedArgs = QuickCheck.prepareArguments(args);
+		Content.Registry registry = new wyc.Activator.Registry();
+		RunTest cmd = new RunTest(registry, Logger.NULL);
+		return cmd.execute(modifiedArgs);		
 	}
 	
 	/**

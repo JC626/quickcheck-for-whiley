@@ -1,5 +1,6 @@
 package quickcheck;
 
+import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 import quickcheck.RunTest.Result;
@@ -44,7 +45,7 @@ public class QuickCheck {
 		String[] modified = new String[RunTest.MAX_NUMBER_ARGUMENTS];
 		// Get the filepath e.g test/helloworld.wyil
 		String filepath = args[0];
-		int lastSlash = filepath.lastIndexOf("/");
+		int lastSlash = filepath.lastIndexOf(File.separatorChar);
 		// If the current directory is used to find the file
 		String relativePath = ".";
 		String filename = filepath;

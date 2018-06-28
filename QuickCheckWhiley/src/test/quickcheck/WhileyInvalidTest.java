@@ -1,7 +1,6 @@
 package test.quickcheck;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,13 +32,13 @@ public class WhileyInvalidTest {
 	/**
 	 * The directory where you want to store the results
 	 */
-	public final static String RESULT_DIR = "tests/invalid_results/";
+	public final static String RESULT_DIR = "tests/invalid_results/".replace('/', File.separatorChar);
 	
 	/**
 	 * The directory containing the source files for each test case. 
 	 * Every test corresponds to a file in this directory.
 	 */
-	public final static String TEST_DIR = "D://Documents/University/ENGR489/WhileyCompiler-0.5.6/tests/invalid";
+	public final static String TEST_DIR = "D://Documents/University/ENGR489/WhileyCompiler-0.5.6/tests/invalid".replace('/', File.separatorChar);
 	
 	/**
 	 * Test helper used for compiling Whiley files
@@ -131,14 +130,14 @@ public class WhileyInvalidTest {
 		// Run tests
         try {
         	// Negative
-            String[] args = new String[] {TEST_DIR + "/" + this.testName, "exhaustive", "100", "-5", "0"};
+            String[] args = new String[] {TEST_DIR + File.separatorChar + this.testName, "exhaustive", "100", "-5", "0"};
             Result result = helper.createRunTest(args);
             if(result == Result.FAILED) {
             	// A negative test failed.
             	return;
             }
             // Positive
-            args = new String[] {TEST_DIR + "/" + this.testName, "exhaustive", "100", "0", "5"};
+            args = new String[] {TEST_DIR + File.separatorChar + this.testName, "exhaustive", "100", "0", "5"};
             result = helper.createRunTest(args);
             assertEquals("All tests passed when some tests should fail.", Result.FAILED, result);   
             return;

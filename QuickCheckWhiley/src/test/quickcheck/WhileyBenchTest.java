@@ -91,7 +91,7 @@ public class WhileyBenchTest {
 	            assertEquals("A test failed with negative integer limits", Result.PASSED, result);
 	            
 	            // Positive
-	            args = new String[] {TEST_DIR + "/" + this.testName, "exhaustive", "100", "0", "5"};
+	            args = new String[] {TEST_DIR + File.separatorChar + this.testName, "exhaustive", "100", "0", "5"};
 	            result = helper.createRunTest(args);
 	            assertEquals("A test failed with negative integer limits", Result.PASSED, result);
 	        }

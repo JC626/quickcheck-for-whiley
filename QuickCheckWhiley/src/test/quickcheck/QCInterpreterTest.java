@@ -10,6 +10,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import quickcheck.QCInterpreter;
+import quickcheck.exception.IntegerRangeException;
 import quickcheck.generator.ExhaustiveGenerateTest;
 import quickcheck.generator.GenerateTest;
 import test.utils.TestHelper;
@@ -57,9 +58,10 @@ public class QCInterpreterTest {
 	/**
 	 * Test calling a function within another function
 	 * @throws IOException 
+	 * @throws IntegerRangeException 
 	 */
 	@Test
-	public void testFunctionOptimisation1() throws IOException {
+	public void testFunctionOptimisation1() throws IOException, IntegerRangeException {
 		String testName = "function_op1";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
@@ -97,9 +99,10 @@ public class QCInterpreterTest {
 	/**
 	 * Test calling a function within another function
 	 * @throws IOException 
+	 * @throws IntegerRangeException 
 	 */
 	@Test
-	public void testFunctionOptimisation2() throws IOException {
+	public void testFunctionOptimisation2() throws IOException, IntegerRangeException {
 		String testName = "function_op2";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
@@ -137,9 +140,10 @@ public class QCInterpreterTest {
 	 * Test recursively calling a function 
 	 * using a factorial
 	 * @throws IOException 
+	 * @throws IntegerRangeException 
 	 */
 	@Test
-	public void testFunctionOptimisationRecursive1() throws IOException {
+	public void testFunctionOptimisationRecursive1() throws IOException, IntegerRangeException {
 		String testName = "function_op_recursive1";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
@@ -180,9 +184,10 @@ public class QCInterpreterTest {
 	 * Test recursively calling a function 
 	 * by getting the sum of the numbers.
 	 * @throws IOException 
+	 * @throws IntegerRangeException 
 	 */
 	@Test
-	public void testFunctionOptimisationRecursive2() throws IOException {
+	public void testFunctionOptimisationRecursive2() throws IOException, IntegerRangeException {
 		String testName = "function_op_recursive2";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
@@ -225,9 +230,10 @@ public class QCInterpreterTest {
 	 * I.e. function A calls another function, B
 	 * and the B calls A, recursively.
 	 * @throws IOException 
+	 * @throws IntegerRangeException 
 	 */
 	@Test
-	public void testFunctionOptimisationRecursiveMulti() throws IOException {
+	public void testFunctionOptimisationRecursiveMulti() throws IOException, IntegerRangeException {
 		String testName = "function_op_recursive_multi";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();

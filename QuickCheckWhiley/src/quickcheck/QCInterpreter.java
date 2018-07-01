@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import quickcheck.exception.IntegerRangeException;
 import quickcheck.generator.GenerateTest;
 import quickcheck.generator.RandomGenerateTest;
 import wybs.lang.Build;
@@ -166,39 +167,44 @@ public class QCInterpreter extends Interpreter {
 			// just call the function/method instead 
 			frame = frame.enter(fun);
 			extractParameters(frame, arguments, fun);
-			GenerateTest testGen = new RandomGenerateTest(fun, this, numRandomFuncValGen, lowerLimit, upperLimit);
-			RValue[] returns;
-			boolean isValid = false;
-			CallStack tempFrame = frame.clone();
-			for(int i=0; i < numRandomFuncValGen; i++) {
-				// Create a generator for the return type of the function based on the input
-				returns = testGen.generateParameters();
-				try {
-					for(int j=0; j < outputParameters.size(); j++) {
-						Decl.Variable parameter = outputParameters.get(j);
-						Type paramType = parameter.getType();
-						isValid = RunTest.checkInvariant(this, paramType, returns[j]);
-						if(!isValid) {
-							break;
-						}
-						frame.putLocal(parameter.getName(), returns[j]);
-					}	
-					recursiveInvariantFunctions.add(decl.getName());
-					this.checkInvariants(frame, postconditions);
-//					System.out.println("HERE");
+			try {
+				GenerateTest testGen = new RandomGenerateTest(fun, this, numRandomFuncValGen, lowerLimit, upperLimit);
+				RValue[] returns;
+				boolean isValid = false;
+				CallStack tempFrame = frame.clone();
+				for(int i=0; i < numRandomFuncValGen; i++) {
+					// Create a generator for the return type of the function based on the input
+					returns = testGen.generateParameters();
+					try {
+						for(int j=0; j < outputParameters.size(); j++) {
+							Decl.Variable parameter = outputParameters.get(j);
+							Type paramType = parameter.getType();
+							isValid = RunTest.checkInvariant(this, paramType, returns[j]);
+							if(!isValid) {
+								break;
+							}
+							frame.putLocal(parameter.getName(), returns[j]);
+						}	
+						recursiveInvariantFunctions.add(decl.getName());
+						this.checkInvariants(frame, postconditions);
+//						System.out.println("HERE");
+					}
+					catch(AssertionError e) {
+//						System.out.println("FAIL");
+						isValid = false;
+					}
+					if(isValid) {
+//						System.out.println("Returned " + Arrays.toString(returns));
+						functionIO.put(arguments, returns);
+						return returns;
+					}
+					// Need to reset frame to remove the old inputs
+					frame = tempFrame.clone();
 				}
-				catch(AssertionError e) {
-//					System.out.println("FAIL");
-					isValid = false;
-				}
-				if(isValid) {
-//					System.out.println("Returned " + Arrays.toString(returns));
-					functionIO.put(arguments, returns);
-					return returns;
-				}
-				// Need to reset frame to remove the old inputs
-				frame = tempFrame.clone();
+			} catch (IntegerRangeException e1) {
+				// Execute test normally then
 			}
+			
 		}		
 		// Invoke the function or method in question
 		return execute(decl.getQualifiedName().toNameID(), decl.getType(), frame, arguments);

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 import quickcheck.constraints.RangeHelper;
+import quickcheck.exception.IntegerRangeException;
 import quickcheck.util.TestType;
 import wybs.util.AbstractCompilationUnit.Identifier;
 import wybs.util.AbstractCompilationUnit.Tuple;
@@ -141,8 +142,9 @@ public final class UnionGenerator implements Generator {
 	 * Check the ranges on the invariants against the generators.
 	 * @param invariants The invariants to check against the generator on the nominal type
 	 * @param interpreter The interpreter used
+	 * @throws IntegerRangeException 
 	 */
-	public void checkInvariantRange(Tuple<Expr> invariants, Interpreter interpreter, String name) {
+	public void checkInvariantRange(Tuple<Expr> invariants, Interpreter interpreter, String name) throws IntegerRangeException {
 		if (invariants.size() > 0 && generators.size() > 0) {
 			for(Generator gen : generators) {
 				if(gen instanceof ArrayGenerator || gen instanceof IntegerGenerator) {

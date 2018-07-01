@@ -10,6 +10,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import quickcheck.QCInterpreter;
+import quickcheck.exception.IntegerRangeException;
 import quickcheck.generator.ExhaustiveGenerateTest;
 import quickcheck.generator.GenerateTest;
 import test.utils.TestHelper;
@@ -61,9 +62,10 @@ public class GenerateExhaustiveTest {
 
 	/**
 	 * Test when the function has no parameters
+	 * @throws IntegerRangeException 
 	 */
 	@Test
-	public void testFunctionNoParameters() {
+	public void testFunctionNoParameters() throws IntegerRangeException {
 		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>();
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
 		BigInteger lower = BigInteger.valueOf(-10);
@@ -74,9 +76,10 @@ public class GenerateExhaustiveTest {
 	
 	/**
 	 * Test when the function has 1 int parameter
+	 * @throws IntegerRangeException 
 	 */
 	@Test
-	public void testFunctionIntParameter() {
+	public void testFunctionIntParameter() throws IntegerRangeException {
 		Decl.Variable intParam = new Decl.Variable(null, new Identifier("firstInt"), Type.Int);
 		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(intParam);
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
@@ -94,9 +97,10 @@ public class GenerateExhaustiveTest {
 	/**
 	 * Test when the function has an int parameter with 
 	 * an invalid range
+	 * @throws IntegerRangeException 
 	 */
-	@Test(expected = Error.class)
-	public void testFunctionIntInvalid() {
+	@Test(expected = IntegerRangeException.class)
+	public void testFunctionIntInvalid() throws IntegerRangeException {
 		Decl.Variable intParam = new Decl.Variable(null, new Identifier("firstInt"), Type.Int);
 		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(intParam);
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
@@ -107,9 +111,10 @@ public class GenerateExhaustiveTest {
 	
 	/**
 	 * Test when the function has multiple int parameters
+	 * @throws IntegerRangeException 
 	 */
 	@Test
-	public void testFunctionMultiIntParameters() {
+	public void testFunctionMultiIntParameters() throws IntegerRangeException {
 		Decl.Variable intOne = new Decl.Variable(null, new Identifier("firstInt"), Type.Int);
 		Decl.Variable intTwo = new Decl.Variable(null, new Identifier("secInt"), Type.Int);
 		Decl.Variable intThree = new Decl.Variable(null, new Identifier("thirdInt"), Type.Int);
@@ -134,9 +139,10 @@ public class GenerateExhaustiveTest {
 	
 	/**
 	 * Test when the function has 1 bool parameter
+	 * @throws IntegerRangeException 
 	 */
 	@Test
-	public void testFunctionBoolParameter() {
+	public void testFunctionBoolParameter() throws IntegerRangeException {
 		Decl.Variable boolParam = new Decl.Variable(null, new Identifier("firstBool"), Type.Bool);
 		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(boolParam);
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
@@ -154,9 +160,10 @@ public class GenerateExhaustiveTest {
 	
 	/**
 	 * Test when the function has multiple bool parameters
+	 * @throws IntegerRangeException 
 	 */
 	@Test
-	public void testFunctionMultiBoolParameters() {
+	public void testFunctionMultiBoolParameters() throws IntegerRangeException {
 		Decl.Variable boolOne = new Decl.Variable(null, new Identifier("firstBool"), Type.Bool);
 		Decl.Variable boolTwo = new Decl.Variable(null, new Identifier("secBool"), Type.Bool);
 		Decl.Variable boolThree = new Decl.Variable(null, new Identifier("thirdBool"), Type.Bool);
@@ -182,9 +189,10 @@ public class GenerateExhaustiveTest {
 	/**
 	 * Test when the function has different parameter types,
 	 * int and bool
+	 * @throws IntegerRangeException 
 	 */
 	@Test
-	public void testFunctionDiffParameters1() {
+	public void testFunctionDiffParameters1() throws IntegerRangeException {
 		Decl.Variable intParam = new Decl.Variable(null, new Identifier("firstInt"), Type.Int);
 		Decl.Variable nullParam = new Decl.Variable(null, new Identifier("secNull"), Type.Null);
 		Decl.Variable boolParam = new Decl.Variable(null, new Identifier("thirdBool"), Type.Bool);
@@ -219,9 +227,10 @@ public class GenerateExhaustiveTest {
 	/**
 	 * Test when the function has different parameter types,
 	 * int, bool and array
+	 * @throws IntegerRangeException 
 	 */
 	@Test
-	public void testFunctionDiffParameters2() {
+	public void testFunctionDiffParameters2() throws IntegerRangeException {
 		Decl.Variable intParam = new Decl.Variable(null, new Identifier("firstInt"), Type.Int);
 		Decl.Variable boolParam = new Decl.Variable(null, new Identifier("secBool"), Type.Bool);
 		Decl.Variable arrayParam = new Decl.Variable(null, new Identifier("boolArr"), new Type.Array(Type.Bool));
@@ -245,9 +254,10 @@ public class GenerateExhaustiveTest {
 
 	/**
 	 * Test when the function has a boolean array
+	 * @throws IntegerRangeException 
 	 */
 	@Test
-	public void testFunctionArraySingleBool() {
+	public void testFunctionArraySingleBool() throws IntegerRangeException {
 		Decl.Variable arrayParam = new Decl.Variable(null, new Identifier("boolArr"), new Type.Array(Type.Bool));
 		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(arrayParam);
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
@@ -263,9 +273,10 @@ public class GenerateExhaustiveTest {
 	
 	/**
 	 * Test when the function has a integer array
+	 * @throws IntegerRangeException 
 	 */
 	@Test
-	public void testFunctionArraySingleInt() {
+	public void testFunctionArraySingleInt() throws IntegerRangeException {
 		Decl.Variable arrayParam = new Decl.Variable(null, new Identifier("intArr"), new Type.Array(Type.Int));
 		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(arrayParam);
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
@@ -308,9 +319,10 @@ public class GenerateExhaustiveTest {
 	
 	/**
 	 * Test when the function has a byte array	
+	 * @throws IntegerRangeException 
 	 */
 	@Test
-	public void testArraySingleByte() {
+	public void testArraySingleByte() throws IntegerRangeException {
 		Decl.Variable arrayParam = new Decl.Variable(null, new Identifier("byteArr"), new Type.Array(Type.Byte));
 		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(arrayParam);
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
@@ -354,9 +366,10 @@ public class GenerateExhaustiveTest {
 	/**
 	 * Test when the function has multiple arrays,
 	 * a boolean and a integer array
+	 * @throws IntegerRangeException 
 	 */
 	@Test
-	public void testMultiArray() {
+	public void testMultiArray() throws IntegerRangeException {
 		Decl.Variable boolArrayParam = new Decl.Variable(null, new Identifier("boolArr"), new Type.Array(Type.Bool));
 		Decl.Variable intArrayParam = new Decl.Variable(null, new Identifier("intArr"), new Type.Array(Type.Int));
 		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(boolArrayParam, intArrayParam);
@@ -409,9 +422,10 @@ public class GenerateExhaustiveTest {
 	/**
 	 * Test when the function with a precondition
 	 * for the nominal type on an integer.
+	 * @throws IntegerRangeException 
 	 */
 	@Test
-	public void testNominal1() throws IOException {
+	public void testNominal1() throws IOException, IntegerRangeException {
 		String testName = "nominal_1";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
@@ -430,9 +444,10 @@ public class GenerateExhaustiveTest {
 	/**
 	 * Test when the function with a postcondition
 	 * for the nominal type on an integer.
+	 * @throws IntegerRangeException 
 	 */
 	@Test
-	public void testNominal2() throws IOException {
+	public void testNominal2() throws IOException, IntegerRangeException {
 		String testName = "nominal_2";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
@@ -451,9 +466,10 @@ public class GenerateExhaustiveTest {
 	/**
 	 * Test when the function has multiple nominal types,
 	 * integer, boolean and boolean array.
+	 * @throws IntegerRangeException 
 	 */
 	@Test
-	public void testMultiNominal() throws IOException {
+	public void testMultiNominal() throws IOException, IntegerRangeException {
 		String testName = "nominal_multi";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
@@ -478,9 +494,10 @@ public class GenerateExhaustiveTest {
 	/**
 	 * Test creating a nominal based on another nominal
 	 * @throws IOException
+	 * @throws IntegerRangeException 
 	 */
 	@Test
-	public void testNominalSame() throws IOException {
+	public void testNominalSame() throws IOException, IntegerRangeException {
 		String testName = "nominal_same";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
@@ -512,9 +529,10 @@ public class GenerateExhaustiveTest {
 	 * two integer fields.
 	 * 
 	 * @throws IOException
+	 * @throws IntegerRangeException 
 	 */
 	@Test
-	public void testRecord1() throws IOException {
+	public void testRecord1() throws IOException, IntegerRangeException {
 		String testName = "record_1";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
@@ -543,9 +561,10 @@ public class GenerateExhaustiveTest {
 	 * boolean and integer.
 	 * 
 	 * @throws IOException
+	 * @throws IntegerRangeException 
 	 */
 	@Test
-	public void testRecord2() throws IOException {
+	public void testRecord2() throws IOException, IntegerRangeException {
 		String testName = "record_2";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
@@ -575,9 +594,10 @@ public class GenerateExhaustiveTest {
 	 * The other record has two integer fields.
 	 * 
 	 * @throws IOException
+	 * @throws IntegerRangeException 
 	 */
 	@Test
-	public void testMultiRecord() throws IOException {
+	public void testMultiRecord() throws IOException, IntegerRangeException {
 		String testName = "record_multi";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
@@ -616,9 +636,10 @@ public class GenerateExhaustiveTest {
 	 * and same field names.
 	 * 
 	 * @throws IOException
+	 * @throws IntegerRangeException 
 	 */
 	@Test
-	public void testRecordSame() throws IOException {
+	public void testRecordSame() throws IOException, IntegerRangeException {
 		String testName = "record_same";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
@@ -654,9 +675,10 @@ public class GenerateExhaustiveTest {
 	
 	/**
 	 * Test generating null.
+	 * @throws IntegerRangeException 
 	 */
 	@Test
-	public void testNull() {
+	public void testNull() throws IntegerRangeException {
 		Decl.Variable nullParam = new Decl.Variable(null, new Identifier("nullParam"), Type.Null);
 		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(nullParam);
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
@@ -673,9 +695,10 @@ public class GenerateExhaustiveTest {
 	/**
 	 * Test having a union for a
 	 * null and integer type.
+	 * @throws IntegerRangeException 
 	 */
 	@Test
-	public void testUnion1() {
+	public void testUnion1() throws IntegerRangeException {
 		Decl.Variable unionParam = new Decl.Variable(null, new Identifier("unionParam"), new Type.Union(Type.Null, Type.Int));
 		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(unionParam);
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
@@ -696,9 +719,10 @@ public class GenerateExhaustiveTest {
 	/**
 	 * Test having a union for a
 	 * boolean and integer type.
+	 * @throws IntegerRangeException 
 	 */
 	@Test
-	public void testUnion2() {
+	public void testUnion2() throws IntegerRangeException {
 		Decl.Variable unionParam = new Decl.Variable(null, new Identifier("unionParam"), new Type.Union(Type.Bool, Type.Int));
 		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(unionParam);
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
@@ -728,9 +752,10 @@ public class GenerateExhaustiveTest {
 	 * Test multiple unions,
 	 * one union has boolean and integer type,
 	 * the other union has a null and boolean array type.
+	 * @throws IntegerRangeException 
 	 */
 	@Test
-	public void testMultipleUnion() {
+	public void testMultipleUnion() throws IntegerRangeException {
 		Decl.Variable unionParam = new Decl.Variable(null, new Identifier("unionParamComplex"), new Type.Union(Type.Null, new Type.Array(Type.Bool)));
 		Decl.Variable unionParam2 = new Decl.Variable(null, new Identifier("unionParam"), new Type.Union(Type.Bool, Type.Int));
 		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(unionParam, unionParam2);
@@ -768,9 +793,10 @@ public class GenerateExhaustiveTest {
 	/**
 	 * Test having a union for that has multiple of the same types,
 	 * boolean, integer, boolean, integer type.
+	 * @throws IntegerRangeException 
 	 */
 	@Test
-	public void testUnionSame() {
+	public void testUnionSame() throws IntegerRangeException {
 		Decl.Variable unionParam = new Decl.Variable(null, new Identifier("unionParam"), new Type.Union(Type.Bool, Type.Int, Type.Bool, Type.Int));
 		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(unionParam);
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
@@ -798,9 +824,10 @@ public class GenerateExhaustiveTest {
 	
 	/**
 	 * Test when the function has 1 byte parameter
+	 * @throws IntegerRangeException 
 	 */
 	@Test
-	public void testByte() {
+	public void testByte() throws IntegerRangeException {
 		Decl.Variable byteParam = new Decl.Variable(null, new Identifier("firstByte"), Type.Byte);
 		Tuple<Decl.Variable> parameters = new Tuple<Decl.Variable>(byteParam);
 		Function func = new Function(null, new Identifier("testF"), parameters, null, null, null, null);
@@ -820,9 +847,10 @@ public class GenerateExhaustiveTest {
 	/**
 	 * Test a recursive type
 	 * @throws IOException 
+	 * @throws IntegerRangeException 
 	 */
 	@Test
-	public void testRecursiveType() throws IOException {
+	public void testRecursiveType() throws IOException, IntegerRangeException {
 		String testName = "recursive_1";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();

@@ -2,6 +2,7 @@ package quickcheck.constraints;
 
 import java.math.BigInteger;
 
+import quickcheck.exception.IntegerRangeException;
 import quickcheck.generator.type.ArrayGenerator;
 import quickcheck.generator.type.Generator;
 import quickcheck.generator.type.IntegerGenerator;
@@ -31,8 +32,9 @@ public class RangeHelper {
 	 * @param name The name of the field the invariant should apply to
 	 * @param invariant The invariants applied on the nominal type
 	 * @param instance The interpreter
+	 * @throws IntegerRangeException 
 	 */
-	public static void checkInvariantRange(Generator gen, Identifier name, Tuple<Expr> invariant, Interpreter instance) {
+	public static void checkInvariantRange(Generator gen, Identifier name, Tuple<Expr> invariant, Interpreter instance) throws IntegerRangeException {
 		// Can have multiple invariants (such as multiple where clauses for a nominal type)
 		if (invariant.size() > 0) {
 			/*

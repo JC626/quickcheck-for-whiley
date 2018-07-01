@@ -1,6 +1,7 @@
 package quickcheck.generator.type;
 
 import quickcheck.constraints.RangeHelper;
+import quickcheck.exception.IntegerRangeException;
 import wybs.util.AbstractCompilationUnit.Identifier;
 import wybs.util.AbstractCompilationUnit.Tuple;
 import wyc.lang.WhileyFile.Decl;
@@ -27,7 +28,7 @@ public class NominalGenerator implements Generator{
 	private Interpreter interpreter;
 	private Decl.Type decl;
 
-	public NominalGenerator(Generator generator, Interpreter interpreter, Decl.Type decl) {
+	public NominalGenerator(Generator generator, Interpreter interpreter, Decl.Type decl) throws IntegerRangeException {
 		super();
 		this.generator = generator;
 		this.interpreter = interpreter;
@@ -66,8 +67,9 @@ public class NominalGenerator implements Generator{
 	 * Check the ranges on the invariants against the generators.
 	 * @param invariants The invariants to check against the generator on the nominal type
 	 * @param name The name of the variable to check the invariant ranges
+	 * @throws IntegerRangeException 
 	 */
-	void checkInvariantRange(Tuple<Expr> invariants, Identifier name) {
+	void checkInvariantRange(Tuple<Expr> invariants, Identifier name) throws IntegerRangeException {
 		if(generator instanceof IntegerGenerator) {
 			RangeHelper.checkInvariantRange(generator, name, invariants, interpreter);
 		}

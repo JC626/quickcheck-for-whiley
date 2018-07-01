@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Random;
 
 import quickcheck.constraints.IntegerRange;
+import quickcheck.exception.IntegerRangeException;
 import quickcheck.util.TestType;
 import wyil.interpreter.ConcreteSemantics;
 import wyil.interpreter.ConcreteSemantics.RValue;
@@ -37,7 +38,7 @@ public final class IntegerGenerator implements Generator {
 	    
     private List<BigInteger> testValues;
 
-    public IntegerGenerator(TestType testType, int numTests, BigInteger lower, BigInteger upper) {
+    public IntegerGenerator(TestType testType, int numTests, BigInteger lower, BigInteger upper) throws IntegerRangeException {
 		this.testType = testType;
 		this.range = new IntegerRange(lower, upper);
 		checkValidRange();
@@ -118,10 +119,10 @@ public final class IntegerGenerator implements Generator {
 		return semantics.Int(value);
 	}
 	
-	private void checkValidRange() {
+	private void checkValidRange() throws IntegerRangeException {
 		// Throw an error if the range is bigger than the other
 		if(range.lowerBound().compareTo(range.upperBound()) >= 0) {
-			throw new Error("Upper integer limit is less than or equal to the lower integer limit");
+			throw new IntegerRangeException();
 		}
 	}
 	
@@ -130,8 +131,9 @@ public final class IntegerGenerator implements Generator {
 	 * another generator if it hasn't generated any values yet.
 	 * 
 	 * @param other An integer range to intersect with
+	 * @throws IntegerRangeException 
 	 */
-	public void joinRange(IntegerRange other) {
+	public void joinRange(IntegerRange other) throws IntegerRangeException {
 		assert count == 1;
 		this.range = range.intersection(other);
 		checkValidRange();

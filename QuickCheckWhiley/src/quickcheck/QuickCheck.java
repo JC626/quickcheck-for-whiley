@@ -45,6 +45,8 @@ public class QuickCheck {
 		String[] modified = new String[RunTest.MAX_NUMBER_ARGUMENTS];
 		// Get the filepath e.g test/helloworld.wyil
 		String filepath = args[0];
+		filepath = filepath.replace('\\', File.separatorChar);
+		filepath = filepath.replace('/', File.separatorChar);
 		int lastSlash = filepath.lastIndexOf(File.separatorChar);
 		// If the current directory is used to find the file
 		String relativePath = ".";

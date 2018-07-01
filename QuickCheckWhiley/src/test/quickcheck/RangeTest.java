@@ -13,6 +13,7 @@ import org.junit.Test;
 
 import quickcheck.QCInterpreter;
 import quickcheck.constraints.IntegerRange;
+import quickcheck.exception.IntegerRangeException;
 import quickcheck.generator.ExhaustiveGenerateTest;
 import quickcheck.generator.GenerateTest;
 import quickcheck.generator.type.ArrayGenerator;
@@ -133,9 +134,10 @@ public class RangeTest {
 	 * @throws NoSuchFieldException
 	 * @throws IllegalAccessException
 	 * @throws IllegalArgumentException
+	 * @throws IntegerRangeException 
 	 */
 	@Test
-	public void testNominalIntRangeAnd() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException{
+	public void testNominalIntRangeAnd() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, IntegerRangeException{
 		String testName = "nominal_int_and";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
@@ -166,9 +168,10 @@ public class RangeTest {
 	 * @throws NoSuchFieldException
 	 * @throws IllegalAccessException
 	 * @throws IllegalArgumentException
+	 * @throws IntegerRangeException 
 	 */
 	@Test
-	public void testNominalIntRangeOr() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException{
+	public void testNominalIntRangeOr() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, IntegerRangeException{
 		String testName = "nominal_int_or";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
@@ -205,9 +208,10 @@ public class RangeTest {
 	 * @throws NoSuchFieldException
 	 * @throws IllegalAccessException
 	 * @throws IllegalArgumentException
+	 * @throws IntegerRangeException 
 	 */
 	@Test
-	public void testNominalIntRangeNot() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+	public void testNominalIntRangeNot() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, IntegerRangeException {
 		String testName = "nominal_int_not";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
@@ -238,9 +242,10 @@ public class RangeTest {
 	 * @throws NoSuchFieldException
 	 * @throws IllegalAccessException
 	 * @throws IllegalArgumentException
+	 * @throws IntegerRangeException 
 	 */
 	@Test
-	public void testNominalIntRangeSingleMulti() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+	public void testNominalIntRangeSingleMulti() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, IntegerRangeException {
 		String testName = "nominal_int_multi_1";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
@@ -271,9 +276,10 @@ public class RangeTest {
 	 * @throws NoSuchFieldException
 	 * @throws IllegalAccessException
 	 * @throws IllegalArgumentException
+	 * @throws IntegerRangeException 
 	 */
 	@Test
-	public void testNominalIntRangeMulti() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+	public void testNominalIntRangeMulti() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, IntegerRangeException {
 		String testName = "nominal_int_multi_2";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
@@ -305,9 +311,10 @@ public class RangeTest {
 	 * @throws NoSuchFieldException
 	 * @throws IllegalAccessException
 	 * @throws IllegalArgumentException
+	 * @throws IntegerRangeException 
 	 */
-	@Test(expected = Error.class)
-	public void testNominalIntRangeInvalid() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+	@Test(expected = IntegerRangeException.class)
+	public void testNominalIntRangeInvalid() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, IntegerRangeException {
 		String testName = "nominal_int_invalid";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
@@ -331,9 +338,10 @@ public class RangeTest {
 	 * @throws NoSuchFieldException
 	 * @throws IllegalAccessException
 	 * @throws IllegalArgumentException
+	 * @throws IntegerRangeException 
 	 */
 	@Test
-	public void testNominalIntRangeEquals() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+	public void testNominalIntRangeEquals() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, IntegerRangeException {
 		String testName = "nominal_int_equals";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
@@ -365,9 +373,10 @@ public class RangeTest {
 	 * @throws NoSuchFieldException
 	 * @throws IllegalAccessException
 	 * @throws IllegalArgumentException
+	 * @throws IntegerRangeException 
 	 */
 	@Test
-	public void testNominalRecordNoName() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+	public void testNominalRecordNoName() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, IntegerRangeException {
 		String testName = "record_invariant_1";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
@@ -405,9 +414,10 @@ public class RangeTest {
 	 * which has an integer field.
 	 * The record has a name.
 	 * The record also has 2 different fields, integer and boolean.
+	 * @throws IntegerRangeException 
 	 */
 	@Test
-	public void testNominalRecordName() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+	public void testNominalRecordName() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, IntegerRangeException {
 		String testName = "record_invariant_2";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
@@ -445,9 +455,10 @@ public class RangeTest {
 	 * @throws SecurityException
 	 * @throws IllegalArgumentException
 	 * @throws IllegalAccessException
+	 * @throws IntegerRangeException 
 	 */
 	@Test
-	public void testNominalArraySize() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+	public void testNominalArraySize() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, NoSuchMethodException, InvocationTargetException, IntegerRangeException {
 		String testName = "nominal_array_1";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
@@ -495,9 +506,10 @@ public class RangeTest {
 	 * @throws SecurityException
 	 * @throws IllegalArgumentException
 	 * @throws IllegalAccessException
+	 * @throws IntegerRangeException 
 	 */
 	@Test
-	public void testNominalRecordArray() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+	public void testNominalRecordArray() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, NoSuchMethodException, InvocationTargetException, IntegerRangeException {
 		String testName = "nominal_record_array";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
@@ -557,9 +569,10 @@ public class RangeTest {
 	 * @throws NoSuchFieldException
 	 * @throws IllegalAccessException
 	 * @throws IllegalArgumentException
+	 * @throws IntegerRangeException 
 	 */
 	@Test
-	public void testDoubleNominalNoConstraint() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+	public void testDoubleNominalNoConstraint() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, IntegerRangeException {
 		String testName = "nominal_double_1";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
@@ -590,9 +603,10 @@ public class RangeTest {
 	 * @throws NoSuchFieldException
 	 * @throws IllegalAccessException
 	 * @throws IllegalArgumentException
+	 * @throws IntegerRangeException 
 	 */
 	@Test
-	public void testDoubleNominalConstraint() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+	public void testDoubleNominalConstraint() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, IntegerRangeException {
 		String testName = "nominal_double_2";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
@@ -631,9 +645,10 @@ public class RangeTest {
 	 * @throws NoSuchFieldException
 	 * @throws IllegalAccessException
 	 * @throws IllegalArgumentException
+	 * @throws IntegerRangeException 
 	 */
-	@Test(expected = Error.class)
-	public void testDoubleNominalInvalid() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+	@Test(expected = IntegerRangeException.class)
+	public void testDoubleNominalInvalid() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, IntegerRangeException {
 		String testName = "nominal_double_invalid";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
@@ -652,9 +667,10 @@ public class RangeTest {
 	 * @throws NoSuchFieldException
 	 * @throws IllegalAccessException
 	 * @throws IllegalArgumentException
+	 * @throws IntegerRangeException 
 	 */
 	@Test
-	public void testRecordNominal() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+	public void testRecordNominal() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, IntegerRangeException {
 		String testName = "nominal_double_record";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
@@ -705,9 +721,10 @@ public class RangeTest {
 	/**
 	 * Test when a record wraps another record.
 	 * Both records have constraints applied to them
+	 * @throws IntegerRangeException 
 	 */
 	@Test
-	public void testDoubleRecord() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+	public void testDoubleRecord() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, IntegerRangeException {
 		String testName = "record_double";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
@@ -755,9 +772,10 @@ public class RangeTest {
 	/**
 	 * Test when a record wraps a union.
 	 * The record has a constraint applied to it.
+	 * @throws IntegerRangeException 
 	 */
 	@Test
-	public void testRecordUnion() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+	public void testRecordUnion() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, IntegerRangeException {
 		String testName = "record_union";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
@@ -804,9 +822,10 @@ public class RangeTest {
 
 	/**
 	 * Test when a union has a constraint.
+	 * @throws IntegerRangeException 
 	 */
 	@Test
-	public void testUnion() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+	public void testUnion() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, IntegerRangeException {
 		String testName = "union_constraint";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
@@ -845,9 +864,10 @@ public class RangeTest {
 	 * Test when another nominal wraps a union type.
 	 * The nominal applies an additional constraint on the
 	 * union.
+	 * @throws IntegerRangeException 
 	 */
 	@Test
-	public void testNominalUnion() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+	public void testNominalUnion() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, IntegerRangeException {
 		String testName = "nominal_union";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
@@ -885,9 +905,10 @@ public class RangeTest {
 	/**
 	 * Test when a union wraps arrays and a
 	 * constraint is applied to its size
+	 * @throws IntegerRangeException 
 	 */
 	@Test
-	public void testUnionArray() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+	public void testUnionArray() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, IntegerRangeException {
 		String testName = "union_array";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
@@ -940,9 +961,10 @@ public class RangeTest {
 	/**
 	 * Test when a union wraps another union
 	 * where both unions have constraints applied.
+	 * @throws IntegerRangeException 
 	 */
 	@Test
-	public void testUnionUnion() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+	public void testUnionUnion() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, IntegerRangeException {
 		String testName = "union_union";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
@@ -997,9 +1019,10 @@ public class RangeTest {
 
 	/**
 	 * Test when a union wraps a record which has constraints.
+	 * @throws IntegerRangeException 
 	 */
 	@Test
-	public void testUnionRecord() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+	public void testUnionRecord() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, IntegerRangeException {
 		String testName = "union_record";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();

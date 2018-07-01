@@ -84,16 +84,28 @@ public class WhileyBenchTest {
 			PrintStream stream = new PrintStream(file);
 			System.setOut(stream);
 			
+			boolean noNegativeLimit = false;
 			// Run tests
 	        try {
+	        	// Negative
 	            String[] args = new String[] {TEST_DIR + File.separatorChar + this.testName, "exhaustive", "100", "-5", "0"};            
 	            Result result = helper.createRunTest(args);
-	            assertEquals("A test failed with negative integer limits", Result.PASSED, result);
+	            if(result == Result.ERRORS) {
+					noNegativeLimit = true;
+	            }
+	            else {
+		            assertEquals("A test failed with negative integer limits.", Result.PASSED, result);
+	            }
 	            
 	            // Positive
-	            args = new String[] {TEST_DIR + File.separatorChar + this.testName, "exhaustive", "100", "0", "5"};
-	            result = helper.createRunTest(args);
-	            assertEquals("A test failed with negative integer limits", Result.PASSED, result);
+	        	args = new String[] {TEST_DIR + File.separatorChar + this.testName, "exhaustive", "100", "0", "5"};
+	        	result = helper.createRunTest(args);
+	        	if(!noNegativeLimit) {
+		            assertEquals("A test failed with positive integer limits.", Result.PASSED, result);
+	        	}
+	        	else if(result != Result.ERRORS){
+		            assertEquals("A test failed with positive integer limits.", Result.PASSED, result);
+	        	}
 	        }
 			finally {
 				stream.close();

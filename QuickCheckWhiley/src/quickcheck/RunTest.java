@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import quickcheck.exception.IntegerRangeException;
 import quickcheck.generator.ExhaustiveGenerateTest;
 import quickcheck.generator.GenerateTest;
 import quickcheck.generator.RandomGenerateTest;
@@ -111,6 +112,9 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 				if(r == Result.FAILED) {
 					result = r;
 				}
+				else if(r == Result.ERRORS) {
+					return r;
+				}
 			}
 			return result;
 		} catch (IOException e) {
@@ -158,11 +162,16 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 	private Result executeTest(Path.ID id, QCInterpreter interpreter, Decl.FunctionOrMethod dec, TestType testType, int numTest, BigInteger lowerLimit, BigInteger upperLimit) {
 		// Get the method for generating test values
 		GenerateTest testGen;
-		if(testType == TestType.EXHAUSTIVE) {
-			testGen = new ExhaustiveGenerateTest(dec, interpreter, numTest, lowerLimit, upperLimit);
-		}
-		else {
-            testGen = new RandomGenerateTest(dec, interpreter, numTest, lowerLimit, upperLimit);
+		try {
+			if(testType == TestType.EXHAUSTIVE) {
+				testGen = new ExhaustiveGenerateTest(dec, interpreter, numTest, lowerLimit, upperLimit);
+			}
+			else {
+	            testGen = new RandomGenerateTest(dec, interpreter, numTest, lowerLimit, upperLimit);
+			}
+		} catch (IntegerRangeException e) {
+			System.out.println("Integer range was invalid for the limits given.");
+			return Result.ERRORS;
 		}
 		// Get the function's relevant header information
 		NameID name = new NameID(id, dec.getName().get());

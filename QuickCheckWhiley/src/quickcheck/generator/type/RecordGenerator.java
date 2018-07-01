@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 import quickcheck.constraints.RangeHelper;
+import quickcheck.exception.IntegerRangeException;
 import quickcheck.util.TestType;
 import wybs.util.AbstractCompilationUnit.Identifier;
 import wybs.util.AbstractCompilationUnit.Tuple;
@@ -173,8 +174,9 @@ public class RecordGenerator implements Generator{
 	 * Check the ranges on the invariants against the generators.
 	 * @param invariants The invariants to check against the generator on the nominal type
 	 * @param interpreter The interpreter used
+	 * @throws IntegerRangeException 
 	 */
-	public void checkInvariantRange(Tuple<Expr> invariants, Interpreter interpreter, String prefix) {
+	public void checkInvariantRange(Tuple<Expr> invariants, Interpreter interpreter, String prefix) throws IntegerRangeException {
 		// Can have multiple invariants
 		if (invariants.size() > 0 && !fields.isEmpty()) {
 			assert fields.size() == generators.size();

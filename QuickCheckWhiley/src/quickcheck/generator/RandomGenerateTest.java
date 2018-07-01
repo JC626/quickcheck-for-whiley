@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import quickcheck.RunTest;
+import quickcheck.exception.IntegerRangeException;
 import quickcheck.generator.type.*;
 import quickcheck.util.TestType;
 import wybs.lang.NameResolver.ResolutionError;
@@ -41,7 +42,7 @@ public class RandomGenerateTest implements GenerateTest{
     private int numTests;
 	private Map<Name, Integer> recursiveType = new HashMap<Name, Integer>();
 		
-    public RandomGenerateTest(FunctionOrMethod dec, Interpreter interpreter, int numTests, BigInteger lowerLimit, BigInteger upperLimit) {
+    public RandomGenerateTest(FunctionOrMethod dec, Interpreter interpreter, int numTests, BigInteger lowerLimit, BigInteger upperLimit) throws IntegerRangeException {
 		super();
 		this.dec = dec;
         this.numTests = numTests;
@@ -60,8 +61,9 @@ public class RandomGenerateTest implements GenerateTest{
 	 * Get the generator based on a type
 	 * @param paramType The type of a parameter for a function/method
 	 * @return The generator that corresponds to the parameter's type
+	 * @throws IntegerRangeException 
 	 */
-	private Generator getGenerator(WhileyFile.Type paramType) {
+	private Generator getGenerator(WhileyFile.Type paramType) throws IntegerRangeException {
 		if(paramType instanceof WhileyFile.Type.Int) {
 			return new IntegerGenerator(TestType.RANDOM, numTests, lowerLimit, upperLimit);
 		}

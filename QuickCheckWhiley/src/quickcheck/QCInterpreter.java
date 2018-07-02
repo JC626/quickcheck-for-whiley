@@ -184,9 +184,8 @@ public class QCInterpreter extends Interpreter {
 								break;
 							}
 							frame.putLocal(parameter.getName(), returns[j]);
-						}	
+						}
 						recursiveInvariantFunctions.add(decl.getName());
-						this.checkInvariants(frame, postconditions);
 //						System.out.println("HERE");
 					}
 					catch(AssertionError e) {
@@ -194,6 +193,7 @@ public class QCInterpreter extends Interpreter {
 						isValid = false;
 					}
 					if(isValid) {
+						this.checkInvariants(frame, postconditions);
 //						System.out.println("Returned " + Arrays.toString(returns));
 						functionIO.put(arguments, returns);
 						return returns;
@@ -201,7 +201,8 @@ public class QCInterpreter extends Interpreter {
 					// Need to reset frame to remove the old inputs
 					frame = tempFrame.clone();
 				}
-			} catch (IntegerRangeException e1) {
+			} 
+			catch (IntegerRangeException e1) {
 				// Execute test normally then
 			}
 			

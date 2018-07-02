@@ -168,7 +168,8 @@ public class QCInterpreter extends Interpreter {
 			frame = frame.enter(fun);
 			extractParameters(frame, arguments, fun);
 			try {
-				GenerateTest testGen = new RandomGenerateTest(fun, this, numRandomFuncValGen, lowerLimit, upperLimit);
+				// Generator for the return values of the function
+				GenerateTest testGen = new RandomGenerateTest(fun, fun.getReturns(), this, numRandomFuncValGen, lowerLimit, upperLimit);
 				RValue[] returns;
 				boolean isValid = false;
 				CallStack tempFrame = frame.clone();

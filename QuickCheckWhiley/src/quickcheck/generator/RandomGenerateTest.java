@@ -56,6 +56,22 @@ public class RandomGenerateTest implements GenerateTest{
 			this.parameterGenerators.add(getGenerator(paramType));
 		}
 	}	
+    
+    // Allows variables for the generators to be passed in instead of 
+    public RandomGenerateTest(FunctionOrMethod dec, Tuple<Decl.Variable> vars, Interpreter interpreter, int numTests, BigInteger lowerLimit, BigInteger upperLimit) throws IntegerRangeException {
+		super();
+		this.dec = dec;
+        this.numTests = numTests;
+		this.interpreter = interpreter;
+		this.lowerLimit = lowerLimit;
+		this.upperLimit = upperLimit;
+		this.parameterGenerators = new ArrayList<Generator>();		
+		// Get the generators
+		for(Variable var : vars) {
+			WhileyFile.Type paramType = var.getType();
+			this.parameterGenerators.add(getGenerator(paramType));
+		}
+	}	
 
 	/**
 	 * Get the generator based on a type

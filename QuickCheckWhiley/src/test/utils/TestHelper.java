@@ -52,8 +52,13 @@ public class TestHelper {
 	 * @param testName The name of the test
 	 * @throws IOException
 	 */
-	public void compile(String testName) throws IOException{		
-		File whileySrcDir = new File(directory);
+	public void compile(String testName) throws IOException{	
+		String relativePath = directory;
+		int lastSlash = testName.lastIndexOf(File.separatorChar);
+		if(lastSlash > -1) {
+			relativePath = directory + File.separatorChar + testName.substring(0, lastSlash);
+		}
+		File whileySrcDir = new File(relativePath);
 		String whileyFilename = directory + File.separatorChar + testName
 				+ ".whiley";
 		// Compile the file

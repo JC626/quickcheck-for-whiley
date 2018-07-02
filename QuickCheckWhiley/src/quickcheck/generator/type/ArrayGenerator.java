@@ -94,9 +94,15 @@ public class ArrayGenerator implements Generator{
 						currentCombinations = 0;
 					}
 				}
+
 				// Resetting as it is a new array size
 				if(arrElements == null || arrElements.length < size) {
 					arrElements = new RValue[size];
+					// When the size is greater than value generated. 
+					if(size >= range.upperBound().intValue()) {
+						resetCount();
+						return this.generate();
+					}
 					assert size < range.upperBound().intValue();
 					for(int i=0; i < arrElements.length; i++) {
 						Generator gen = generators.get(i);

@@ -146,7 +146,7 @@ public class RangeTest {
 
 		BigInteger lower = BigInteger.valueOf(-5);
 		BigInteger upper = BigInteger.valueOf(15);
-		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), interpreter, 20, lower, upper);
+		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0).getParameters(), interpreter, 20, lower, upper);
 
 		IntegerRange range = getIntegerRange(testGen).get(0);
 		assertEquals(BigInteger.valueOf(1), range.lowerBound());
@@ -180,7 +180,7 @@ public class RangeTest {
 
 		BigInteger lower = BigInteger.valueOf(-5);
 		BigInteger upper = BigInteger.valueOf(15);
-		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), interpreter, 20, lower, upper);
+		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0).getParameters(), interpreter, 20, lower, upper);
 
 		IntegerRange range = getIntegerRange(testGen).get(0);
 		assertEquals(lower, range.lowerBound());
@@ -220,7 +220,7 @@ public class RangeTest {
 
 		BigInteger lower = BigInteger.valueOf(-5);
 		BigInteger upper = BigInteger.valueOf(15);
-		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), interpreter, 20, lower, upper);
+		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0).getParameters(), interpreter, 20, lower, upper);
 
 		IntegerRange range = getIntegerRange(testGen).get(0);
 		assertEquals(lower, range.lowerBound());
@@ -254,7 +254,7 @@ public class RangeTest {
 
 		BigInteger lower = BigInteger.valueOf(-5);
 		BigInteger upper = BigInteger.valueOf(15);
-		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), interpreter, 20, lower, upper);
+		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0).getParameters(), interpreter, 20, lower, upper);
 
 		IntegerRange range = getIntegerRange(testGen).get(0);
 		assertEquals(BigInteger.valueOf(-5), range.lowerBound());
@@ -288,7 +288,7 @@ public class RangeTest {
 
 		BigInteger lower = BigInteger.valueOf(-5);
 		BigInteger upper = BigInteger.valueOf(15);
-		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), interpreter, 20, lower, upper);
+		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0).getParameters(), interpreter, 20, lower, upper);
 
 		IntegerRange range = getIntegerRange(testGen).get(0);
 		assertEquals(BigInteger.valueOf(1), range.lowerBound());
@@ -323,7 +323,7 @@ public class RangeTest {
 
 		BigInteger lower = BigInteger.valueOf(-5);
 		BigInteger upper = BigInteger.valueOf(15);
-		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), interpreter, 20, lower, upper);
+		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0).getParameters(), interpreter, 20, lower, upper);
 
 		IntegerRange range = getIntegerRange(testGen).get(0);
 		assertEquals(BigInteger.valueOf(1), range.lowerBound());
@@ -350,7 +350,7 @@ public class RangeTest {
 
 		BigInteger lower = BigInteger.valueOf(-5);
 		BigInteger upper = BigInteger.valueOf(15);
-		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), interpreter, 20, lower, upper);
+		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0).getParameters(), interpreter, 20, lower, upper);
 
 		IntegerRange range = getIntegerRange(testGen).get(0);
 		assertEquals(BigInteger.valueOf(10), range.lowerBound());
@@ -385,7 +385,7 @@ public class RangeTest {
 
 		BigInteger lower = BigInteger.valueOf(-5);
 		BigInteger upper = BigInteger.valueOf(10);
-		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), interpreter, 50, lower, upper);
+		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0).getParameters(), interpreter, 50, lower, upper);
 
 
 		List<IntegerRange> ranges = getIntegerRange(testGen);
@@ -426,7 +426,7 @@ public class RangeTest {
 
 		BigInteger lower = BigInteger.valueOf(-5);
 		BigInteger upper = BigInteger.valueOf(10);
-		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), interpreter, 50, lower, upper);
+		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0).getParameters(), interpreter, 50, lower, upper);
 
 		List<IntegerRange> ranges = getIntegerRange(testGen);
 		assertEquals(1, ranges.size());
@@ -467,7 +467,7 @@ public class RangeTest {
 
 		BigInteger lower = BigInteger.valueOf(0);
 		BigInteger upper = BigInteger.valueOf(3);
-		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), interpreter, 50, lower, upper);
+		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0).getParameters(), interpreter, 50, lower, upper);
 
 		List<IntegerRange> ranges = getIntegerRange(testGen);
 		assertEquals(1, ranges.size());
@@ -518,7 +518,7 @@ public class RangeTest {
 
 		BigInteger lower = BigInteger.valueOf(-5);
 		BigInteger upper = BigInteger.valueOf(5);
-		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), interpreter, 50, lower, upper);
+		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0).getParameters(), interpreter, 50, lower, upper);
 
 		List<IntegerRange> ranges = getIntegerRange(testGen);
 		assertEquals(2, ranges.size());
@@ -581,7 +581,7 @@ public class RangeTest {
 
 		BigInteger lower = BigInteger.valueOf(-5);
 		BigInteger upper = BigInteger.valueOf(10);
-		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), interpreter, 20, lower, upper);
+		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0).getParameters(), interpreter, 20, lower, upper);
 
 		IntegerRange range = getIntegerRange(testGen).get(0);
 		assertEquals(BigInteger.valueOf(1), range.lowerBound());
@@ -615,7 +615,7 @@ public class RangeTest {
 
 		BigInteger lower = BigInteger.valueOf(-5);
 		BigInteger upper = BigInteger.valueOf(15);
-		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), interpreter, 50, lower, upper);
+		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0).getParameters(), interpreter, 50, lower, upper);
 
 		List<IntegerRange> ranges = getIntegerRange(testGen);
 		assertEquals(2, ranges.size());
@@ -657,7 +657,7 @@ public class RangeTest {
 
 		BigInteger lower = BigInteger.valueOf(-5);
 		BigInteger upper = BigInteger.valueOf(15);
-		new ExhaustiveGenerateTest(functions.get(0), interpreter, 50, lower, upper);
+		new ExhaustiveGenerateTest(functions.get(0).getParameters(), interpreter, 50, lower, upper);
 	}
 
 	/**
@@ -679,7 +679,7 @@ public class RangeTest {
 
 		BigInteger lower = BigInteger.valueOf(-5);
 		BigInteger upper = BigInteger.valueOf(10);
-		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), interpreter, 20, lower, upper);
+		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0).getParameters(), interpreter, 20, lower, upper);
 
 		List<IntegerRange> ranges = getIntegerRange(testGen);
 		assertEquals(4, ranges.size());
@@ -733,7 +733,7 @@ public class RangeTest {
 
 		BigInteger lower = BigInteger.valueOf(-5);
 		BigInteger upper = BigInteger.valueOf(15);
-		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), interpreter, 50, lower, upper);
+		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0).getParameters(), interpreter, 50, lower, upper);
 
 		List<IntegerRange> ranges = getIntegerRange(testGen);
 		assertEquals(2, ranges.size());
@@ -784,7 +784,7 @@ public class RangeTest {
 
 		BigInteger lower = BigInteger.valueOf(-5);
 		BigInteger upper = BigInteger.valueOf(15);
-		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), interpreter, 50, lower, upper);
+		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0).getParameters(), interpreter, 50, lower, upper);
 
 		List<IntegerRange> ranges = getIntegerRange(testGen);
 		assertEquals(2, ranges.size());
@@ -834,7 +834,7 @@ public class RangeTest {
 
 		BigInteger lower = BigInteger.valueOf(-5);
 		BigInteger upper = BigInteger.valueOf(15);
-		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), interpreter, 50, lower, upper);
+		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0).getParameters(), interpreter, 50, lower, upper);
 
 		List<IntegerRange> ranges = getIntegerRange(testGen);
 		assertEquals(2, ranges.size());
@@ -876,7 +876,7 @@ public class RangeTest {
 
 		BigInteger lower = BigInteger.valueOf(-5);
 		BigInteger upper = BigInteger.valueOf(15);
-		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), interpreter, 50, lower, upper);
+		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0).getParameters(), interpreter, 50, lower, upper);
 
 		List<IntegerRange> ranges = getIntegerRange(testGen);
 		assertEquals(2, ranges.size());
@@ -917,7 +917,7 @@ public class RangeTest {
 
 		BigInteger lower = BigInteger.valueOf(-5);
 		BigInteger upper = BigInteger.valueOf(5);
-		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), interpreter, 50, lower, upper);
+		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0).getParameters(), interpreter, 50, lower, upper);
 
 		List<IntegerRange> ranges = getIntegerRange(testGen);
 		assertEquals(2, ranges.size());
@@ -973,7 +973,7 @@ public class RangeTest {
 
 		BigInteger lower = BigInteger.valueOf(-5);
 		BigInteger upper = BigInteger.valueOf(10);
-		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), interpreter, 50, lower, upper);
+		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0).getParameters(), interpreter, 50, lower, upper);
 
 		List<IntegerRange> ranges = getIntegerRange(testGen);
 		assertEquals(3, ranges.size());
@@ -1031,7 +1031,7 @@ public class RangeTest {
 
 		BigInteger lower = BigInteger.valueOf(-5);
 		BigInteger upper = BigInteger.valueOf(10);
-		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0), interpreter, 50, lower, upper);
+		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0).getParameters(), interpreter, 50, lower, upper);
 
 		List<IntegerRange> ranges = getIntegerRange(testGen);
 		assertEquals(3, ranges.size());

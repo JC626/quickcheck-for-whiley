@@ -30,12 +30,7 @@ import wyil.interpreter.ConcreteSemantics.RValue;
  * @author Janice Chin
  *
  */
-public class ExhaustiveGenerateTest implements GenerateTest{
-	/**
-	 * The function/method we want to test
-	 */
-	private Decl.FunctionOrMethod dec;
-	
+public class ExhaustiveGenerateTest implements GenerateTest{	
 	/**
 	 *  A list of generators, each corresponding to a parameter in the function/method
 	 */
@@ -60,8 +55,7 @@ public class ExhaustiveGenerateTest implements GenerateTest{
 
 	private Map<Name, Integer> recursiveType = new HashMap<Name, Integer>();
 	
-	public ExhaustiveGenerateTest(FunctionOrMethod dec, Interpreter interpreter, int numTests, BigInteger lowerLimit, BigInteger upperLimit) throws IntegerRangeException {
-		this.dec = dec;
+	public ExhaustiveGenerateTest(Tuple<Decl.Variable> valuesToGenerate, Interpreter interpreter, int numTests, BigInteger lowerLimit, BigInteger upperLimit) throws IntegerRangeException {
 		this.interpreter = interpreter;
 		this.lowerLimit = lowerLimit;
 		this.upperLimit = upperLimit;
@@ -69,7 +63,7 @@ public class ExhaustiveGenerateTest implements GenerateTest{
 		this.parameterGenerators = new ArrayList<Generator>();
 		this.totalCombinations = BigInteger.valueOf(1);
 		// Get the generators
-		for(Variable var : this.dec.getParameters()) {
+		for(Variable var : valuesToGenerate) {
 			WhileyFile.Type paramType = var.getType();
 			Generator gen = getGenerator(paramType);
 			totalCombinations.multiply(BigInteger.valueOf(gen.size()));

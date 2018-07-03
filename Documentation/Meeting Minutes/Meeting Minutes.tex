@@ -397,9 +397,35 @@ None.
  	Not too sure how to solve this as I need to be able to detect the difference between a normal function call and recursive function call. 
  	E.g. if there are two functions foo() and bar() where foo calls bar and bar calls foo until some condition is met.
  	Should try and disable this.
-% 	Could possibly keep track of the different scopes, if the functions called within a scope are the same then just execute the function normally?
  \end{enumerate}
 \end{itemize}
+
+\section{July 3rd 2018}
+\subsection{Present}
+\begin{itemize}
+	\item David Pearce
+\end{itemize}
+
+\subsection{Action points were achieved since the last meeting}
+\begin{itemize}
+	\item Began experimenting on Whiley valid and invalid tests.
+	\item Fix bugs discovered from testing.
+	\item Attempted to test the WhileyBench tests, could not get this to work due to other libraries required during compiling. 
+\end{itemize}
+\subsection{Action points have yet to be achieved since the last meeting}
+
+\subsection{Action points were agreed to for the next meeting}
+\begin{itemize}
+	\item Execute the WyBench tests. See if function optimisation impacts the performance of these tests.
+	Require Dave to send the jar and wyil files for the remaining WyBench tests.
+	\item Fix more bugs discovered from testing.
+\end{itemize}
+\subsection{Discussion Points}
+\begin{itemize}
+ \item Having problems importing libraries during compiling. Needed for the WyBench tests. 	Dave managed to get the wystd library working by using the correct version.
+ \item How to format command line arguments as input? Not necessary to format command line arguments nicely. Only would be useful if it was widely used.
+\end{itemize}
+
 
 %\section{ 2018}
 %\subsection{Present}
@@ -413,7 +439,6 @@ None.
 %
 %\subsection{Discussion Points}
 %\begin{itemize}
-% 	\item Similar to the integer range problem: How to generate values that adhere to the function's postconditions? At the moment, just randomly generating and only using the values if it conforms to the postcondition.
 %\end{itemize}
 
 

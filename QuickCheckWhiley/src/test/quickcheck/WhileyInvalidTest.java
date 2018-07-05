@@ -77,6 +77,9 @@ public class WhileyInvalidTest {
 		// ===============================================================
 		IGNORED.put("RecursiveType_Invalid_9", "unclassified");
 		IGNORED.put("RecursiveType_Invalid_2", "WyTP#26");
+		
+        // Problem?
+        IGNORED.put("DoWhile_Invalid_4", "Infinite loop!");
 	}
 
 	// ======================================================================

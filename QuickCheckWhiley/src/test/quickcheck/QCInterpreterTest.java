@@ -71,7 +71,7 @@ public class QCInterpreterTest {
 		BigInteger lower = BigInteger.valueOf(0);
 		BigInteger upper = BigInteger.valueOf(10);
 		Decl.Function func = functions.get(0);
-		GenerateTest testGen = new ExhaustiveGenerateTest(func, interpreter, 25, lower, upper);
+		GenerateTest testGen = new ExhaustiveGenerateTest(func.getParameters(), interpreter, 25, lower, upper);
 		
 		Tuple<Decl.Variable> inputParameters = func.getParameters();
 		Path.ID id = Trie.fromString(testName);
@@ -112,7 +112,7 @@ public class QCInterpreterTest {
 		BigInteger lower = BigInteger.valueOf(0);
 		BigInteger upper = BigInteger.valueOf(10);
 		Decl.Function func = functions.get(0);
-		GenerateTest testGen = new ExhaustiveGenerateTest(func, interpreter, 25, lower, upper);
+		GenerateTest testGen = new ExhaustiveGenerateTest(func.getParameters(), interpreter, 25, lower, upper);
 		
 		Tuple<Decl.Variable> inputParameters = func.getParameters();
 		Path.ID id = Trie.fromString(testName);
@@ -156,7 +156,7 @@ public class QCInterpreterTest {
 		Tuple<Expr> empty = new Tuple<Expr>();		
 		func.setOperand(4, empty); // Remove precondition
 		func.setOperand(5, empty); // Remove postcondition
-		GenerateTest testGen = new ExhaustiveGenerateTest(func, interpreter, 25, lower, upper);
+		GenerateTest testGen = new ExhaustiveGenerateTest(func.getParameters(), interpreter, 25, lower, upper);
 		
 		Tuple<Decl.Variable> inputParameters = func.getParameters();
 		Path.ID id = Trie.fromString(testName);
@@ -200,7 +200,7 @@ public class QCInterpreterTest {
 		Tuple<Expr> empty = new Tuple<Expr>();		
 		func.setOperand(4, empty); // Remove precondition
 		func.setOperand(5, empty); // Remove postcondition
-		GenerateTest testGen = new ExhaustiveGenerateTest(func, interpreter, 25, lower, upper);
+		GenerateTest testGen = new ExhaustiveGenerateTest(func.getParameters(), interpreter, 25, lower, upper);
 		
 		Tuple<Decl.Variable> inputParameters = func.getParameters();
 		Path.ID id = Trie.fromString(testName);
@@ -244,7 +244,7 @@ public class QCInterpreterTest {
 		BigInteger upper = BigInteger.valueOf(8);
 		Decl.Function func = functions.get(0);
 
-		GenerateTest testGen = new ExhaustiveGenerateTest(func, interpreter, 25, lower, upper);
+		GenerateTest testGen = new ExhaustiveGenerateTest(func.getParameters(), interpreter, 25, lower, upper);
 		
 		Tuple<Decl.Variable> inputParameters = func.getParameters();
 		Path.ID id = Trie.fromString(testName);

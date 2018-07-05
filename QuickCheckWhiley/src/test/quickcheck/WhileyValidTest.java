@@ -207,7 +207,7 @@ public class WhileyValidTest {
             // Positive
         	args = new String[] {TEST_DIR + File.separatorChar + this.testName, "exhaustive", "100", "0", "5"};
         	result = helper.createRunTest(args);
-        	if(!noNegativeLimit) {
+        	if(noNegativeLimit) {
 	            assertEquals("A test failed with positive integer limits.", Result.PASSED, result);
         	}
         	else if(result != Result.ERRORS){

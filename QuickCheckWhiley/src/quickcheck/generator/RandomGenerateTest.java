@@ -28,9 +28,6 @@ import wyil.interpreter.Interpreter;
  */
 public class RandomGenerateTest implements GenerateTest{
 	
-	/** The function/method we want to test */
-	private Decl.FunctionOrMethod dec;
-	
 	/** A list of generators, each corresponding to a parameter in the function/method */
 	private List<Generator> parameterGenerators;
 	
@@ -42,16 +39,17 @@ public class RandomGenerateTest implements GenerateTest{
     private int numTests;
 	private Map<Name, Integer> recursiveType = new HashMap<Name, Integer>();
 		
-    public RandomGenerateTest(FunctionOrMethod dec, Interpreter interpreter, int numTests, BigInteger lowerLimit, BigInteger upperLimit) throws IntegerRangeException {
+    
+    // Allows variables for the generators to be passed in instead of 
+    public RandomGenerateTest(Tuple<Decl.Variable> valuesToGenerate, Interpreter interpreter, int numTests, BigInteger lowerLimit, BigInteger upperLimit) throws IntegerRangeException {
 		super();
-		this.dec = dec;
         this.numTests = numTests;
 		this.interpreter = interpreter;
 		this.lowerLimit = lowerLimit;
 		this.upperLimit = upperLimit;
 		this.parameterGenerators = new ArrayList<Generator>();		
 		// Get the generators
-		for(Variable var : this.dec.getParameters()) {
+		for(Variable var : valuesToGenerate) {
 			WhileyFile.Type paramType = var.getType();
 			this.parameterGenerators.add(getGenerator(paramType));
 		}

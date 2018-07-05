@@ -164,10 +164,10 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 		GenerateTest testGen;
 		try {
 			if(testType == TestType.EXHAUSTIVE) {
-				testGen = new ExhaustiveGenerateTest(dec, interpreter, numTest, lowerLimit, upperLimit);
+				testGen = new ExhaustiveGenerateTest(dec.getParameters(), interpreter, numTest, lowerLimit, upperLimit);
 			}
 			else {
-	            testGen = new RandomGenerateTest(dec, interpreter, numTest, lowerLimit, upperLimit);
+	            testGen = new RandomGenerateTest(dec.getParameters(), interpreter, numTest, lowerLimit, upperLimit);
 			}
 		} catch (IntegerRangeException e) {
 			System.out.println("Integer range was invalid for the limits given.");

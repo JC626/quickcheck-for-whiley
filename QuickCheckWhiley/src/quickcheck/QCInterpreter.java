@@ -168,7 +168,8 @@ public class QCInterpreter extends Interpreter {
 			frame = frame.enter(fun);
 			extractParameters(frame, arguments, fun);
 			try {
-				GenerateTest testGen = new RandomGenerateTest(fun, this, numRandomFuncValGen, lowerLimit, upperLimit);
+				// Generator for the return values of the function
+				GenerateTest testGen = new RandomGenerateTest(fun.getReturns(), this, numRandomFuncValGen, lowerLimit, upperLimit);
 				RValue[] returns;
 				boolean isValid = false;
 				CallStack tempFrame = frame.clone();
@@ -184,9 +185,8 @@ public class QCInterpreter extends Interpreter {
 								break;
 							}
 							frame.putLocal(parameter.getName(), returns[j]);
-						}	
+						}
 						recursiveInvariantFunctions.add(decl.getName());
-						this.checkInvariants(frame, postconditions);
 //						System.out.println("HERE");
 					}
 					catch(AssertionError e) {
@@ -194,6 +194,7 @@ public class QCInterpreter extends Interpreter {
 						isValid = false;
 					}
 					if(isValid) {
+						this.checkInvariants(frame, postconditions);
 //						System.out.println("Returned " + Arrays.toString(returns));
 						functionIO.put(arguments, returns);
 						return returns;
@@ -201,7 +202,8 @@ public class QCInterpreter extends Interpreter {
 					// Need to reset frame to remove the old inputs
 					frame = tempFrame.clone();
 				}
-			} catch (IntegerRangeException e1) {
+			} 
+			catch (IntegerRangeException e1) {
 				// Execute test normally then
 			}
 			

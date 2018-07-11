@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 
 import quickcheck.RunTest;
 import quickcheck.exception.IntegerRangeException;
@@ -117,6 +118,7 @@ public class RandomGenerateTest implements GenerateTest{
 			return new RecordGenerator(generators, fields, TestType.RANDOM, numTests);
 		}
 		else if(paramType instanceof WhileyFile.Type.Union) {
+			boolean limitReached = false;
 			WhileyFile.Type.Union union = (WhileyFile.Type.Union) paramType;
 			// Decided not to use a Set as there are few generators
 			// and it is highly unlikely a user would have a very large union
@@ -126,13 +128,38 @@ public class RandomGenerateTest implements GenerateTest{
 				if(unionFieldType instanceof WhileyFile.Type.Nominal) {
 					WhileyFile.Type.Nominal nom = (WhileyFile.Type.Nominal) unionFieldType;
 					if(recursiveType.getOrDefault(nom.getName(), 0) >= RunTest.RECURSIVE_LIMIT) {
+						limitReached = true;
 						// No longer be able to generate the nominal type
-						continue;
+						break;
 					}
 				}
-				Generator gen = getGenerator(unionFieldType);
-				if(!generators.contains(gen)) {
-					generators.add(gen);
+				// Check nominals in the record (and in nested records), are/are not recursive types
+				else if(unionFieldType instanceof WhileyFile.Type.Record) {
+					Stack<WhileyFile.Type.Record> stack = new Stack<WhileyFile.Type.Record>();
+					stack.push((WhileyFile.Type.Record) unionFieldType);
+					while(!stack.isEmpty()) {
+						WhileyFile.Type.Record record = stack.pop();
+						Tuple<Decl.Variable> tuple = record.getFields();
+						for(Decl.Variable var : tuple) {
+							if(var.getType() instanceof WhileyFile.Type.Nominal) {
+								WhileyFile.Type.Nominal nom = (WhileyFile.Type.Nominal) var.getType();
+								if(recursiveType.getOrDefault(nom.getName(), 0) >= RunTest.RECURSIVE_LIMIT) {
+									limitReached = true;
+									// No longer be able to generate the nominal type
+									break;
+								}
+							}
+							else if(var.getType() instanceof WhileyFile.Type.Nominal) {
+								stack.push((WhileyFile.Type.Record) var.getType());
+							}
+						}
+					}
+				}
+				if(!limitReached) {
+					Generator gen = getGenerator(unionFieldType);
+					if(!generators.contains(gen)) {
+						generators.add(gen);
+					}
 				}
 			}
 			return new UnionGenerator(generators, TestType.RANDOM, numTests);

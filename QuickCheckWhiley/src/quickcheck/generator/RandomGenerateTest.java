@@ -15,7 +15,6 @@ import wybs.util.AbstractCompilationUnit.Name;
 import wybs.util.AbstractCompilationUnit.Tuple;
 import wyc.lang.WhileyFile;
 import wyc.lang.WhileyFile.Decl;
-import wyc.lang.WhileyFile.Decl.FunctionOrMethod;
 import wyc.lang.WhileyFile.Decl.Variable;
 import wyil.interpreter.ConcreteSemantics.RValue;
 import wyil.interpreter.Interpreter;
@@ -91,8 +90,11 @@ public class RandomGenerateTest implements GenerateTest{
 				Decl.Variable var = decl.getVariableDeclaration();
 				Name name = nom.getName();
 				recursiveType.put(name, recursiveType.getOrDefault(name, -1) + 1);
+				if(recursiveType.get(name) > RunTest.RECURSIVE_LIMIT) {
+					return new NullGenerator();
+				}
 				Generator gen = getGenerator(var.getType());
-				if(recursiveType.get(name) == 0) {
+				if(recursiveType.get(name) == -1) {
 					recursiveType.remove(name);
 				}
 				return new NominalGenerator(gen, interpreter, decl);

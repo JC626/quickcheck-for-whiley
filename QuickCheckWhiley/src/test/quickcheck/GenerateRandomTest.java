@@ -664,8 +664,35 @@ public class GenerateRandomTest {
 	 * @throws IntegerRangeException 
 	 */
 	@Test
-	public void testRecursiveType() throws IOException, IntegerRangeException {
+	public void testRecursiveType1() throws IOException, IntegerRangeException {
 		String testName = "recursive_1";
+		helper.compile(testName);
+		Build.Project project = helper.createProject();
+		Interpreter interpreter = new QCInterpreter(project, System.out);
+		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		
+		BigInteger lower = BigInteger.valueOf(-10);
+		BigInteger upper = BigInteger.valueOf(10);	
+		GenerateTest testGen = new RandomGenerateTest(functions.get(0).getParameters(), interpreter, 10, lower, upper);
+		
+		RValue[] generatedParameters = testGen.generateParameters();
+		assertEquals(1, generatedParameters.length);
+		assertTrue(generatedParameters[0] instanceof RValue.Record);
+		RValue.Record record = (RValue.Record) generatedParameters[0];
+		RValue first = record.read(new Identifier("data"));
+		assertTrue(first instanceof RValue.Int);
+		RValue second = record.read(new Identifier("n"));
+		assertTrue(second instanceof RValue.Null || second instanceof RValue.Record);
+	}
+	
+	/**
+	 * Test a recursive type
+	 * @throws IOException 
+	 * @throws IntegerRangeException 
+	 */
+	@Test
+	public void testRecursiveType2() throws IOException, IntegerRangeException {
+		String testName = "recursive_2";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);

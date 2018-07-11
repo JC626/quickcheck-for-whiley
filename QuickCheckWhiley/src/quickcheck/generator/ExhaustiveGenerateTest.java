@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 
 import quickcheck.RunTest;
 import quickcheck.exception.IntegerRangeException;
@@ -112,8 +113,12 @@ public class ExhaustiveGenerateTest implements GenerateTest{
 				Decl.Variable var = decl.getVariableDeclaration();
 				Name name = nom.getName();
 				recursiveType.put(name, recursiveType.getOrDefault(name, -1) + 1);
+				if(recursiveType.get(name) > RunTest.RECURSIVE_LIMIT) {
+					return new NullGenerator();
+				}
 				Generator gen = getGenerator(var.getType());
-				if(recursiveType.get(name) == 0) {
+				recursiveType.put(name, recursiveType.get(name) - 1);
+				if(recursiveType.get(name) == -1) {
 					recursiveType.remove(name);
 				}
 				return new NominalGenerator(gen, interpreter, decl);
@@ -148,6 +153,29 @@ public class ExhaustiveGenerateTest implements GenerateTest{
 						// No longer be able to generate the nominal type
 						continue;
 					}
+				}
+				// Check nominals in the record (and in nested records), are/are not recursive types
+				else if(unionFieldType instanceof WhileyFile.Type.Record) {
+					Stack<WhileyFile.Type.Record> stack = new Stack<WhileyFile.Type.Record>();
+					stack.push((WhileyFile.Type.Record) unionFieldType);
+					while(!stack.isEmpty()) {
+						WhileyFile.Type.Record record = stack.pop();
+						Tuple<Decl.Variable> tuple = record.getFields();
+						for(Decl.Variable var : tuple) {
+							if(var.getType() instanceof WhileyFile.Type.Nominal) {
+								WhileyFile.Type.Nominal nom = (WhileyFile.Type.Nominal) var.getType();
+								if(recursiveType.getOrDefault(nom.getName(), 0) >= RunTest.RECURSIVE_LIMIT) {
+									// No longer be able to generate the nominal type
+									continue;
+								}
+							}
+							else if(var.getType() instanceof WhileyFile.Type.Nominal) {
+								stack.push((WhileyFile.Type.Record) var.getType());
+							}
+						}
+					}
+
+					
 				}
 				Generator gen = getGenerator(unionFieldType);
 				if(!generators.contains(gen)) {

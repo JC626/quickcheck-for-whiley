@@ -187,6 +187,7 @@ public class QCInterpreter extends Interpreter {
 							frame.putLocal(parameter.getName(), returns[j]);
 						}
 						recursiveInvariantFunctions.add(decl.getName());
+						this.checkInvariants(frame, postconditions);
 //						System.out.println("HERE");
 					}
 					catch(AssertionError e) {
@@ -194,7 +195,6 @@ public class QCInterpreter extends Interpreter {
 						isValid = false;
 					}
 					if(isValid) {
-						this.checkInvariants(frame, postconditions);
 //						System.out.println("Returned " + Arrays.toString(returns));
 						functionIO.put(arguments, returns);
 						return returns;

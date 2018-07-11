@@ -141,6 +141,7 @@ public class ExhaustiveGenerateTest implements GenerateTest{
 			return new RecordGenerator(generators, fields, TestType.EXHAUSTIVE, numTests);
 		}
 		else if(paramType instanceof WhileyFile.Type.Union) {
+			boolean limitReached = false;
 			WhileyFile.Type.Union union = (WhileyFile.Type.Union) paramType;
 			// Decided not to use a Set as there are few generators
 			// and it is highly unlikely a user would have a very large union
@@ -150,8 +151,9 @@ public class ExhaustiveGenerateTest implements GenerateTest{
 				if(unionFieldType instanceof WhileyFile.Type.Nominal) {
 					WhileyFile.Type.Nominal nom = (WhileyFile.Type.Nominal) unionFieldType;
 					if(recursiveType.getOrDefault(nom.getName(), 0) >= RunTest.RECURSIVE_LIMIT) {
+						limitReached = true;
 						// No longer be able to generate the nominal type
-						continue;
+						break;
 					}
 				}
 				// Check nominals in the record (and in nested records), are/are not recursive types
@@ -165,8 +167,9 @@ public class ExhaustiveGenerateTest implements GenerateTest{
 							if(var.getType() instanceof WhileyFile.Type.Nominal) {
 								WhileyFile.Type.Nominal nom = (WhileyFile.Type.Nominal) var.getType();
 								if(recursiveType.getOrDefault(nom.getName(), 0) >= RunTest.RECURSIVE_LIMIT) {
+									limitReached = true;
 									// No longer be able to generate the nominal type
-									continue;
+									break;
 								}
 							}
 							else if(var.getType() instanceof WhileyFile.Type.Nominal) {
@@ -177,9 +180,11 @@ public class ExhaustiveGenerateTest implements GenerateTest{
 
 					
 				}
-				Generator gen = getGenerator(unionFieldType);
-				if(!generators.contains(gen)) {
-					generators.add(gen);
+				if(!limitReached) {
+					Generator gen = getGenerator(unionFieldType);
+					if(!generators.contains(gen)) {
+						generators.add(gen);
+					}
 				}
 			}
 			return new UnionGenerator(generators, TestType.EXHAUSTIVE, numTests);

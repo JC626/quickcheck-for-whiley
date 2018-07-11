@@ -156,7 +156,7 @@ public class QCInterpreter extends Interpreter {
 		// If there is a recursive invariant, then execute the function normally
 		// instead of generating the value.
 		Identifier funcName = decl.getName();
-		if(funcOptimisation && !recursiveInvariantFunctions.contains(funcName)) {
+		if(funcOptimisation && !recursiveInvariantFunctions.contains(funcName) && !(decl instanceof Decl.Property)) {
 			Decl.FunctionOrMethod fun = ((Decl.FunctionOrMethod) decl);
 			Map<RValue[], RValue[]> functionIO = functionParameters.getOrDefault(fun, new HashMap<RValue[], RValue[]>());
 			// Every function should return the same output for the same input

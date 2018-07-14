@@ -75,8 +75,7 @@ public class WhileyBenchTest {
 
 		@Test
 		public void benchmark() throws IOException {
-			helper.compile(this.testName);
-			
+			helper.compile(this.testName, "wystd-v0.2.3.jar:wybench.jar");
 			String fileName = this.testName.replace(File.separatorChar, '_');
 			
 	        // Set system output to the file

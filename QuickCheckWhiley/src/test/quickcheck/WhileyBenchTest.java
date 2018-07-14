@@ -9,6 +9,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.Assume;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -48,6 +50,12 @@ public class WhileyBenchTest {
 	 */
 	public final static Map<String, String> IGNORED = new HashMap<>();
 	
+	static {
+		IGNORED.put("106_lander\\whiley\\src\\lander\\ui\\LanderCanvas", "Uses native and package.");
+		IGNORED.put("108_scrabble\\Board", "No functions to test.");
+		IGNORED.put("todo\\codejam_0511B\\Main", "Not a normal whiley file.");
+	}
+	
 	// ======================================================================
 		// Tests
 		// ======================================================================
@@ -67,11 +75,11 @@ public class WhileyBenchTest {
 		}
 
 		// Skip ignored tests
-//		@Before
-//		public void beforeMethod() {
-//			String ignored = IGNORED.get(this.testName);
-//			Assume.assumeTrue("Test " + this.testName + " skipped: " + ignored, ignored == null);
-//		}
+		@Before
+		public void beforeMethod() {
+			String ignored = IGNORED.get(this.testName);
+			Assume.assumeTrue("Test " + this.testName + " skipped: " + ignored, ignored == null);
+		}
 
 		@Test
 		public void benchmark() throws IOException {

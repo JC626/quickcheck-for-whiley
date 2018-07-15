@@ -9,6 +9,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.Assume;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -27,6 +29,7 @@ import test.utils.TestHelper;
  */
 @RunWith(Parameterized.class)
 public class WhileyBenchTest {
+	
 	/**
 	 * The directory where you want to store the results
 	 */
@@ -37,16 +40,28 @@ public class WhileyBenchTest {
 	 * Every test corresponds to a file in this directory.
 	 */
 	public final static String TEST_DIR = "D://Documents/University/ENGR489/WyBench-develop/src".replace('/', File.separatorChar);
-	
+
 	/**
 	 * Test helper used for compiling Whiley files
 	 */
 	public final static TestHelper helper = new TestHelper(TEST_DIR);
+	
+	/**
+	 * Libraries used during compilation
+	 */
+	public final static String LIBRARIES = "wystd-v0.2.3.jar:wybench.jar";
 
 	/**
 	 * Ignored tests and a reason why we ignore them.
 	 */
 	public final static Map<String, String> IGNORED = new HashMap<>();
+	
+	static {
+		IGNORED.put("107_minesweeper\\minesweeper", "Long time to run due to exposeNeighbours");
+		IGNORED.put("106_lander\\whiley\\src\\lander\\ui\\LanderCanvas", "Uses native and package.");
+		IGNORED.put("108_scrabble\\Board", "No functions to test.");
+		IGNORED.put("todo\\codejam_0511B\\Main", "Not a normal whiley file.");
+	}
 	
 	// ======================================================================
 		// Tests
@@ -67,16 +82,15 @@ public class WhileyBenchTest {
 		}
 
 		// Skip ignored tests
-//		@Before
-//		public void beforeMethod() {
-//			String ignored = IGNORED.get(this.testName);
-//			Assume.assumeTrue("Test " + this.testName + " skipped: " + ignored, ignored == null);
-//		}
+		@Before
+		public void beforeMethod() {
+			String ignored = IGNORED.get(this.testName);
+			Assume.assumeTrue("Test " + this.testName + " skipped: " + ignored, ignored == null);
+		}
 
 		@Test
 		public void benchmark() throws IOException {
-			helper.compile(this.testName);
-			
+			helper.compile(this.testName, LIBRARIES);
 			String fileName = this.testName.replace(File.separatorChar, '_');
 			
 	        // Set system output to the file

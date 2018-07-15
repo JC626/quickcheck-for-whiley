@@ -13,7 +13,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.TooManyListenersException;
 import java.util.stream.Collectors;
 
 import quickcheck.QuickCheck;
@@ -69,6 +68,41 @@ public class TestHelper {
 
 		Compile.Result r = p.first();
 
+		if (r != Compile.Result.SUCCESS) {
+			fail("Test failed to compile!");
+		} else if (r == Compile.Result.INTERNAL_FAILURE) {
+			fail("Test caused internal failure!");
+		}
+	}
+	
+	/**
+	 * Compile a .whiley file with additional libraries
+	 * @param testName The name of the test
+	 * @throws IOException
+	 */
+	public void compile(String testName, String... libraryPaths) throws IOException{	
+		String relativePath = directory;
+		int lastSlash = testName.lastIndexOf(File.separatorChar);
+		if(lastSlash > -1) {
+			relativePath = directory + File.separatorChar + testName.substring(0, lastSlash);
+		}
+		File whileySrcDir = new File(relativePath);
+		String whileyFilename = directory + File.separatorChar + testName
+				+ ".whiley";
+		
+		// Compile the file
+		Content.Registry registry = new wyc.Activator.Registry();
+		Compile cmd = new Compile(registry,Logger.NULL,System.out,System.out);
+
+		// Whiley directory allows other files to be imported
+		for(String libPath : libraryPaths) {
+			cmd.setWhileypath(libPath);
+		}
+		cmd.setWhileydir(whileySrcDir);
+		cmd.setWyaldir(whileySrcDir);
+		cmd.setVerify(false);
+
+		Compile.Result r = cmd.execute(whileyFilename);
 		if (r != Compile.Result.SUCCESS) {
 			fail("Test failed to compile!");
 		} else if (r == Compile.Result.INTERNAL_FAILURE) {

@@ -23,6 +23,7 @@ import wycc.util.Logger;
 import wyfs.lang.Content;
 import wyfs.lang.Path;
 import wyfs.util.DirectoryRoot;
+import wyfs.util.JarFileRoot;
 import wyfs.util.Trie;
 import wyil.interpreter.Interpreter;
 import wyil.interpreter.Interpreter.CallStack;
@@ -49,6 +50,8 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 	public static final int ARRAY_LOWER_LIMIT = 0;
 	public static final int ARRAY_UPPER_LIMIT = 3;
 	public static final int RECURSIVE_LIMIT = 3;
+	
+	public static final String STANDARD_LIB = "wystd-v0.2.3.jar";
 	
 	/**
 	 * Result kind for this command
@@ -90,7 +93,7 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 			return Result.ERRORS;
 		}
 		try {
-			Build.Project project = createWhileyProject(args[0]);
+			Build.Project project = createWhileyProject(STANDARD_LIB, args[0]);
 			Path.ID id = Trie.fromString(args[1]);
 			TestType testType = TestType.valueOf(args[2]);
 			List<Decl.Function> functions = getFunctions(id, project);
@@ -136,14 +139,17 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 	 * @param dir - The path directory to look for the Whiley/Wyil file.
 	 * @return Whiley Project
 	 */
-	private static Build.Project createWhileyProject(String dir) throws IOException {
+	private static Build.Project createWhileyProject(String standardLib, String dir) throws IOException {
 		// The content registry maps file name extensions to their Content.Type.
 		Content.Registry registry = new wyc.Activator.Registry();
 		// The directory root specified where to look for Whiley / WyIL files.
 		DirectoryRoot root = new DirectoryRoot(dir,registry);
 		ArrayList<Path.Root> roots = new ArrayList<>();
 		roots.add(root);
-		// Finally, create the project itself
+		// Add standard library location
+		roots.add(new JarFileRoot(standardLib, registry));
+//		DirectoryRoot stdLib = whileypath.add(new DirectoryRoot("wystd-v0.2.3.jar", registry));
+		// Finally, create the project itself		
 		return new StdProject(roots);
 	}
 

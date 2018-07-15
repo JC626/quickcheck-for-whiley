@@ -337,10 +337,12 @@ public class QCInterpreter extends Interpreter {
 					throw new IllegalArgumentException("no function or method body found: " + nid + ", " + sig);
 				}
 				// Execute the method or function body
-				if(firstTest) {
-					this.recursiveInvariantFunctions = new HashSet<Identifier>();
+				if(funcOptimisation) {
+					if(firstTest) {
+						this.recursiveInvariantFunctions = new HashSet<Identifier>();
+					}
+					recursiveInvariantFunctions.add(fm.getName());
 				}
-				recursiveInvariantFunctions.add(fm.getName());
 				executeBlock(fm.getBody(), frame, new FunctionOrMethodScope(fm));
 				// Extra the return values
 				RValue[] returns = packReturns(frame,fmp);

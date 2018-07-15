@@ -193,7 +193,9 @@ public class QCInterpreter extends Interpreter {
 								}
 								frame.putLocal(parameter.getName(), returns[j]);
 							}
-							recursiveInvariantFunctions.add(decl.getName());
+							if(funcOptimisation) {
+								recursiveInvariantFunctions.add(decl.getName());
+							}
 							this.checkInvariants(frame, postconditions);
 //							System.out.println("HERE");
 						}

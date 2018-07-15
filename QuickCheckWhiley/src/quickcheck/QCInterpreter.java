@@ -3,8 +3,10 @@ package quickcheck;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.math.BigInteger;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -74,7 +76,7 @@ public class QCInterpreter extends Interpreter {
 	private final PrintStream debug;
 	
 	/** A map from function name to a map of inputs to outputs */ 
-	private final Map<FunctionOrMethod, Map<RValue[], RValue[]>> functionParameters;
+	private final Map<FunctionOrMethod, Map<List<RValue>, RValue[]>> functionParameters;
 	
 	/** Store a list of functions that are called recursively */
 	private Set<Identifier> recursiveInvariantFunctions;
@@ -94,7 +96,7 @@ public class QCInterpreter extends Interpreter {
 		this.debug = debug;
 		this.typeSystem = new TypeSystem(project);
 		this.semantics = new ConcreteSemantics();
-		this.functionParameters = new HashMap<FunctionOrMethod, Map<RValue[], RValue[]>>();
+		this.functionParameters = new HashMap<FunctionOrMethod, Map<List<RValue>, RValue[]>>();
 		this.recursiveInvariantFunctions = new HashSet<Identifier>();
 		this.lowerLimit = lowerLimit;
 		this.upperLimit = upperLimit;
@@ -114,7 +116,7 @@ public class QCInterpreter extends Interpreter {
 		this.debug = debug;
 		this.typeSystem = new TypeSystem(project);
 		this.semantics = new ConcreteSemantics();
-		this.functionParameters = new HashMap<FunctionOrMethod, Map<RValue[], RValue[]>>();
+		this.functionParameters = new HashMap<FunctionOrMethod, Map<List<RValue>, RValue[]>>();
 		this.recursiveInvariantFunctions = new HashSet<Identifier>();
 		this.lowerLimit = BigInteger.valueOf(RunTest.INT_LOWER_LIMIT);
 		this.upperLimit = BigInteger.valueOf(RunTest.INT_UPPER_LIMIT);
@@ -156,57 +158,63 @@ public class QCInterpreter extends Interpreter {
 		// If there is a recursive invariant, then execute the function normally
 		// instead of generating the value.
 		Identifier funcName = decl.getName();
-		if(funcOptimisation && !recursiveInvariantFunctions.contains(funcName) && !(decl instanceof Decl.Property)) {
+		if(funcOptimisation && !(decl instanceof Decl.Property)) {
 			Decl.FunctionOrMethod fun = ((Decl.FunctionOrMethod) decl);
-			Map<RValue[], RValue[]> functionIO = functionParameters.getOrDefault(fun, new HashMap<RValue[], RValue[]>());
-			// Every function should return the same output for the same input
-			Tuple<Expr> postconditions = fun.getEnsures();
-			Tuple<Decl.Variable> outputParameters = fun.getReturns();
-			// Generate until the return type meets the postcondition
-			// If it is unable to generate after a certain number of times,
-			// just call the function/method instead 
-			frame = frame.enter(fun);
-			extractParameters(frame, arguments, fun);
-			try {
-				// Generator for the return values of the function
-				GenerateTest testGen = new RandomGenerateTest(fun.getReturns(), this, numRandomFuncValGen, lowerLimit, upperLimit);
-				RValue[] returns;
-				boolean isValid = false;
-				CallStack tempFrame = frame.clone();
-				for(int i=0; i < numRandomFuncValGen; i++) {
-					// Create a generator for the return type of the function based on the input
-					returns = testGen.generateParameters();
-					try {
-						for(int j=0; j < outputParameters.size(); j++) {
-							Decl.Variable parameter = outputParameters.get(j);
-							Type paramType = parameter.getType();
-							isValid = RunTest.checkInvariant(this, paramType, returns[j]);
-							if(!isValid) {
-								break;
-							}
-							frame.putLocal(parameter.getName(), returns[j]);
-						}
-						recursiveInvariantFunctions.add(decl.getName());
-						this.checkInvariants(frame, postconditions);
-//						System.out.println("HERE");
-					}
-					catch(AssertionError e) {
-//						System.out.println("FAIL");
-						isValid = false;
-					}
-					if(isValid) {
-//						System.out.println("Returned " + Arrays.toString(returns));
-						functionIO.put(arguments, returns);
-						return returns;
-					}
-					// Need to reset frame to remove the old inputs
-					frame = tempFrame.clone();
-				}
-			} 
-			catch (IntegerRangeException e1) {
-				// Execute test normally then
+			Map<List<RValue>, RValue[]> functionIO = functionParameters.getOrDefault(fun, new HashMap<List<RValue>, RValue[]>());
+			List<RValue> argList = Arrays.asList(arguments);
+			if(functionIO.containsKey(argList)){
+				return functionIO.get(argList);
 			}
-			
+			else if(!recursiveInvariantFunctions.contains(funcName)){
+				// Every function should return the same output for the same input
+				Tuple<Expr> postconditions = fun.getEnsures();
+				Tuple<Decl.Variable> outputParameters = fun.getReturns();
+				// Generate until the return type meets the postcondition
+				// If it is unable to generate after a certain number of times,
+				// just call the function/method instead 
+				frame = frame.enter(fun);
+				extractParameters(frame, arguments, fun);
+				try {
+					// Generator for the return values of the function
+					GenerateTest testGen = new RandomGenerateTest(fun.getReturns(), this, numRandomFuncValGen, lowerLimit, upperLimit);
+					RValue[] returns;
+					boolean isValid = false;
+					CallStack tempFrame = frame.clone();
+					for(int i=0; i < numRandomFuncValGen; i++) {
+						// Create a generator for the return type of the function based on the input
+						returns = testGen.generateParameters();
+						try {
+							for(int j=0; j < outputParameters.size(); j++) {
+								Decl.Variable parameter = outputParameters.get(j);
+								Type paramType = parameter.getType();
+								isValid = RunTest.checkInvariant(this, paramType, returns[j]);
+								if(!isValid) {
+									break;
+								}
+								frame.putLocal(parameter.getName(), returns[j]);
+							}
+							recursiveInvariantFunctions.add(decl.getName());
+							this.checkInvariants(frame, postconditions);
+//							System.out.println("HERE");
+						}
+						catch(AssertionError e) {
+//							System.out.println("FAIL");
+							isValid = false;
+						}
+						if(isValid) {
+//							System.out.println("Returned " + Arrays.toString(returns));
+							functionIO.put(argList, returns);
+							functionParameters.put(fun, functionIO);
+							return returns;
+						}
+						// Need to reset frame to remove the old inputs
+						frame = tempFrame.clone();
+					}
+				} 
+				catch (IntegerRangeException e1) {
+					// Execute test normally then
+				}
+			}
 		}		
 		// Invoke the function or method in question
 		return execute(decl.getQualifiedName().toNameID(), decl.getType(), frame, arguments);

@@ -426,6 +426,35 @@ None.
  \item How to format command line arguments as input? Not necessary to format command line arguments nicely. Only would be useful if it was widely used.
 \end{itemize}
 
+\section{July 16th 2018}
+\subsection{Present}
+\begin{itemize}
+	\item David Pearce
+\end{itemize}
+
+\subsection{Action points were achieved since the last meeting}
+\begin{itemize}
+	\item Able to run the WyBench tests by using the Standard Library and the wybench.jar file provided.
+	\item Discovered a few bugs in the WyBench tests.
+\end{itemize}
+\subsection{Action points have yet to be achieved since the last meeting}
+None
+\subsection{Action points were agreed to for the next meeting}
+\begin{itemize}
+	\item For the bugs discovered, add issues to the WyBench GitHub. Then fix these issues by submitting a pull request. This can then be addressed as evidence in the final report.
+	\item Fix any further bugs in the tool, adding missing
+	specifications and refactoring where appropriate.
+	\item Investigate mutation testing. Setup the framework to read in a WyIL file, apply a mutation to some expression within that file, and the print out the file using
+	wyc.io.WhileyPrettyPrinter. Copy the code for that from GitHub into your project and fix it.
+\end{itemize}
+
+\subsection{Discussion Points}
+\begin{itemize}
+	\item Received feedback on the Progress Report. Dave said not to worry too much about the feedback. Especially the function optimisation since I have done this already. 
+	\item Presentation on Friday July 20th for the Programming Language user group at 12pm, CO255. Prepare a presentation between 5 to 10 minutes long, around 3 slides. Short introduction, maybe present data and explain about the generators.
+	\item Take an Whiley as input, produce mutated file as output (Whiley). Consider how many to apply mutations to apply and where they should be applied. Could implement this as a applyMutation function, where you take an arbitrary expression and mutate it. Check the mutated file can be compiled.
+\end{itemize}
+
 
 %\section{ 2018}
 %\subsection{Present}

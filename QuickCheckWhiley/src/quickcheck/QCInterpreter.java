@@ -282,7 +282,19 @@ public class QCInterpreter extends Interpreter {
 				// Check the postcondition holds
 				checkInvariants(frame, fm.getEnsures());
 				return returns;
-			} else {
+			} 
+			else if (fmp instanceof Decl.Property) {
+				try {
+					Decl.Property fm = (Decl.Property) fmp;
+					checkInvariants(frame, fm.getInvariant());
+				}
+				catch(AssertionError e) {
+					return new RValue[] {RValue.False};
+				}
+
+				return new RValue[]{RValue.True};
+			}
+			else {
 				// Properties always return true (provided their preconditions hold)
 				return new RValue[]{RValue.True};
 			}

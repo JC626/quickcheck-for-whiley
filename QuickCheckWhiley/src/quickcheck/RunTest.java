@@ -1,5 +1,6 @@
 package quickcheck;
 
+import java.io.File;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -51,8 +52,6 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 	public static final int ARRAY_UPPER_LIMIT = 3;
 	public static final int RECURSIVE_LIMIT = 3;
 	
-	public static final String STANDARD_LIB = "wystd-v0.2.3.jar";
-	
 	/**
 	 * Result kind for this command
 	 *
@@ -93,7 +92,18 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 			return Result.ERRORS;
 		}
 		try {
-			Build.Project project = createWhileyProject(STANDARD_LIB, args[0]);
+			// Get the Whiley standard library
+			String whileystd = System.getenv("WHILEYSTD");
+			if(whileystd == null) {
+				System.out.println("error: WHILEYSTD environment variable not set.");
+				System.out.println("This should be set to the wystd jar file or the directory of the library");
+				System.out.println("Tests including the standard library may not execute.");
+			}
+			else {
+				whileystd = whileystd.replace('\\', File.separatorChar);
+				whileystd = whileystd.replace('/', File.separatorChar);
+			}
+			Build.Project project = createWhileyProject(whileystd, args[0]);
 			Path.ID id = Trie.fromString(args[1]);
 			TestType testType = TestType.valueOf(args[2]);
 			List<Decl.Function> functions = getFunctions(id, project);
@@ -147,8 +157,14 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 		ArrayList<Path.Root> roots = new ArrayList<>();
 		roots.add(root);
 		// Add standard library location
-		roots.add(new JarFileRoot(standardLib, registry));
-//		DirectoryRoot stdLib = whileypath.add(new DirectoryRoot("wystd-v0.2.3.jar", registry));
+		if(standardLib != null) {
+			if(standardLib.endsWith("jar")) {
+				roots.add(new JarFileRoot(standardLib, registry));
+			}
+			else {
+				roots.add(new DirectoryRoot(standardLib, registry));
+			}
+		}
 		// Finally, create the project itself		
 		return new StdProject(roots);
 	}
@@ -241,7 +257,8 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 			}
 			catch(AssertionError e) {
 				System.out.printf("Failed Input: %s Output: %s%n", Arrays.toString(paramValues), Arrays.toString(returns));
-			} catch (ResolutionError e) {
+			} 
+			catch (ResolutionError e) {
 				// FIXME resolution error
 				e.printStackTrace();
 				assert false;

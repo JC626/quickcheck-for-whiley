@@ -27,6 +27,10 @@ public class NominalGenerator implements Generator{
 	private Generator generator;
 	private Interpreter interpreter;
 	private Decl.Type decl;
+	/**The next value that was generated*/
+	private RValue nextValue;
+	/**Used to check if the generators were resetted internally, due to failing invariants*/
+	private boolean internalReset;
 
 	public NominalGenerator(Generator generator, Interpreter interpreter, Decl.Type decl) throws IntegerRangeException {
 		super();
@@ -42,22 +46,14 @@ public class NominalGenerator implements Generator{
 
 	@Override
 	public RValue generate() {
-		RValue.Bool isValid = RValue.Bool.False;
-		int i = 1;
-		RValue value = null;
-		while(isValid == RValue.Bool.False) {
-			value = generator.generate();
-			isValid = value.checkInvariant(decl.getVariableDeclaration(), decl.getInvariant(), interpreter);
-			// No valid values
-			if(i > generator.size()) {
-				// TODO Change this to a different exception
-				throw new Error("No possible values can be generated for the nominal type: " + decl.getName());
-			}
-			i++;
+		RValue value = this.nextValue;
+		if(value == null) {
+			value = generateNext();
 		}
+		this.nextValue = null;
 		return value;
 	}
-	
+
 	@Override
 	public RValue generateCombination(int comboNum) {
 		return generator.generateCombination(comboNum);
@@ -90,6 +86,33 @@ public class NominalGenerator implements Generator{
 			unionGen.checkInvariantRange(invariants, interpreter, name.get());
 		}
 	}
+	
+	/**
+	 * Internally generate the next value possible.
+	 * @return
+	 */
+	private RValue generateNext() {
+		RValue.Bool isValid = RValue.Bool.False;
+		int i = 1;
+		RValue value = null;
+		while(isValid == RValue.Bool.False) {
+			// When the generator's limit has reached, reset the generator
+			if(generator.exceedCount()) {
+				internalReset = true;
+				generator.resetCount();
+			}
+			value = generator.generate();
+			// TODO if an assertion error is thrown for the value, skip it?
+			isValid = value.checkInvariant(decl.getVariableDeclaration(), decl.getInvariant(), interpreter);
+			// No valid values
+			if(i > generator.size()) {
+				// TODO Change this to a different exception
+				throw new Error("No possible values can be generated for the nominal type: " + decl.getName());
+			}
+			i++;
+		}
+		return value;
+	}
 
 	@Override
 	public int size() {
@@ -98,12 +121,25 @@ public class NominalGenerator implements Generator{
 
 	@Override
 	public void resetCount() {
-		generator.resetCount();
+		if(!internalReset) {
+			nextValue = null;
+			generator.resetCount();
+		}
+		internalReset = false;
 	}
 
 	@Override
 	public boolean exceedCount() {
-		return generator.exceedCount();
+		if(nextValue == null) {
+			// Check if the generator has exceeded the count
+			if(generator.exceedCount()) {
+				return true;
+			}
+			// Generate next value to check if it will exceed the count
+			this.nextValue = generateNext();
+		}
+		// If the count was resetted internally, return true.
+		return internalReset;
 	}
 
 	@Override

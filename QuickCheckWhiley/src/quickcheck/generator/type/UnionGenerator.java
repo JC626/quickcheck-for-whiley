@@ -83,14 +83,19 @@ public final class UnionGenerator implements Generator {
 			if(exceedCount()) {
 				resetCount();
 			}
+			int startIndex = currentIndex;
 			while(currentGen.exceedCount()) {
 				currentIndex++;
 				if(currentIndex >= generators.size()) {
 					currentIndex = 0;
 				}
 				currentGen = generators.get(currentIndex);
+				// In the case, when nominal generator has exceeded (but its size is incorrect).
+				if(startIndex == currentIndex) {
+					resetCount();
+					break;
+				}
 			}
-
 			currentIndex++;
 			count++;
 			return currentGen.generate();

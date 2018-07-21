@@ -1,0 +1,826 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="Rerun test.quickcheck.WhileyBenchTest" project="QuickCheckWhiley" tests="37" started="37" failures="2" errors="8" ignored="0">
+  <testsuite name="test.quickcheck.WhileyBenchTest" time="296.248">
+    <testsuite name="[001_average\main]" time="0.392">
+      <testcase name="benchmark[001_average\main]" classname="test.quickcheck.WhileyBenchTest" time="0.392"/>
+    </testsuite>
+    <testsuite name="[002_fib\main]" time="0.149">
+      <testcase name="benchmark[002_fib\main]" classname="test.quickcheck.WhileyBenchTest" time="0.149"/>
+    </testsuite>
+    <testsuite name="[003_gcd\main]" time="0.174">
+      <testcase name="benchmark[003_gcd\main]" classname="test.quickcheck.WhileyBenchTest" time="0.174"/>
+    </testsuite>
+    <testsuite name="[004_matrix\main]" time="212.677">
+      <testcase name="benchmark[004_matrix\main]" classname="test.quickcheck.WhileyBenchTest" time="212.677"/>
+    </testsuite>
+    <testsuite name="[006_queens\main]" time="46.668">
+      <testcase name="benchmark[006_queens\main]" classname="test.quickcheck.WhileyBenchTest" time="46.668">
+        <error>java.lang.IndexOutOfBoundsException: Index 3 out-of-bounds for length 3&#13;
+	at java.base/jdk.internal.util.Preconditions.outOfBounds(Unknown Source)&#13;
+	at java.base/jdk.internal.util.Preconditions.outOfBoundsCheckIndex(Unknown Source)&#13;
+	at java.base/jdk.internal.util.Preconditions.checkIndex(Unknown Source)&#13;
+	at java.base/java.util.Objects.checkIndex(Unknown Source)&#13;
+	at java.base/java.util.ArrayList.get(Unknown Source)&#13;
+	at quickcheck.generator.type.ArrayGenerator.generateCombination(ArrayGenerator.java:177)&#13;
+	at quickcheck.generator.type.ArrayGenerator.generate(ArrayGenerator.java:152)&#13;
+	at quickcheck.generator.RandomGenerateTest.generateParameters(RandomGenerateTest.java:176)&#13;
+	at quickcheck.QCInterpreter.executeInvoke(QCInterpreter.java:185)&#13;
+	at quickcheck.QCInterpreter.executeMultiReturnExpression(QCInterpreter.java:1176)&#13;
+	at quickcheck.QCInterpreter.executeExpressions(QCInterpreter.java:1148)&#13;
+	at quickcheck.QCInterpreter.executeAssign(QCInterpreter.java:522)&#13;
+	at quickcheck.QCInterpreter.executeStatement(QCInterpreter.java:475)&#13;
+	at quickcheck.QCInterpreter.executeBlock(QCInterpreter.java:449)&#13;
+	at quickcheck.QCInterpreter.executeIf(QCInterpreter.java:674)&#13;
+	at quickcheck.QCInterpreter.executeStatement(QCInterpreter.java:488)&#13;
+	at quickcheck.QCInterpreter.executeBlock(QCInterpreter.java:449)&#13;
+	at quickcheck.QCInterpreter.executeWhile(QCInterpreter.java:714)&#13;
+	at quickcheck.QCInterpreter.executeStatement(QCInterpreter.java:498)&#13;
+	at quickcheck.QCInterpreter.executeBlock(QCInterpreter.java:449)&#13;
+	at quickcheck.QCInterpreter.executeIf(QCInterpreter.java:677)&#13;
+	at quickcheck.QCInterpreter.executeStatement(QCInterpreter.java:488)&#13;
+	at quickcheck.QCInterpreter.executeBlock(QCInterpreter.java:449)&#13;
+	at quickcheck.QCInterpreter.execute(QCInterpreter.java:367)&#13;
+	at quickcheck.RunTest.executeTest(RunTest.java:256)&#13;
+	at quickcheck.RunTest.execute(RunTest.java:130)&#13;
+	at test.utils.TestHelper.createRunTest(TestHelper.java:123)&#13;
+	at test.quickcheck.WhileyBenchTest.benchmark(WhileyBenchTest.java:120)&#13;
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)&#13;
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)&#13;
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)&#13;
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)&#13;
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)&#13;
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)&#13;
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)&#13;
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:128)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:27)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:538)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:760)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:460)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:206)&#13;
+&#13;
+</error>
+      </testcase>
+    </testsuite>
+    <testsuite name="[007_regex\main]" time="0.682">
+      <testcase name="benchmark[007_regex\main]" classname="test.quickcheck.WhileyBenchTest" time="0.682"/>
+    </testsuite>
+    <testsuite name="[008_scc\main]" time="0.632">
+      <testcase name="benchmark[008_scc\main]" classname="test.quickcheck.WhileyBenchTest" time="0.632">
+        <error>java.lang.IndexOutOfBoundsException: Index 3 out-of-bounds for length 3&#13;
+	at java.base/jdk.internal.util.Preconditions.outOfBounds(Unknown Source)&#13;
+	at java.base/jdk.internal.util.Preconditions.outOfBoundsCheckIndex(Unknown Source)&#13;
+	at java.base/jdk.internal.util.Preconditions.checkIndex(Unknown Source)&#13;
+	at java.base/java.util.Objects.checkIndex(Unknown Source)&#13;
+	at java.base/java.util.ArrayList.get(Unknown Source)&#13;
+	at quickcheck.generator.type.ArrayGenerator.generateCombination(ArrayGenerator.java:177)&#13;
+	at quickcheck.generator.type.ArrayGenerator.generate(ArrayGenerator.java:152)&#13;
+	at quickcheck.generator.type.NominalGenerator.generateNext(NominalGenerator.java:104)&#13;
+	at quickcheck.generator.type.NominalGenerator.generate(NominalGenerator.java:51)&#13;
+	at quickcheck.generator.RandomGenerateTest.generateParameters(RandomGenerateTest.java:176)&#13;
+	at quickcheck.QCInterpreter.executeInvoke(QCInterpreter.java:185)&#13;
+	at quickcheck.QCInterpreter.executeMultiReturnExpression(QCInterpreter.java:1176)&#13;
+	at quickcheck.QCInterpreter.executeExpressions(QCInterpreter.java:1148)&#13;
+	at quickcheck.QCInterpreter.executeAssign(QCInterpreter.java:522)&#13;
+	at quickcheck.QCInterpreter.executeStatement(QCInterpreter.java:475)&#13;
+	at quickcheck.QCInterpreter.executeBlock(QCInterpreter.java:449)&#13;
+	at quickcheck.QCInterpreter.execute(QCInterpreter.java:367)&#13;
+	at quickcheck.RunTest.executeTest(RunTest.java:256)&#13;
+	at quickcheck.RunTest.execute(RunTest.java:130)&#13;
+	at test.utils.TestHelper.createRunTest(TestHelper.java:123)&#13;
+	at test.quickcheck.WhileyBenchTest.benchmark(WhileyBenchTest.java:120)&#13;
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)&#13;
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)&#13;
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)&#13;
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)&#13;
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)&#13;
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)&#13;
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)&#13;
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:128)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:27)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:538)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:760)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:460)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:206)&#13;
+&#13;
+</error>
+      </testcase>
+    </testsuite>
+    <testsuite name="[009_lz77\main]" time="4.098">
+      <testcase name="benchmark[009_lz77\main]" classname="test.quickcheck.WhileyBenchTest" time="4.098"/>
+    </testsuite>
+    <testsuite name="[010_sort\main]" time="2.34">
+      <testcase name="benchmark[010_sort\main]" classname="test.quickcheck.WhileyBenchTest" time="2.34"/>
+    </testsuite>
+    <testsuite name="[011_codejam\main]" time="0.436">
+      <testcase name="benchmark[011_codejam\main]" classname="test.quickcheck.WhileyBenchTest" time="0.436">
+        <error>java.lang.RuntimeException: name "parser::skipWhiteSpace" not found&#13;
+	at wyil.interpreter.Interpreter.error(Interpreter.java:1359)&#13;
+	at quickcheck.QCInterpreter.executeMultiReturnExpression(QCInterpreter.java:1189)&#13;
+	at quickcheck.QCInterpreter.executeExpressions(QCInterpreter.java:1148)&#13;
+	at quickcheck.QCInterpreter.executeAssign(QCInterpreter.java:522)&#13;
+	at quickcheck.QCInterpreter.executeStatement(QCInterpreter.java:475)&#13;
+	at quickcheck.QCInterpreter.executeBlock(QCInterpreter.java:449)&#13;
+	at quickcheck.QCInterpreter.execute(QCInterpreter.java:367)&#13;
+	at quickcheck.RunTest.executeTest(RunTest.java:256)&#13;
+	at quickcheck.RunTest.execute(RunTest.java:130)&#13;
+	at test.utils.TestHelper.createRunTest(TestHelper.java:123)&#13;
+	at test.quickcheck.WhileyBenchTest.benchmark(WhileyBenchTest.java:120)&#13;
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)&#13;
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)&#13;
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)&#13;
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)&#13;
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)&#13;
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)&#13;
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)&#13;
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:128)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:27)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:538)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:760)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:460)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:206)&#13;
+&#13;
+</error>
+      </testcase>
+    </testsuite>
+    <testsuite name="[012_cyclic\main]" time="2.3">
+      <testcase name="benchmark[012_cyclic\main]" classname="test.quickcheck.WhileyBenchTest" time="2.3"/>
+    </testsuite>
+    <testsuite name="[013_btree\main]" time="1.0">
+      <testcase name="benchmark[013_btree\main]" classname="test.quickcheck.WhileyBenchTest" time="1.0">
+        <error>java.lang.NullPointerException&#13;
+	at quickcheck.QCInterpreter.executeInvoke(QCInterpreter.java:160)&#13;
+	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:854)&#13;
+	at wyil.interpreter.Interpreter.executeArrayLength(Interpreter.java:1047)&#13;
+	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:947)&#13;
+	at wyil.interpreter.Interpreter.executeArrayRange(Interpreter.java:1082)&#13;
+	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:953)&#13;
+	at quickcheck.QCInterpreter.executeQuantifier(QCInterpreter.java:1083)&#13;
+	at quickcheck.QCInterpreter.executeQuantifier(QCInterpreter.java:1058)&#13;
+	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:883)&#13;
+	at wyil.interpreter.Interpreter.executeLogicalImplication(Interpreter.java:992)&#13;
+	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:876)&#13;
+	at wyil.interpreter.Interpreter.checkInvariants(Interpreter.java:1293)&#13;
+	at quickcheck.RunTest.executeTest(RunTest.java:244)&#13;
+	at quickcheck.RunTest.execute(RunTest.java:130)&#13;
+	at test.utils.TestHelper.createRunTest(TestHelper.java:123)&#13;
+	at test.quickcheck.WhileyBenchTest.benchmark(WhileyBenchTest.java:110)&#13;
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)&#13;
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)&#13;
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)&#13;
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)&#13;
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)&#13;
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)&#13;
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)&#13;
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:128)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:27)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:538)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:760)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:460)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:206)&#13;
+&#13;
+</error>
+      </testcase>
+    </testsuite>
+    <testsuite name="[014_lights\main]" time="1.45">
+      <testcase name="benchmark[014_lights\main]" classname="test.quickcheck.WhileyBenchTest" time="1.45"/>
+    </testsuite>
+    <testsuite name="[015_cashtill\main]" time="1.34">
+      <testcase name="benchmark[015_cashtill\main]" classname="test.quickcheck.WhileyBenchTest" time="1.34">
+        <error>java.lang.Error: Upper integer limit is less than or equal to the lower integer limit&#13;
+	at quickcheck.generator.type.ArrayGenerator.checkValidRange(ArrayGenerator.java:210)&#13;
+	at quickcheck.generator.type.ArrayGenerator.joinRange(ArrayGenerator.java:223)&#13;
+	at quickcheck.constraints.RangeHelper.checkInvariantRange(RangeHelper.java:55)&#13;
+	at quickcheck.generator.type.NominalGenerator.checkInvariantRange(NominalGenerator.java:78)&#13;
+	at quickcheck.generator.type.NominalGenerator.&lt;init&gt;(NominalGenerator.java:42)&#13;
+	at quickcheck.generator.ExhaustiveGenerateTest.getGenerator(ExhaustiveGenerateTest.java:124)&#13;
+	at quickcheck.generator.ExhaustiveGenerateTest.&lt;init&gt;(ExhaustiveGenerateTest.java:69)&#13;
+	at quickcheck.RunTest.executeTest(RunTest.java:204)&#13;
+	at quickcheck.RunTest.execute(RunTest.java:130)&#13;
+	at test.utils.TestHelper.createRunTest(TestHelper.java:123)&#13;
+	at test.quickcheck.WhileyBenchTest.benchmark(WhileyBenchTest.java:120)&#13;
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)&#13;
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)&#13;
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)&#13;
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)&#13;
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)&#13;
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)&#13;
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)&#13;
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:128)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:27)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:538)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:760)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:460)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:206)&#13;
+&#13;
+</error>
+      </testcase>
+    </testsuite>
+    <testsuite name="[016_date\main]" time="2.36">
+      <testcase name="benchmark[016_date\main]" classname="test.quickcheck.WhileyBenchTest" time="2.36"/>
+    </testsuite>
+    <testsuite name="[017_math\main]" time="4.323">
+      <testcase name="benchmark[017_math\main]" classname="test.quickcheck.WhileyBenchTest" time="4.323"/>
+    </testsuite>
+    <testsuite name="[018_heap\main]" time="0.03">
+      <testcase name="benchmark[018_heap\main]" classname="test.quickcheck.WhileyBenchTest" time="0.03">
+        <error>java.lang.NegativeArraySizeException&#13;
+	at wyil.interpreter.Interpreter.executeArrayRange(Interpreter.java:1083)&#13;
+	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:953)&#13;
+	at quickcheck.QCInterpreter.executeQuantifier(QCInterpreter.java:1083)&#13;
+	at quickcheck.QCInterpreter.executeQuantifier(QCInterpreter.java:1058)&#13;
+	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:883)&#13;
+	at wyil.interpreter.ConcreteSemantics$RValue.checkInvariant(ConcreteSemantics.java:184)&#13;
+	at quickcheck.generator.type.NominalGenerator.generateNext(NominalGenerator.java:107)&#13;
+	at quickcheck.generator.type.NominalGenerator.generate(NominalGenerator.java:51)&#13;
+	at quickcheck.generator.ExhaustiveGenerateTest.generateParameters(ExhaustiveGenerateTest.java:210)&#13;
+	at quickcheck.RunTest.executeTest(RunTest.java:236)&#13;
+	at quickcheck.RunTest.execute(RunTest.java:130)&#13;
+	at test.utils.TestHelper.createRunTest(TestHelper.java:123)&#13;
+	at test.quickcheck.WhileyBenchTest.benchmark(WhileyBenchTest.java:110)&#13;
+	at jdk.internal.reflect.GeneratedMethodAccessor2.invoke(Unknown Source)&#13;
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)&#13;
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)&#13;
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)&#13;
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)&#13;
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)&#13;
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)&#13;
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:128)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:27)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:538)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:760)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:460)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:206)&#13;
+&#13;
+</error>
+      </testcase>
+    </testsuite>
+    <testsuite name="[022_cars\main]" time="0.206">
+      <testcase name="benchmark[022_cars\main]" classname="test.quickcheck.WhileyBenchTest" time="0.206"/>
+    </testsuite>
+    <testsuite name="[023_microwave\main]" time="0.135">
+      <testcase name="benchmark[023_microwave\main]" classname="test.quickcheck.WhileyBenchTest" time="0.135"/>
+    </testsuite>
+    <testsuite name="[024_bits\main]" time="0.636">
+      <testcase name="benchmark[024_bits\main]" classname="test.quickcheck.WhileyBenchTest" time="0.636">
+        <failure>java.lang.AssertionError: A test failed with negative integer limits. expected:&lt;PASSED&gt; but was:&lt;FAILED&gt;&#13;
+	at org.junit.Assert.fail(Assert.java:88)&#13;
+	at org.junit.Assert.failNotEquals(Assert.java:834)&#13;
+	at org.junit.Assert.assertEquals(Assert.java:118)&#13;
+	at test.quickcheck.WhileyBenchTest.benchmark(WhileyBenchTest.java:115)&#13;
+	at jdk.internal.reflect.GeneratedMethodAccessor2.invoke(Unknown Source)&#13;
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)&#13;
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)&#13;
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)&#13;
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)&#13;
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)&#13;
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)&#13;
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:128)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:27)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:538)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:760)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:460)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:206)&#13;
+&#13;
+</failure>
+      </testcase>
+    </testsuite>
+    <testsuite name="[025_tries\main]" time="0.0">
+      <testcase name="benchmark[025_tries\main]" classname="test.quickcheck.WhileyBenchTest" time="0.0">
+        <skipped>org.junit.AssumptionViolatedException: Test 025_tries\main skipped: Long time to run due to add(Trie trie, Transition transition)&#13;
+	at org.junit.Assume.assumeTrue(Assume.java:59)&#13;
+	at test.quickcheck.WhileyBenchTest.beforeMethod(WhileyBenchTest.java:92)&#13;
+	at jdk.internal.reflect.GeneratedMethodAccessor1.invoke(Unknown Source)&#13;
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)&#13;
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)&#13;
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)&#13;
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)&#13;
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:24)&#13;
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:128)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:27)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:538)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:760)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:460)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:206)&#13;
+&#13;
+</skipped>
+      </testcase>
+    </testsuite>
+    <testsuite name="[026_reverse\main]" time="4.41">
+      <testcase name="benchmark[026_reverse\main]" classname="test.quickcheck.WhileyBenchTest" time="4.41"/>
+    </testsuite>
+    <testsuite name="[027_c_string\main]" time="0.249">
+      <testcase name="benchmark[027_c_string\main]" classname="test.quickcheck.WhileyBenchTest" time="0.249"/>
+    </testsuite>
+    <testsuite name="[028_flag\main]" time="0.413">
+      <testcase name="benchmark[028_flag\main]" classname="test.quickcheck.WhileyBenchTest" time="0.413"/>
+    </testsuite>
+    <testsuite name="[029_bipmatch\main]" time="0.0">
+      <testcase name="benchmark[029_bipmatch\main]" classname="test.quickcheck.WhileyBenchTest" time="0.0">
+        <skipped>org.junit.AssumptionViolatedException: Test 029_bipmatch\main skipped: Long time to run due to add(Trie trie, Transition transition)&#13;
+	at org.junit.Assume.assumeTrue(Assume.java:59)&#13;
+	at test.quickcheck.WhileyBenchTest.beforeMethod(WhileyBenchTest.java:92)&#13;
+	at jdk.internal.reflect.GeneratedMethodAccessor1.invoke(Unknown Source)&#13;
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)&#13;
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)&#13;
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)&#13;
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)&#13;
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:24)&#13;
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:128)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:27)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:538)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:760)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:460)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:206)&#13;
+&#13;
+</skipped>
+      </testcase>
+    </testsuite>
+    <testsuite name="[030_fractions\main]" time="0.211">
+      <testcase name="benchmark[030_fractions\main]" classname="test.quickcheck.WhileyBenchTest" time="0.211"/>
+    </testsuite>
+    <testsuite name="[032_arrlist\main]" time="0.145">
+      <testcase name="benchmark[032_arrlist\main]" classname="test.quickcheck.WhileyBenchTest" time="0.145">
+        <failure>java.lang.AssertionError: A test failed with positive integer limits. expected:&lt;PASSED&gt; but was:&lt;FAILED&gt;&#13;
+	at org.junit.Assert.fail(Assert.java:88)&#13;
+	at org.junit.Assert.failNotEquals(Assert.java:834)&#13;
+	at org.junit.Assert.assertEquals(Assert.java:118)&#13;
+	at test.quickcheck.WhileyBenchTest.benchmark(WhileyBenchTest.java:122)&#13;
+	at jdk.internal.reflect.GeneratedMethodAccessor2.invoke(Unknown Source)&#13;
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)&#13;
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)&#13;
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)&#13;
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)&#13;
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)&#13;
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)&#13;
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:128)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:27)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:538)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:760)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:460)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:206)&#13;
+&#13;
+</failure>
+      </testcase>
+    </testsuite>
+    <testsuite name="[102_conway\main]" time="6.103">
+      <testcase name="benchmark[102_conway\main]" classname="test.quickcheck.WhileyBenchTest" time="6.103"/>
+    </testsuite>
+    <testsuite name="[104_tictactoe\board]" time="1.08">
+      <testcase name="benchmark[104_tictactoe\board]" classname="test.quickcheck.WhileyBenchTest" time="1.08">
+        <error>java.lang.Error: Upper integer limit is less than or equal to the lower integer limit&#13;
+	at quickcheck.generator.type.ArrayGenerator.checkValidRange(ArrayGenerator.java:210)&#13;
+	at quickcheck.generator.type.ArrayGenerator.joinRange(ArrayGenerator.java:223)&#13;
+	at quickcheck.constraints.RangeHelper.checkInvariantRange(RangeHelper.java:55)&#13;
+	at quickcheck.generator.type.NominalGenerator.checkInvariantRange(NominalGenerator.java:78)&#13;
+	at quickcheck.generator.type.NominalGenerator.&lt;init&gt;(NominalGenerator.java:42)&#13;
+	at quickcheck.generator.ExhaustiveGenerateTest.getGenerator(ExhaustiveGenerateTest.java:124)&#13;
+	at quickcheck.generator.ExhaustiveGenerateTest.&lt;init&gt;(ExhaustiveGenerateTest.java:69)&#13;
+	at quickcheck.RunTest.executeTest(RunTest.java:204)&#13;
+	at quickcheck.RunTest.execute(RunTest.java:130)&#13;
+	at test.utils.TestHelper.createRunTest(TestHelper.java:123)&#13;
+	at test.quickcheck.WhileyBenchTest.benchmark(WhileyBenchTest.java:120)&#13;
+	at jdk.internal.reflect.GeneratedMethodAccessor2.invoke(Unknown Source)&#13;
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)&#13;
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)&#13;
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)&#13;
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)&#13;
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)&#13;
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)&#13;
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:128)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:27)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:538)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:760)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:460)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:206)&#13;
+&#13;
+</error>
+      </testcase>
+    </testsuite>
+    <testsuite name="[104_tictactoe\game]" time="0.69">
+      <testcase name="benchmark[104_tictactoe\game]" classname="test.quickcheck.WhileyBenchTest" time="0.69">
+        <error>java.lang.Error: Upper integer limit is less than or equal to the lower integer limit&#13;
+	at quickcheck.generator.type.ArrayGenerator.checkValidRange(ArrayGenerator.java:210)&#13;
+	at quickcheck.generator.type.ArrayGenerator.joinRange(ArrayGenerator.java:223)&#13;
+	at quickcheck.constraints.RangeHelper.checkInvariantRange(RangeHelper.java:55)&#13;
+	at quickcheck.generator.type.NominalGenerator.checkInvariantRange(NominalGenerator.java:78)&#13;
+	at quickcheck.generator.type.NominalGenerator.&lt;init&gt;(NominalGenerator.java:42)&#13;
+	at quickcheck.generator.RandomGenerateTest.getGenerator(RandomGenerateTest.java:101)&#13;
+	at quickcheck.generator.RandomGenerateTest.&lt;init&gt;(RandomGenerateTest.java:54)&#13;
+	at quickcheck.QCInterpreter.executeInvoke(QCInterpreter.java:179)&#13;
+	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:854)&#13;
+	at quickcheck.QCInterpreter.executeRecordInitialiser(QCInterpreter.java:1051)&#13;
+	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:844)&#13;
+	at quickcheck.QCInterpreter.executeMultiReturnExpression(QCInterpreter.java:1185)&#13;
+	at quickcheck.QCInterpreter.executeExpressions(QCInterpreter.java:1148)&#13;
+	at quickcheck.QCInterpreter.executeReturn(QCInterpreter.java:742)&#13;
+	at quickcheck.QCInterpreter.executeStatement(QCInterpreter.java:500)&#13;
+	at quickcheck.QCInterpreter.executeBlock(QCInterpreter.java:449)&#13;
+	at quickcheck.QCInterpreter.execute(QCInterpreter.java:367)&#13;
+	at quickcheck.RunTest.executeTest(RunTest.java:256)&#13;
+	at quickcheck.RunTest.execute(RunTest.java:130)&#13;
+	at test.utils.TestHelper.createRunTest(TestHelper.java:123)&#13;
+	at test.quickcheck.WhileyBenchTest.benchmark(WhileyBenchTest.java:120)&#13;
+	at jdk.internal.reflect.GeneratedMethodAccessor2.invoke(Unknown Source)&#13;
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)&#13;
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)&#13;
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)&#13;
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)&#13;
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)&#13;
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)&#13;
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:128)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:27)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:538)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:760)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:460)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:206)&#13;
+&#13;
+</error>
+      </testcase>
+    </testsuite>
+    <testsuite name="[104_tictactoe\main]" time="0.341">
+      <testcase name="benchmark[104_tictactoe\main]" classname="test.quickcheck.WhileyBenchTest" time="0.341"/>
+    </testsuite>
+    <testsuite name="[106_lander\whiley\src\lander\ui\LanderCanvas]" time="0.0">
+      <testcase name="benchmark[106_lander\whiley\src\lander\ui\LanderCanvas]" classname="test.quickcheck.WhileyBenchTest" time="0.0">
+        <skipped>org.junit.AssumptionViolatedException: Test 106_lander\whiley\src\lander\ui\LanderCanvas skipped: Uses native and package.&#13;
+	at org.junit.Assume.assumeTrue(Assume.java:59)&#13;
+	at test.quickcheck.WhileyBenchTest.beforeMethod(WhileyBenchTest.java:92)&#13;
+	at jdk.internal.reflect.GeneratedMethodAccessor1.invoke(Unknown Source)&#13;
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)&#13;
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)&#13;
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)&#13;
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)&#13;
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:24)&#13;
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:128)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:27)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:538)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:760)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:460)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:206)&#13;
+&#13;
+</skipped>
+      </testcase>
+    </testsuite>
+    <testsuite name="[107_minesweeper\main]" time="0.312">
+      <testcase name="benchmark[107_minesweeper\main]" classname="test.quickcheck.WhileyBenchTest" time="0.312"/>
+    </testsuite>
+    <testsuite name="[107_minesweeper\minesweeper]" time="0.0">
+      <testcase name="benchmark[107_minesweeper\minesweeper]" classname="test.quickcheck.WhileyBenchTest" time="0.0">
+        <skipped>org.junit.AssumptionViolatedException: Test 107_minesweeper\minesweeper skipped: Long time to run due to exposeNeighbours&#13;
+	at org.junit.Assume.assumeTrue(Assume.java:59)&#13;
+	at test.quickcheck.WhileyBenchTest.beforeMethod(WhileyBenchTest.java:92)&#13;
+	at jdk.internal.reflect.GeneratedMethodAccessor1.invoke(Unknown Source)&#13;
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)&#13;
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)&#13;
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)&#13;
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)&#13;
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:24)&#13;
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:128)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:27)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:538)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:760)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:460)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:206)&#13;
+&#13;
+</skipped>
+      </testcase>
+    </testsuite>
+    <testsuite name="[108_scrabble\Board]" time="0.0">
+      <testcase name="benchmark[108_scrabble\Board]" classname="test.quickcheck.WhileyBenchTest" time="0.0">
+        <skipped>org.junit.AssumptionViolatedException: Test 108_scrabble\Board skipped: No functions to test.&#13;
+	at org.junit.Assume.assumeTrue(Assume.java:59)&#13;
+	at test.quickcheck.WhileyBenchTest.beforeMethod(WhileyBenchTest.java:92)&#13;
+	at jdk.internal.reflect.GeneratedMethodAccessor1.invoke(Unknown Source)&#13;
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)&#13;
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)&#13;
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)&#13;
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)&#13;
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:24)&#13;
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:128)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:27)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:538)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:760)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:460)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:206)&#13;
+&#13;
+</skipped>
+      </testcase>
+    </testsuite>
+    <testsuite name="[stdtest\test]" time="0.266">
+      <testcase name="benchmark[stdtest\test]" classname="test.quickcheck.WhileyBenchTest" time="0.266"/>
+    </testsuite>
+    <testsuite name="[todo\codejam_0511B\Main]" time="0.0">
+      <testcase name="benchmark[todo\codejam_0511B\Main]" classname="test.quickcheck.WhileyBenchTest" time="0.0">
+        <skipped>org.junit.AssumptionViolatedException: Test todo\codejam_0511B\Main skipped: Not a normal whiley file.&#13;
+	at org.junit.Assume.assumeTrue(Assume.java:59)&#13;
+	at test.quickcheck.WhileyBenchTest.beforeMethod(WhileyBenchTest.java:92)&#13;
+	at jdk.internal.reflect.GeneratedMethodAccessor1.invoke(Unknown Source)&#13;
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)&#13;
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)&#13;
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)&#13;
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)&#13;
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:24)&#13;
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:128)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:27)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:538)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:760)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:460)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:206)&#13;
+&#13;
+</skipped>
+      </testcase>
+    </testsuite>
+  </testsuite>
+</testrun>

@@ -200,7 +200,7 @@ public class WhileyValidTest {
             if(result == Result.ERRORS) {
 				noNegativeLimit = true;
             }
-            else {
+            else if(result != Result.SKIPPED){
 	            assertEquals("A test failed with negative integer limits.", Result.PASSED, result);
             }
             

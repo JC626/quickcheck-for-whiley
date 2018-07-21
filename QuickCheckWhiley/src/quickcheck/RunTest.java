@@ -59,6 +59,7 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 	public enum Result {
 		PASSED, // All tests passed
 		FAILED, // Some tests failed
+		SKIPPED, // All tests were skipped 
 		ERRORS, // An error occurred before execution
 		INTERNAL_FAILURE // An error occurred during the program
 	}
@@ -119,6 +120,7 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 				numTests = Integer.parseInt(args[3]);
 			}
 			catch(NumberFormatException e) {}
+			int numSkipped = 0;
 			Result result = Result.PASSED;
 			for(Decl.Function func : functions) {
 				Result r = executeTest(id, interpreter, func, testType, numTests, lower, upper);
@@ -127,6 +129,15 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 				}
 				else if(r == Result.ERRORS) {
 					return r;
+				}
+				else if(r == Result.SKIPPED) {
+					numSkipped++;
+				}
+			}
+			if(result == Result.SKIPPED) {
+				// Some of the tests were successful
+				if(numSkipped != functions.size()) {
+					return Result.PASSED;
 				}
 			}
 			return result;
@@ -214,7 +225,8 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 //		Tuple<Expr> empty = new Tuple<Expr>();		
 //		dec.setOperand(4, empty); // Remove precondition
 //		dec.setOperand(5, empty); // Remove postcondition
-
+		
+		int numSkipped = 0;
 		int numPassed = 0;
 		for(int i=0; i < numTest; i++) {
 			RValue[] paramValues = testGen.generateParameters();
@@ -229,6 +241,7 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 			}
 			catch(AssertionError e){
 				System.out.println("Pre-condition failed on input: " + Arrays.toString(paramValues));
+				numSkipped++;
 				continue;
 			}
 			
@@ -265,14 +278,19 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 			} 
 		}
 		// Overall test statistics
-		if(numPassed == numTest) {
-			System.out.printf("Ok: ran %d tests%n", numTest);
+		if(numPassed + numSkipped == numTest) {
+			System.out.printf("Ok: %d passed  (%.2f %%), %d skipped (%.2f %%), ran %d tests %n",
+					numPassed, (double) 100 * numPassed/numTest, numSkipped, (double) 100 * numSkipped/numTest, numTest);
 			return Result.PASSED;
+		}
+		else if(numSkipped == numTest) {
+			System.out.println("All tests skipped!");
+			return Result.SKIPPED;
 		}
 		else {
 			int numFailed = numTest - numPassed;
-			System.out.printf("Failed: %d passed (%.2f %%), %d failed (%.2f %%), ran %d tests%n",
-					numPassed, (double) 100 * numPassed/numTest, numFailed, (double) 100 * numFailed/numTest, numTest);
+			System.out.printf("Failed: %d passed (%.2f %%), %d failed (%.2f %%), %d skipped (%.2f %%), ran %d tests%n",
+					numPassed, (double) 100 * numPassed/numTest, numFailed, (double) 100 * numFailed/numTest, numSkipped, (double) 100 * numSkipped/numTest, numTest);
 			return Result.FAILED;
 		}
 	}

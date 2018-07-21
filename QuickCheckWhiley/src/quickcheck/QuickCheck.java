@@ -92,10 +92,13 @@ public class QuickCheck {
 		if(result == Result.PASSED) {
 			System.out.println("All tests passed.");
 		}
-		else if(result == Result.PASSED) {
+		else if(result == Result.FAILED) {
 			System.out.println("Some tests failed.");
 		}
-		else {
+		else if(result == Result.SKIPPED) {
+			System.out.println("All tests were skipped. Please try again, with a different configuration.");
+		}
+		else{
 			System.out.println("An error occurred during testing.");
 		}
 	}

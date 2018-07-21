@@ -121,9 +121,6 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 			catch(NumberFormatException e) {}
 			Result result = Result.PASSED;
 			for(Decl.Function func : functions) {
-//				if(!func.getName().get().equals("length")) {
-//					continue;
-//				}
 				Result r = executeTest(id, interpreter, func, testType, numTests, lower, upper);
 				if(r == Result.FAILED) {
 					result = r;

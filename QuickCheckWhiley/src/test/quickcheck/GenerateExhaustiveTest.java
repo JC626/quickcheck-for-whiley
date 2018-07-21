@@ -15,15 +15,19 @@ import quickcheck.generator.ExhaustiveGenerateTest;
 import quickcheck.generator.GenerateTest;
 import test.utils.TestHelper;
 import wybs.lang.Build;
+import wybs.lang.NameID;
 import wybs.util.AbstractCompilationUnit.Identifier;
 import wybs.util.AbstractCompilationUnit.Tuple;
 import wyc.lang.WhileyFile.Decl;
 import wyc.lang.WhileyFile.Type;
 import wyc.lang.WhileyFile.Decl.Function;
+import wyfs.lang.Path;
+import wyfs.util.Trie;
 import wyil.interpreter.ConcreteSemantics;
 import wyil.interpreter.Interpreter;
 import wyil.interpreter.ConcreteSemantics.RValue;
 import wyil.interpreter.ConcreteSemantics.RValue.Record;
+import wyil.interpreter.Interpreter.CallStack;
 
 /**
  * Test the exhaustive test generation
@@ -1018,4 +1022,48 @@ public class GenerateExhaustiveTest {
 		}
 	}
 	
+	/**
+	 * Test a property in a function
+	 * 
+	 * @throws IOException
+	 * @throws IntegerRangeException 
+	 */
+	@Test
+	public void testPropertyFunction() throws IOException, IntegerRangeException {
+		String testName = "property_func";
+		helper.compile(testName);
+		Build.Project project = helper.createProject();
+		Interpreter interpreter = new QCInterpreter(project, System.out);
+		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		
+		BigInteger lower = BigInteger.valueOf(-5);
+		BigInteger upper = BigInteger.valueOf(5);
+		Decl.Function func = functions.get(0);
+
+		GenerateTest testGen = new ExhaustiveGenerateTest(func.getParameters(), interpreter, 25, lower, upper);
+		
+		Tuple<Decl.Variable> inputParameters = func.getParameters();
+		Path.ID id = Trie.fromString(testName);
+		NameID funcName = new NameID(id, func.getName().get());
+		Type.Callable type = functions.get(0).getType();
+		
+		Identifier paramName = inputParameters.get(0).getName();
+		for(int i=-5; i < 5; i++) {
+			CallStack frame = interpreter.new CallStack();
+			RValue[] paramValues = testGen.generateParameters();
+			frame.putLocal(paramName, paramValues[0]);
+			try {
+				interpreter.checkInvariants(frame, func.getRequires());
+			}
+			catch(AssertionError e){
+				if(i >= 0) {
+					System.out.println("I is " + i);
+					throw e;
+				}
+				continue;
+			}
+			RValue[] returns = interpreter.execute(funcName, type, frame, paramValues);
+			assertEquals(semantics.Int(BigInteger.valueOf(i)), returns[0]);
+		}		
+	}
 }

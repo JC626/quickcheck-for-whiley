@@ -39,7 +39,7 @@ public class QuickCheck {
 	
 	public static String[] prepareArguments(String[] args) {
 		if(args.length == 0) {
-			System.out.println("Usage: java QuickCheck <wyilfile> <testtype> <numtests> <lowerintegerlimit> <upperintegerlimit>");
+			System.out.println("Usage: java QuickCheck <wyilfile> <testtype> <numtests> <lowerintegerlimit> <upperintegerlimit> <functionoptimisation> <num_gen_func_opt>");
 			System.exit(-1);
 		}
 		String[] modified = new String[RunTest.MAX_NUMBER_ARGUMENTS];
@@ -80,7 +80,7 @@ public class QuickCheck {
 	public static void main(String[] args){
 		long startTime = System.nanoTime();
 		if(args.length == 0) {
-			System.out.println("Usage: java QuickCheck <wyilfile> <testtype> <numtests> <lowerintegerlimit> <upperintegerlimit>");
+			System.out.println("Usage: java QuickCheck <wyilfile> <testtype> <numtests> <lowerintegerlimit> <upperintegerlimit> <functionoptimisation> <num_gen_func_opt>");
 			System.exit(-1);
 		}
 		String[] modifiedArgs = prepareArguments(args);

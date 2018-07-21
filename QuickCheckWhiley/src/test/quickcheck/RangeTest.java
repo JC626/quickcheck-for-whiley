@@ -1074,4 +1074,35 @@ public class RangeTest {
 			}
 		}
 	}
+	
+	
+	/**
+	 * Test when a nominal type has a property
+	 * with an integer range
+	 * 
+	 * @throws IOException
+	 * @throws IntegerRangeException 
+	 */
+	@Test
+	public void testPropertyType2() throws IOException, IntegerRangeException {
+		String testName = "property_type2";
+		helper.compile(testName);
+		Build.Project project = helper.createProject();
+		Interpreter interpreter = new QCInterpreter(project, System.out);
+		List<Decl.Function> functions = helper.getFunctions(testName, project);
+
+		BigInteger lower = BigInteger.valueOf(-5);
+		BigInteger upper = BigInteger.valueOf(5);
+		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0).getParameters(), interpreter, 25, lower, upper);
+		for(int j=0; j < 2; j++) {
+			for(int i=0; i < 5; i++) {
+				RValue[] generatedParameters = testGen.generateParameters();
+				assertEquals(1, generatedParameters.length);
+				RValue.Record record = (Record) generatedParameters[0];
+				RValue first = record.read(new Identifier("data"));
+				assertEquals(semantics.Int(BigInteger.valueOf(i)), first);
+			}
+		}
+	}
+	
 }

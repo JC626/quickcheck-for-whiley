@@ -284,6 +284,7 @@ public class QCInterpreter extends Interpreter {
 				return returns;
 			} 
 			else if (fmp instanceof Decl.Property) {
+				// Check properties invariants
 				try {
 					Decl.Property fm = (Decl.Property) fmp;
 					checkInvariants(frame, fm.getInvariant());
@@ -291,11 +292,9 @@ public class QCInterpreter extends Interpreter {
 				catch(AssertionError e) {
 					return new RValue[] {RValue.False};
 				}
-
 				return new RValue[]{RValue.True};
 			}
 			else {
-				// Properties always return true (provided their preconditions hold)
 				return new RValue[]{RValue.True};
 			}
 			//
@@ -375,8 +374,19 @@ public class QCInterpreter extends Interpreter {
 					checkInvariants(frame, fm.getEnsures());				
 				}
 				return returns;
-			} else {
-				// Properties always return true (provided their preconditions hold)
+			} 
+			else if (fmp instanceof Decl.Property) {
+				// Check properties invariants
+				try {
+					Decl.Property fm = (Decl.Property) fmp;
+					checkInvariants(frame, fm.getInvariant());
+				}
+				catch(AssertionError e) {
+					return new RValue[] {RValue.False};
+				}
+				return new RValue[]{RValue.True};
+			}
+			else {
 				return new RValue[]{RValue.True};
 			}
 			//

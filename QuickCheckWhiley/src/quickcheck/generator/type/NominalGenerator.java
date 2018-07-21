@@ -103,7 +103,10 @@ public class NominalGenerator implements Generator{
 			}
 			value = generator.generate();
 			// TODO if an assertion error is thrown for the value, skip it?
-			isValid = value.checkInvariant(decl.getVariableDeclaration(), decl.getInvariant(), interpreter);
+			try {
+				isValid = value.checkInvariant(decl.getVariableDeclaration(), decl.getInvariant(), interpreter);
+			}
+			catch(AssertionError e) {}
 			// No valid values
 			if(i > generator.size()) {
 				// TODO Change this to a different exception

@@ -49,7 +49,8 @@ public class WhileyBenchTest {
 	/**
 	 * Libraries used during compilation
 	 */
-	public final static String LIBRARIES = "wystd-v0.2.3.jar:wybench.jar";
+//    public final static String LIBRARIES = "wystd-v0.2.3.jar:wybench.jar";
+	public final static String LIBRARIES = "../../WySTD-develop/src/whiley:wybench.jar".replace('/', File.separatorChar);
 
 	/**
 	 * Ignored tests and a reason why we ignore them.
@@ -57,6 +58,7 @@ public class WhileyBenchTest {
 	public final static Map<String, String> IGNORED = new HashMap<>();
 	
 	static {
+		IGNORED.put("025_tries\\main", "Long time to run due to add(Trie trie, Transition transition)");
 		IGNORED.put("107_minesweeper\\minesweeper", "Long time to run due to exposeNeighbours");
 		IGNORED.put("106_lander\\whiley\\src\\lander\\ui\\LanderCanvas", "Uses native and package.");
 		IGNORED.put("108_scrabble\\Board", "No functions to test.");

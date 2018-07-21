@@ -147,8 +147,12 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 		ArrayList<Path.Root> roots = new ArrayList<>();
 		roots.add(root);
 		// Add standard library location
-		roots.add(new JarFileRoot(standardLib, registry));
-//		DirectoryRoot stdLib = whileypath.add(new DirectoryRoot("wystd-v0.2.3.jar", registry));
+		if(standardLib.endsWith("jar")) {
+			roots.add(new JarFileRoot(standardLib, registry));
+		}
+		else {
+			roots.add(new DirectoryRoot(standardLib, registry));
+		}
 		// Finally, create the project itself		
 		return new StdProject(roots);
 	}

@@ -76,7 +76,7 @@ Whiley can also pass functions as an argument to other functions.
 			\item Array
 			\item Later on: records (closed), union
 			\item Even later: Recursive types
-			\item Extra (may not be implemented) - references, functionss
+			\item Extra (may not be implemented) - references, functions
 		\end{itemize}
 		\item Testing functions only or also test methods? Methods have side effects.
 		\begin{itemize}
@@ -455,6 +455,37 @@ None
 	\item Take an Whiley as input, produce mutated file as output (Whiley). Consider how many to apply mutations to apply and where they should be applied. Could implement this as a applyMutation function, where you take an arbitrary expression and mutate it. Check the mutated file can be compiled.
 \end{itemize}
 
+
+\section{July 24th 2018}
+\subsection{Present}
+\begin{itemize}
+	\item David Pearce
+\end{itemize}
+
+\subsection{Action points were achieved since the last meeting}
+\begin{itemize}
+	\item Added issues on GitHub to fix Whiley tests
+	\item Fixed more bugs in the tool, and better error reporting when a test fails
+	\item Started looking into mutation testing.
+\end{itemize}
+\subsection{Action points have yet to be achieved since the last meeting}
+None
+\subsection{Action points were agreed to for the next meeting}
+\begin{itemize}
+	\item Generating references - do simple cases first then consider what happens with aliasing.
+	\item Generating functions - should be similar to function optimisation.
+	\item Testing methods
+\end{itemize}
+
+\subsection{Discussion Points}
+\begin{itemize}
+	\item In the report, write about caching values (memorisation). How it affects performance?
+	\item When generating references, a prog
+	\item References should start at a random value (RValue.Cell). The Reference points to RValue.Cell.
+	\item Problem with references is aliasing where two references can point to the same cell.
+	For example, e.g. foo(\&int, \&int, \&int) can have different combinations such as 1, 1, 1 (all point to same cell), 0, 1, 0 (first and last point to same cell) etc.
+	\item Have enough tests for the evaluation. Leave out mutation testing for now as it seems like another side project. If we do decide to do this, then we may do a quick implementation of it (e.g. just replacing operators).
+\end{itemize}
 
 %\section{ 2018}
 %\subsection{Present}

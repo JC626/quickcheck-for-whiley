@@ -95,6 +95,7 @@ public class RandomGenerateTest implements GenerateTest{
 					return new NullGenerator();
 				}
 				Generator gen = getGenerator(var.getType());
+				recursiveType.put(name, recursiveType.get(name) - 1);
 				if(recursiveType.get(name) == -1) {
 					recursiveType.remove(name);
 				}

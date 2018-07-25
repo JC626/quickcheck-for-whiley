@@ -250,6 +250,12 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 			RValue[] returns = null;
 			try {
 				returns = interpreter.execute(name, type, frame, false, false, i == 0, paramValues);
+			}
+			catch(AssertionError e) {
+				System.out.println("Error occurred during execution " + e + ": " + e.getMessage());
+				continue;
+			} 
+			try {
 				// Add the return values into the frame for validation
 				for(int j=0; j < outputParameters.size(); j++) {
 					Decl.Variable parameter = outputParameters.get(j);
@@ -270,6 +276,7 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 			}
 			catch(AssertionError e) {
 				System.out.printf("Failed Input: %s Output: %s%n", Arrays.toString(paramValues), Arrays.toString(returns));
+				System.out.println("Due to error " + e + ": " + e.getMessage());
 			} 
 			catch (ResolutionError e) {
 				// FIXME resolution error

@@ -96,14 +96,18 @@ public class NominalGenerator implements Generator{
 		int i = 1;
 		RValue value = null;
 		while(isValid == RValue.Bool.False) {
+            // TODO might be a good idea to redefine the size of the nominal?
 			// When the generator's limit has reached, reset the generator
 			if(generator.exceedCount()) {
 				internalReset = true;
 				generator.resetCount();
 			}
 			value = generator.generate();
-			// TODO if an assertion error is thrown for the value, skip it?
-			isValid = value.checkInvariant(decl.getVariableDeclaration(), decl.getInvariant(), interpreter);
+			// If an assertion error is thrown for the value, then invariant failed. Skip the value
+			try {
+				isValid = value.checkInvariant(decl.getVariableDeclaration(), decl.getInvariant(), interpreter);
+			}
+			catch(AssertionError e) {}
 			// No valid values
 			if(i > generator.size()) {
 				// TODO Change this to a different exception

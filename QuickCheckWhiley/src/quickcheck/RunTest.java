@@ -107,7 +107,7 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 			Build.Project project = createWhileyProject(whileystd, args[0]);
 			Path.ID id = Trie.fromString(args[1]);
 			TestType testType = TestType.valueOf(args[2]);
-			List<Decl.Function> functions = getFunctions(id, project);
+			List<Decl.FunctionOrMethod> funcMethods = getFunctionsAndMethods(id, project);
 			BigInteger lower = new BigInteger(args[4]);
 			BigInteger upper = new BigInteger(args[5]);
 			// Function optimisation parameters
@@ -122,7 +122,7 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 			catch(NumberFormatException e) {}
 			int numSkipped = 0;
 			Result result = Result.PASSED;
-			for(Decl.Function func : functions) {
+			for(Decl.FunctionOrMethod func : funcMethods) {
 				Result r = executeTest(id, interpreter, func, testType, numTests, lower, upper);
 				if(r == Result.FAILED) {
 					result = r;
@@ -136,7 +136,7 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 			}
 			if(result == Result.SKIPPED) {
 				// Some of the tests were successful
-				if(numSkipped != functions.size()) {
+				if(numSkipped != funcMethods.size()) {
 					return Result.PASSED;
 				}
 			}
@@ -359,13 +359,13 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 	}
 		
 	/**
-	 * Get all functions in the Wyil file 
+	 * Get all functions and methods from the the Wyil file 
 	 * Based on part of wyil.interpreter.Interpreter execute function
 	 * @param id 
 	 * @param project
 	 * @return A list of functions from the Wyil file
 	 */
-	private List<Decl.Function> getFunctions(Path.ID id, Build.Project project) {
+	private List<Decl.FunctionOrMethod> getFunctionsAndMethods(Path.ID id, Build.Project project) {
 		try {
 			// NOTE: need to read WyilFile here as, otherwise, it forces a
 			// rereading of the Whiley source file and a loss of all generation
@@ -378,13 +378,13 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 			// Get declarations from the WhileyFile
 			Tuple<Decl> declarations = wyilFile.getDeclarations();
 			// Get the functions from the WhileyFile
-			List<Decl.Function> functions = new ArrayList<Decl.Function>();
+			List<Decl.FunctionOrMethod> funcMethod = new ArrayList<Decl.FunctionOrMethod>();
 			for(Decl dec : declarations) {
-				if(dec instanceof Decl.Function) {
-					functions.add((Decl.Function) dec);
+				if(dec instanceof Decl.FunctionOrMethod) {
+					funcMethod.add((Decl.FunctionOrMethod) dec);
 				}
 			}
-			return functions;
+			return funcMethod;
 		}
 		catch(IOException e) {
 			throw new RuntimeException(e.getMessage(), e);

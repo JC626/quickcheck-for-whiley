@@ -66,7 +66,7 @@ public class QCInterpreterTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		List<Decl.Function> functions = helper.getFunctionsAndMethods(testName, project);
 		
 		BigInteger lower = BigInteger.valueOf(0);
 		BigInteger upper = BigInteger.valueOf(10);
@@ -107,7 +107,7 @@ public class QCInterpreterTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		List<Decl.Function> functions = helper.getFunctionsAndMethods(testName, project);
 		
 		BigInteger lower = BigInteger.valueOf(0);
 		BigInteger upper = BigInteger.valueOf(10);
@@ -148,7 +148,7 @@ public class QCInterpreterTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		List<Decl.Function> functions = helper.getFunctionsAndMethods(testName, project);
 		
 		BigInteger lower = BigInteger.valueOf(1);
 		BigInteger upper = BigInteger.valueOf(8);
@@ -192,7 +192,7 @@ public class QCInterpreterTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		List<Decl.Function> functions = helper.getFunctionsAndMethods(testName, project);
 		
 		BigInteger lower = BigInteger.valueOf(1);
 		BigInteger upper = BigInteger.valueOf(8);
@@ -238,7 +238,7 @@ public class QCInterpreterTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		List<Decl.Function> functions = helper.getFunctionsAndMethods(testName, project);
 		
 		BigInteger lower = BigInteger.valueOf(1);
 		BigInteger upper = BigInteger.valueOf(8);

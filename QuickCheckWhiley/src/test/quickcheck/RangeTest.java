@@ -142,7 +142,7 @@ public class RangeTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		List<Decl.Function> functions = helper.getFunctionsAndMethods(testName, project);
 
 		BigInteger lower = BigInteger.valueOf(-5);
 		BigInteger upper = BigInteger.valueOf(15);
@@ -176,7 +176,7 @@ public class RangeTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		List<Decl.Function> functions = helper.getFunctionsAndMethods(testName, project);
 
 		BigInteger lower = BigInteger.valueOf(-5);
 		BigInteger upper = BigInteger.valueOf(15);
@@ -216,7 +216,7 @@ public class RangeTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		List<Decl.Function> functions = helper.getFunctionsAndMethods(testName, project);
 
 		BigInteger lower = BigInteger.valueOf(-5);
 		BigInteger upper = BigInteger.valueOf(15);
@@ -250,7 +250,7 @@ public class RangeTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		List<Decl.Function> functions = helper.getFunctionsAndMethods(testName, project);
 
 		BigInteger lower = BigInteger.valueOf(-5);
 		BigInteger upper = BigInteger.valueOf(15);
@@ -284,7 +284,7 @@ public class RangeTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		List<Decl.Function> functions = helper.getFunctionsAndMethods(testName, project);
 
 		BigInteger lower = BigInteger.valueOf(-5);
 		BigInteger upper = BigInteger.valueOf(15);
@@ -319,7 +319,7 @@ public class RangeTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		List<Decl.Function> functions = helper.getFunctionsAndMethods(testName, project);
 
 		BigInteger lower = BigInteger.valueOf(-5);
 		BigInteger upper = BigInteger.valueOf(15);
@@ -346,7 +346,7 @@ public class RangeTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		List<Decl.Function> functions = helper.getFunctionsAndMethods(testName, project);
 
 		BigInteger lower = BigInteger.valueOf(-5);
 		BigInteger upper = BigInteger.valueOf(15);
@@ -381,7 +381,7 @@ public class RangeTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		List<Decl.Function> functions = helper.getFunctionsAndMethods(testName, project);
 
 		BigInteger lower = BigInteger.valueOf(-5);
 		BigInteger upper = BigInteger.valueOf(10);
@@ -422,7 +422,7 @@ public class RangeTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		List<Decl.Function> functions = helper.getFunctionsAndMethods(testName, project);
 
 		BigInteger lower = BigInteger.valueOf(-5);
 		BigInteger upper = BigInteger.valueOf(10);
@@ -463,7 +463,7 @@ public class RangeTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		List<Decl.Function> functions = helper.getFunctionsAndMethods(testName, project);
 
 		BigInteger lower = BigInteger.valueOf(0);
 		BigInteger upper = BigInteger.valueOf(3);
@@ -514,7 +514,7 @@ public class RangeTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		List<Decl.Function> functions = helper.getFunctionsAndMethods(testName, project);
 
 		BigInteger lower = BigInteger.valueOf(-5);
 		BigInteger upper = BigInteger.valueOf(5);
@@ -577,7 +577,7 @@ public class RangeTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		List<Decl.Function> functions = helper.getFunctionsAndMethods(testName, project);
 
 		BigInteger lower = BigInteger.valueOf(-5);
 		BigInteger upper = BigInteger.valueOf(10);
@@ -611,7 +611,7 @@ public class RangeTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		List<Decl.Function> functions = helper.getFunctionsAndMethods(testName, project);
 
 		BigInteger lower = BigInteger.valueOf(-5);
 		BigInteger upper = BigInteger.valueOf(15);
@@ -653,7 +653,7 @@ public class RangeTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		List<Decl.Function> functions = helper.getFunctionsAndMethods(testName, project);
 
 		BigInteger lower = BigInteger.valueOf(-5);
 		BigInteger upper = BigInteger.valueOf(15);
@@ -675,7 +675,7 @@ public class RangeTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		List<Decl.Function> functions = helper.getFunctionsAndMethods(testName, project);
 
 		BigInteger lower = BigInteger.valueOf(-5);
 		BigInteger upper = BigInteger.valueOf(10);
@@ -729,7 +729,7 @@ public class RangeTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		List<Decl.Function> functions = helper.getFunctionsAndMethods(testName, project);
 
 		BigInteger lower = BigInteger.valueOf(-5);
 		BigInteger upper = BigInteger.valueOf(15);
@@ -780,7 +780,7 @@ public class RangeTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		List<Decl.Function> functions = helper.getFunctionsAndMethods(testName, project);
 
 		BigInteger lower = BigInteger.valueOf(-5);
 		BigInteger upper = BigInteger.valueOf(15);
@@ -830,7 +830,7 @@ public class RangeTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		List<Decl.Function> functions = helper.getFunctionsAndMethods(testName, project);
 
 		BigInteger lower = BigInteger.valueOf(-5);
 		BigInteger upper = BigInteger.valueOf(15);
@@ -872,7 +872,7 @@ public class RangeTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		List<Decl.Function> functions = helper.getFunctionsAndMethods(testName, project);
 
 		BigInteger lower = BigInteger.valueOf(-5);
 		BigInteger upper = BigInteger.valueOf(15);
@@ -913,7 +913,7 @@ public class RangeTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		List<Decl.Function> functions = helper.getFunctionsAndMethods(testName, project);
 
 		BigInteger lower = BigInteger.valueOf(-5);
 		BigInteger upper = BigInteger.valueOf(5);
@@ -969,7 +969,7 @@ public class RangeTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		List<Decl.Function> functions = helper.getFunctionsAndMethods(testName, project);
 
 		BigInteger lower = BigInteger.valueOf(-5);
 		BigInteger upper = BigInteger.valueOf(10);
@@ -1027,7 +1027,7 @@ public class RangeTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		List<Decl.Function> functions = helper.getFunctionsAndMethods(testName, project);
 
 		BigInteger lower = BigInteger.valueOf(-5);
 		BigInteger upper = BigInteger.valueOf(10);
@@ -1089,7 +1089,7 @@ public class RangeTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		List<Decl.Function> functions = helper.getFunctionsAndMethods(testName, project);
 
 		BigInteger lower = BigInteger.valueOf(-5);
 		BigInteger upper = BigInteger.valueOf(5);

@@ -145,14 +145,14 @@ public class TestHelper {
 	 * @return Functions in the file
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Decl.Function> getFunctions(String testName, Build.Project project){
+	public List<Decl.Function> getFunctionsAndMethods(String testName, Build.Project project){
 		// Create ID from ROOT constant
 		Path.ID id = Trie.ROOT.append(testName);
 		Content.Registry registry = new wyc.Activator.Registry();
 		RunTest cmd = new RunTest(registry,Logger.NULL);
 		Method met;
 		try {
-			met = cmd.getClass().getDeclaredMethod("getFunctions", Path.ID.class, Build.Project.class);
+			met = cmd.getClass().getDeclaredMethod("getFunctionsAndMethods", Path.ID.class, Build.Project.class);
 			met.setAccessible(true);
 			List<Decl.Function> functions = (List<Function>) met.invoke(cmd, id, project);
 			return functions;

@@ -66,11 +66,11 @@ public class QCInterpreterTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctionsAndMethods(testName, project);
+		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
 		
 		BigInteger lower = BigInteger.valueOf(0);
 		BigInteger upper = BigInteger.valueOf(10);
-		Decl.Function func = functions.get(0);
+		Decl.FunctionOrMethod func = functions.get(0);
 		GenerateTest testGen = new ExhaustiveGenerateTest(func.getParameters(), interpreter, 25, lower, upper);
 		
 		Tuple<Decl.Variable> inputParameters = func.getParameters();
@@ -107,11 +107,11 @@ public class QCInterpreterTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctionsAndMethods(testName, project);
+		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
 		
 		BigInteger lower = BigInteger.valueOf(0);
 		BigInteger upper = BigInteger.valueOf(10);
-		Decl.Function func = functions.get(0);
+		Decl.FunctionOrMethod func = functions.get(0);
 		GenerateTest testGen = new ExhaustiveGenerateTest(func.getParameters(), interpreter, 25, lower, upper);
 		
 		Tuple<Decl.Variable> inputParameters = func.getParameters();
@@ -148,11 +148,11 @@ public class QCInterpreterTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctionsAndMethods(testName, project);
+		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
 		
 		BigInteger lower = BigInteger.valueOf(1);
 		BigInteger upper = BigInteger.valueOf(8);
-		Decl.Function func = functions.get(0);
+		Decl.FunctionOrMethod func = functions.get(0);
 		Tuple<Expr> empty = new Tuple<Expr>();		
 		func.setOperand(4, empty); // Remove precondition
 		func.setOperand(5, empty); // Remove postcondition
@@ -192,11 +192,11 @@ public class QCInterpreterTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctionsAndMethods(testName, project);
+		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
 		
 		BigInteger lower = BigInteger.valueOf(1);
 		BigInteger upper = BigInteger.valueOf(8);
-		Decl.Function func = functions.get(0);
+		Decl.FunctionOrMethod func = functions.get(0);
 		Tuple<Expr> empty = new Tuple<Expr>();		
 		func.setOperand(4, empty); // Remove precondition
 		func.setOperand(5, empty); // Remove postcondition
@@ -238,11 +238,11 @@ public class QCInterpreterTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctionsAndMethods(testName, project);
+		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
 		
 		BigInteger lower = BigInteger.valueOf(1);
 		BigInteger upper = BigInteger.valueOf(8);
-		Decl.Function func = functions.get(0);
+		Decl.FunctionOrMethod func = functions.get(0);
 
 		GenerateTest testGen = new ExhaustiveGenerateTest(func.getParameters(), interpreter, 25, lower, upper);
 		

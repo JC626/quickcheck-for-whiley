@@ -434,7 +434,7 @@ public class GenerateExhaustiveTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctionsAndMethods(testName, project);
+		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
 		
 		BigInteger lower = BigInteger.valueOf(-2);
 		BigInteger upper = BigInteger.valueOf(2);
@@ -456,7 +456,7 @@ public class GenerateExhaustiveTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctionsAndMethods(testName, project);
+		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
 		
 		BigInteger lower = BigInteger.valueOf(1);
 		BigInteger upper = BigInteger.valueOf(10);
@@ -478,7 +478,7 @@ public class GenerateExhaustiveTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctionsAndMethods(testName, project);
+		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
 		BigInteger lower = BigInteger.valueOf(0);
 		BigInteger upper = BigInteger.valueOf(3);
 		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0).getParameters(), interpreter, 90, lower, upper);
@@ -506,7 +506,7 @@ public class GenerateExhaustiveTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctionsAndMethods(testName, project);
+		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
 		
 		BigInteger lower = BigInteger.valueOf(-3);
 		BigInteger upper = BigInteger.valueOf(3);
@@ -541,7 +541,7 @@ public class GenerateExhaustiveTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctionsAndMethods(testName, project);
+		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
 		
 		BigInteger lower = BigInteger.valueOf(0);
 		BigInteger upper = BigInteger.valueOf(6);
@@ -573,7 +573,7 @@ public class GenerateExhaustiveTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctionsAndMethods(testName, project);
+		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
 		
 		BigInteger lower = BigInteger.valueOf(0);
 		BigInteger upper = BigInteger.valueOf(6);
@@ -606,7 +606,7 @@ public class GenerateExhaustiveTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctionsAndMethods(testName, project);
+		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
 		
 		BigInteger lower = BigInteger.valueOf(0);
 		BigInteger upper = BigInteger.valueOf(3);
@@ -648,7 +648,7 @@ public class GenerateExhaustiveTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctionsAndMethods(testName, project);
+		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
 		
 		BigInteger lower = BigInteger.valueOf(0);
 		BigInteger upper = BigInteger.valueOf(3);
@@ -859,7 +859,7 @@ public class GenerateExhaustiveTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctionsAndMethods(testName, project);
+		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
 		
 		BigInteger lower = BigInteger.valueOf(0);
 		BigInteger upper = BigInteger.valueOf(2);	
@@ -929,7 +929,7 @@ public class GenerateExhaustiveTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctionsAndMethods(testName, project);
+		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
 		
 		BigInteger lower = BigInteger.valueOf(0);
 		BigInteger upper = BigInteger.valueOf(2);	
@@ -1004,7 +1004,7 @@ public class GenerateExhaustiveTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctionsAndMethods(testName, project);
+		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
 
 		BigInteger lower = BigInteger.valueOf(-5);
 		BigInteger upper = BigInteger.valueOf(5);
@@ -1034,11 +1034,11 @@ public class GenerateExhaustiveTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctionsAndMethods(testName, project);
+		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
 		
 		BigInteger lower = BigInteger.valueOf(-5);
 		BigInteger upper = BigInteger.valueOf(5);
-		Decl.Function func = functions.get(0);
+		Decl.FunctionOrMethod func = functions.get(0);
 
 		GenerateTest testGen = new ExhaustiveGenerateTest(func.getParameters(), interpreter, 25, lower, upper);
 		

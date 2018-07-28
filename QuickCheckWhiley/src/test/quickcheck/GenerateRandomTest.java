@@ -319,7 +319,7 @@ public class GenerateRandomTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctionsAndMethods(testName, project);
+		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
 		
 		BigInteger lower = BigInteger.valueOf(-10);
 		BigInteger upper = BigInteger.valueOf(10);
@@ -340,7 +340,7 @@ public class GenerateRandomTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctionsAndMethods(testName, project);
+		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
 		
 		BigInteger lower = BigInteger.valueOf(-10);
 		BigInteger upper = BigInteger.valueOf(10);
@@ -361,7 +361,7 @@ public class GenerateRandomTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctionsAndMethods(testName, project);
+		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
 		
 		BigInteger lower = BigInteger.valueOf(-10);
 		BigInteger upper = BigInteger.valueOf(10);
@@ -386,7 +386,7 @@ public class GenerateRandomTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctionsAndMethods(testName, project);
+		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
 
 		BigInteger lower = BigInteger.valueOf(-3);
 		BigInteger upper = BigInteger.valueOf(3);
@@ -419,7 +419,7 @@ public class GenerateRandomTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctionsAndMethods(testName, project);
+		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
 		
 		BigInteger lower = BigInteger.valueOf(-10);
 		BigInteger upper = BigInteger.valueOf(10);	
@@ -447,7 +447,7 @@ public class GenerateRandomTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctionsAndMethods(testName, project);
+		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
 		
 		BigInteger lower = BigInteger.valueOf(-10);
 		BigInteger upper = BigInteger.valueOf(10);	
@@ -476,7 +476,7 @@ public class GenerateRandomTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctionsAndMethods(testName, project);
+		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
 		
 		BigInteger lower = BigInteger.valueOf(-10);
 		BigInteger upper = BigInteger.valueOf(10);	
@@ -512,7 +512,7 @@ public class GenerateRandomTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctionsAndMethods(testName, project);
+		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
 		
 		BigInteger lower = BigInteger.valueOf(-10);
 		BigInteger upper = BigInteger.valueOf(10);	
@@ -669,7 +669,7 @@ public class GenerateRandomTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctionsAndMethods(testName, project);
+		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
 		
 		BigInteger lower = BigInteger.valueOf(-10);
 		BigInteger upper = BigInteger.valueOf(10);	
@@ -696,7 +696,7 @@ public class GenerateRandomTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctionsAndMethods(testName, project);
+		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
 		
 		BigInteger lower = BigInteger.valueOf(-10);
 		BigInteger upper = BigInteger.valueOf(10);	
@@ -712,4 +712,5 @@ public class GenerateRandomTest {
 		assertTrue(second instanceof RValue.Null || second instanceof RValue.Record);
 	}
 	
+	// TODO test reference generation
 }

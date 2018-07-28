@@ -145,7 +145,7 @@ public class TestHelper {
 	 * @return Functions in the file
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Decl.Function> getFunctionsAndMethods(String testName, Build.Project project){
+	public List<Decl.FunctionOrMethod> getFunctionsAndMethods(String testName, Build.Project project){
 		// Create ID from ROOT constant
 		Path.ID id = Trie.ROOT.append(testName);
 		Content.Registry registry = new wyc.Activator.Registry();
@@ -154,8 +154,8 @@ public class TestHelper {
 		try {
 			met = cmd.getClass().getDeclaredMethod("getFunctionsAndMethods", Path.ID.class, Build.Project.class);
 			met.setAccessible(true);
-			List<Decl.Function> functions = (List<Function>) met.invoke(cmd, id, project);
-			return functions;
+			List<Decl.FunctionOrMethod> funcMethod = (List<Decl.FunctionOrMethod>) met.invoke(cmd, id, project);
+			return funcMethod;
 		} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			e.printStackTrace();
 			fail("Could not get the functions");

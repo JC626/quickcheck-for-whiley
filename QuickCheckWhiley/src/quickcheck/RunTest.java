@@ -336,6 +336,14 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 						break;
 					}
 				}
+				else if(t instanceof Type.Nominal) {
+					Type.Nominal nom = (Type.Nominal) t;
+					boolean valid = checkInvariant(interpreter, nom, returnVal);
+					if(valid) {
+						isValid = true;
+						break;
+					}
+				}
 			}
 			if(!isValid) {
 				return false;

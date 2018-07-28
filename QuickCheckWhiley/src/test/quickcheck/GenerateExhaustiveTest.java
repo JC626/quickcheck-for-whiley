@@ -1128,7 +1128,7 @@ public class GenerateExhaustiveTest {
 		
 	/**
 	 * Test when there are two references generated
-	 * which both have the 
+	 * which have different types.
 	 * 
 	 * @throws IOException
 	 * @throws IntegerRangeException 

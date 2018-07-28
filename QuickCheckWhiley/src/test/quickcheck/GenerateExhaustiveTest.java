@@ -27,6 +27,7 @@ import wyil.interpreter.ConcreteSemantics;
 import wyil.interpreter.Interpreter;
 import wyil.interpreter.ConcreteSemantics.RValue;
 import wyil.interpreter.ConcreteSemantics.RValue.Record;
+import wyil.interpreter.ConcreteSemantics.RValue.Reference;
 import wyil.interpreter.Interpreter.CallStack;
 
 /**
@@ -1066,4 +1067,95 @@ public class GenerateExhaustiveTest {
 			assertEquals(semantics.Int(BigInteger.valueOf(i)), returns[0]);
 		}		
 	}
+	
+	/**
+	 * Test when there is only one reference generated
+	 * 
+	 * @throws IOException
+	 * @throws IntegerRangeException 
+	 */
+	@Test
+	public void testReference1() throws IOException, IntegerRangeException {
+		String testName = "reference_1";
+		helper.compile(testName);
+		Build.Project project = helper.createProject();
+		Interpreter interpreter = new QCInterpreter(project, System.out);
+		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
+
+		BigInteger lower = BigInteger.valueOf(-5);
+		BigInteger upper = BigInteger.valueOf(5);
+		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0).getParameters(), interpreter, 25, lower, upper);
+		for(int i=-5; i < 5; i++) {
+			RValue[] generatedParameters = testGen.generateParameters();
+			assertEquals(1, generatedParameters.length);
+			assertTrue(generatedParameters[0] instanceof RValue.Reference);
+			RValue.Reference ref = (Reference) generatedParameters[0];
+			assertEquals(semantics.Int(BigInteger.valueOf(i)), ref.deref().read());
+		}
+	}
+	
+	/**
+	 * Test when there are two references generated
+	 * which both have the same type
+	 * 
+	 * @throws IOException
+	 * @throws IntegerRangeException 
+	 */
+	@Test
+	public void testReference2() throws IOException, IntegerRangeException {
+		String testName = "reference_2";
+		helper.compile(testName);
+		Build.Project project = helper.createProject();
+		Interpreter interpreter = new QCInterpreter(project, System.out);
+		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
+
+		BigInteger lower = BigInteger.valueOf(-5);
+		BigInteger upper = BigInteger.valueOf(5);
+		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0).getParameters(), interpreter, 25, lower, upper);
+		for(int i=-5; i < 5; i++) {
+			for(int j=-5; j < 5; j++) {
+				RValue[] generatedParameters = testGen.generateParameters();
+				assertEquals(2, generatedParameters.length);
+				assertTrue(generatedParameters[0] instanceof RValue.Reference);
+				assertTrue(generatedParameters[1] instanceof RValue.Reference);
+				RValue.Reference refOne = (Reference) generatedParameters[0];
+				RValue.Reference refTwo = (Reference) generatedParameters[1];
+				assertEquals(semantics.Int(BigInteger.valueOf(i)), refOne.deref().read());
+				assertEquals(semantics.Int(BigInteger.valueOf(j)), refTwo.deref().read());
+			}
+		}
+	}
+		
+	/**
+	 * Test when there are two references generated
+	 * which both have the 
+	 * 
+	 * @throws IOException
+	 * @throws IntegerRangeException 
+	 */
+	@Test
+	public void testReference3() throws IOException, IntegerRangeException {
+		String testName = "reference_3";
+		helper.compile(testName);
+		Build.Project project = helper.createProject();
+		Interpreter interpreter = new QCInterpreter(project, System.out);
+		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
+
+		BigInteger lower = BigInteger.valueOf(-5);
+		BigInteger upper = BigInteger.valueOf(5);
+		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0).getParameters(), interpreter, 25, lower, upper);
+		for(int i=-5; i < 5; i++) {
+			for(int j=0; j < 2; j++) {
+				RValue[] generatedParameters = testGen.generateParameters();
+				assertEquals(2, generatedParameters.length);
+				assertTrue(generatedParameters[0] instanceof RValue.Reference);
+				assertTrue(generatedParameters[1] instanceof RValue.Reference);
+				RValue.Reference refOne = (Reference) generatedParameters[0];
+				RValue.Reference refTwo = (Reference) generatedParameters[1];
+				assertEquals(semantics.Int(BigInteger.valueOf(i)), refOne.deref().read());
+				assertEquals(semantics.Bool(j==0), refTwo.deref().read());
+			}
+		}
+	}
+		
 }

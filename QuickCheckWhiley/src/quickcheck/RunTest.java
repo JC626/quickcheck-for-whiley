@@ -262,8 +262,7 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 					Type paramType = parameter.getType();
 					boolean valid = checkInvariant(interpreter, paramType, returns[j]);
 					if(!valid) {
-						System.out.println("Post condition for " + parameter  + " failed");
-						throw new AssertionError("");
+						throw new AssertionError("Type constraints for " + parameter  + " failed");
 					}
 					frame.putLocal(parameter.getName(), returns[j]);
 				}				
@@ -275,8 +274,8 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 //				}
 			}
 			catch(AssertionError e) {
-				System.out.printf("Failed Input: %s Output: %s%n", Arrays.toString(paramValues), Arrays.toString(returns));
-				System.out.println("Due to error " + e + ": " + e.getMessage());
+				System.out.printf("Failed Input: %s%nFailed Output: %s%n", Arrays.toString(paramValues), Arrays.toString(returns));
+				System.out.println("Due to error " + e);
 			} 
 			catch (ResolutionError e) {
 				// FIXME resolution error

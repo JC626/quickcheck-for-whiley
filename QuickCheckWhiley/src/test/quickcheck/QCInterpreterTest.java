@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.util.List;
 
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import quickcheck.QCInterpreter;
@@ -44,16 +43,6 @@ public class QCInterpreterTest {
 	
 	private static final ConcreteSemantics semantics = new ConcreteSemantics();
 	private final static TestHelper helper = new TestHelper(TEST_DIR);
-	/**
-	 * Base interpreter used for the tests that do not require reading from a test file
-	 */
-	private static Interpreter baseInterpreter;
-	
-	@BeforeClass
-	public static void setupClass() throws IOException {
-		Build.Project project = helper.createProject();
-		baseInterpreter = new QCInterpreter(project, System.out);
-	}	
 
 	/**
 	 * Test calling a function within another function

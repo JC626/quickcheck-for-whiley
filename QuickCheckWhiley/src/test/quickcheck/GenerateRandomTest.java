@@ -14,7 +14,6 @@ import org.junit.Test;
 
 import quickcheck.QCInterpreter;
 import quickcheck.exception.IntegerRangeException;
-import quickcheck.generator.ExhaustiveGenerateTest;
 import quickcheck.generator.GenerateTest;
 import quickcheck.generator.RandomGenerateTest;
 import test.utils.TestHelper;

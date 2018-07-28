@@ -16,7 +16,6 @@ import wybs.util.AbstractCompilationUnit.Name;
 import wybs.util.AbstractCompilationUnit.Tuple;
 import wyc.lang.WhileyFile;
 import wyc.lang.WhileyFile.Decl;
-import wyc.lang.WhileyFile.Decl.FunctionOrMethod;
 import wyc.lang.WhileyFile.Decl.Variable;
 import wyil.interpreter.Interpreter;
 import wyil.interpreter.ConcreteSemantics.RValue;
@@ -188,6 +187,11 @@ public class ExhaustiveGenerateTest implements GenerateTest{
 				}
 			}
 			return new UnionGenerator(generators, TestType.EXHAUSTIVE, numTests);
+		}
+		else if(paramType instanceof WhileyFile.Type.Reference) {
+			WhileyFile.Type.Reference ref = (WhileyFile.Type.Reference) paramType;
+			Generator gen = getGenerator(ref.getElement());
+			return new ReferenceGenerator(gen);
 		}
 		assert false;
 		return null;

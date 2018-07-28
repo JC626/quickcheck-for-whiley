@@ -165,6 +165,11 @@ public class RandomGenerateTest implements GenerateTest{
 			}
 			return new UnionGenerator(generators, TestType.RANDOM, numTests);
 		}
+		else if(paramType instanceof WhileyFile.Type.Reference) {
+			WhileyFile.Type.Reference ref = (WhileyFile.Type.Reference) paramType;
+			Generator gen = getGenerator(ref.getElement());
+			return new ReferenceGenerator(gen);
+		}
 		assert false;
 		return null;
 	}

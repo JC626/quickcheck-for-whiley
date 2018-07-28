@@ -25,6 +25,7 @@ import wyc.lang.WhileyFile.Decl.Function;
 import wyil.interpreter.ConcreteSemantics.RValue;
 import wyil.interpreter.ConcreteSemantics.RValue.Array;
 import wyil.interpreter.ConcreteSemantics.RValue.Record;
+import wyil.interpreter.ConcreteSemantics.RValue.Reference;
 import wyil.interpreter.Interpreter;
 
 /**
@@ -319,7 +320,7 @@ public class GenerateRandomTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
 		
 		BigInteger lower = BigInteger.valueOf(-10);
 		BigInteger upper = BigInteger.valueOf(10);
@@ -340,7 +341,7 @@ public class GenerateRandomTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
 		
 		BigInteger lower = BigInteger.valueOf(-10);
 		BigInteger upper = BigInteger.valueOf(10);
@@ -361,7 +362,7 @@ public class GenerateRandomTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
 		
 		BigInteger lower = BigInteger.valueOf(-10);
 		BigInteger upper = BigInteger.valueOf(10);
@@ -386,7 +387,7 @@ public class GenerateRandomTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
 
 		BigInteger lower = BigInteger.valueOf(-3);
 		BigInteger upper = BigInteger.valueOf(3);
@@ -419,7 +420,7 @@ public class GenerateRandomTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
 		
 		BigInteger lower = BigInteger.valueOf(-10);
 		BigInteger upper = BigInteger.valueOf(10);	
@@ -447,7 +448,7 @@ public class GenerateRandomTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
 		
 		BigInteger lower = BigInteger.valueOf(-10);
 		BigInteger upper = BigInteger.valueOf(10);	
@@ -476,7 +477,7 @@ public class GenerateRandomTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
 		
 		BigInteger lower = BigInteger.valueOf(-10);
 		BigInteger upper = BigInteger.valueOf(10);	
@@ -512,7 +513,7 @@ public class GenerateRandomTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
 		
 		BigInteger lower = BigInteger.valueOf(-10);
 		BigInteger upper = BigInteger.valueOf(10);	
@@ -669,7 +670,7 @@ public class GenerateRandomTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
 		
 		BigInteger lower = BigInteger.valueOf(-10);
 		BigInteger upper = BigInteger.valueOf(10);	
@@ -696,7 +697,7 @@ public class GenerateRandomTest {
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
 		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.Function> functions = helper.getFunctions(testName, project);
+		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
 		
 		BigInteger lower = BigInteger.valueOf(-10);
 		BigInteger upper = BigInteger.valueOf(10);	
@@ -710,6 +711,86 @@ public class GenerateRandomTest {
 		assertTrue(first instanceof RValue.Int);
 		RValue second = record.read(new Identifier("n"));
 		assertTrue(second instanceof RValue.Null || second instanceof RValue.Record);
+	}
+	
+	/**
+	 * Test when there is only one reference generated
+	 * 
+	 * @throws IOException
+	 * @throws IntegerRangeException 
+	 */
+	@Test
+	public void testReference1() throws IOException, IntegerRangeException {
+		String testName = "reference_1";
+		helper.compile(testName);
+		Build.Project project = helper.createProject();
+		Interpreter interpreter = new QCInterpreter(project, System.out);
+		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
+
+		BigInteger lower = BigInteger.valueOf(-5);
+		BigInteger upper = BigInteger.valueOf(5);
+		GenerateTest testGen = new RandomGenerateTest(functions.get(0).getParameters(), interpreter, 25, lower, upper);
+		RValue[] generatedParameters = testGen.generateParameters();
+		assertEquals(1, generatedParameters.length);
+		assertTrue(generatedParameters[0] instanceof RValue.Reference);
+		RValue.Reference refOne = (Reference) generatedParameters[0];
+		assertTrue(refOne.deref().read() instanceof RValue.Int);
+	}
+	
+	/**
+	 * Test when there are two references generated
+	 * which both have the same type
+	 * 
+	 * @throws IOException
+	 * @throws IntegerRangeException 
+	 */
+	@Test
+	public void testReference2() throws IOException, IntegerRangeException {
+		String testName = "reference_2";
+		helper.compile(testName);
+		Build.Project project = helper.createProject();
+		Interpreter interpreter = new QCInterpreter(project, System.out);
+		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
+
+		BigInteger lower = BigInteger.valueOf(-5);
+		BigInteger upper = BigInteger.valueOf(5);
+		GenerateTest testGen = new RandomGenerateTest(functions.get(0).getParameters(), interpreter, 25, lower, upper);
+		RValue[] generatedParameters = testGen.generateParameters();
+		assertEquals(2, generatedParameters.length);
+		assertTrue(generatedParameters[0] instanceof RValue.Reference);
+		assertTrue(generatedParameters[1] instanceof RValue.Reference);
+		RValue.Reference refOne = (Reference) generatedParameters[0];
+		RValue.Reference refTwo = (Reference) generatedParameters[1];
+		assertTrue(refOne.deref().read() instanceof RValue.Int);
+		assertTrue((refTwo.deref().read() instanceof RValue.Int));
+	}
+		
+	/**
+	 * Test when there are two references generated
+	 * which have different types.
+	 * 
+	 * @throws IOException
+	 * @throws IntegerRangeException 
+	 */
+	@Test
+	public void testReference3() throws IOException, IntegerRangeException {
+		String testName = "reference_3";
+		helper.compile(testName);
+		Build.Project project = helper.createProject();
+		Interpreter interpreter = new QCInterpreter(project, System.out);
+		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
+
+		BigInteger lower = BigInteger.valueOf(-5);
+		BigInteger upper = BigInteger.valueOf(5);
+		GenerateTest testGen = new RandomGenerateTest(functions.get(0).getParameters(), interpreter, 25, lower, upper);
+		RValue[] generatedParameters = testGen.generateParameters();
+		assertEquals(2, generatedParameters.length);
+		assertTrue(generatedParameters[0] instanceof RValue.Reference);
+		assertTrue(generatedParameters[1] instanceof RValue.Reference);
+		RValue.Reference refOne = (Reference) generatedParameters[0];
+		RValue.Reference refTwo = (Reference) generatedParameters[1];
+		assertTrue(refOne.deref().read() instanceof RValue.Int);
+		assertTrue((refTwo.deref().read() instanceof RValue.Bool));
 	}
 	
 }

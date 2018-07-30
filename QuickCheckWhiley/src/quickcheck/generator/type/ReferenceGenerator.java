@@ -50,5 +50,31 @@ public class ReferenceGenerator implements Generator{
 	@Override
 	public boolean exceedCount() {
 		return generator.exceedCount();
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((generator == null) ? 0 : generator.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ReferenceGenerator other = (ReferenceGenerator) obj;
+		if (generator == null) {
+			if (other.generator != null)
+				return false;
+		} else if (!generator.equals(other.generator))
+			return false;
+		return true;
 	}	
+	
 }

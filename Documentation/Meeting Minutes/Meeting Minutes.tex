@@ -479,12 +479,42 @@ None
 
 \subsection{Discussion Points}
 \begin{itemize}
-	\item In the report, write about caching values (memorisation). How it affects performance?
-	\item When generating references, a prog
+	\item In the report, write about caching values (memoisation). How it affects performance?
 	\item References should start at a random value (RValue.Cell). The Reference points to RValue.Cell.
 	\item Problem with references is aliasing where two references can point to the same cell.
 	For example, e.g. foo(\&int, \&int, \&int) can have different combinations such as 1, 1, 1 (all point to same cell), 0, 1, 0 (first and last point to same cell) etc.
 	\item Have enough tests for the evaluation. Leave out mutation testing for now as it seems like another side project. If we do decide to do this, then we may do a quick implementation of it (e.g. just replacing operators).
+\end{itemize}
+
+\section{July 31st 2018}
+\subsection{Present}
+\begin{itemize}
+	\item David Pearce
+\end{itemize}
+
+\subsection{Action points were achieved since the last meeting}
+\begin{itemize}
+	\item Can now test on methods
+	\item Reference generation without aliasing
+	\item Function generation - just generates a return value randomly using the return parameters. Similar to generating a record.
+\end{itemize}
+\subsection{Action points have yet to be achieved since the last meeting}
+None
+\subsection{Action points were agreed to for the next meeting}
+\begin{itemize}
+	\item Record statistics from method calls.
+	\item Want to try and optimise performance of the tool, by reducing the number of tests if all combinations have been exhausted. Only for functions as the methods could alter global variables, therefore, the number of method calls matter.
+	\item Add extra command line arguments for memoisation.
+	\item Try and prepare structure for the final report.
+\end{itemize}
+
+\subsection{Discussion Points}
+\begin{itemize}
+	\item Next week, will start the final report. Could take parts of the progress report and put it in the final report
+	\item Have a lot of material for evaluation, the statistics from testing and the issues raised on GitHub.
+	\item Need to check if the return type for the function generated follows the type constraints. E.g. function(int) -> (nat) where the nat needs to be an int \textgreater= 0.
+	\item For the functions generated, their return calls could also be memosised? (Hmmm... the function always returns the same value, so  calling a generated function shouldn't be costly?). Since this is not implemented, this can be added as a future extension in the report.
+	\item Also in the report, can talk about why aliasing was not done for reference generation and how it could have been approached.
 \end{itemize}
 
 %\section{ 2018}

@@ -203,7 +203,7 @@ public class QCInterpreter extends Interpreter {
 								}
 								frame.putLocal(parameter.getName(), returns[j]);
 							}
-							recursiveInvariantFunctions.add(decl.getName());
+							recursiveInvariantFunctions.add(funcName);
 							this.checkInvariants(frame, postconditions);
 						}
 						catch(AssertionError e) {
@@ -291,7 +291,9 @@ public class QCInterpreter extends Interpreter {
 					throw new IllegalArgumentException("no function or method body found: " + nid + ", " + sig);
 				}
 				// Execute the method or function body
-				recursiveInvariantFunctions.add(fm.getName());
+				if(funcOptimisation) {
+					recursiveInvariantFunctions.add(fm.getName());
+				}
 				executeBlock(fm.getBody(), frame, new FunctionOrMethodScope(fm));
 				// Extra the return values
 				RValue[] returns = packReturns(frame,fmp);
@@ -337,7 +339,7 @@ public class QCInterpreter extends Interpreter {
 	 *            The supplied arguments
 	 * @return
 	 */
-	public RValue[] execute(NameID nid, Type.Callable sig, CallStack frame, boolean checkPrecondition, boolean checkPostcondition, boolean firstTest, RValue... args) {
+	public RValue[] execute(NameID nid, Type.Callable sig, CallStack frame, boolean checkPrecondition, boolean checkPostcondition, RValue... args) {
 		// First, find the enclosing WyilFile
 		try {
 			// FIXME: NameID needs to be deprecated
@@ -377,9 +379,7 @@ public class QCInterpreter extends Interpreter {
 				}
 				// Execute the method or function body
 				if(funcOptimisation) {
-					if(firstTest) {
-						this.recursiveInvariantFunctions = new HashSet<Identifier>();
-					}
+					this.recursiveInvariantFunctions = new HashSet<Identifier>();
 					recursiveInvariantFunctions.add(fm.getName());
 				}
 				executeBlock(fm.getBody(), frame, new FunctionOrMethodScope(fm));

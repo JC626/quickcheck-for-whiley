@@ -251,7 +251,7 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 			// Checks the postcondition when it is executed
 			RValue[] returns = null;
 			try {
-				returns = interpreter.execute(name, type, frame, false, false, i == 0, paramValues);
+				returns = interpreter.execute(name, type, frame, false, false, paramValues);
 			}
 			catch(AssertionError e) {
 				System.out.println("Error occurred during execution " + e + ": " + e.getMessage());

@@ -54,11 +54,12 @@ public class QCInterpreterTest {
 		String testName = "function_op1";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
-		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
-		
 		BigInteger lower = BigInteger.valueOf(0);
 		BigInteger upper = BigInteger.valueOf(10);
+		int numGen = 5;
+		Interpreter interpreter = new QCInterpreter(project, System.out, lower, upper, true, numGen);
+		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
+
 		Decl.FunctionOrMethod func = functions.get(0);
 		GenerateTest testGen = new ExhaustiveGenerateTest(func.getParameters(), interpreter, 25, lower, upper);
 		
@@ -81,7 +82,7 @@ public class QCInterpreterTest {
 			else {
 				assertEquals(semantics.Int(BigInteger.valueOf(ans)), returns[0]);
 			}
-		}		
+		}				
 	}
 	
 	
@@ -95,11 +96,12 @@ public class QCInterpreterTest {
 		String testName = "function_op2";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
-		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
-		
 		BigInteger lower = BigInteger.valueOf(0);
 		BigInteger upper = BigInteger.valueOf(10);
+		int numGen = 5;
+		Interpreter interpreter = new QCInterpreter(project, System.out, lower, upper, true, numGen);
+		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
+		
 		Decl.FunctionOrMethod func = functions.get(0);
 		GenerateTest testGen = new ExhaustiveGenerateTest(func.getParameters(), interpreter, 25, lower, upper);
 		
@@ -136,11 +138,12 @@ public class QCInterpreterTest {
 		String testName = "function_op_recursive1";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
-		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
-		
 		BigInteger lower = BigInteger.valueOf(1);
 		BigInteger upper = BigInteger.valueOf(8);
+		int numGen = 5;
+		Interpreter interpreter = new QCInterpreter(project, System.out, lower, upper, true, numGen);
+		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
+		
 		Decl.FunctionOrMethod func = functions.get(0);
 		Tuple<Expr> empty = new Tuple<Expr>();		
 		func.setOperand(4, empty); // Remove precondition
@@ -180,11 +183,12 @@ public class QCInterpreterTest {
 		String testName = "function_op_recursive2";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
-		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
-		
 		BigInteger lower = BigInteger.valueOf(1);
 		BigInteger upper = BigInteger.valueOf(8);
+		int numGen = 5;
+		Interpreter interpreter = new QCInterpreter(project, System.out, lower, upper, true, numGen);
+		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
+		
 		Decl.FunctionOrMethod func = functions.get(0);
 		Tuple<Expr> empty = new Tuple<Expr>();		
 		func.setOperand(4, empty); // Remove precondition
@@ -226,13 +230,13 @@ public class QCInterpreterTest {
 		String testName = "function_op_recursive_multi";
 		helper.compile(testName);
 		Build.Project project = helper.createProject();
-		Interpreter interpreter = new QCInterpreter(project, System.out);
-		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
-		
 		BigInteger lower = BigInteger.valueOf(1);
 		BigInteger upper = BigInteger.valueOf(8);
+		int numGen = 5;
+		Interpreter interpreter = new QCInterpreter(project, System.out, lower, upper, true, numGen);
+		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
+	
 		Decl.FunctionOrMethod func = functions.get(0);
-
 		GenerateTest testGen = new ExhaustiveGenerateTest(func.getParameters(), interpreter, 25, lower, upper);
 		
 		Tuple<Decl.Variable> inputParameters = func.getParameters();

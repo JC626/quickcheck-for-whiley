@@ -1157,5 +1157,195 @@ public class GenerateExhaustiveTest {
 			}
 		}
 	}
+	
+	/**
+	 * Test when a function returns an int
+	 * 
+	 * @throws IOException
+	 * @throws IntegerRangeException 
+	 */
+	@Test
+	public void testFunction1() throws IOException, IntegerRangeException {
+		String testName = "function_1";
+		helper.compile(testName);
+		Build.Project project = helper.createProject();
+		Interpreter interpreter = new QCInterpreter(project, System.out);
+		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
 		
+		BigInteger lower = BigInteger.valueOf(-5);
+		BigInteger upper = BigInteger.valueOf(5);
+		Decl.FunctionOrMethod func = functions.get(0);
+		GenerateTest testGen = new ExhaustiveGenerateTest(func.getParameters(), interpreter, 25, lower, upper);
+		
+		Tuple<Decl.Variable> inputParameters = func.getParameters();
+		Path.ID id = Trie.fromString(testName);
+		NameID funcName = new NameID(id, func.getName().get());
+		Type.Callable type = functions.get(0).getType();
+
+		Identifier paramName = inputParameters.get(0).getName();
+		for(int i=-5; i < 5; i++) {
+			CallStack frame = interpreter.new CallStack();
+			RValue[] paramValues = testGen.generateParameters();
+			frame.putLocal(paramName, paramValues[0]);
+
+			RValue[] returns = interpreter.execute(funcName, type, frame, paramValues);
+			assertEquals(semantics.Int(BigInteger.valueOf(i)), returns[0]);
+		}		
+	}
+	
+	/**
+	 * Test when a function returns two types,
+	 * an int and a boolean
+	 * 
+	 * @throws IOException
+	 * @throws IntegerRangeException 
+	 */
+	@Test
+	public void testFunction2() throws IOException, IntegerRangeException {
+		String testName = "function_2";
+		helper.compile(testName);
+		Build.Project project = helper.createProject();
+		Interpreter interpreter = new QCInterpreter(project, System.out);
+		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
+		
+		BigInteger lower = BigInteger.valueOf(-5);
+		BigInteger upper = BigInteger.valueOf(5);
+		Decl.FunctionOrMethod func = functions.get(0);
+		GenerateTest testGen = new ExhaustiveGenerateTest(func.getParameters(), interpreter, 25, lower, upper);
+		
+		Tuple<Decl.Variable> inputParameters = func.getParameters();
+		Path.ID id = Trie.fromString(testName);
+		NameID funcName = new NameID(id, func.getName().get());
+		Type.Callable type = functions.get(0).getType();
+
+		Identifier paramName = inputParameters.get(0).getName();
+		for(int i=-5; i < 5; i++) {
+			for(int j=0; j < 2; j++) {
+				CallStack frame = interpreter.new CallStack();
+				RValue[] paramValues = testGen.generateParameters();
+				frame.putLocal(paramName, paramValues[0]);
+	
+				RValue[] returns = interpreter.execute(funcName, type, frame, paramValues);
+				assertEquals(semantics.Int(BigInteger.valueOf(i)), returns[0]);
+				assertEquals(semantics.Bool(j==0), returns[1]);
+			}
+		}	
+	}
+	
+	/**
+	 * Test when a function returns a nominal
+	 * with a constraint
+	 * 
+	 * @throws IOException
+	 * @throws IntegerRangeException 
+	 */
+	@Test
+	public void testFunction3() throws IOException, IntegerRangeException {
+		String testName = "function_3";
+		helper.compile(testName);
+		Build.Project project = helper.createProject();
+		Interpreter interpreter = new QCInterpreter(project, System.out);
+		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
+		
+		BigInteger lower = BigInteger.valueOf(-5);
+		BigInteger upper = BigInteger.valueOf(5);
+		Decl.FunctionOrMethod func = functions.get(0);
+		GenerateTest testGen = new ExhaustiveGenerateTest(func.getParameters(), interpreter, 25, lower, upper);
+		
+		Tuple<Decl.Variable> inputParameters = func.getParameters();
+		Path.ID id = Trie.fromString(testName);
+		NameID funcName = new NameID(id, func.getName().get());
+		Type.Callable type = functions.get(0).getType();
+
+		Identifier paramName = inputParameters.get(0).getName();
+		for(int i=0; i < 5; i++) {
+			CallStack frame = interpreter.new CallStack();
+			RValue[] paramValues = testGen.generateParameters();
+			frame.putLocal(paramName, paramValues[0]);
+
+			RValue[] returns = interpreter.execute(funcName, type, frame, paramValues);
+			assertEquals(semantics.Int(BigInteger.valueOf(i)), returns[0]);
+		}		
+	}
+	
+	/**
+	 * Test when a function returns a record
+	 * 
+	 * @throws IOException
+	 * @throws IntegerRangeException 
+	 */
+	@Test
+	public void testFunction4() throws IOException, IntegerRangeException {
+		String testName = "function_4";
+		helper.compile(testName);
+		Build.Project project = helper.createProject();
+		Interpreter interpreter = new QCInterpreter(project, System.out);
+		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
+		
+		BigInteger lower = BigInteger.valueOf(-5);
+		BigInteger upper = BigInteger.valueOf(5);
+		Decl.FunctionOrMethod func = functions.get(0);
+		GenerateTest testGen = new ExhaustiveGenerateTest(func.getParameters(), interpreter, 25, lower, upper);
+		
+		Tuple<Decl.Variable> inputParameters = func.getParameters();
+		Path.ID id = Trie.fromString(testName);
+		NameID funcName = new NameID(id, func.getName().get());
+		Type.Callable type = functions.get(0).getType();
+
+		Identifier paramName = inputParameters.get(0).getName();
+		for(int i=-5; i < 5; i++) {
+			for(int j=-5; j < 5; j++) {
+				CallStack frame = interpreter.new CallStack();
+				RValue[] paramValues = testGen.generateParameters();
+				frame.putLocal(paramName, paramValues[0]);
+				RValue[] returns = interpreter.execute(funcName, type, frame, paramValues);
+	
+				RValue.Record record = (Record) returns[0];
+				RValue first = record.read(new Identifier("x"));
+				assertEquals(semantics.Int(BigInteger.valueOf(i)), first);
+				RValue second = record.read(new Identifier("y"));
+				assertEquals(semantics.Int(BigInteger.valueOf(j)), second);
+			}
+		}		
+	}
+	
+	/**
+	 * Test when a function returns a union
+	 * 
+	 * @throws IOException
+	 * @throws IntegerRangeException 
+	 */
+	@Test
+	public void testFunction5() throws IOException, IntegerRangeException {
+		String testName = "function_5";
+		helper.compile(testName);
+		Build.Project project = helper.createProject();
+		Interpreter interpreter = new QCInterpreter(project, System.out);
+		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
+		
+		BigInteger lower = BigInteger.valueOf(-5);
+		BigInteger upper = BigInteger.valueOf(5);
+		Decl.FunctionOrMethod func = functions.get(0);
+		GenerateTest testGen = new ExhaustiveGenerateTest(func.getParameters(), interpreter, 25, lower, upper);
+		
+		Tuple<Decl.Variable> inputParameters = func.getParameters();
+		Path.ID id = Trie.fromString(testName);
+		NameID funcName = new NameID(id, func.getName().get());
+		Type.Callable type = functions.get(0).getType();
+
+		Identifier paramName = inputParameters.get(0).getName();
+		for(int i=-6; i < 5; i++) {
+			CallStack frame = interpreter.new CallStack();
+			RValue[] paramValues = testGen.generateParameters();
+			frame.putLocal(paramName, paramValues[0]);
+
+			RValue[] returns = interpreter.execute(funcName, type, frame, paramValues);
+			if(i == -6) {
+				assertEquals(semantics.Null(), returns[0]);
+			}
+			else {
+				assertEquals(semantics.Int(BigInteger.valueOf(i)), returns[0]);
+			}
+		}		
+	}
 }

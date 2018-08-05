@@ -193,6 +193,14 @@ public class ExhaustiveGenerateTest implements GenerateTest{
 			Generator gen = getGenerator(ref.getElement());
 			return new ReferenceGenerator(gen);
 		}
+		else if(paramType instanceof WhileyFile.Type.Function) {
+			WhileyFile.Type.Function func = (WhileyFile.Type.Function) paramType;
+			List<Generator> generators = new ArrayList<Generator>();
+			for(WhileyFile.Type type : func.getReturns()) {
+				generators.add(getGenerator(type));
+			}
+			return new FunctionGenerator(generators, func, interpreter, TestType.EXHAUSTIVE, numTests);
+		}
 		assert false;
 		return null;
 	}

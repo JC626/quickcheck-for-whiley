@@ -52,7 +52,9 @@ public class QCInterpreter extends Interpreter {
 	/** Number of values generated for function optimisation */
 	public static final int NUM_GEN_FUNC_OPT = 5;
 	public static final boolean FUNCTION_OPTIMISATION = false;
-	
+	/** Whether function outputs are cached when the same function input is given*/
+	public static final boolean FUNCTION_MEMOISATION = false;
+
 	/**
 	 * The build project provides access to compiled WyIL files.
 	 */
@@ -89,8 +91,10 @@ public class QCInterpreter extends Interpreter {
 	private final int numRandomFuncValGen;
 	/**Flag whether function optimisation should be executed or not*/
 	private final boolean funcOptimisation;
+	/**Flag whether function memoisation/caching should be applied or not*/
+	private final boolean funcMemoisation;
 	
-	public QCInterpreter(Build.Project project, PrintStream debug, BigInteger lowerLimit, BigInteger upperLimit, boolean funcOpt,  int numFuncOpGen) {
+	public QCInterpreter(Build.Project project, PrintStream debug, BigInteger lowerLimit, BigInteger upperLimit, boolean funcMemo,  boolean funcOpt, int numFuncOpGen) {
 		super(project, debug);
 		this.project = project;
 		this.debug = debug;
@@ -108,6 +112,7 @@ public class QCInterpreter extends Interpreter {
 			this.numRandomFuncValGen = numFuncOpGen;
 			this.funcOptimisation = funcOpt;
 		}
+		this.funcMemoisation = funcMemo;
 	}
 	
 	public QCInterpreter(Build.Project project, PrintStream debug) {
@@ -122,6 +127,7 @@ public class QCInterpreter extends Interpreter {
 		this.upperLimit = BigInteger.valueOf(RunTest.INT_UPPER_LIMIT);
 		this.numRandomFuncValGen = NUM_GEN_FUNC_OPT;
 		this.funcOptimisation = FUNCTION_OPTIMISATION;
+		this.funcMemoisation = FUNCTION_MEMOISATION;
 	}
 
 	private enum Status {
@@ -155,17 +161,22 @@ public class QCInterpreter extends Interpreter {
 				Decl.Callable.class);
 		// Evaluate argument expressions
 		RValue[] arguments = executeExpressions(expr.getOperands(), frame);
-		// If there is a recursive invariant, then execute the function normally
-		// instead of generating the value.
-		Identifier funcName = decl.getName();
-		if(funcOptimisation && !(decl instanceof Decl.Property)) {
+		/*
+		 * If there is a recursive invariant, then execute the function normally
+		 * instead of generating the value.
+		 * Also do not optimise if the declaration is a property.
+		 */
+		if(!(decl instanceof Decl.Property)) {
+			Identifier funcName = decl.getName();
 			Decl.FunctionOrMethod fun = ((Decl.FunctionOrMethod) decl);
-			Map<List<RValue>, RValue[]> functionIO = functionParameters.getOrDefault(fun, new HashMap<List<RValue>, RValue[]>());
-			List<RValue> argList = Arrays.asList(arguments);
-			if(functionIO.containsKey(argList)){
-				return functionIO.get(argList);
+			if(funcMemoisation) {
+				Map<List<RValue>, RValue[]> functionIO = functionParameters.getOrDefault(fun, new HashMap<List<RValue>, RValue[]>());
+				List<RValue> argList = Arrays.asList(arguments);
+				if(functionIO.containsKey(argList)){
+					return functionIO.get(argList);
+				}
 			}
-			else if(!recursiveInvariantFunctions.contains(funcName)){
+			else if(funcOptimisation && !recursiveInvariantFunctions.contains(funcName)) {
 				// Every function should return the same output for the same input
 				Tuple<Expr> postconditions = fun.getEnsures();
 				Tuple<Decl.Variable> outputParameters = fun.getReturns();
@@ -193,20 +204,19 @@ public class QCInterpreter extends Interpreter {
 								}
 								frame.putLocal(parameter.getName(), returns[j]);
 							}
-							if(funcOptimisation) {
-								recursiveInvariantFunctions.add(decl.getName());
-							}
+							recursiveInvariantFunctions.add(decl.getName());
 							this.checkInvariants(frame, postconditions);
-//							System.out.println("HERE");
 						}
 						catch(AssertionError e) {
-//							System.out.println("FAIL");
 							isValid = false;
 						}
 						if(isValid) {
-//							System.out.println("Returned " + Arrays.toString(returns));
-							functionIO.put(argList, returns);
-							functionParameters.put(fun, functionIO);
+							if(funcMemoisation) {
+								Map<List<RValue>, RValue[]> functionIO = functionParameters.getOrDefault(fun, new HashMap<List<RValue>, RValue[]>());
+								List<RValue> argList = Arrays.asList(arguments);
+								functionIO.put(argList, returns);
+								functionParameters.put(fun, functionIO);
+							}
 							return returns;
 						}
 						// Need to reset frame to remove the old inputs
@@ -216,8 +226,9 @@ public class QCInterpreter extends Interpreter {
 				catch (IntegerRangeException e1) {
 					// Execute test normally then
 				}
-			}
-		}		
+				
+			}		
+		}
 		// Invoke the function or method in question
 		return execute(decl.getQualifiedName().toNameID(), decl.getType(), frame, arguments);
 	}

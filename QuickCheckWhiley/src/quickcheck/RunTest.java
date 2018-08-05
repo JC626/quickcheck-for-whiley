@@ -114,7 +114,7 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 			boolean funcOpt = args[6].equals(Boolean.toString(true));
 			int numFuncOpGen = Integer.parseInt(args[7]);
 			// Generate tests for each function
-			QCInterpreter interpreter = new QCInterpreter(project, System.out, lower, upper, funcOpt, numFuncOpGen);
+			QCInterpreter interpreter = new QCInterpreter(project, System.out, lower, upper, false, funcOpt, numFuncOpGen);
 			int numTests = RunTest.NUM_TESTS;
 			try {
 				numTests = Integer.parseInt(args[3]);

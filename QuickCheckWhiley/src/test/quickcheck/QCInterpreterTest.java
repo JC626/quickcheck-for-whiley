@@ -57,7 +57,7 @@ public class QCInterpreterTest {
 		BigInteger lower = BigInteger.valueOf(0);
 		BigInteger upper = BigInteger.valueOf(10);
 		int numGen = 5;
-		Interpreter interpreter = new QCInterpreter(project, System.out, lower, upper, false, true, numGen);
+		QCInterpreter interpreter = new QCInterpreter(project, System.out, lower, upper, false, true, numGen);
 		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
 
 		Decl.FunctionOrMethod func = functions.get(0);
@@ -74,7 +74,7 @@ public class QCInterpreterTest {
 			RValue[] paramValues = testGen.generateParameters();
 			frame.putLocal(paramName, paramValues[0]);
 
-			RValue[] returns = interpreter.execute(funcName, type, frame, paramValues);
+			RValue[] returns = interpreter.execute(funcName, type, frame, true, true, paramValues);
 			int ans = i*i + 1;
 			if(i == 10) {
 				assertEquals(semantics.Int(BigInteger.valueOf(1)), returns[0]);
@@ -99,7 +99,7 @@ public class QCInterpreterTest {
 		BigInteger lower = BigInteger.valueOf(0);
 		BigInteger upper = BigInteger.valueOf(10);
 		int numGen = 5;
-		Interpreter interpreter = new QCInterpreter(project, System.out, lower, upper, false, true, numGen);
+		QCInterpreter interpreter = new QCInterpreter(project, System.out, lower, upper, false, true, numGen);
 		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
 		
 		Decl.FunctionOrMethod func = functions.get(0);
@@ -116,7 +116,7 @@ public class QCInterpreterTest {
 			RValue[] paramValues = testGen.generateParameters();
 			frame.putLocal(paramName, paramValues[0]);
 
-			RValue[] returns = interpreter.execute(funcName, type, frame, paramValues);
+			RValue[] returns = interpreter.execute(funcName, type, frame, true, true, paramValues);
 			int ans = i*2;
 			if(i == 10) {
 				assertEquals(semantics.Int(BigInteger.valueOf(0)), returns[0]);
@@ -141,7 +141,7 @@ public class QCInterpreterTest {
 		BigInteger lower = BigInteger.valueOf(1);
 		BigInteger upper = BigInteger.valueOf(8);
 		int numGen = 5;
-		Interpreter interpreter = new QCInterpreter(project, System.out, lower, upper, false, true, numGen);
+		QCInterpreter interpreter = new QCInterpreter(project, System.out, lower, upper, false, true, numGen);
 		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
 		
 		Decl.FunctionOrMethod func = functions.get(0);
@@ -162,7 +162,7 @@ public class QCInterpreterTest {
 			RValue[] paramValues = testGen.generateParameters();
 			frame.putLocal(paramName, paramValues[0]);
 
-			RValue[] returns = interpreter.execute(funcName, type, frame, paramValues);
+			RValue[] returns = interpreter.execute(funcName, type, frame, true, true, paramValues);
 			if(i == 8) {
 				assertEquals(semantics.Int(BigInteger.valueOf(answers[0])), returns[0]);
 			}
@@ -186,7 +186,7 @@ public class QCInterpreterTest {
 		BigInteger lower = BigInteger.valueOf(1);
 		BigInteger upper = BigInteger.valueOf(8);
 		int numGen = 5;
-		Interpreter interpreter = new QCInterpreter(project, System.out, lower, upper, false, true, numGen);
+		QCInterpreter interpreter = new QCInterpreter(project, System.out, lower, upper, false, true, numGen);
 		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
 		
 		Decl.FunctionOrMethod func = functions.get(0);
@@ -208,7 +208,7 @@ public class QCInterpreterTest {
 			RValue[] paramValues = testGen.generateParameters();
 			frame.putLocal(paramName, paramValues[0]);
 
-			RValue[] returns = interpreter.execute(funcName, type, frame, paramValues);
+			RValue[] returns = interpreter.execute(funcName, type, frame, true, true, paramValues);
 			if(i == 8) {
 				assertEquals(semantics.Int(BigInteger.valueOf(1)), returns[0]);
 			}
@@ -233,7 +233,7 @@ public class QCInterpreterTest {
 		BigInteger lower = BigInteger.valueOf(1);
 		BigInteger upper = BigInteger.valueOf(8);
 		int numGen = 5;
-		Interpreter interpreter = new QCInterpreter(project, System.out, lower, upper, false, true, numGen);
+		QCInterpreter interpreter = new QCInterpreter(project, System.out, lower, upper, false, true, numGen);
 		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
 	
 		Decl.FunctionOrMethod func = functions.get(0);
@@ -252,7 +252,7 @@ public class QCInterpreterTest {
 			RValue[] paramValues = testGen.generateParameters();
 			frame.putLocal(paramName, paramValues[0]);
 
-			RValue[] returns = interpreter.execute(funcName, type, frame, paramValues);
+			RValue[] returns = interpreter.execute(funcName, type, frame, true, true, paramValues);
 			if(i == 8) {
 				assertEquals(semantics.Int(BigInteger.valueOf(1)), returns[0]);
 			}

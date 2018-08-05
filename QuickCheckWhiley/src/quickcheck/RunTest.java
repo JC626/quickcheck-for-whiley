@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import quickcheck.exception.CannotGenerateException;
 import quickcheck.exception.IntegerRangeException;
 import quickcheck.generator.ExhaustiveGenerateTest;
 import quickcheck.generator.GenerateTest;
@@ -240,15 +241,21 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 				completedAll = true;
 				break;
 			}
-			RValue[] paramValues = testGen.generateParameters();
+			RValue[] paramValues = null;
 			CallStack frame = interpreter.new CallStack();
 			// Check the precondition
 			try {
+				paramValues = testGen.generateParameters();
+				
 				for(int j=0; j < inputParameters.size(); j++) {
 					Decl.Variable parameter = inputParameters.get(j);
 					frame.putLocal(parameter.getName(), paramValues[j]);
 				}
 				interpreter.checkInvariants(frame, preconditions);
+			}
+			catch(CannotGenerateException e) {
+				System.out.println(e);
+				return Result.ERRORS;
 			}
 			catch(AssertionError e){
 				System.out.println("Pre-condition failed on input: " + Arrays.toString(paramValues));

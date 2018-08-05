@@ -1,6 +1,7 @@
 package quickcheck.generator.type;
 
 import quickcheck.constraints.RangeHelper;
+import quickcheck.exception.CannotGenerateException;
 import quickcheck.exception.IntegerRangeException;
 import wybs.util.AbstractCompilationUnit.Identifier;
 import wybs.util.AbstractCompilationUnit.Tuple;
@@ -90,6 +91,7 @@ public class NominalGenerator implements Generator{
 	/**
 	 * Internally generate the next value possible.
 	 * @return
+	 * @throws CannotGenerateException 
 	 */
 	private RValue generateNext() {
 		RValue.Bool isValid = RValue.Bool.False;
@@ -111,7 +113,7 @@ public class NominalGenerator implements Generator{
 			// No valid values
 			if(i > generator.size()) {
 				// TODO Change this to a different exception
-				throw new Error("No possible values can be generated for the nominal type: " + decl.getName());
+				throw new CannotGenerateException("No possible values can be generated for the nominal type: " + decl.getName());
 			}
 			i++;
 		}

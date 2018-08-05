@@ -29,7 +29,6 @@ import static wyil.interpreter.ConcreteSemantics.RValue;
 
 import wyc.lang.WhileyFile;
 import wyc.lang.WhileyFile.Decl;
-import wyc.lang.WhileyFile.Decl.FunctionOrMethod;
 import wyfs.lang.Path;
 import wyc.lang.WhileyFile.Expr;
 import wyc.lang.WhileyFile.Type;
@@ -52,7 +51,9 @@ public class QCInterpreter extends Interpreter {
 	/** Number of values generated for function optimisation */
 	public static final int NUM_GEN_FUNC_OPT = 5;
 	public static final boolean FUNCTION_OPTIMISATION = false;
-	
+	/** Whether function outputs are cached when the same function input is given*/
+	public static final boolean FUNCTION_MEMOISATION = false;
+
 	/**
 	 * The build project provides access to compiled WyIL files.
 	 */
@@ -76,7 +77,7 @@ public class QCInterpreter extends Interpreter {
 	private final PrintStream debug;
 	
 	/** A map from function name to a map of inputs to outputs */ 
-	private final Map<FunctionOrMethod, Map<List<RValue>, RValue[]>> functionParameters;
+	private final Map<Decl.Callable, Map<List<RValue>, RValue[]>> functionParameters;
 	
 	/** Store a list of functions that are called recursively */
 	private Set<Identifier> recursiveInvariantFunctions;
@@ -89,14 +90,16 @@ public class QCInterpreter extends Interpreter {
 	private final int numRandomFuncValGen;
 	/**Flag whether function optimisation should be executed or not*/
 	private final boolean funcOptimisation;
+	/**Flag whether function memoisation/caching should be applied or not*/
+	private final boolean funcMemoisation;
 	
-	public QCInterpreter(Build.Project project, PrintStream debug, BigInteger lowerLimit, BigInteger upperLimit, boolean funcOpt,  int numFuncOpGen) {
+	public QCInterpreter(Build.Project project, PrintStream debug, BigInteger lowerLimit, BigInteger upperLimit, boolean funcMemo,  boolean funcOpt, int numFuncOpGen) {
 		super(project, debug);
 		this.project = project;
 		this.debug = debug;
 		this.typeSystem = new TypeSystem(project);
 		this.semantics = new ConcreteSemantics();
-		this.functionParameters = new HashMap<FunctionOrMethod, Map<List<RValue>, RValue[]>>();
+		this.functionParameters = new HashMap<Decl.Callable, Map<List<RValue>, RValue[]>>();
 		this.recursiveInvariantFunctions = new HashSet<Identifier>();
 		this.lowerLimit = lowerLimit;
 		this.upperLimit = upperLimit;
@@ -108,6 +111,7 @@ public class QCInterpreter extends Interpreter {
 			this.numRandomFuncValGen = numFuncOpGen;
 			this.funcOptimisation = funcOpt;
 		}
+		this.funcMemoisation = funcMemo;
 	}
 	
 	public QCInterpreter(Build.Project project, PrintStream debug) {
@@ -116,12 +120,13 @@ public class QCInterpreter extends Interpreter {
 		this.debug = debug;
 		this.typeSystem = new TypeSystem(project);
 		this.semantics = new ConcreteSemantics();
-		this.functionParameters = new HashMap<FunctionOrMethod, Map<List<RValue>, RValue[]>>();
+		this.functionParameters = new HashMap<Decl.Callable, Map<List<RValue>, RValue[]>>();
 		this.recursiveInvariantFunctions = new HashSet<Identifier>();
 		this.lowerLimit = BigInteger.valueOf(RunTest.INT_LOWER_LIMIT);
 		this.upperLimit = BigInteger.valueOf(RunTest.INT_UPPER_LIMIT);
 		this.numRandomFuncValGen = NUM_GEN_FUNC_OPT;
 		this.funcOptimisation = FUNCTION_OPTIMISATION;
+		this.funcMemoisation = FUNCTION_MEMOISATION;
 	}
 
 	private enum Status {
@@ -155,17 +160,22 @@ public class QCInterpreter extends Interpreter {
 				Decl.Callable.class);
 		// Evaluate argument expressions
 		RValue[] arguments = executeExpressions(expr.getOperands(), frame);
-		// If there is a recursive invariant, then execute the function normally
-		// instead of generating the value.
-		Identifier funcName = decl.getName();
-		if(funcOptimisation && !(decl instanceof Decl.Property)) {
-			Decl.FunctionOrMethod fun = ((Decl.FunctionOrMethod) decl);
-			Map<List<RValue>, RValue[]> functionIO = functionParameters.getOrDefault(fun, new HashMap<List<RValue>, RValue[]>());
+		/*
+		 * If there is a recursive invariant, then execute the function normally
+		 * instead of generating the value.
+		 * Also do not optimise if the declaration is a property.
+		 */
+		if(funcMemoisation) {
+			Map<List<RValue>, RValue[]> functionIO = functionParameters.getOrDefault(decl, new HashMap<List<RValue>, RValue[]>());
 			List<RValue> argList = Arrays.asList(arguments);
 			if(functionIO.containsKey(argList)){
 				return functionIO.get(argList);
 			}
-			else if(!recursiveInvariantFunctions.contains(funcName)){
+		}
+		if(funcOptimisation && !(decl instanceof Decl.Property)) {
+			Identifier funcName = decl.getName();
+			Decl.FunctionOrMethod fun = ((Decl.FunctionOrMethod) decl);
+			if(!recursiveInvariantFunctions.contains(funcName)) {
 				// Every function should return the same output for the same input
 				Tuple<Expr> postconditions = fun.getEnsures();
 				Tuple<Decl.Variable> outputParameters = fun.getReturns();
@@ -193,20 +203,19 @@ public class QCInterpreter extends Interpreter {
 								}
 								frame.putLocal(parameter.getName(), returns[j]);
 							}
-							if(funcOptimisation) {
-								recursiveInvariantFunctions.add(decl.getName());
-							}
+							recursiveInvariantFunctions.add(funcName);
 							this.checkInvariants(frame, postconditions);
-//							System.out.println("HERE");
 						}
 						catch(AssertionError e) {
-//							System.out.println("FAIL");
 							isValid = false;
 						}
 						if(isValid) {
-//							System.out.println("Returned " + Arrays.toString(returns));
-							functionIO.put(argList, returns);
-							functionParameters.put(fun, functionIO);
+							if(funcMemoisation) {
+								Map<List<RValue>, RValue[]> functionIO = functionParameters.getOrDefault(fun, new HashMap<List<RValue>, RValue[]>());
+								List<RValue> argList = Arrays.asList(arguments);
+								functionIO.put(argList, returns);
+								functionParameters.put(fun, functionIO);
+							}
 							return returns;
 						}
 						// Need to reset frame to remove the old inputs
@@ -217,7 +226,16 @@ public class QCInterpreter extends Interpreter {
 					// Execute test normally then
 				}
 			}
-		}		
+		}	
+		// Need to cache the input and corresponding output
+		if(funcMemoisation) {
+			Map<List<RValue>, RValue[]> functionIO = functionParameters.getOrDefault(decl, new HashMap<List<RValue>, RValue[]>());
+			List<RValue> argList = Arrays.asList(arguments);
+			RValue[] returns = execute(decl.getQualifiedName().toNameID(), decl.getType(), frame, arguments);
+			functionIO.put(argList, returns);
+			functionParameters.put(decl, functionIO);
+			return returns;
+		}
 		// Invoke the function or method in question
 		return execute(decl.getQualifiedName().toNameID(), decl.getType(), frame, arguments);
 	}
@@ -273,7 +291,9 @@ public class QCInterpreter extends Interpreter {
 					throw new IllegalArgumentException("no function or method body found: " + nid + ", " + sig);
 				}
 				// Execute the method or function body
-				recursiveInvariantFunctions.add(fm.getName());
+				if(funcOptimisation) {
+					recursiveInvariantFunctions.add(fm.getName());
+				}
 				executeBlock(fm.getBody(), frame, new FunctionOrMethodScope(fm));
 				// Extra the return values
 				RValue[] returns = packReturns(frame,fmp);
@@ -319,7 +339,7 @@ public class QCInterpreter extends Interpreter {
 	 *            The supplied arguments
 	 * @return
 	 */
-	public RValue[] execute(NameID nid, Type.Callable sig, CallStack frame, boolean checkPrecondition, boolean checkPostcondition, boolean firstTest, RValue... args) {
+	public RValue[] execute(NameID nid, Type.Callable sig, CallStack frame, boolean checkPrecondition, boolean checkPostcondition, RValue... args) {
 		// First, find the enclosing WyilFile
 		try {
 			// FIXME: NameID needs to be deprecated
@@ -359,9 +379,7 @@ public class QCInterpreter extends Interpreter {
 				}
 				// Execute the method or function body
 				if(funcOptimisation) {
-					if(firstTest) {
-						this.recursiveInvariantFunctions = new HashSet<Identifier>();
-					}
+					this.recursiveInvariantFunctions = new HashSet<Identifier>();
 					recursiveInvariantFunctions.add(fm.getName());
 				}
 				executeBlock(fm.getBody(), frame, new FunctionOrMethodScope(fm));

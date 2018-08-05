@@ -72,8 +72,9 @@ public class QuickCheck {
 		modified[4] = args.length >= 4 ? args[3] : Integer.toString(RunTest.INT_LOWER_LIMIT);
 		modified[5] = args.length >= 5 ? args[4] : Integer.toString(RunTest.INT_UPPER_LIMIT);
 		// Function optimisation flags
-		modified[6] = args.length >= 6 ? args[5] : Boolean.toString(QCInterpreter.FUNCTION_OPTIMISATION);
-		modified[7] = args.length >= 7 ? args[6] : Integer.toString(QCInterpreter.NUM_GEN_FUNC_OPT);
+		modified[6] = args.length >= 6 ? args[5] : Boolean.toString(QCInterpreter.FUNCTION_MEMOISATION);
+		modified[7] = args.length >= 7 ? args[6] : Boolean.toString(QCInterpreter.FUNCTION_OPTIMISATION);
+		modified[8] = args.length >= 8 ? args[7] : Integer.toString(QCInterpreter.NUM_GEN_FUNC_OPT);
 		return modified;
 	}
 	

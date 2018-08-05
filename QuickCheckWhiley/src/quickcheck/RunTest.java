@@ -299,10 +299,11 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 		// Overall test statistics
 		if(isFunction && completedAll) {
 			System.out.println("Tested all possible combinations");
+			int numActualTest = numPassed + numFailed + numSkipped;
 			if(numFailed == 0) {
 				if(numPassed > 0) {
 					System.out.printf("Ok: %d passed  (%.2f %%), %d skipped (%.2f %%), ran %d tests %n",
-							numPassed, (double) 100 * numPassed/numTest, numSkipped, (double) 100 * numSkipped/numTest, numTest);
+							numPassed, (double) 100 * numPassed/numActualTest, numSkipped, (double) 100 * numSkipped/numActualTest, numActualTest);
 					return Result.PASSED;
 				}
 				else {
@@ -311,7 +312,7 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 				}
 			}
 			System.out.printf("Failed: %d passed (%.2f %%), %d failed (%.2f %%), %d skipped (%.2f %%), ran %d tests%n",
-					numPassed, (double) 100 * numPassed/numTest, numFailed, (double) 100 * numFailed/numTest, numSkipped, (double) 100 * numSkipped/numTest, numTest);
+					numPassed, (double) 100 * numPassed/numActualTest, numFailed, (double) 100 * numFailed/numActualTest, numSkipped, (double) 100 * numSkipped/numActualTest, numActualTest);
 			return Result.FAILED;
 		}
 		else if(numPassed + numSkipped == numTest) {

@@ -165,9 +165,11 @@ public class QCInterpreter extends Interpreter {
 		 * instead of generating the value.
 		 * Also do not optimise if the declaration is a property.
 		 */
+		Map<List<RValue>, RValue[]> functionIO = null;
+		List<RValue> argList = null;
 		if(funcMemoisation) {
-			Map<List<RValue>, RValue[]> functionIO = functionParameters.getOrDefault(decl, new HashMap<List<RValue>, RValue[]>());
-			List<RValue> argList = Arrays.asList(arguments);
+			functionIO = functionParameters.getOrDefault(decl, new HashMap<List<RValue>, RValue[]>());
+			argList = Arrays.asList(arguments);
 			if(functionIO.containsKey(argList)){
 				return functionIO.get(argList);
 			}
@@ -211,8 +213,6 @@ public class QCInterpreter extends Interpreter {
 						}
 						if(isValid) {
 							if(funcMemoisation) {
-								Map<List<RValue>, RValue[]> functionIO = functionParameters.getOrDefault(fun, new HashMap<List<RValue>, RValue[]>());
-								List<RValue> argList = Arrays.asList(arguments);
 								functionIO.put(argList, returns);
 								functionParameters.put(fun, functionIO);
 							}
@@ -229,8 +229,6 @@ public class QCInterpreter extends Interpreter {
 		}	
 		// Need to cache the input and corresponding output
 		if(funcMemoisation) {
-			Map<List<RValue>, RValue[]> functionIO = functionParameters.getOrDefault(decl, new HashMap<List<RValue>, RValue[]>());
-			List<RValue> argList = Arrays.asList(arguments);
 			RValue[] returns = execute(decl.getQualifiedName().toNameID(), decl.getType(), frame, arguments);
 			functionIO.put(argList, returns);
 			functionParameters.put(decl, functionIO);

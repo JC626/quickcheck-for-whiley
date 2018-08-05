@@ -26,7 +26,6 @@ import wyfs.util.Trie;
 import wyil.interpreter.ConcreteSemantics;
 import wyil.interpreter.Interpreter;
 import wyil.interpreter.ConcreteSemantics.RValue;
-import wyil.interpreter.ConcreteSemantics.RValue.Lambda;
 import wyil.interpreter.ConcreteSemantics.RValue.Record;
 import wyil.interpreter.ConcreteSemantics.RValue.Reference;
 import wyil.interpreter.Interpreter.CallStack;
@@ -1310,7 +1309,6 @@ public class GenerateExhaustiveTest {
 		}		
 	}
 	
-	// TODO test functions returning a union
 	/**
 	 * Test when a function returns a union
 	 * 

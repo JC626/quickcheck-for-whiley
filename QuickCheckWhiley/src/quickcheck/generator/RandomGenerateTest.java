@@ -191,5 +191,11 @@ public class RandomGenerateTest implements GenerateTest{
 		}
 		return parameters;
 	}
+
+	@Override
+	public boolean exceedSize() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 }

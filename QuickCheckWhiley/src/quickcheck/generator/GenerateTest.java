@@ -16,4 +16,11 @@ public interface GenerateTest {
 	 * @return The parameters for the function.
 	 */
 	public RValue[] generateParameters();
+	
+	/**
+	 * Check if all the possible combinations
+	 * have been generated or not.
+	 * @return Whether all combinations have been generated.
+	 */
+	public boolean exceedSize();
 }

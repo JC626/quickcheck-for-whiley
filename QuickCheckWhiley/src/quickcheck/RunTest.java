@@ -228,9 +228,18 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 //		dec.setOperand(4, empty); // Remove precondition
 //		dec.setOperand(5, empty); // Remove postcondition
 		
+		boolean isFunction = dec instanceof Decl.Function;
+		boolean completedAll = false;
 		int numSkipped = 0;
 		int numPassed = 0;
+		int numFailed = 0;
 		for(int i=0; i < numTest; i++) {
+			// Stop execution if all possible combinations have been generated 
+			// for the function
+			if(isFunction && testGen.exceedSize()) {
+				completedAll = true;
+				break;
+			}
 			RValue[] paramValues = testGen.generateParameters();
 			CallStack frame = interpreter.new CallStack();
 			// Check the precondition
@@ -255,6 +264,7 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 			}
 			catch(AssertionError e) {
 				System.out.println("Error occurred during execution " + e + ": " + e.getMessage());
+				numFailed++;
 				continue;
 			} 
 			try {
@@ -278,6 +288,7 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 			catch(AssertionError e) {
 				System.out.printf("Failed Input: %s%nFailed Output: %s%n", Arrays.toString(paramValues), Arrays.toString(returns));
 				System.out.println("Due to error " + e);
+				numFailed++;
 			} 
 			catch (ResolutionError e) {
 				// FIXME resolution error
@@ -286,7 +297,25 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 			} 
 		}
 		// Overall test statistics
-		if(numPassed + numSkipped == numTest) {
+		if(isFunction && completedAll) {
+			System.out.println("Tested all possible combinations");
+			if(numFailed == 0) {
+				if(numPassed > 0) {
+					System.out.printf("Ok: %d passed  (%.2f %%), %d skipped (%.2f %%), ran %d tests %n",
+							numPassed, (double) 100 * numPassed/numTest, numSkipped, (double) 100 * numSkipped/numTest, numTest);
+					return Result.PASSED;
+				}
+				else {
+					System.out.println("All tests skipped!");
+					return Result.SKIPPED;
+				}
+			}
+			System.out.printf("Failed: %d passed (%.2f %%), %d failed (%.2f %%), %d skipped (%.2f %%), ran %d tests%n",
+					numPassed, (double) 100 * numPassed/numTest, numFailed, (double) 100 * numFailed/numTest, numSkipped, (double) 100 * numSkipped/numTest, numTest);
+			return Result.FAILED;
+		}
+		else if(numPassed + numSkipped == numTest) {
+			assert numFailed == 0;
 			System.out.printf("Ok: %d passed  (%.2f %%), %d skipped (%.2f %%), ran %d tests %n",
 					numPassed, (double) 100 * numPassed/numTest, numSkipped, (double) 100 * numSkipped/numTest, numTest);
 			return Result.PASSED;
@@ -296,7 +325,6 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 			return Result.SKIPPED;
 		}
 		else {
-			int numFailed = numTest - numPassed;
 			System.out.printf("Failed: %d passed (%.2f %%), %d failed (%.2f %%), %d skipped (%.2f %%), ran %d tests%n",
 					numPassed, (double) 100 * numPassed/numTest, numFailed, (double) 100 * numFailed/numTest, numSkipped, (double) 100 * numSkipped/numTest, numTest);
 			return Result.FAILED;

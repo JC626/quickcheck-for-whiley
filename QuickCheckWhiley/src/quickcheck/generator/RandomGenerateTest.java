@@ -2,9 +2,11 @@ package quickcheck.generator;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Stack;
 
 import quickcheck.RunTest;
@@ -31,16 +33,22 @@ public class RandomGenerateTest implements GenerateTest{
 	/** A list of generators, each corresponding to a parameter in the function/method */
 	private List<Generator> parameterGenerators;
 	
+	/**Combinations for random test generation*/
+	private List<Integer> testCombos;
+	
 	private Interpreter interpreter;
 	
 	private BigInteger lowerLimit;
 	private BigInteger upperLimit;
+
 	
+	private BigInteger totalCombinations;
+	private int numTested = 1;
     private int numTests;
+    
+	/** All the user created types that are recursive structures */
 	private Map<Name, Integer> recursiveType = new HashMap<Name, Integer>();
 		
-    
-    // Allows variables for the generators to be passed in instead of 
     public RandomGenerateTest(Tuple<Decl.Variable> valuesToGenerate, Interpreter interpreter, int numTests, BigInteger lowerLimit, BigInteger upperLimit) throws IntegerRangeException {
 		super();
         this.numTests = numTests;
@@ -52,6 +60,41 @@ public class RandomGenerateTest implements GenerateTest{
 		for(Variable var : valuesToGenerate) {
 			WhileyFile.Type paramType = var.getType();
 			this.parameterGenerators.add(getGenerator(paramType));
+		}
+		// Number of combinations
+		if(parameterGenerators.isEmpty()) {
+			this.totalCombinations = BigInteger.valueOf(0);
+		}
+		else {
+			int size = 1;
+			for(Generator gen : parameterGenerators) {
+				size *= gen.size();
+			}
+			this.totalCombinations = BigInteger.valueOf(size);
+		}
+		// Random inputs use Knuth's Algorithm S
+		Random randomiser = new Random(); 
+		testCombos = new ArrayList<Integer>();
+		int nextCombo = 0;
+		int selected = 0; 
+		while(selected < numTests) {
+			double uniform = randomiser.nextDouble();
+			if((this.totalCombinations.intValue() - nextCombo)*uniform >= numTests - selected) {
+				nextCombo++;
+			}
+			else {
+				testCombos.add(nextCombo);
+				nextCombo++;
+				selected++;
+			}
+			if(nextCombo >= this.totalCombinations.intValue()) {
+				nextCombo = 0;
+			}
+		}
+		// Shuffle test values so they are not in order
+		// Only shuffle if all combinations are not executed
+		if(numTests < totalCombinations.intValue()) {
+			Collections.shuffle(testCombos);
 		}
 	}	
 
@@ -184,12 +227,57 @@ public class RandomGenerateTest implements GenerateTest{
 	
 	@Override
 	public RValue[] generateParameters() {
-		// Iterate through the generators to generate the parameters
+		if(exceedSize()) {
+ 			Random randomiser = new Random(); 
+			int nextCombo = 0;
+			int selected = 0; 
+			while(true) {
+				double uniform = randomiser.nextDouble();
+				if((this.totalCombinations.intValue() - nextCombo)*uniform >= 1 - selected) {
+					nextCombo++;
+				}
+				else {
+					return generateCombination(nextCombo);
+				}
+				if(nextCombo >= this.totalCombinations.intValue()) {
+					nextCombo = 0;
+				}
+			}
+ 		}
+		else {
+			int index = numTested - 1;
+			numTested++;
+			return generateCombination(testCombos.get(index));
+		}
+	}
+	
+	private RValue[] generateCombination(int comboNum) {
 		RValue[] parameters = new RValue[parameterGenerators.size()];
-		for(int i=0; i < parameterGenerators.size(); i++) {
-			parameters[i] = parameterGenerators.get(i).generate();
+		int leftover = comboNum;
+		for(int i=0; i < parameters.length ; i++) {
+			int divNum = 1;
+			for(int j = i+1; j < parameters.length; j++ ) {
+				Generator gen = parameterGenerators.get(j);
+				divNum *= gen.size();
+			}
+			if(i+1 >= parameters.length) {
+				divNum = 0;
+			}
+			int num = leftover;
+			// Note: Num is always rounded down
+			if(divNum != 0) {
+				num /= divNum;
+			}
+			Generator gen = parameterGenerators.get(i);
+			parameters[i] = gen.generateCombination(num);
+			leftover -= num * divNum;
 		}
 		return parameters;
+	}
+
+	@Override
+	public boolean exceedSize() {
+		return numTested > totalCombinations.intValue();
 	}
 	
 }

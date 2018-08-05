@@ -35,24 +35,19 @@ public class ExhaustiveGenerateTest implements GenerateTest{
 	 *  A list of generators, each corresponding to a parameter in the function/method
 	 */
 	private List<Generator> parameterGenerators;
-	/**
-	 * The last parameters used to create a test
-	 */
+	/** The last parameters used to create a test */
 	private RValue[] parameters;
-	/**
-	 * Stores the generators used in an iterative manner.
-	 */
-	
+
 	private BigInteger totalCombinations;
 	private int numTested;
 	private int numTests; // Default number of tests to run
-	private boolean allTests;
 	
 	private Interpreter interpreter;
 	
 	private BigInteger lowerLimit;
 	private BigInteger upperLimit;
 
+	/** All the user created types that are recursive structures */
 	private Map<Name, Integer> recursiveType = new HashMap<Name, Integer>();
 	
 	public ExhaustiveGenerateTest(Tuple<Decl.Variable> valuesToGenerate, Interpreter interpreter, int numTests, BigInteger lowerLimit, BigInteger upperLimit) throws IntegerRangeException {
@@ -70,10 +65,16 @@ public class ExhaustiveGenerateTest implements GenerateTest{
 			this.parameterGenerators.add(gen);
 		}
 		if(parameterGenerators.isEmpty()) {
-			this.totalCombinations = new BigInteger("0");
+			this.totalCombinations = BigInteger.valueOf(0);
+		}
+		else {
+			int size = 1;
+			for(Generator gen : parameterGenerators) {
+				size *= gen.size();
+			}
+			this.totalCombinations = BigInteger.valueOf(size);
 		}
 		this.parameters = new RValue[parameterGenerators.size()];
-		this.allTests = totalCombinations.compareTo(BigInteger.valueOf(numTests)) != 1;
 	}
 	
 	/**
@@ -213,41 +214,40 @@ public class ExhaustiveGenerateTest implements GenerateTest{
 		if(parameters.length == 0){
 			return parameters;
 		}
-		// FIXME (only run for allTests)
-		else if(true) {
-			// Initialise the first combination used
-			if(parameters[0] == null) {
-				for(int i=0; i < parameters.length; i++) {
-					Generator gen = parameterGenerators.get(i);
+		// Initialise the first combination used
+		if(parameters[0] == null) {
+			for(int i=0; i < parameters.length; i++) {
+				Generator gen = parameterGenerators.get(i);
+				parameters[i] = gen.generate();
+			}
+		}
+		else{
+            /*
+             *  Generate the array elements backwards.
+             *  If the last generator has reached it's upper limit 
+             *  (i.e. we cannot move onto the next combination) then reset the generator.
+             *  Repeat for all previous generators that have reached its limit,
+             *  until we reach a generator which hasn't reached it's limit.
+             */
+			for(int i=parameters.length - 1; i >= 0 ; i--) {
+				Generator gen = parameterGenerators.get(i);
+				if(!gen.exceedCount()) {
+					parameters[i] = gen.generate();
+					break;
+				}
+				else {
+					gen.resetCount();
 					parameters[i] = gen.generate();
 				}
 			}
-			else{
-	            /*
-	             *  Generate the array elements backwards.
-	             *  If the last generator has reached it's upper limit 
-	             *  (i.e. we cannot move onto the next combination) then reset the generator.
-	             *  Repeat for all previous generators that have reached its limit,
-	             *  until we reach a generator which hasn't reached it's limit.
-	             */
-				for(int i=parameters.length - 1; i >= 0 ; i--) {
-					Generator gen = parameterGenerators.get(i);
-					if(!gen.exceedCount()) {
-						parameters[i] = gen.generate();
-						break;
-					}
-					else {
-						gen.resetCount();
-						parameters[i] = gen.generate();
-					}
-				}
-			}
-		}
-		// TODO selection of tests if we cannot do all exhaustive combinations?
+		}		
 		numTested++;
 		return parameters;
 	}
-	
-	
+
+	@Override
+	public boolean exceedSize() {
+		return numTested >= totalCombinations.intValue();
+	}
 	
 }

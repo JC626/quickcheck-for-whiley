@@ -1,0 +1,2230 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="WhileyInvalidTest" project="QuickCheckWhiley" tests="355" started="355" failures="0" errors="11" ignored="0">
+  <testsuite name="test.quickcheck.WhileyInvalidTest" time="12.886">
+    <testsuite name="[AddressExpression_Invalid_1]" time="0.093">
+      <testcase name="invalid[AddressExpression_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.093"/>
+    </testsuite>
+    <testsuite name="[AddressExpression_Invalid_2]" time="0.016">
+      <testcase name="invalid[AddressExpression_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[ArrayAccess_Invalid_1]" time="0.031">
+      <testcase name="invalid[ArrayAccess_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.031"/>
+    </testsuite>
+    <testsuite name="[ArrayAccess_Invalid_2]" time="0.157">
+      <testcase name="invalid[ArrayAccess_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.157"/>
+    </testsuite>
+    <testsuite name="[ArrayAccess_Invalid_3]" time="0.015">
+      <testcase name="invalid[ArrayAccess_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[ArrayAccess_Invalid_4]" time="0.063">
+      <testcase name="invalid[ArrayAccess_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.063"/>
+    </testsuite>
+    <testsuite name="[ArrayAccess_Invalid_5]" time="0.109">
+      <testcase name="invalid[ArrayAccess_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.109"/>
+    </testsuite>
+    <testsuite name="[ArrayAssign_Invalid_1]" time="0.016">
+      <testcase name="invalid[ArrayAssign_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[ArrayAssign_Invalid_2]" time="0.047">
+      <testcase name="invalid[ArrayAssign_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
+    </testsuite>
+    <testsuite name="[ArrayAssign_Invalid_3]" time="0.046">
+      <testcase name="invalid[ArrayAssign_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.046"/>
+    </testsuite>
+    <testsuite name="[ArrayConversion_Invalid_1]" time="0.016">
+      <testcase name="invalid[ArrayConversion_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[ArrayEmpty_Invalid_1]" time="0.016">
+      <testcase name="invalid[ArrayEmpty_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[ArrayEmpty_Invalid_2]" time="0.046">
+      <testcase name="invalid[ArrayEmpty_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.046"/>
+    </testsuite>
+    <testsuite name="[ArrayEquals_Invalid_1]" time="0.063">
+      <testcase name="invalid[ArrayEquals_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.063"/>
+    </testsuite>
+    <testsuite name="[ArrayGenerator_Invalid_1]" time="0.047">
+      <testcase name="invalid[ArrayGenerator_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
+    </testsuite>
+    <testsuite name="[ArrayGenerator_Invalid_2]" time="0.047">
+      <testcase name="invalid[ArrayGenerator_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
+    </testsuite>
+    <testsuite name="[ArrayGenerator_Invalid_3]" time="0.015">
+      <testcase name="invalid[ArrayGenerator_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[ArrayGenerator_Invalid_4]" time="0.016">
+      <testcase name="invalid[ArrayGenerator_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[ArrayLength_Invalid_1]" time="0.031">
+      <testcase name="invalid[ArrayLength_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.031"/>
+    </testsuite>
+    <testsuite name="[ArrayLength_Invalid_2]" time="0.094">
+      <testcase name="invalid[ArrayLength_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.094"/>
+    </testsuite>
+    <testsuite name="[ArrayLength_Invalid_3]" time="0.094">
+      <testcase name="invalid[ArrayLength_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.094"/>
+    </testsuite>
+    <testsuite name="[ArrayUpdate_Invalid_1]" time="0.078">
+      <testcase name="invalid[ArrayUpdate_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.078">
+        <error>java.lang.ArrayIndexOutOfBoundsException: 0&#13;
+	at wyil.interpreter.ConcreteSemantics$RValue$Array.write(ConcreteSemantics.java:498)&#13;
+	at wyil.interpreter.ConcreteSemantics$LValue$Array.write(ConcreteSemantics.java:837)&#13;
+	at quickcheck.QCInterpreter.executeAssign(QCInterpreter.java:543)&#13;
+	at quickcheck.QCInterpreter.executeStatement(QCInterpreter.java:493)&#13;
+	at quickcheck.QCInterpreter.executeBlock(QCInterpreter.java:467)&#13;
+	at quickcheck.QCInterpreter.execute(QCInterpreter.java:385)&#13;
+	at quickcheck.RunTest.executeTest(RunTest.java:270)&#13;
+	at quickcheck.RunTest.execute(RunTest.java:135)&#13;
+	at test.utils.TestHelper.createRunTest(TestHelper.java:123)&#13;
+	at test.quickcheck.WhileyInvalidTest.invalid(WhileyInvalidTest.java:133)&#13;
+	at jdk.internal.reflect.GeneratedMethodAccessor2.invoke(Unknown Source)&#13;
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)&#13;
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)&#13;
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)&#13;
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)&#13;
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)&#13;
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)&#13;
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:128)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:27)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:538)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:760)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:460)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:206)&#13;
+&#13;
+</error>
+      </testcase>
+    </testsuite>
+    <testsuite name="[Array_Invalid_1]" time="0.015">
+      <testcase name="invalid[Array_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[Array_Invalid_10]" time="0.141">
+      <testcase name="invalid[Array_Invalid_10]" classname="test.quickcheck.WhileyInvalidTest" time="0.141">
+        <error>java.lang.ArrayIndexOutOfBoundsException: 0&#13;
+	at wyil.interpreter.ConcreteSemantics$RValue$Array.write(ConcreteSemantics.java:498)&#13;
+	at wyil.interpreter.ConcreteSemantics$LValue$Array.write(ConcreteSemantics.java:837)&#13;
+	at quickcheck.QCInterpreter.executeAssign(QCInterpreter.java:543)&#13;
+	at quickcheck.QCInterpreter.executeStatement(QCInterpreter.java:493)&#13;
+	at quickcheck.QCInterpreter.executeBlock(QCInterpreter.java:467)&#13;
+	at quickcheck.QCInterpreter.execute(QCInterpreter.java:385)&#13;
+	at quickcheck.RunTest.executeTest(RunTest.java:270)&#13;
+	at quickcheck.RunTest.execute(RunTest.java:135)&#13;
+	at test.utils.TestHelper.createRunTest(TestHelper.java:123)&#13;
+	at test.quickcheck.WhileyInvalidTest.invalid(WhileyInvalidTest.java:140)&#13;
+	at jdk.internal.reflect.GeneratedMethodAccessor2.invoke(Unknown Source)&#13;
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)&#13;
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)&#13;
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)&#13;
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)&#13;
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)&#13;
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)&#13;
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:128)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:27)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:538)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:760)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:460)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:206)&#13;
+&#13;
+</error>
+      </testcase>
+    </testsuite>
+    <testsuite name="[Array_Invalid_11]" time="0.203">
+      <testcase name="invalid[Array_Invalid_11]" classname="test.quickcheck.WhileyInvalidTest" time="0.203"/>
+    </testsuite>
+    <testsuite name="[Array_Invalid_12]" time="0.172">
+      <testcase name="invalid[Array_Invalid_12]" classname="test.quickcheck.WhileyInvalidTest" time="0.172"/>
+    </testsuite>
+    <testsuite name="[Array_Invalid_13]" time="0.078">
+      <testcase name="invalid[Array_Invalid_13]" classname="test.quickcheck.WhileyInvalidTest" time="0.078"/>
+    </testsuite>
+    <testsuite name="[Array_Invalid_14]" time="0.094">
+      <testcase name="invalid[Array_Invalid_14]" classname="test.quickcheck.WhileyInvalidTest" time="0.094"/>
+    </testsuite>
+    <testsuite name="[Array_Invalid_15]" time="0.093">
+      <testcase name="invalid[Array_Invalid_15]" classname="test.quickcheck.WhileyInvalidTest" time="0.093"/>
+    </testsuite>
+    <testsuite name="[Array_Invalid_16]" time="0.079">
+      <testcase name="invalid[Array_Invalid_16]" classname="test.quickcheck.WhileyInvalidTest" time="0.079"/>
+    </testsuite>
+    <testsuite name="[Array_Invalid_17]" time="0.093">
+      <testcase name="invalid[Array_Invalid_17]" classname="test.quickcheck.WhileyInvalidTest" time="0.093"/>
+    </testsuite>
+    <testsuite name="[Array_Invalid_18]" time="0.265">
+      <testcase name="invalid[Array_Invalid_18]" classname="test.quickcheck.WhileyInvalidTest" time="0.265"/>
+    </testsuite>
+    <testsuite name="[Array_Invalid_19]" time="0.062">
+      <testcase name="invalid[Array_Invalid_19]" classname="test.quickcheck.WhileyInvalidTest" time="0.062"/>
+    </testsuite>
+    <testsuite name="[Array_Invalid_2]" time="0.016">
+      <testcase name="invalid[Array_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Array_Invalid_20]" time="0.156">
+      <testcase name="invalid[Array_Invalid_20]" classname="test.quickcheck.WhileyInvalidTest" time="0.156"/>
+    </testsuite>
+    <testsuite name="[Array_Invalid_21]" time="0.141">
+      <testcase name="invalid[Array_Invalid_21]" classname="test.quickcheck.WhileyInvalidTest" time="0.141"/>
+    </testsuite>
+    <testsuite name="[Array_Invalid_22]" time="0.172">
+      <testcase name="invalid[Array_Invalid_22]" classname="test.quickcheck.WhileyInvalidTest" time="0.172"/>
+    </testsuite>
+    <testsuite name="[Array_Invalid_23]" time="0.078">
+      <testcase name="invalid[Array_Invalid_23]" classname="test.quickcheck.WhileyInvalidTest" time="0.078"/>
+    </testsuite>
+    <testsuite name="[Array_Invalid_24]" time="0.078">
+      <testcase name="invalid[Array_Invalid_24]" classname="test.quickcheck.WhileyInvalidTest" time="0.078"/>
+    </testsuite>
+    <testsuite name="[Array_Invalid_3]" time="0.015">
+      <testcase name="invalid[Array_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[Array_Invalid_4]" time="0.016">
+      <testcase name="invalid[Array_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Array_Invalid_5]" time="0.016">
+      <testcase name="invalid[Array_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Array_Invalid_6]" time="0.015">
+      <testcase name="invalid[Array_Invalid_6]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[Array_Invalid_7]" time="0.016">
+      <testcase name="invalid[Array_Invalid_7]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Array_Invalid_8]" time="0.094">
+      <testcase name="invalid[Array_Invalid_8]" classname="test.quickcheck.WhileyInvalidTest" time="0.094"/>
+    </testsuite>
+    <testsuite name="[Array_Invalid_9]" time="0.14">
+      <testcase name="invalid[Array_Invalid_9]" classname="test.quickcheck.WhileyInvalidTest" time="0.14"/>
+    </testsuite>
+    <testsuite name="[Assert_Invalid_1]" time="0.016">
+      <testcase name="invalid[Assert_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Assert_Invalid_2]" time="0.016">
+      <testcase name="invalid[Assert_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Assert_Invalid_3]" time="0.093">
+      <testcase name="invalid[Assert_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.093"/>
+    </testsuite>
+    <testsuite name="[Assign_Invalid_1]" time="0.016">
+      <testcase name="invalid[Assign_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Assign_Invalid_2]" time="0.016">
+      <testcase name="invalid[Assign_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Assign_Invalid_3]" time="0.0">
+      <testcase name="invalid[Assign_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
+    </testsuite>
+    <testsuite name="[Assign_Invalid_4]" time="0.015">
+      <testcase name="invalid[Assign_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[Assign_Invalid_5]" time="0.016">
+      <testcase name="invalid[Assign_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Assign_Invalid_6]" time="0.015">
+      <testcase name="invalid[Assign_Invalid_6]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[Assign_Invalid_7]" time="0.016">
+      <testcase name="invalid[Assign_Invalid_7]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Assign_Invalid_8]" time="0.016">
+      <testcase name="invalid[Assign_Invalid_8]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Assign_Invalid_9]" time="0.015">
+      <testcase name="invalid[Assign_Invalid_9]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[Byte_Invalid_1]" time="0.016">
+      <testcase name="invalid[Byte_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Coercion_Invalid_2]" time="0.015">
+      <testcase name="invalid[Coercion_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[Constant_Invalid_1]" time="0.0">
+      <testcase name="invalid[Constant_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
+    </testsuite>
+    <testsuite name="[Constant_Invalid_2]" time="0.016">
+      <testcase name="invalid[Constant_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[ConstrainedArray_Invalid_1]" time="0.078">
+      <testcase name="invalid[ConstrainedArray_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.078"/>
+    </testsuite>
+    <testsuite name="[ConstrainedArray_Invalid_2]" time="0.094">
+      <testcase name="invalid[ConstrainedArray_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.094"/>
+    </testsuite>
+    <testsuite name="[ConstrainedArray_Invalid_3]" time="0.078">
+      <testcase name="invalid[ConstrainedArray_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.078"/>
+    </testsuite>
+    <testsuite name="[ConstrainedInt_Invalid_1]" time="0.047">
+      <testcase name="invalid[ConstrainedInt_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
+    </testsuite>
+    <testsuite name="[ConstrainedInt_Invalid_11]" time="0.016">
+      <testcase name="invalid[ConstrainedInt_Invalid_11]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[ConstrainedInt_Invalid_12]" time="0.062">
+      <testcase name="invalid[ConstrainedInt_Invalid_12]" classname="test.quickcheck.WhileyInvalidTest" time="0.062"/>
+    </testsuite>
+    <testsuite name="[ConstrainedInt_Invalid_2]" time="0.047">
+      <testcase name="invalid[ConstrainedInt_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
+    </testsuite>
+    <testsuite name="[ConstrainedInt_Invalid_3]" time="0.062">
+      <testcase name="invalid[ConstrainedInt_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.062"/>
+    </testsuite>
+    <testsuite name="[ConstrainedInt_Invalid_4]" time="0.032">
+      <testcase name="invalid[ConstrainedInt_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.032"/>
+    </testsuite>
+    <testsuite name="[ConstrainedInt_Invalid_5]" time="0.062">
+      <testcase name="invalid[ConstrainedInt_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.062"/>
+    </testsuite>
+    <testsuite name="[ConstrainedInt_Invalid_6]" time="0.047">
+      <testcase name="invalid[ConstrainedInt_Invalid_6]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
+    </testsuite>
+    <testsuite name="[ConstrainedInt_Invalid_7]" time="0.047">
+      <testcase name="invalid[ConstrainedInt_Invalid_7]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
+    </testsuite>
+    <testsuite name="[ConstrainedInt_Invalid_8]" time="0.125">
+      <testcase name="invalid[ConstrainedInt_Invalid_8]" classname="test.quickcheck.WhileyInvalidTest" time="0.125"/>
+    </testsuite>
+    <testsuite name="[ConstrainedInt_Invalid_9]" time="0.062">
+      <testcase name="invalid[ConstrainedInt_Invalid_9]" classname="test.quickcheck.WhileyInvalidTest" time="0.062"/>
+    </testsuite>
+    <testsuite name="[ConstrainedRecord_Invalid_1]" time="0.063">
+      <testcase name="invalid[ConstrainedRecord_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.063"/>
+    </testsuite>
+    <testsuite name="[Continue_Invalid_1]" time="0.015">
+      <testcase name="invalid[Continue_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[Continue_Invalid_2]" time="0.016">
+      <testcase name="invalid[Continue_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[DefiniteAssign_Invalid_1]" time="0.016">
+      <testcase name="invalid[DefiniteAssign_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[DefiniteAssign_Invalid_2]" time="0.015">
+      <testcase name="invalid[DefiniteAssign_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[DefiniteAssign_Invalid_3]" time="0.016">
+      <testcase name="invalid[DefiniteAssign_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[DefiniteAssign_Invalid_4]" time="0.015">
+      <testcase name="invalid[DefiniteAssign_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[DoWhile_Invalid_1]" time="0.063">
+      <testcase name="invalid[DoWhile_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.063"/>
+    </testsuite>
+    <testsuite name="[DoWhile_Invalid_2]" time="0.047">
+      <testcase name="invalid[DoWhile_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
+    </testsuite>
+    <testsuite name="[DoWhile_Invalid_3]" time="0.062">
+      <testcase name="invalid[DoWhile_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.062"/>
+    </testsuite>
+    <testsuite name="[DoWhile_Invalid_4]" time="0.0">
+      <testcase name="invalid[DoWhile_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.0">
+        <skipped>org.junit.AssumptionViolatedException: Test DoWhile_Invalid_4 skipped: Infinite loop!&#13;
+	at org.junit.Assume.assumeTrue(Assume.java:59)&#13;
+	at test.quickcheck.WhileyInvalidTest.beforeMethod(WhileyInvalidTest.java:107)&#13;
+	at jdk.internal.reflect.GeneratedMethodAccessor1.invoke(Unknown Source)&#13;
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)&#13;
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)&#13;
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)&#13;
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)&#13;
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:24)&#13;
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:128)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:27)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:538)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:760)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:460)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:206)&#13;
+&#13;
+</skipped>
+      </testcase>
+    </testsuite>
+    <testsuite name="[DoWhile_Invalid_5]" time="0.016">
+      <testcase name="invalid[DoWhile_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[DoWhile_Invalid_6]" time="0.047">
+      <testcase name="invalid[DoWhile_Invalid_6]" classname="test.quickcheck.WhileyInvalidTest" time="0.047">
+        <error>java.lang.NegativeArraySizeException&#13;
+	at wyil.interpreter.Interpreter.executeArrayRange(Interpreter.java:1083)&#13;
+	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:971)&#13;
+	at quickcheck.QCInterpreter.executeQuantifier(QCInterpreter.java:1101)&#13;
+	at quickcheck.QCInterpreter.executeQuantifier(QCInterpreter.java:1076)&#13;
+	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:901)&#13;
+	at wyil.interpreter.Interpreter.checkInvariants(Interpreter.java:1293)&#13;
+	at quickcheck.QCInterpreter.execute(QCInterpreter.java:310)&#13;
+	at quickcheck.QCInterpreter.executeInvoke(QCInterpreter.java:240)&#13;
+	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:872)&#13;
+	at wyil.interpreter.Interpreter.checkInvariants(Interpreter.java:1293)&#13;
+	at quickcheck.RunTest.executeTest(RunTest.java:288)&#13;
+	at quickcheck.RunTest.execute(RunTest.java:135)&#13;
+	at test.utils.TestHelper.createRunTest(TestHelper.java:123)&#13;
+	at test.quickcheck.WhileyInvalidTest.invalid(WhileyInvalidTest.java:133)&#13;
+	at jdk.internal.reflect.GeneratedMethodAccessor2.invoke(Unknown Source)&#13;
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)&#13;
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)&#13;
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)&#13;
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)&#13;
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)&#13;
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)&#13;
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:128)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:27)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:538)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:760)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:460)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:206)&#13;
+&#13;
+</error>
+      </testcase>
+    </testsuite>
+    <testsuite name="[DoWhile_Invalid_7]" time="0.062">
+      <testcase name="invalid[DoWhile_Invalid_7]" classname="test.quickcheck.WhileyInvalidTest" time="0.062">
+        <error>java.lang.NegativeArraySizeException&#13;
+	at wyil.interpreter.Interpreter.executeArrayRange(Interpreter.java:1083)&#13;
+	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:971)&#13;
+	at quickcheck.QCInterpreter.executeQuantifier(QCInterpreter.java:1101)&#13;
+	at quickcheck.QCInterpreter.executeQuantifier(QCInterpreter.java:1076)&#13;
+	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:901)&#13;
+	at wyil.interpreter.Interpreter.checkInvariants(Interpreter.java:1293)&#13;
+	at quickcheck.QCInterpreter.execute(QCInterpreter.java:310)&#13;
+	at quickcheck.QCInterpreter.executeInvoke(QCInterpreter.java:240)&#13;
+	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:872)&#13;
+	at wyil.interpreter.Interpreter.checkInvariants(Interpreter.java:1293)&#13;
+	at quickcheck.RunTest.executeTest(RunTest.java:288)&#13;
+	at quickcheck.RunTest.execute(RunTest.java:135)&#13;
+	at test.utils.TestHelper.createRunTest(TestHelper.java:123)&#13;
+	at test.quickcheck.WhileyInvalidTest.invalid(WhileyInvalidTest.java:133)&#13;
+	at jdk.internal.reflect.GeneratedMethodAccessor2.invoke(Unknown Source)&#13;
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)&#13;
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)&#13;
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)&#13;
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)&#13;
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)&#13;
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)&#13;
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:128)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:27)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:538)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:760)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:460)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:206)&#13;
+&#13;
+</error>
+      </testcase>
+    </testsuite>
+    <testsuite name="[DoWhile_Invalid_8]" time="0.063">
+      <testcase name="invalid[DoWhile_Invalid_8]" classname="test.quickcheck.WhileyInvalidTest" time="0.063">
+        <error>java.lang.NegativeArraySizeException&#13;
+	at wyil.interpreter.Interpreter.executeArrayRange(Interpreter.java:1083)&#13;
+	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:971)&#13;
+	at quickcheck.QCInterpreter.executeQuantifier(QCInterpreter.java:1101)&#13;
+	at quickcheck.QCInterpreter.executeQuantifier(QCInterpreter.java:1076)&#13;
+	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:901)&#13;
+	at wyil.interpreter.Interpreter.checkInvariants(Interpreter.java:1293)&#13;
+	at quickcheck.QCInterpreter.execute(QCInterpreter.java:310)&#13;
+	at quickcheck.QCInterpreter.executeInvoke(QCInterpreter.java:240)&#13;
+	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:872)&#13;
+	at wyil.interpreter.Interpreter.checkInvariants(Interpreter.java:1293)&#13;
+	at quickcheck.RunTest.executeTest(RunTest.java:288)&#13;
+	at quickcheck.RunTest.execute(RunTest.java:135)&#13;
+	at test.utils.TestHelper.createRunTest(TestHelper.java:123)&#13;
+	at test.quickcheck.WhileyInvalidTest.invalid(WhileyInvalidTest.java:133)&#13;
+	at jdk.internal.reflect.GeneratedMethodAccessor2.invoke(Unknown Source)&#13;
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)&#13;
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)&#13;
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)&#13;
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)&#13;
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)&#13;
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)&#13;
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:128)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:27)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:538)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:760)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:460)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:206)&#13;
+&#13;
+</error>
+      </testcase>
+    </testsuite>
+    <testsuite name="[EndOfFile_Invalid_1]" time="0.015">
+      <testcase name="invalid[EndOfFile_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[Ensures_Invalid_1]" time="0.047">
+      <testcase name="invalid[Ensures_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
+    </testsuite>
+    <testsuite name="[Ensures_Invalid_2]" time="0.0">
+      <testcase name="invalid[Ensures_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
+    </testsuite>
+    <testsuite name="[Ensures_Invalid_3]" time="0.063">
+      <testcase name="invalid[Ensures_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.063"/>
+    </testsuite>
+    <testsuite name="[Export_Invalid_1]" time="0.0">
+      <testcase name="invalid[Export_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.0">
+        <skipped>org.junit.AssumptionViolatedException: Test Export_Invalid_1 skipped: unclassified&#13;
+	at org.junit.Assume.assumeTrue(Assume.java:59)&#13;
+	at test.quickcheck.WhileyInvalidTest.beforeMethod(WhileyInvalidTest.java:107)&#13;
+	at jdk.internal.reflect.GeneratedMethodAccessor1.invoke(Unknown Source)&#13;
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)&#13;
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)&#13;
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)&#13;
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)&#13;
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:24)&#13;
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:128)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:27)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:538)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:760)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:460)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:206)&#13;
+&#13;
+</skipped>
+      </testcase>
+    </testsuite>
+    <testsuite name="[Fail_Invalid_1]" time="0.031">
+      <testcase name="invalid[Fail_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.031"/>
+    </testsuite>
+    <testsuite name="[Fail_Invalid_2]" time="0.016">
+      <testcase name="invalid[Fail_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Fail_Invalid_3]" time="0.031">
+      <testcase name="invalid[Fail_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.031"/>
+    </testsuite>
+    <testsuite name="[Final_Invalid_1]" time="0.015">
+      <testcase name="invalid[Final_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[Final_Invalid_10]" time="0.016">
+      <testcase name="invalid[Final_Invalid_10]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Final_Invalid_11]" time="0.016">
+      <testcase name="invalid[Final_Invalid_11]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Final_Invalid_12]" time="0.015">
+      <testcase name="invalid[Final_Invalid_12]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[Final_Invalid_13]" time="0.016">
+      <testcase name="invalid[Final_Invalid_13]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Final_Invalid_14]" time="0.0">
+      <testcase name="invalid[Final_Invalid_14]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
+    </testsuite>
+    <testsuite name="[Final_Invalid_15]" time="0.016">
+      <testcase name="invalid[Final_Invalid_15]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Final_Invalid_2]" time="0.015">
+      <testcase name="invalid[Final_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[Final_Invalid_3]" time="0.016">
+      <testcase name="invalid[Final_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Final_Invalid_4]" time="0.015">
+      <testcase name="invalid[Final_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[Final_Invalid_5]" time="0.016">
+      <testcase name="invalid[Final_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Final_Invalid_6]" time="0.0">
+      <testcase name="invalid[Final_Invalid_6]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
+    </testsuite>
+    <testsuite name="[Final_Invalid_7]" time="0.016">
+      <testcase name="invalid[Final_Invalid_7]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Final_Invalid_8]" time="0.015">
+      <testcase name="invalid[Final_Invalid_8]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[Final_Invalid_9]" time="0.016">
+      <testcase name="invalid[Final_Invalid_9]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[FunctionRef_Invalid_1]" time="0.016">
+      <testcase name="invalid[FunctionRef_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[FunctionRef_Invalid_2]" time="0.031">
+      <testcase name="invalid[FunctionRef_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.031"/>
+    </testsuite>
+    <testsuite name="[FunctionRef_Invalid_3]" time="0.063">
+      <testcase name="invalid[FunctionRef_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.063"/>
+    </testsuite>
+    <testsuite name="[FunctionRef_Invalid_4]" time="0.031">
+      <testcase name="invalid[FunctionRef_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.031"/>
+    </testsuite>
+    <testsuite name="[FunctionRef_Invalid_5]" time="0.015">
+      <testcase name="invalid[FunctionRef_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[FunctionRef_Invalid_6]" time="0.016">
+      <testcase name="invalid[FunctionRef_Invalid_6]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[FunctionRef_Invalid_7]" time="0.015">
+      <testcase name="invalid[FunctionRef_Invalid_7]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[Function_Invalid_1]" time="0.0">
+      <testcase name="invalid[Function_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
+    </testsuite>
+    <testsuite name="[Function_Invalid_10]" time="0.016">
+      <testcase name="invalid[Function_Invalid_10]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Function_Invalid_11]" time="0.016">
+      <testcase name="invalid[Function_Invalid_11]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Function_Invalid_12]" time="0.015">
+      <testcase name="invalid[Function_Invalid_12]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[Function_Invalid_13]" time="0.016">
+      <testcase name="invalid[Function_Invalid_13]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Function_Invalid_2]" time="0.0">
+      <testcase name="invalid[Function_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.0">
+        <skipped>org.junit.AssumptionViolatedException: Test Function_Invalid_2 skipped: unclassified&#13;
+	at org.junit.Assume.assumeTrue(Assume.java:59)&#13;
+	at test.quickcheck.WhileyInvalidTest.beforeMethod(WhileyInvalidTest.java:107)&#13;
+	at jdk.internal.reflect.GeneratedMethodAccessor1.invoke(Unknown Source)&#13;
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)&#13;
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)&#13;
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)&#13;
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)&#13;
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:24)&#13;
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:128)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:27)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:538)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:760)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:460)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:206)&#13;
+&#13;
+</skipped>
+      </testcase>
+    </testsuite>
+    <testsuite name="[Function_Invalid_3]" time="0.015">
+      <testcase name="invalid[Function_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[Function_Invalid_4]" time="0.0">
+      <testcase name="invalid[Function_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
+    </testsuite>
+    <testsuite name="[Function_Invalid_9]" time="0.0">
+      <testcase name="invalid[Function_Invalid_9]" classname="test.quickcheck.WhileyInvalidTest" time="0.0">
+        <skipped>org.junit.AssumptionViolatedException: Test Function_Invalid_9 skipped: unclassified&#13;
+	at org.junit.Assume.assumeTrue(Assume.java:59)&#13;
+	at test.quickcheck.WhileyInvalidTest.beforeMethod(WhileyInvalidTest.java:107)&#13;
+	at jdk.internal.reflect.GeneratedMethodAccessor1.invoke(Unknown Source)&#13;
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)&#13;
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)&#13;
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)&#13;
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)&#13;
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:24)&#13;
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:128)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:27)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:538)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:760)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:460)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:206)&#13;
+&#13;
+</skipped>
+      </testcase>
+    </testsuite>
+    <testsuite name="[If_Invalid_1]" time="0.016">
+      <testcase name="invalid[If_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[If_Invalid_2]" time="0.016">
+      <testcase name="invalid[If_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[If_Invalid_4]" time="0.015">
+      <testcase name="invalid[If_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[If_Invalid_5]" time="0.016">
+      <testcase name="invalid[If_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Import_Invalid_1]" time="0.016">
+      <testcase name="invalid[Import_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[IntDiv_Invalid_1]" time="0.046">
+      <testcase name="invalid[IntDiv_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.046">
+        <error>java.lang.ArithmeticException: BigInteger divide by zero&#13;
+	at java.base/java.math.MutableBigInteger.divideKnuth(Unknown Source)&#13;
+	at java.base/java.math.BigInteger.divideKnuth(Unknown Source)&#13;
+	at java.base/java.math.BigInteger.divide(Unknown Source)&#13;
+	at wyil.interpreter.ConcreteSemantics$RValue$Int.divide(ConcreteSemantics.java:407)&#13;
+	at wyil.interpreter.Interpreter.executeIntegerDivision(Interpreter.java:911)&#13;
+	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:922)&#13;
+	at quickcheck.QCInterpreter.executeMultiReturnExpression(QCInterpreter.java:1203)&#13;
+	at quickcheck.QCInterpreter.executeExpressions(QCInterpreter.java:1166)&#13;
+	at quickcheck.QCInterpreter.executeAssign(QCInterpreter.java:540)&#13;
+	at quickcheck.QCInterpreter.executeStatement(QCInterpreter.java:493)&#13;
+	at quickcheck.QCInterpreter.executeBlock(QCInterpreter.java:467)&#13;
+	at quickcheck.QCInterpreter.execute(QCInterpreter.java:385)&#13;
+	at quickcheck.RunTest.executeTest(RunTest.java:270)&#13;
+	at quickcheck.RunTest.execute(RunTest.java:135)&#13;
+	at test.utils.TestHelper.createRunTest(TestHelper.java:123)&#13;
+	at test.quickcheck.WhileyInvalidTest.invalid(WhileyInvalidTest.java:140)&#13;
+	at jdk.internal.reflect.GeneratedMethodAccessor2.invoke(Unknown Source)&#13;
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)&#13;
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)&#13;
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)&#13;
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)&#13;
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)&#13;
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)&#13;
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:128)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:27)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:538)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:760)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:460)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:206)&#13;
+&#13;
+</error>
+      </testcase>
+    </testsuite>
+    <testsuite name="[Intersection_Invalid_1]" time="0.016">
+      <testcase name="invalid[Intersection_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Intersection_Invalid_2]" time="0.016">
+      <testcase name="invalid[Intersection_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Lambda_Invalid_3]" time="0.062">
+      <testcase name="invalid[Lambda_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.062"/>
+    </testsuite>
+    <testsuite name="[Lifetime_Invalid_1]" time="0.016">
+      <testcase name="invalid[Lifetime_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Lifetime_Invalid_2]" time="0.0">
+      <testcase name="invalid[Lifetime_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
+    </testsuite>
+    <testsuite name="[Lifetime_Invalid_3]" time="0.015">
+      <testcase name="invalid[Lifetime_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[Lifetime_Invalid_4]" time="0.016">
+      <testcase name="invalid[Lifetime_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Lifetime_Invalid_5]" time="0.016">
+      <testcase name="invalid[Lifetime_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Lifetime_Invalid_6]" time="0.015">
+      <testcase name="invalid[Lifetime_Invalid_6]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[Lifetime_Invalid_7]" time="0.0">
+      <testcase name="invalid[Lifetime_Invalid_7]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
+    </testsuite>
+    <testsuite name="[Lifetime_Invalid_8]" time="0.016">
+      <testcase name="invalid[Lifetime_Invalid_8]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Lifetime_Invalid_9]" time="0.016">
+      <testcase name="invalid[Lifetime_Invalid_9]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Lifetime_Lambda_Invalid_1]" time="0.015">
+      <testcase name="invalid[Lifetime_Lambda_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[Lifetime_Lambda_Invalid_2]" time="0.016">
+      <testcase name="invalid[Lifetime_Lambda_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Lifetime_Lambda_Invalid_3]" time="0.0">
+      <testcase name="invalid[Lifetime_Lambda_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.0">
+        <skipped>org.junit.AssumptionViolatedException: Test Lifetime_Lambda_Invalid_3 skipped: #794&#13;
+	at org.junit.Assume.assumeTrue(Assume.java:59)&#13;
+	at test.quickcheck.WhileyInvalidTest.beforeMethod(WhileyInvalidTest.java:107)&#13;
+	at jdk.internal.reflect.GeneratedMethodAccessor1.invoke(Unknown Source)&#13;
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)&#13;
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)&#13;
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)&#13;
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)&#13;
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:24)&#13;
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:128)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:27)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:538)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:760)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:460)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:206)&#13;
+&#13;
+</skipped>
+      </testcase>
+    </testsuite>
+    <testsuite name="[Lifetime_Lambda_Invalid_4]" time="0.015">
+      <testcase name="invalid[Lifetime_Lambda_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[Lifetime_Lambda_Invalid_5]" time="0.0">
+      <testcase name="invalid[Lifetime_Lambda_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.0">
+        <skipped>org.junit.AssumptionViolatedException: Test Lifetime_Lambda_Invalid_5 skipped: #795&#13;
+	at org.junit.Assume.assumeTrue(Assume.java:59)&#13;
+	at test.quickcheck.WhileyInvalidTest.beforeMethod(WhileyInvalidTest.java:107)&#13;
+	at jdk.internal.reflect.GeneratedMethodAccessor1.invoke(Unknown Source)&#13;
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)&#13;
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)&#13;
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)&#13;
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)&#13;
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:24)&#13;
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:128)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:27)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:538)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:760)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:460)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:206)&#13;
+&#13;
+</skipped>
+      </testcase>
+    </testsuite>
+    <testsuite name="[Lifetime_Lambda_Invalid_6]" time="0.0">
+      <testcase name="invalid[Lifetime_Lambda_Invalid_6]" classname="test.quickcheck.WhileyInvalidTest" time="0.0">
+        <skipped>org.junit.AssumptionViolatedException: Test Lifetime_Lambda_Invalid_6 skipped: #765&#13;
+	at org.junit.Assume.assumeTrue(Assume.java:59)&#13;
+	at test.quickcheck.WhileyInvalidTest.beforeMethod(WhileyInvalidTest.java:107)&#13;
+	at jdk.internal.reflect.GeneratedMethodAccessor1.invoke(Unknown Source)&#13;
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)&#13;
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)&#13;
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)&#13;
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)&#13;
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:24)&#13;
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:128)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:27)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:538)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:760)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:460)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:206)&#13;
+&#13;
+</skipped>
+      </testcase>
+    </testsuite>
+    <testsuite name="[MethodCall_Invalid_1]" time="0.0">
+      <testcase name="invalid[MethodCall_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
+    </testsuite>
+    <testsuite name="[MethodCall_Invalid_2]" time="0.016">
+      <testcase name="invalid[MethodCall_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[MethodCall_Invalid_3]" time="0.016">
+      <testcase name="invalid[MethodCall_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[MethodCall_Invalid_4]" time="0.015">
+      <testcase name="invalid[MethodCall_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[MethodCall_Invalid_5]" time="0.016">
+      <testcase name="invalid[MethodCall_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[MethodCall_Invalid_6]" time="0.0">
+      <testcase name="invalid[MethodCall_Invalid_6]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
+    </testsuite>
+    <testsuite name="[MethodCall_Invalid_7]" time="0.016">
+      <testcase name="invalid[MethodCall_Invalid_7]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[MethodCall_Invalid_8]" time="0.015">
+      <testcase name="invalid[MethodCall_Invalid_8]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[MethodRef_Invalid_1]" time="0.016">
+      <testcase name="invalid[MethodRef_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[MethodRef_Invalid_2]" time="0.015">
+      <testcase name="invalid[MethodRef_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[MethodRef_Invalid_3]" time="0.016">
+      <testcase name="invalid[MethodRef_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Method_Invalid_9]" time="0.0">
+      <testcase name="invalid[Method_Invalid_9]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
+    </testsuite>
+    <testsuite name="[MultiAssign_Invalid_1]" time="0.016">
+      <testcase name="invalid[MultiAssign_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Native_Invalid_1]" time="0.0">
+      <testcase name="invalid[Native_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.0">
+        <skipped>org.junit.AssumptionViolatedException: Test Native_Invalid_1 skipped: unclassified&#13;
+	at org.junit.Assume.assumeTrue(Assume.java:59)&#13;
+	at test.quickcheck.WhileyInvalidTest.beforeMethod(WhileyInvalidTest.java:107)&#13;
+	at jdk.internal.reflect.GeneratedMethodAccessor1.invoke(Unknown Source)&#13;
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)&#13;
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)&#13;
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)&#13;
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)&#13;
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:24)&#13;
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:128)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:27)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:538)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:760)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:460)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:206)&#13;
+&#13;
+</skipped>
+      </testcase>
+    </testsuite>
+    <testsuite name="[NegationType_Invalid_1]" time="0.015">
+      <testcase name="invalid[NegationType_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[NegationType_Invalid_2]" time="0.016">
+      <testcase name="invalid[NegationType_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[NegationType_Invalid_3]" time="0.015">
+      <testcase name="invalid[NegationType_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[NegationType_Invalid_4]" time="0.016">
+      <testcase name="invalid[NegationType_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[OpenRecord_Invalid_1]" time="0.0">
+      <testcase name="invalid[OpenRecord_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
+    </testsuite>
+    <testsuite name="[OpenRecord_Invalid_2]" time="0.016">
+      <testcase name="invalid[OpenRecord_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[OpenRecord_Invalid_3]" time="0.015">
+      <testcase name="invalid[OpenRecord_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[OpenRecord_Invalid_4]" time="0.016">
+      <testcase name="invalid[OpenRecord_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[OpenRecord_Invalid_5]" time="0.016">
+      <testcase name="invalid[OpenRecord_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[OpenRecord_Invalid_6]" time="0.0">
+      <testcase name="invalid[OpenRecord_Invalid_6]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
+    </testsuite>
+    <testsuite name="[OpenRecord_Invalid_7]" time="0.015">
+      <testcase name="invalid[OpenRecord_Invalid_7]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[Parameter_Invalid_1]" time="0.016">
+      <testcase name="invalid[Parameter_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Parameter_Invalid_2]" time="0.015">
+      <testcase name="invalid[Parameter_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[Parsing_Invalid_1]" time="0.0">
+      <testcase name="invalid[Parsing_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.0">
+        <skipped>org.junit.AssumptionViolatedException: Test Parsing_Invalid_1 skipped: 608&#13;
+	at org.junit.Assume.assumeTrue(Assume.java:59)&#13;
+	at test.quickcheck.WhileyInvalidTest.beforeMethod(WhileyInvalidTest.java:107)&#13;
+	at jdk.internal.reflect.GeneratedMethodAccessor1.invoke(Unknown Source)&#13;
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)&#13;
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)&#13;
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)&#13;
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)&#13;
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:24)&#13;
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:128)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:27)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:538)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:760)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:460)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:206)&#13;
+&#13;
+</skipped>
+      </testcase>
+    </testsuite>
+    <testsuite name="[Parsing_Invalid_10]" time="0.0">
+      <testcase name="invalid[Parsing_Invalid_10]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
+    </testsuite>
+    <testsuite name="[Parsing_Invalid_11]" time="0.016">
+      <testcase name="invalid[Parsing_Invalid_11]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Parsing_Invalid_12]" time="0.016">
+      <testcase name="invalid[Parsing_Invalid_12]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Parsing_Invalid_15]" time="0.0">
+      <testcase name="invalid[Parsing_Invalid_15]" classname="test.quickcheck.WhileyInvalidTest" time="0.0">
+        <skipped>org.junit.AssumptionViolatedException: Test Parsing_Invalid_15 skipped: 609&#13;
+	at org.junit.Assume.assumeTrue(Assume.java:59)&#13;
+	at test.quickcheck.WhileyInvalidTest.beforeMethod(WhileyInvalidTest.java:107)&#13;
+	at jdk.internal.reflect.GeneratedMethodAccessor1.invoke(Unknown Source)&#13;
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)&#13;
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)&#13;
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)&#13;
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)&#13;
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:24)&#13;
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:128)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:27)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:538)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:760)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:460)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:206)&#13;
+&#13;
+</skipped>
+      </testcase>
+    </testsuite>
+    <testsuite name="[Parsing_Invalid_16]" time="0.015">
+      <testcase name="invalid[Parsing_Invalid_16]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[Parsing_Invalid_2]" time="0.0">
+      <testcase name="invalid[Parsing_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.0">
+        <skipped>org.junit.AssumptionViolatedException: Test Parsing_Invalid_2 skipped: 608&#13;
+	at org.junit.Assume.assumeTrue(Assume.java:59)&#13;
+	at test.quickcheck.WhileyInvalidTest.beforeMethod(WhileyInvalidTest.java:107)&#13;
+	at jdk.internal.reflect.GeneratedMethodAccessor1.invoke(Unknown Source)&#13;
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)&#13;
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)&#13;
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)&#13;
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)&#13;
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:24)&#13;
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:128)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:27)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:538)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:760)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:460)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:206)&#13;
+&#13;
+</skipped>
+      </testcase>
+    </testsuite>
+    <testsuite name="[Parsing_Invalid_21]" time="0.016">
+      <testcase name="invalid[Parsing_Invalid_21]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Parsing_Invalid_23]" time="0.016">
+      <testcase name="invalid[Parsing_Invalid_23]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Parsing_Invalid_24]" time="0.015">
+      <testcase name="invalid[Parsing_Invalid_24]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[Parsing_Invalid_25]" time="0.016">
+      <testcase name="invalid[Parsing_Invalid_25]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Parsing_Invalid_26]" time="0.015">
+      <testcase name="invalid[Parsing_Invalid_26]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[Parsing_Invalid_27]" time="0.0">
+      <testcase name="invalid[Parsing_Invalid_27]" classname="test.quickcheck.WhileyInvalidTest" time="0.0">
+        <skipped>org.junit.AssumptionViolatedException: Test Parsing_Invalid_27 skipped: 609&#13;
+	at org.junit.Assume.assumeTrue(Assume.java:59)&#13;
+	at test.quickcheck.WhileyInvalidTest.beforeMethod(WhileyInvalidTest.java:107)&#13;
+	at jdk.internal.reflect.GeneratedMethodAccessor1.invoke(Unknown Source)&#13;
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)&#13;
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)&#13;
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)&#13;
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)&#13;
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:24)&#13;
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:128)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:27)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:538)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:760)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:460)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:206)&#13;
+&#13;
+</skipped>
+      </testcase>
+    </testsuite>
+    <testsuite name="[Parsing_Invalid_28]" time="0.0">
+      <testcase name="invalid[Parsing_Invalid_28]" classname="test.quickcheck.WhileyInvalidTest" time="0.0">
+        <skipped>org.junit.AssumptionViolatedException: Test Parsing_Invalid_28 skipped: 609&#13;
+	at org.junit.Assume.assumeTrue(Assume.java:59)&#13;
+	at test.quickcheck.WhileyInvalidTest.beforeMethod(WhileyInvalidTest.java:107)&#13;
+	at jdk.internal.reflect.GeneratedMethodAccessor1.invoke(Unknown Source)&#13;
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)&#13;
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)&#13;
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)&#13;
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)&#13;
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:24)&#13;
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:128)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:27)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:538)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:760)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:460)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:206)&#13;
+&#13;
+</skipped>
+      </testcase>
+    </testsuite>
+    <testsuite name="[Parsing_Invalid_29]" time="0.0">
+      <testcase name="invalid[Parsing_Invalid_29]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
+    </testsuite>
+    <testsuite name="[Parsing_Invalid_30]" time="0.016">
+      <testcase name="invalid[Parsing_Invalid_30]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Parsing_Invalid_31]" time="0.016">
+      <testcase name="invalid[Parsing_Invalid_31]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Parsing_Invalid_4]" time="0.015">
+      <testcase name="invalid[Parsing_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[Parsing_Invalid_5]" time="0.032">
+      <testcase name="invalid[Parsing_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.032"/>
+    </testsuite>
+    <testsuite name="[Parsing_Invalid_6]" time="0.031">
+      <testcase name="invalid[Parsing_Invalid_6]" classname="test.quickcheck.WhileyInvalidTest" time="0.031"/>
+    </testsuite>
+    <testsuite name="[Parsing_Invalid_8]" time="0.031">
+      <testcase name="invalid[Parsing_Invalid_8]" classname="test.quickcheck.WhileyInvalidTest" time="0.031"/>
+    </testsuite>
+    <testsuite name="[ProcessAccess_Invalid_1]" time="0.016">
+      <testcase name="invalid[ProcessAccess_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[ProcessAccess_Invalid_2]" time="0.015">
+      <testcase name="invalid[ProcessAccess_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[ProcessAccess_Invalid_3]" time="0.016">
+      <testcase name="invalid[ProcessAccess_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Process_Invalid_1]" time="0.016">
+      <testcase name="invalid[Process_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Property_Invalid_1]" time="0.015">
+      <testcase name="invalid[Property_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[Property_Invalid_2]" time="0.047">
+      <testcase name="invalid[Property_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
+    </testsuite>
+    <testsuite name="[Property_Invalid_3]" time="0.047">
+      <testcase name="invalid[Property_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
+    </testsuite>
+    <testsuite name="[Property_Invalid_4]" time="0.062">
+      <testcase name="invalid[Property_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.062"/>
+    </testsuite>
+    <testsuite name="[Property_Invalid_5]" time="0.016">
+      <testcase name="invalid[Property_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Property_Invalid_6]" time="0.016">
+      <testcase name="invalid[Property_Invalid_6]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Property_Invalid_7]" time="0.015">
+      <testcase name="invalid[Property_Invalid_7]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[Property_Invalid_8]" time="0.047">
+      <testcase name="invalid[Property_Invalid_8]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
+    </testsuite>
+    <testsuite name="[Quantifiers_Invalid_1]" time="0.047">
+      <testcase name="invalid[Quantifiers_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
+    </testsuite>
+    <testsuite name="[Quantifiers_Invalid_2]" time="0.062">
+      <testcase name="invalid[Quantifiers_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.062"/>
+    </testsuite>
+    <testsuite name="[Quantifiers_Invalid_3]" time="0.047">
+      <testcase name="invalid[Quantifiers_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
+    </testsuite>
+    <testsuite name="[Quantifiers_Invalid_4]" time="0.047">
+      <testcase name="invalid[Quantifiers_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
+    </testsuite>
+    <testsuite name="[Quantifiers_Invalid_5]" time="0.047">
+      <testcase name="invalid[Quantifiers_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
+    </testsuite>
+    <testsuite name="[Quantifiers_Invalid_6]" time="0.047">
+      <testcase name="invalid[Quantifiers_Invalid_6]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
+    </testsuite>
+    <testsuite name="[Quantifiers_Invalid_7]" time="0.078">
+      <testcase name="invalid[Quantifiers_Invalid_7]" classname="test.quickcheck.WhileyInvalidTest" time="0.078"/>
+    </testsuite>
+    <testsuite name="[Quantifiers_Invalid_8]" time="0.047">
+      <testcase name="invalid[Quantifiers_Invalid_8]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
+    </testsuite>
+    <testsuite name="[Record_Invalid_1]" time="0.015">
+      <testcase name="invalid[Record_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[Record_Invalid_2]" time="0.016">
+      <testcase name="invalid[Record_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Record_Invalid_3]" time="0.016">
+      <testcase name="invalid[Record_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Record_Invalid_4]" time="0.015">
+      <testcase name="invalid[Record_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[Record_Invalid_5]" time="0.0">
+      <testcase name="invalid[Record_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
+    </testsuite>
+    <testsuite name="[Record_Invalid_6]" time="0.016">
+      <testcase name="invalid[Record_Invalid_6]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[RecursiveType_Invalid_1]" time="0.062">
+      <testcase name="invalid[RecursiveType_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.062"/>
+    </testsuite>
+    <testsuite name="[RecursiveType_Invalid_10]" time="0.063">
+      <testcase name="invalid[RecursiveType_Invalid_10]" classname="test.quickcheck.WhileyInvalidTest" time="0.063"/>
+    </testsuite>
+    <testsuite name="[RecursiveType_Invalid_11]" time="0.0">
+      <testcase name="invalid[RecursiveType_Invalid_11]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
+    </testsuite>
+    <testsuite name="[RecursiveType_Invalid_2]" time="0.0">
+      <testcase name="invalid[RecursiveType_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.0">
+        <skipped>org.junit.AssumptionViolatedException: Test RecursiveType_Invalid_2 skipped: WyTP#26&#13;
+	at org.junit.Assume.assumeTrue(Assume.java:59)&#13;
+	at test.quickcheck.WhileyInvalidTest.beforeMethod(WhileyInvalidTest.java:107)&#13;
+	at jdk.internal.reflect.GeneratedMethodAccessor1.invoke(Unknown Source)&#13;
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)&#13;
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)&#13;
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)&#13;
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)&#13;
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:24)&#13;
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:128)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:27)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:538)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:760)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:460)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:206)&#13;
+&#13;
+</skipped>
+      </testcase>
+    </testsuite>
+    <testsuite name="[RecursiveType_Invalid_3]" time="0.016">
+      <testcase name="invalid[RecursiveType_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[RecursiveType_Invalid_4]" time="0.249">
+      <testcase name="invalid[RecursiveType_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.249"/>
+    </testsuite>
+    <testsuite name="[RecursiveType_Invalid_5]" time="0.016">
+      <testcase name="invalid[RecursiveType_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[RecursiveType_Invalid_7]" time="0.188">
+      <testcase name="invalid[RecursiveType_Invalid_7]" classname="test.quickcheck.WhileyInvalidTest" time="0.188"/>
+    </testsuite>
+    <testsuite name="[RecursiveType_Invalid_8]" time="0.203">
+      <testcase name="invalid[RecursiveType_Invalid_8]" classname="test.quickcheck.WhileyInvalidTest" time="0.203"/>
+    </testsuite>
+    <testsuite name="[RecursiveType_Invalid_9]" time="0.0">
+      <testcase name="invalid[RecursiveType_Invalid_9]" classname="test.quickcheck.WhileyInvalidTest" time="0.0">
+        <skipped>org.junit.AssumptionViolatedException: Test RecursiveType_Invalid_9 skipped: unclassified&#13;
+	at org.junit.Assume.assumeTrue(Assume.java:59)&#13;
+	at test.quickcheck.WhileyInvalidTest.beforeMethod(WhileyInvalidTest.java:107)&#13;
+	at jdk.internal.reflect.GeneratedMethodAccessor1.invoke(Unknown Source)&#13;
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)&#13;
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)&#13;
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)&#13;
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)&#13;
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:24)&#13;
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:128)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:27)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:538)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:760)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:460)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:206)&#13;
+&#13;
+</skipped>
+      </testcase>
+    </testsuite>
+    <testsuite name="[Reference_Subtype_Variant_Invalid_1]" time="0.015">
+      <testcase name="invalid[Reference_Subtype_Variant_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[Remainder_Invalid_1]" time="0.047">
+      <testcase name="invalid[Remainder_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.047">
+        <error>java.lang.ArithmeticException: BigInteger divide by zero&#13;
+	at java.base/java.math.MutableBigInteger.divideKnuth(Unknown Source)&#13;
+	at java.base/java.math.MutableBigInteger.divideKnuth(Unknown Source)&#13;
+	at java.base/java.math.BigInteger.remainderKnuth(Unknown Source)&#13;
+	at java.base/java.math.BigInteger.remainder(Unknown Source)&#13;
+	at wyil.interpreter.ConcreteSemantics$RValue$Int.remainder(ConcreteSemantics.java:413)&#13;
+	at wyil.interpreter.Interpreter.executeIntegerRemainder(Interpreter.java:917)&#13;
+	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:925)&#13;
+	at quickcheck.QCInterpreter.executeMultiReturnExpression(QCInterpreter.java:1203)&#13;
+	at quickcheck.QCInterpreter.executeExpressions(QCInterpreter.java:1166)&#13;
+	at quickcheck.QCInterpreter.executeReturn(QCInterpreter.java:760)&#13;
+	at quickcheck.QCInterpreter.executeStatement(QCInterpreter.java:518)&#13;
+	at quickcheck.QCInterpreter.executeBlock(QCInterpreter.java:467)&#13;
+	at quickcheck.QCInterpreter.execute(QCInterpreter.java:385)&#13;
+	at quickcheck.RunTest.executeTest(RunTest.java:270)&#13;
+	at quickcheck.RunTest.execute(RunTest.java:135)&#13;
+	at test.utils.TestHelper.createRunTest(TestHelper.java:123)&#13;
+	at test.quickcheck.WhileyInvalidTest.invalid(WhileyInvalidTest.java:140)&#13;
+	at jdk.internal.reflect.GeneratedMethodAccessor2.invoke(Unknown Source)&#13;
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)&#13;
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)&#13;
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)&#13;
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)&#13;
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)&#13;
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)&#13;
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:128)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:27)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:538)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:760)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:460)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:206)&#13;
+&#13;
+</error>
+      </testcase>
+    </testsuite>
+    <testsuite name="[Remainder_Invalid_2]" time="0.016">
+      <testcase name="invalid[Remainder_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Remainder_Invalid_3]" time="0.015">
+      <testcase name="invalid[Remainder_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[Requires_Invalid_1]" time="0.047">
+      <testcase name="invalid[Requires_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
+    </testsuite>
+    <testsuite name="[Return_Invalid_1]" time="0.016">
+      <testcase name="invalid[Return_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Return_Invalid_10]" time="0.0">
+      <testcase name="invalid[Return_Invalid_10]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
+    </testsuite>
+    <testsuite name="[Return_Invalid_11]" time="0.015">
+      <testcase name="invalid[Return_Invalid_11]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[Return_Invalid_12]" time="0.016">
+      <testcase name="invalid[Return_Invalid_12]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Return_Invalid_2]" time="0.016">
+      <testcase name="invalid[Return_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Return_Invalid_3]" time="0.015">
+      <testcase name="invalid[Return_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[Return_Invalid_4]" time="0.016">
+      <testcase name="invalid[Return_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Return_Invalid_5]" time="0.0">
+      <testcase name="invalid[Return_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
+    </testsuite>
+    <testsuite name="[Return_Invalid_6]" time="0.016">
+      <testcase name="invalid[Return_Invalid_6]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Return_Invalid_7]" time="0.015">
+      <testcase name="invalid[Return_Invalid_7]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[Return_Invalid_8]" time="0.016">
+      <testcase name="invalid[Return_Invalid_8]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Return_Invalid_9]" time="0.015">
+      <testcase name="invalid[Return_Invalid_9]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[StaticVar_Invalid_1]" time="0.016">
+      <testcase name="invalid[StaticVar_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[StaticVar_Invalid_2]" time="0.0">
+      <testcase name="invalid[StaticVar_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
+    </testsuite>
+    <testsuite name="[StaticVar_Invalid_3]" time="0.016">
+      <testcase name="invalid[StaticVar_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[StaticVar_Invalid_4]" time="0.015">
+      <testcase name="invalid[StaticVar_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[StaticVar_Invalid_5]" time="0.047">
+      <testcase name="invalid[StaticVar_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
+    </testsuite>
+    <testsuite name="[StaticVar_Invalid_6]" time="0.0">
+      <testcase name="invalid[StaticVar_Invalid_6]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
+    </testsuite>
+    <testsuite name="[StaticVar_Invalid_7]" time="0.016">
+      <testcase name="invalid[StaticVar_Invalid_7]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[StaticVar_Invalid_8]" time="0.015">
+      <testcase name="invalid[StaticVar_Invalid_8]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[StaticVar_Invalid_9]" time="0.016">
+      <testcase name="invalid[StaticVar_Invalid_9]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Subtype_Invalid_1]" time="0.063">
+      <testcase name="invalid[Subtype_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.063"/>
+    </testsuite>
+    <testsuite name="[Subtype_Invalid_2]" time="0.156">
+      <testcase name="invalid[Subtype_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.156"/>
+    </testsuite>
+    <testsuite name="[Subtype_Invalid_3]" time="0.078">
+      <testcase name="invalid[Subtype_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.078"/>
+    </testsuite>
+    <testsuite name="[Subtype_Invalid_4]" time="0.062">
+      <testcase name="invalid[Subtype_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.062"/>
+    </testsuite>
+    <testsuite name="[Subtype_Invalid_5]" time="0.063">
+      <testcase name="invalid[Subtype_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.063"/>
+    </testsuite>
+    <testsuite name="[Subtype_Invalid_6]" time="0.062">
+      <testcase name="invalid[Subtype_Invalid_6]" classname="test.quickcheck.WhileyInvalidTest" time="0.062"/>
+    </testsuite>
+    <testsuite name="[Subtype_Invalid_7]" time="0.063">
+      <testcase name="invalid[Subtype_Invalid_7]" classname="test.quickcheck.WhileyInvalidTest" time="0.063"/>
+    </testsuite>
+    <testsuite name="[Subtype_Invalid_8]" time="0.094">
+      <testcase name="invalid[Subtype_Invalid_8]" classname="test.quickcheck.WhileyInvalidTest" time="0.094"/>
+    </testsuite>
+    <testsuite name="[Subtype_Invalid_9]" time="0.093">
+      <testcase name="invalid[Subtype_Invalid_9]" classname="test.quickcheck.WhileyInvalidTest" time="0.093"/>
+    </testsuite>
+    <testsuite name="[Switch_Invalid_1]" time="0.016">
+      <testcase name="invalid[Switch_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Switch_Invalid_2]" time="0.015">
+      <testcase name="invalid[Switch_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[Switch_Invalid_3]" time="0.0">
+      <testcase name="invalid[Switch_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
+    </testsuite>
+    <testsuite name="[Switch_Invalid_4]" time="0.016">
+      <testcase name="invalid[Switch_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Switch_Invalid_5]" time="0.016">
+      <testcase name="invalid[Switch_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Switch_Invalid_6]" time="0.015">
+      <testcase name="invalid[Switch_Invalid_6]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[Switch_Invalid_7]" time="0.016">
+      <testcase name="invalid[Switch_Invalid_7]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[TupleAssign_Invalid_1]" time="0.031">
+      <testcase name="invalid[TupleAssign_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.031"/>
+    </testsuite>
+    <testsuite name="[TupleAssign_Invalid_2]" time="0.078">
+      <testcase name="invalid[TupleAssign_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.078"/>
+    </testsuite>
+    <testsuite name="[TupleAssign_Invalid_3]" time="0.047">
+      <testcase name="invalid[TupleAssign_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
+    </testsuite>
+    <testsuite name="[TupleDefine_Invalid_1]" time="0.016">
+      <testcase name="invalid[TupleDefine_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[TupleDefine_Invalid_2]" time="0.062">
+      <testcase name="invalid[TupleDefine_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.062"/>
+    </testsuite>
+    <testsuite name="[Tuple_Invalid_3]" time="0.078">
+      <testcase name="invalid[Tuple_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.078"/>
+    </testsuite>
+    <testsuite name="[Tuple_Invalid_4]" time="0.094">
+      <testcase name="invalid[Tuple_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.094"/>
+    </testsuite>
+    <testsuite name="[Tuple_Invalid_5]" time="0.109">
+      <testcase name="invalid[Tuple_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.109"/>
+    </testsuite>
+    <testsuite name="[Tuple_Invalid_6]" time="0.016">
+      <testcase name="invalid[Tuple_Invalid_6]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Tuple_Invalid_7]" time="0.016">
+      <testcase name="invalid[Tuple_Invalid_7]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[TypeEquals_Invalid_1]" time="0.015">
+      <testcase name="invalid[TypeEquals_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[TypeEquals_Invalid_10]" time="0.0">
+      <testcase name="invalid[TypeEquals_Invalid_10]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
+    </testsuite>
+    <testsuite name="[TypeEquals_Invalid_11]" time="0.016">
+      <testcase name="invalid[TypeEquals_Invalid_11]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[TypeEquals_Invalid_12]" time="0.047">
+      <testcase name="invalid[TypeEquals_Invalid_12]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
+    </testsuite>
+    <testsuite name="[TypeEquals_Invalid_13]" time="0.015">
+      <testcase name="invalid[TypeEquals_Invalid_13]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[TypeEquals_Invalid_2]" time="0.016">
+      <testcase name="invalid[TypeEquals_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[TypeEquals_Invalid_5]" time="0.094">
+      <testcase name="invalid[TypeEquals_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.094"/>
+    </testsuite>
+    <testsuite name="[TypeEquals_Invalid_6]" time="0.047">
+      <testcase name="invalid[TypeEquals_Invalid_6]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
+    </testsuite>
+    <testsuite name="[TypeEquals_Invalid_7]" time="0.015">
+      <testcase name="invalid[TypeEquals_Invalid_7]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[TypeEquals_Invalid_8]" time="0.016">
+      <testcase name="invalid[TypeEquals_Invalid_8]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[TypeEquals_Invalid_9]" time="0.016">
+      <testcase name="invalid[TypeEquals_Invalid_9]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Type_Invalid_1]" time="0.0">
+      <testcase name="invalid[Type_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
+    </testsuite>
+    <testsuite name="[Type_Invalid_10]" time="0.0">
+      <testcase name="invalid[Type_Invalid_10]" classname="test.quickcheck.WhileyInvalidTest" time="0.0">
+        <skipped>org.junit.AssumptionViolatedException: Test Type_Invalid_10 skipped: 823&#13;
+	at org.junit.Assume.assumeTrue(Assume.java:59)&#13;
+	at test.quickcheck.WhileyInvalidTest.beforeMethod(WhileyInvalidTest.java:107)&#13;
+	at jdk.internal.reflect.GeneratedMethodAccessor1.invoke(Unknown Source)&#13;
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)&#13;
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)&#13;
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)&#13;
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)&#13;
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:24)&#13;
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:128)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:27)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:538)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:760)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:460)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:206)&#13;
+&#13;
+</skipped>
+      </testcase>
+    </testsuite>
+    <testsuite name="[Type_Invalid_11]" time="0.0">
+      <testcase name="invalid[Type_Invalid_11]" classname="test.quickcheck.WhileyInvalidTest" time="0.0">
+        <skipped>org.junit.AssumptionViolatedException: Test Type_Invalid_11 skipped: 793&#13;
+	at org.junit.Assume.assumeTrue(Assume.java:59)&#13;
+	at test.quickcheck.WhileyInvalidTest.beforeMethod(WhileyInvalidTest.java:107)&#13;
+	at jdk.internal.reflect.GeneratedMethodAccessor1.invoke(Unknown Source)&#13;
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)&#13;
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)&#13;
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)&#13;
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)&#13;
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:24)&#13;
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:128)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:27)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:538)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:760)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:460)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:206)&#13;
+&#13;
+</skipped>
+      </testcase>
+    </testsuite>
+    <testsuite name="[Type_Invalid_2]" time="0.015">
+      <testcase name="invalid[Type_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[Type_Invalid_3]" time="0.016">
+      <testcase name="invalid[Type_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Type_Invalid_4]" time="0.015">
+      <testcase name="invalid[Type_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[Type_Invalid_5]" time="0.0">
+      <testcase name="invalid[Type_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
+    </testsuite>
+    <testsuite name="[Type_Invalid_6]" time="0.016">
+      <testcase name="invalid[Type_Invalid_6]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Type_Invalid_7]" time="0.016">
+      <testcase name="invalid[Type_Invalid_7]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[Type_Invalid_8]" time="0.015">
+      <testcase name="invalid[Type_Invalid_8]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[Type_Invalid_9]" time="0.016">
+      <testcase name="invalid[Type_Invalid_9]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[UnionType_Invalid_1]" time="0.0">
+      <testcase name="invalid[UnionType_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
+    </testsuite>
+    <testsuite name="[UnionType_Invalid_10]" time="0.047">
+      <testcase name="invalid[UnionType_Invalid_10]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
+    </testsuite>
+    <testsuite name="[UnionType_Invalid_11]" time="0.015">
+      <testcase name="invalid[UnionType_Invalid_11]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[UnionType_Invalid_12]" time="0.016">
+      <testcase name="invalid[UnionType_Invalid_12]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[UnionType_Invalid_13]" time="0.0">
+      <testcase name="invalid[UnionType_Invalid_13]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
+    </testsuite>
+    <testsuite name="[UnionType_Invalid_14]" time="0.016">
+      <testcase name="invalid[UnionType_Invalid_14]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[UnionType_Invalid_15]" time="0.015">
+      <testcase name="invalid[UnionType_Invalid_15]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[UnionType_Invalid_2]" time="0.016">
+      <testcase name="invalid[UnionType_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[UnionType_Invalid_3]" time="0.015">
+      <testcase name="invalid[UnionType_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[UnionType_Invalid_4]" time="0.0">
+      <testcase name="invalid[UnionType_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
+    </testsuite>
+    <testsuite name="[UnionType_Invalid_5]" time="0.016">
+      <testcase name="invalid[UnionType_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[UnionType_Invalid_6]" time="0.016">
+      <testcase name="invalid[UnionType_Invalid_6]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[UnionType_Invalid_7]" time="0.093">
+      <testcase name="invalid[UnionType_Invalid_7]" classname="test.quickcheck.WhileyInvalidTest" time="0.093"/>
+    </testsuite>
+    <testsuite name="[UnionType_Invalid_8]" time="0.047">
+      <testcase name="invalid[UnionType_Invalid_8]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
+    </testsuite>
+    <testsuite name="[UnionType_Invalid_9]" time="0.063">
+      <testcase name="invalid[UnionType_Invalid_9]" classname="test.quickcheck.WhileyInvalidTest" time="0.063"/>
+    </testsuite>
+    <testsuite name="[VarDecl_Invalid_1]" time="0.0">
+      <testcase name="invalid[VarDecl_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
+    </testsuite>
+    <testsuite name="[VarDecl_Invalid_2]" time="0.047">
+      <testcase name="invalid[VarDecl_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.047">
+        <error>java.lang.ArithmeticException: BigInteger divide by zero&#13;
+	at java.base/java.math.MutableBigInteger.divideKnuth(Unknown Source)&#13;
+	at java.base/java.math.BigInteger.divideKnuth(Unknown Source)&#13;
+	at java.base/java.math.BigInteger.divide(Unknown Source)&#13;
+	at wyil.interpreter.ConcreteSemantics$RValue$Int.divide(ConcreteSemantics.java:407)&#13;
+	at wyil.interpreter.Interpreter.executeIntegerDivision(Interpreter.java:911)&#13;
+	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:922)&#13;
+	at quickcheck.QCInterpreter.executeVariableDeclaration(QCInterpreter.java:828)&#13;
+	at quickcheck.QCInterpreter.executeStatement(QCInterpreter.java:525)&#13;
+	at quickcheck.QCInterpreter.executeBlock(QCInterpreter.java:467)&#13;
+	at quickcheck.QCInterpreter.execute(QCInterpreter.java:297)&#13;
+	at quickcheck.QCInterpreter.executeInvoke(QCInterpreter.java:240)&#13;
+	at quickcheck.QCInterpreter.executeStatement(QCInterpreter.java:511)&#13;
+	at quickcheck.QCInterpreter.executeBlock(QCInterpreter.java:467)&#13;
+	at quickcheck.QCInterpreter.execute(QCInterpreter.java:385)&#13;
+	at quickcheck.RunTest.executeTest(RunTest.java:270)&#13;
+	at quickcheck.RunTest.execute(RunTest.java:135)&#13;
+	at test.utils.TestHelper.createRunTest(TestHelper.java:123)&#13;
+	at test.quickcheck.WhileyInvalidTest.invalid(WhileyInvalidTest.java:133)&#13;
+	at jdk.internal.reflect.GeneratedMethodAccessor2.invoke(Unknown Source)&#13;
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)&#13;
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)&#13;
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)&#13;
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)&#13;
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)&#13;
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)&#13;
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:128)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:27)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:538)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:760)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:460)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:206)&#13;
+&#13;
+</error>
+      </testcase>
+    </testsuite>
+    <testsuite name="[VarDecl_Invalid_3]" time="0.015">
+      <testcase name="invalid[VarDecl_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[VarDecl_Invalid_4]" time="0.032">
+      <testcase name="invalid[VarDecl_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.032"/>
+    </testsuite>
+    <testsuite name="[While_Invalid_1]" time="0.0">
+      <testcase name="invalid[While_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
+    </testsuite>
+    <testsuite name="[While_Invalid_10]" time="0.031">
+      <testcase name="invalid[While_Invalid_10]" classname="test.quickcheck.WhileyInvalidTest" time="0.031">
+        <error>java.lang.ArrayIndexOutOfBoundsException: 0&#13;
+	at wyil.interpreter.ConcreteSemantics$RValue$Array.write(ConcreteSemantics.java:498)&#13;
+	at wyil.interpreter.ConcreteSemantics$LValue$Array.write(ConcreteSemantics.java:837)&#13;
+	at quickcheck.QCInterpreter.executeAssign(QCInterpreter.java:543)&#13;
+	at quickcheck.QCInterpreter.executeStatement(QCInterpreter.java:493)&#13;
+	at quickcheck.QCInterpreter.executeBlock(QCInterpreter.java:467)&#13;
+	at quickcheck.QCInterpreter.executeWhile(QCInterpreter.java:732)&#13;
+	at quickcheck.QCInterpreter.executeStatement(QCInterpreter.java:516)&#13;
+	at quickcheck.QCInterpreter.executeBlock(QCInterpreter.java:467)&#13;
+	at quickcheck.QCInterpreter.execute(QCInterpreter.java:385)&#13;
+	at quickcheck.RunTest.executeTest(RunTest.java:270)&#13;
+	at quickcheck.RunTest.execute(RunTest.java:135)&#13;
+	at test.utils.TestHelper.createRunTest(TestHelper.java:123)&#13;
+	at test.quickcheck.WhileyInvalidTest.invalid(WhileyInvalidTest.java:133)&#13;
+	at jdk.internal.reflect.GeneratedMethodAccessor2.invoke(Unknown Source)&#13;
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)&#13;
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)&#13;
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)&#13;
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)&#13;
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)&#13;
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)&#13;
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:128)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:27)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:538)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:760)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:460)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:206)&#13;
+&#13;
+</error>
+      </testcase>
+    </testsuite>
+    <testsuite name="[While_Invalid_11]" time="0.125">
+      <testcase name="invalid[While_Invalid_11]" classname="test.quickcheck.WhileyInvalidTest" time="0.125"/>
+    </testsuite>
+    <testsuite name="[While_Invalid_12]" time="0.031">
+      <testcase name="invalid[While_Invalid_12]" classname="test.quickcheck.WhileyInvalidTest" time="0.031"/>
+    </testsuite>
+    <testsuite name="[While_Invalid_13]" time="0.062">
+      <testcase name="invalid[While_Invalid_13]" classname="test.quickcheck.WhileyInvalidTest" time="0.062"/>
+    </testsuite>
+    <testsuite name="[While_Invalid_14]" time="0.016">
+      <testcase name="invalid[While_Invalid_14]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[While_Invalid_15]" time="0.109">
+      <testcase name="invalid[While_Invalid_15]" classname="test.quickcheck.WhileyInvalidTest" time="0.109"/>
+    </testsuite>
+    <testsuite name="[While_Invalid_16]" time="0.016">
+      <testcase name="invalid[While_Invalid_16]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[While_Invalid_17]" time="0.047">
+      <testcase name="invalid[While_Invalid_17]" classname="test.quickcheck.WhileyInvalidTest" time="0.047">
+        <error>java.lang.ArrayIndexOutOfBoundsException: 2&#13;
+	at wyil.interpreter.ConcreteSemantics$RValue$Array.write(ConcreteSemantics.java:498)&#13;
+	at wyil.interpreter.ConcreteSemantics$LValue$Array.write(ConcreteSemantics.java:837)&#13;
+	at quickcheck.QCInterpreter.executeAssign(QCInterpreter.java:543)&#13;
+	at quickcheck.QCInterpreter.executeStatement(QCInterpreter.java:493)&#13;
+	at quickcheck.QCInterpreter.executeBlock(QCInterpreter.java:467)&#13;
+	at quickcheck.QCInterpreter.executeWhile(QCInterpreter.java:732)&#13;
+	at quickcheck.QCInterpreter.executeStatement(QCInterpreter.java:516)&#13;
+	at quickcheck.QCInterpreter.executeBlock(QCInterpreter.java:467)&#13;
+	at quickcheck.QCInterpreter.execute(QCInterpreter.java:297)&#13;
+	at quickcheck.QCInterpreter.executeInvoke(QCInterpreter.java:240)&#13;
+	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:872)&#13;
+	at wyil.interpreter.Interpreter.executeEqual(Interpreter.java:921)&#13;
+	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:904)&#13;
+	at wyil.interpreter.Interpreter.checkInvariants(Interpreter.java:1311)&#13;
+	at quickcheck.QCInterpreter.executeAssert(QCInterpreter.java:560)&#13;
+	at quickcheck.QCInterpreter.executeStatement(QCInterpreter.java:489)&#13;
+	at quickcheck.QCInterpreter.executeBlock(QCInterpreter.java:467)&#13;
+	at quickcheck.QCInterpreter.execute(QCInterpreter.java:385)&#13;
+	at quickcheck.RunTest.executeTest(RunTest.java:270)&#13;
+	at quickcheck.RunTest.execute(RunTest.java:135)&#13;
+	at test.utils.TestHelper.createRunTest(TestHelper.java:123)&#13;
+	at test.quickcheck.WhileyInvalidTest.invalid(WhileyInvalidTest.java:133)&#13;
+	at jdk.internal.reflect.GeneratedMethodAccessor2.invoke(Unknown Source)&#13;
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)&#13;
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)&#13;
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)&#13;
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)&#13;
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)&#13;
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)&#13;
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:128)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:27)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:538)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:760)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:460)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:206)&#13;
+&#13;
+</error>
+      </testcase>
+    </testsuite>
+    <testsuite name="[While_Invalid_18]" time="0.078">
+      <testcase name="invalid[While_Invalid_18]" classname="test.quickcheck.WhileyInvalidTest" time="0.078"/>
+    </testsuite>
+    <testsuite name="[While_Invalid_19]" time="0.062">
+      <testcase name="invalid[While_Invalid_19]" classname="test.quickcheck.WhileyInvalidTest" time="0.062">
+        <error>java.lang.NegativeArraySizeException&#13;
+	at wyil.interpreter.Interpreter.executeArrayRange(Interpreter.java:1083)&#13;
+	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:971)&#13;
+	at quickcheck.QCInterpreter.executeQuantifier(QCInterpreter.java:1101)&#13;
+	at quickcheck.QCInterpreter.executeQuantifier(QCInterpreter.java:1076)&#13;
+	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:901)&#13;
+	at wyil.interpreter.Interpreter.checkInvariants(Interpreter.java:1293)&#13;
+	at quickcheck.QCInterpreter.execute(QCInterpreter.java:310)&#13;
+	at quickcheck.QCInterpreter.executeInvoke(QCInterpreter.java:240)&#13;
+	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:872)&#13;
+	at wyil.interpreter.Interpreter.executeLogicalAnd(Interpreter.java:966)&#13;
+	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:888)&#13;
+	at wyil.interpreter.Interpreter.checkInvariants(Interpreter.java:1293)&#13;
+	at quickcheck.RunTest.executeTest(RunTest.java:288)&#13;
+	at quickcheck.RunTest.execute(RunTest.java:135)&#13;
+	at test.utils.TestHelper.createRunTest(TestHelper.java:123)&#13;
+	at test.quickcheck.WhileyInvalidTest.invalid(WhileyInvalidTest.java:133)&#13;
+	at jdk.internal.reflect.GeneratedMethodAccessor2.invoke(Unknown Source)&#13;
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)&#13;
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)&#13;
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)&#13;
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)&#13;
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)&#13;
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)&#13;
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)&#13;
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:128)&#13;
+	at org.junit.runners.Suite.runChild(Suite.java:27)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:538)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:760)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:460)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:206)&#13;
+&#13;
+</error>
+      </testcase>
+    </testsuite>
+    <testsuite name="[While_Invalid_2]" time="0.016">
+      <testcase name="invalid[While_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[While_Invalid_20]" time="0.25">
+      <testcase name="invalid[While_Invalid_20]" classname="test.quickcheck.WhileyInvalidTest" time="0.25"/>
+    </testsuite>
+    <testsuite name="[While_Invalid_21]" time="0.5">
+      <testcase name="invalid[While_Invalid_21]" classname="test.quickcheck.WhileyInvalidTest" time="0.5"/>
+    </testsuite>
+    <testsuite name="[While_Invalid_22]" time="0.125">
+      <testcase name="invalid[While_Invalid_22]" classname="test.quickcheck.WhileyInvalidTest" time="0.125"/>
+    </testsuite>
+    <testsuite name="[While_Invalid_23]" time="0.203">
+      <testcase name="invalid[While_Invalid_23]" classname="test.quickcheck.WhileyInvalidTest" time="0.203"/>
+    </testsuite>
+    <testsuite name="[While_Invalid_3]" time="0.016">
+      <testcase name="invalid[While_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[While_Invalid_4]" time="0.015">
+      <testcase name="invalid[While_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+    <testsuite name="[While_Invalid_5]" time="0.0">
+      <testcase name="invalid[While_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
+    </testsuite>
+    <testsuite name="[While_Invalid_6]" time="0.016">
+      <testcase name="invalid[While_Invalid_6]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[While_Invalid_7]" time="0.062">
+      <testcase name="invalid[While_Invalid_7]" classname="test.quickcheck.WhileyInvalidTest" time="0.062"/>
+    </testsuite>
+    <testsuite name="[While_Invalid_8]" time="0.047">
+      <testcase name="invalid[While_Invalid_8]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
+    </testsuite>
+    <testsuite name="[While_Invalid_9]" time="0.016">
+      <testcase name="invalid[While_Invalid_9]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    </testsuite>
+    <testsuite name="[XOR_Invalid_1]" time="0.015">
+      <testcase name="invalid[XOR_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    </testsuite>
+  </testsuite>
+</testrun>

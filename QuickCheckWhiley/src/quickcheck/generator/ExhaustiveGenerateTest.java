@@ -35,9 +35,7 @@ public class ExhaustiveGenerateTest implements GenerateTest{
 	 *  A list of generators, each corresponding to a parameter in the function/method
 	 */
 	private List<Generator> parameterGenerators;
-	/**
-	 * The last parameters used to create a test
-	 */
+	/** The last parameters used to create a test */
 	private RValue[] parameters;
 
 	private BigInteger totalCombinations;
@@ -49,6 +47,7 @@ public class ExhaustiveGenerateTest implements GenerateTest{
 	private BigInteger lowerLimit;
 	private BigInteger upperLimit;
 
+	/** All the user created types that are recursive structures */
 	private Map<Name, Integer> recursiveType = new HashMap<Name, Integer>();
 	
 	public ExhaustiveGenerateTest(Tuple<Decl.Variable> valuesToGenerate, Interpreter interpreter, int numTests, BigInteger lowerLimit, BigInteger upperLimit) throws IntegerRangeException {

@@ -1,25 +1,25 @@
-<?xml version="1.0" encoding="UTF-8"?><testrun name="Rerun test.quickcheck.WhileyInvalidTest" project="QuickCheckWhiley" tests="355" started="355" failures="0" errors="12" ignored="0">
-  <testsuite name="test.quickcheck.WhileyInvalidTest" time="11.191">
-    <testsuite name="[AddressExpression_Invalid_1]" time="0.078">
-      <testcase name="invalid[AddressExpression_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.078"/>
+<?xml version="1.0" encoding="UTF-8"?><testrun name="WhileyInvalidTest" project="QuickCheckWhiley" tests="355" started="355" failures="0" errors="12" ignored="0">
+  <testsuite name="test.quickcheck.WhileyInvalidTest" time="11.398">
+    <testsuite name="[AddressExpression_Invalid_1]" time="0.125">
+      <testcase name="invalid[AddressExpression_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.125"/>
     </testsuite>
-    <testsuite name="[AddressExpression_Invalid_2]" time="0.015">
-      <testcase name="invalid[AddressExpression_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    <testsuite name="[AddressExpression_Invalid_2]" time="0.016">
+      <testcase name="invalid[AddressExpression_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[ArrayAccess_Invalid_1]" time="0.016">
-      <testcase name="invalid[ArrayAccess_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    <testsuite name="[ArrayAccess_Invalid_1]" time="0.031">
+      <testcase name="invalid[ArrayAccess_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.031"/>
     </testsuite>
     <testsuite name="[ArrayAccess_Invalid_2]" time="0.141">
       <testcase name="invalid[ArrayAccess_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.141"/>
     </testsuite>
-    <testsuite name="[ArrayAccess_Invalid_3]" time="0.015">
-      <testcase name="invalid[ArrayAccess_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    <testsuite name="[ArrayAccess_Invalid_3]" time="0.031">
+      <testcase name="invalid[ArrayAccess_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.031"/>
     </testsuite>
-    <testsuite name="[ArrayAccess_Invalid_4]" time="0.078">
-      <testcase name="invalid[ArrayAccess_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.078"/>
+    <testsuite name="[ArrayAccess_Invalid_4]" time="0.063">
+      <testcase name="invalid[ArrayAccess_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.063"/>
     </testsuite>
-    <testsuite name="[ArrayAccess_Invalid_5]" time="0.078">
-      <testcase name="invalid[ArrayAccess_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.078"/>
+    <testsuite name="[ArrayAccess_Invalid_5]" time="0.093">
+      <testcase name="invalid[ArrayAccess_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.093"/>
     </testsuite>
     <testsuite name="[ArrayAssign_Invalid_1]" time="0.016">
       <testcase name="invalid[ArrayAssign_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
@@ -42,38 +42,38 @@
     <testsuite name="[ArrayEquals_Invalid_1]" time="0.047">
       <testcase name="invalid[ArrayEquals_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
     </testsuite>
-    <testsuite name="[ArrayGenerator_Invalid_1]" time="0.047">
-      <testcase name="invalid[ArrayGenerator_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
+    <testsuite name="[ArrayGenerator_Invalid_1]" time="0.063">
+      <testcase name="invalid[ArrayGenerator_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.063"/>
     </testsuite>
-    <testsuite name="[ArrayGenerator_Invalid_2]" time="0.047">
-      <testcase name="invalid[ArrayGenerator_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
+    <testsuite name="[ArrayGenerator_Invalid_2]" time="0.063">
+      <testcase name="invalid[ArrayGenerator_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.063"/>
     </testsuite>
-    <testsuite name="[ArrayGenerator_Invalid_3]" time="0.016">
-      <testcase name="invalid[ArrayGenerator_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    <testsuite name="[ArrayGenerator_Invalid_3]" time="0.031">
+      <testcase name="invalid[ArrayGenerator_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.031"/>
     </testsuite>
-    <testsuite name="[ArrayGenerator_Invalid_4]" time="0.015">
-      <testcase name="invalid[ArrayGenerator_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    <testsuite name="[ArrayGenerator_Invalid_4]" time="0.031">
+      <testcase name="invalid[ArrayGenerator_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.031"/>
     </testsuite>
     <testsuite name="[ArrayLength_Invalid_1]" time="0.047">
       <testcase name="invalid[ArrayLength_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
     </testsuite>
-    <testsuite name="[ArrayLength_Invalid_2]" time="0.047">
-      <testcase name="invalid[ArrayLength_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
+    <testsuite name="[ArrayLength_Invalid_2]" time="0.062">
+      <testcase name="invalid[ArrayLength_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.062"/>
     </testsuite>
-    <testsuite name="[ArrayLength_Invalid_3]" time="0.141">
-      <testcase name="invalid[ArrayLength_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.141"/>
+    <testsuite name="[ArrayLength_Invalid_3]" time="0.109">
+      <testcase name="invalid[ArrayLength_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.109"/>
     </testsuite>
-    <testsuite name="[ArrayUpdate_Invalid_1]" time="0.046">
-      <testcase name="invalid[ArrayUpdate_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.046">
+    <testsuite name="[ArrayUpdate_Invalid_1]" time="0.047">
+      <testcase name="invalid[ArrayUpdate_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.047">
         <error>java.lang.ArrayIndexOutOfBoundsException: 0&#13;
 	at wyil.interpreter.ConcreteSemantics$RValue$Array.write(ConcreteSemantics.java:498)&#13;
 	at wyil.interpreter.ConcreteSemantics$LValue$Array.write(ConcreteSemantics.java:837)&#13;
-	at quickcheck.QCInterpreter.executeAssign(QCInterpreter.java:543)&#13;
-	at quickcheck.QCInterpreter.executeStatement(QCInterpreter.java:493)&#13;
-	at quickcheck.QCInterpreter.executeBlock(QCInterpreter.java:467)&#13;
-	at quickcheck.QCInterpreter.execute(QCInterpreter.java:385)&#13;
-	at quickcheck.RunTest.executeTest(RunTest.java:270)&#13;
-	at quickcheck.RunTest.execute(RunTest.java:135)&#13;
+	at quickcheck.QCInterpreter.executeAssign(QCInterpreter.java:541)&#13;
+	at quickcheck.QCInterpreter.executeStatement(QCInterpreter.java:491)&#13;
+	at quickcheck.QCInterpreter.executeBlock(QCInterpreter.java:465)&#13;
+	at quickcheck.QCInterpreter.execute(QCInterpreter.java:383)&#13;
+	at quickcheck.RunTest.executeTest(RunTest.java:277)&#13;
+	at quickcheck.RunTest.execute(RunTest.java:136)&#13;
 	at test.utils.TestHelper.createRunTest(TestHelper.java:123)&#13;
 	at test.quickcheck.WhileyInvalidTest.invalid(WhileyInvalidTest.java:133)&#13;
 	at jdk.internal.reflect.GeneratedMethodAccessor2.invoke(Unknown Source)&#13;
@@ -114,20 +114,20 @@
     <testsuite name="[Array_Invalid_1]" time="0.016">
       <testcase name="invalid[Array_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[Array_Invalid_10]" time="0.063">
-      <testcase name="invalid[Array_Invalid_10]" classname="test.quickcheck.WhileyInvalidTest" time="0.063"/>
+    <testsuite name="[Array_Invalid_10]" time="0.078">
+      <testcase name="invalid[Array_Invalid_10]" classname="test.quickcheck.WhileyInvalidTest" time="0.078"/>
     </testsuite>
-    <testsuite name="[Array_Invalid_11]" time="0.093">
-      <testcase name="invalid[Array_Invalid_11]" classname="test.quickcheck.WhileyInvalidTest" time="0.093"/>
+    <testsuite name="[Array_Invalid_11]" time="0.078">
+      <testcase name="invalid[Array_Invalid_11]" classname="test.quickcheck.WhileyInvalidTest" time="0.078"/>
     </testsuite>
-    <testsuite name="[Array_Invalid_12]" time="0.078">
-      <testcase name="invalid[Array_Invalid_12]" classname="test.quickcheck.WhileyInvalidTest" time="0.078"/>
+    <testsuite name="[Array_Invalid_12]" time="0.094">
+      <testcase name="invalid[Array_Invalid_12]" classname="test.quickcheck.WhileyInvalidTest" time="0.094"/>
     </testsuite>
-    <testsuite name="[Array_Invalid_13]" time="0.079">
-      <testcase name="invalid[Array_Invalid_13]" classname="test.quickcheck.WhileyInvalidTest" time="0.079"/>
+    <testsuite name="[Array_Invalid_13]" time="0.078">
+      <testcase name="invalid[Array_Invalid_13]" classname="test.quickcheck.WhileyInvalidTest" time="0.078"/>
     </testsuite>
-    <testsuite name="[Array_Invalid_14]" time="0.078">
-      <testcase name="invalid[Array_Invalid_14]" classname="test.quickcheck.WhileyInvalidTest" time="0.078"/>
+    <testsuite name="[Array_Invalid_14]" time="0.062">
+      <testcase name="invalid[Array_Invalid_14]" classname="test.quickcheck.WhileyInvalidTest" time="0.062"/>
     </testsuite>
     <testsuite name="[Array_Invalid_15]" time="0.078">
       <testcase name="invalid[Array_Invalid_15]" classname="test.quickcheck.WhileyInvalidTest" time="0.078"/>
@@ -135,41 +135,41 @@
     <testsuite name="[Array_Invalid_16]" time="0.078">
       <testcase name="invalid[Array_Invalid_16]" classname="test.quickcheck.WhileyInvalidTest" time="0.078"/>
     </testsuite>
-    <testsuite name="[Array_Invalid_17]" time="0.078">
-      <testcase name="invalid[Array_Invalid_17]" classname="test.quickcheck.WhileyInvalidTest" time="0.078"/>
+    <testsuite name="[Array_Invalid_17]" time="0.094">
+      <testcase name="invalid[Array_Invalid_17]" classname="test.quickcheck.WhileyInvalidTest" time="0.094"/>
     </testsuite>
-    <testsuite name="[Array_Invalid_18]" time="0.062">
-      <testcase name="invalid[Array_Invalid_18]" classname="test.quickcheck.WhileyInvalidTest" time="0.062"/>
+    <testsuite name="[Array_Invalid_18]" time="0.063">
+      <testcase name="invalid[Array_Invalid_18]" classname="test.quickcheck.WhileyInvalidTest" time="0.063"/>
     </testsuite>
-    <testsuite name="[Array_Invalid_19]" time="0.063">
-      <testcase name="invalid[Array_Invalid_19]" classname="test.quickcheck.WhileyInvalidTest" time="0.063"/>
+    <testsuite name="[Array_Invalid_19]" time="0.141">
+      <testcase name="invalid[Array_Invalid_19]" classname="test.quickcheck.WhileyInvalidTest" time="0.141"/>
     </testsuite>
-    <testsuite name="[Array_Invalid_2]" time="0.016">
-      <testcase name="invalid[Array_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    <testsuite name="[Array_Invalid_2]" time="0.015">
+      <testcase name="invalid[Array_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
     </testsuite>
-    <testsuite name="[Array_Invalid_20]" time="0.078">
-      <testcase name="invalid[Array_Invalid_20]" classname="test.quickcheck.WhileyInvalidTest" time="0.078"/>
+    <testsuite name="[Array_Invalid_20]" time="0.062">
+      <testcase name="invalid[Array_Invalid_20]" classname="test.quickcheck.WhileyInvalidTest" time="0.062"/>
     </testsuite>
-    <testsuite name="[Array_Invalid_21]" time="0.062">
-      <testcase name="invalid[Array_Invalid_21]" classname="test.quickcheck.WhileyInvalidTest" time="0.062"/>
+    <testsuite name="[Array_Invalid_21]" time="0.063">
+      <testcase name="invalid[Array_Invalid_21]" classname="test.quickcheck.WhileyInvalidTest" time="0.063"/>
     </testsuite>
-    <testsuite name="[Array_Invalid_22]" time="0.063">
-      <testcase name="invalid[Array_Invalid_22]" classname="test.quickcheck.WhileyInvalidTest" time="0.063"/>
+    <testsuite name="[Array_Invalid_22]" time="0.078">
+      <testcase name="invalid[Array_Invalid_22]" classname="test.quickcheck.WhileyInvalidTest" time="0.078"/>
     </testsuite>
-    <testsuite name="[Array_Invalid_23]" time="0.1">
-      <testcase name="invalid[Array_Invalid_23]" classname="test.quickcheck.WhileyInvalidTest" time="0.1"/>
+    <testsuite name="[Array_Invalid_23]" time="0.047">
+      <testcase name="invalid[Array_Invalid_23]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
     </testsuite>
-    <testsuite name="[Array_Invalid_24]" time="0.031">
-      <testcase name="invalid[Array_Invalid_24]" classname="test.quickcheck.WhileyInvalidTest" time="0.031">
+    <testsuite name="[Array_Invalid_24]" time="0.047">
+      <testcase name="invalid[Array_Invalid_24]" classname="test.quickcheck.WhileyInvalidTest" time="0.047">
         <error>java.lang.ArrayIndexOutOfBoundsException: -5&#13;
 	at wyil.interpreter.ConcreteSemantics$RValue$Array.write(ConcreteSemantics.java:498)&#13;
 	at wyil.interpreter.ConcreteSemantics$LValue$Array.write(ConcreteSemantics.java:837)&#13;
-	at quickcheck.QCInterpreter.executeAssign(QCInterpreter.java:543)&#13;
-	at quickcheck.QCInterpreter.executeStatement(QCInterpreter.java:493)&#13;
-	at quickcheck.QCInterpreter.executeBlock(QCInterpreter.java:467)&#13;
-	at quickcheck.QCInterpreter.execute(QCInterpreter.java:385)&#13;
-	at quickcheck.RunTest.executeTest(RunTest.java:270)&#13;
-	at quickcheck.RunTest.execute(RunTest.java:135)&#13;
+	at quickcheck.QCInterpreter.executeAssign(QCInterpreter.java:541)&#13;
+	at quickcheck.QCInterpreter.executeStatement(QCInterpreter.java:491)&#13;
+	at quickcheck.QCInterpreter.executeBlock(QCInterpreter.java:465)&#13;
+	at quickcheck.QCInterpreter.execute(QCInterpreter.java:383)&#13;
+	at quickcheck.RunTest.executeTest(RunTest.java:277)&#13;
+	at quickcheck.RunTest.execute(RunTest.java:136)&#13;
 	at test.utils.TestHelper.createRunTest(TestHelper.java:123)&#13;
 	at test.quickcheck.WhileyInvalidTest.invalid(WhileyInvalidTest.java:133)&#13;
 	at jdk.internal.reflect.GeneratedMethodAccessor2.invoke(Unknown Source)&#13;
@@ -219,29 +219,29 @@
     <testsuite name="[Array_Invalid_6]" time="0.015">
       <testcase name="invalid[Array_Invalid_6]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
     </testsuite>
-    <testsuite name="[Array_Invalid_7]" time="0.016">
-      <testcase name="invalid[Array_Invalid_7]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    <testsuite name="[Array_Invalid_7]" time="0.0">
+      <testcase name="invalid[Array_Invalid_7]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
     </testsuite>
-    <testsuite name="[Array_Invalid_8]" time="0.047">
-      <testcase name="invalid[Array_Invalid_8]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
+    <testsuite name="[Array_Invalid_8]" time="0.063">
+      <testcase name="invalid[Array_Invalid_8]" classname="test.quickcheck.WhileyInvalidTest" time="0.063"/>
     </testsuite>
     <testsuite name="[Array_Invalid_9]" time="0.078">
       <testcase name="invalid[Array_Invalid_9]" classname="test.quickcheck.WhileyInvalidTest" time="0.078"/>
     </testsuite>
-    <testsuite name="[Assert_Invalid_1]" time="0.016">
-      <testcase name="invalid[Assert_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    <testsuite name="[Assert_Invalid_1]" time="0.015">
+      <testcase name="invalid[Assert_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
     </testsuite>
-    <testsuite name="[Assert_Invalid_2]" time="0.015">
-      <testcase name="invalid[Assert_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    <testsuite name="[Assert_Invalid_2]" time="0.016">
+      <testcase name="invalid[Assert_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
     <testsuite name="[Assert_Invalid_3]" time="0.047">
       <testcase name="invalid[Assert_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
     </testsuite>
-    <testsuite name="[Assign_Invalid_1]" time="0.016">
-      <testcase name="invalid[Assign_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    <testsuite name="[Assign_Invalid_1]" time="0.015">
+      <testcase name="invalid[Assign_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
     </testsuite>
-    <testsuite name="[Assign_Invalid_2]" time="0.015">
-      <testcase name="invalid[Assign_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    <testsuite name="[Assign_Invalid_2]" time="0.016">
+      <testcase name="invalid[Assign_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
     <testsuite name="[Assign_Invalid_3]" time="0.016">
       <testcase name="invalid[Assign_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
@@ -264,11 +264,11 @@
     <testsuite name="[Assign_Invalid_9]" time="0.016">
       <testcase name="invalid[Assign_Invalid_9]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[Byte_Invalid_1]" time="0.016">
-      <testcase name="invalid[Byte_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    <testsuite name="[Byte_Invalid_1]" time="0.015">
+      <testcase name="invalid[Byte_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
     </testsuite>
-    <testsuite name="[Coercion_Invalid_2]" time="0.015">
-      <testcase name="invalid[Coercion_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    <testsuite name="[Coercion_Invalid_2]" time="0.016">
+      <testcase name="invalid[Coercion_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
     <testsuite name="[Constant_Invalid_1]" time="0.016">
       <testcase name="invalid[Constant_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
@@ -282,38 +282,38 @@
     <testsuite name="[ConstrainedArray_Invalid_2]" time="0.047">
       <testcase name="invalid[ConstrainedArray_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
     </testsuite>
-    <testsuite name="[ConstrainedArray_Invalid_3]" time="0.078">
-      <testcase name="invalid[ConstrainedArray_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.078"/>
+    <testsuite name="[ConstrainedArray_Invalid_3]" time="0.094">
+      <testcase name="invalid[ConstrainedArray_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.094"/>
     </testsuite>
     <testsuite name="[ConstrainedInt_Invalid_1]" time="0.047">
       <testcase name="invalid[ConstrainedInt_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
     </testsuite>
-    <testsuite name="[ConstrainedInt_Invalid_11]" time="0.016">
-      <testcase name="invalid[ConstrainedInt_Invalid_11]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    <testsuite name="[ConstrainedInt_Invalid_11]" time="0.031">
+      <testcase name="invalid[ConstrainedInt_Invalid_11]" classname="test.quickcheck.WhileyInvalidTest" time="0.031"/>
     </testsuite>
-    <testsuite name="[ConstrainedInt_Invalid_12]" time="0.062">
-      <testcase name="invalid[ConstrainedInt_Invalid_12]" classname="test.quickcheck.WhileyInvalidTest" time="0.062"/>
+    <testsuite name="[ConstrainedInt_Invalid_12]" time="0.094">
+      <testcase name="invalid[ConstrainedInt_Invalid_12]" classname="test.quickcheck.WhileyInvalidTest" time="0.094"/>
     </testsuite>
-    <testsuite name="[ConstrainedInt_Invalid_2]" time="0.047">
-      <testcase name="invalid[ConstrainedInt_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
+    <testsuite name="[ConstrainedInt_Invalid_2]" time="0.031">
+      <testcase name="invalid[ConstrainedInt_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.031"/>
     </testsuite>
-    <testsuite name="[ConstrainedInt_Invalid_3]" time="0.047">
-      <testcase name="invalid[ConstrainedInt_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
+    <testsuite name="[ConstrainedInt_Invalid_3]" time="0.062">
+      <testcase name="invalid[ConstrainedInt_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.062"/>
     </testsuite>
     <testsuite name="[ConstrainedInt_Invalid_4]" time="0.047">
       <testcase name="invalid[ConstrainedInt_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
     </testsuite>
-    <testsuite name="[ConstrainedInt_Invalid_5]" time="0.062">
-      <testcase name="invalid[ConstrainedInt_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.062"/>
+    <testsuite name="[ConstrainedInt_Invalid_5]" time="0.047">
+      <testcase name="invalid[ConstrainedInt_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
     </testsuite>
-    <testsuite name="[ConstrainedInt_Invalid_6]" time="0.079">
-      <testcase name="invalid[ConstrainedInt_Invalid_6]" classname="test.quickcheck.WhileyInvalidTest" time="0.079"/>
+    <testsuite name="[ConstrainedInt_Invalid_6]" time="0.047">
+      <testcase name="invalid[ConstrainedInt_Invalid_6]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
     </testsuite>
     <testsuite name="[ConstrainedInt_Invalid_7]" time="0.062">
       <testcase name="invalid[ConstrainedInt_Invalid_7]" classname="test.quickcheck.WhileyInvalidTest" time="0.062"/>
     </testsuite>
-    <testsuite name="[ConstrainedInt_Invalid_8]" time="0.062">
-      <testcase name="invalid[ConstrainedInt_Invalid_8]" classname="test.quickcheck.WhileyInvalidTest" time="0.062"/>
+    <testsuite name="[ConstrainedInt_Invalid_8]" time="0.047">
+      <testcase name="invalid[ConstrainedInt_Invalid_8]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
     </testsuite>
     <testsuite name="[ConstrainedInt_Invalid_9]" time="0.063">
       <testcase name="invalid[ConstrainedInt_Invalid_9]" classname="test.quickcheck.WhileyInvalidTest" time="0.063"/>
@@ -324,29 +324,29 @@
     <testsuite name="[Continue_Invalid_1]" time="0.016">
       <testcase name="invalid[Continue_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[Continue_Invalid_2]" time="0.0">
-      <testcase name="invalid[Continue_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
+    <testsuite name="[Continue_Invalid_2]" time="0.015">
+      <testcase name="invalid[Continue_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
     </testsuite>
     <testsuite name="[DefiniteAssign_Invalid_1]" time="0.016">
       <testcase name="invalid[DefiniteAssign_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[DefiniteAssign_Invalid_2]" time="0.015">
-      <testcase name="invalid[DefiniteAssign_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    <testsuite name="[DefiniteAssign_Invalid_2]" time="0.016">
+      <testcase name="invalid[DefiniteAssign_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[DefiniteAssign_Invalid_3]" time="0.016">
-      <testcase name="invalid[DefiniteAssign_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    <testsuite name="[DefiniteAssign_Invalid_3]" time="0.015">
+      <testcase name="invalid[DefiniteAssign_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
     </testsuite>
-    <testsuite name="[DefiniteAssign_Invalid_4]" time="0.016">
-      <testcase name="invalid[DefiniteAssign_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    <testsuite name="[DefiniteAssign_Invalid_4]" time="0.0">
+      <testcase name="invalid[DefiniteAssign_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
     </testsuite>
-    <testsuite name="[DoWhile_Invalid_1]" time="0.046">
-      <testcase name="invalid[DoWhile_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.046"/>
+    <testsuite name="[DoWhile_Invalid_1]" time="0.063">
+      <testcase name="invalid[DoWhile_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.063"/>
     </testsuite>
     <testsuite name="[DoWhile_Invalid_2]" time="0.047">
       <testcase name="invalid[DoWhile_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
     </testsuite>
-    <testsuite name="[DoWhile_Invalid_3]" time="0.063">
-      <testcase name="invalid[DoWhile_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.063"/>
+    <testsuite name="[DoWhile_Invalid_3]" time="0.062">
+      <testcase name="invalid[DoWhile_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.062"/>
     </testsuite>
     <testsuite name="[DoWhile_Invalid_4]" time="0.0">
       <testcase name="invalid[DoWhile_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.0">
@@ -387,24 +387,24 @@
 </skipped>
       </testcase>
     </testsuite>
-    <testsuite name="[DoWhile_Invalid_5]" time="0.015">
-      <testcase name="invalid[DoWhile_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    <testsuite name="[DoWhile_Invalid_5]" time="0.016">
+      <testcase name="invalid[DoWhile_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[DoWhile_Invalid_6]" time="0.047">
-      <testcase name="invalid[DoWhile_Invalid_6]" classname="test.quickcheck.WhileyInvalidTest" time="0.047">
+    <testsuite name="[DoWhile_Invalid_6]" time="0.062">
+      <testcase name="invalid[DoWhile_Invalid_6]" classname="test.quickcheck.WhileyInvalidTest" time="0.062">
         <error>java.lang.NegativeArraySizeException&#13;
 	at wyil.interpreter.Interpreter.executeArrayRange(Interpreter.java:1083)&#13;
-	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:971)&#13;
-	at quickcheck.QCInterpreter.executeQuantifier(QCInterpreter.java:1101)&#13;
-	at quickcheck.QCInterpreter.executeQuantifier(QCInterpreter.java:1076)&#13;
-	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:901)&#13;
+	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:969)&#13;
+	at quickcheck.QCInterpreter.executeQuantifier(QCInterpreter.java:1099)&#13;
+	at quickcheck.QCInterpreter.executeQuantifier(QCInterpreter.java:1074)&#13;
+	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:899)&#13;
 	at wyil.interpreter.Interpreter.checkInvariants(Interpreter.java:1293)&#13;
-	at quickcheck.QCInterpreter.execute(QCInterpreter.java:310)&#13;
-	at quickcheck.QCInterpreter.executeInvoke(QCInterpreter.java:234)&#13;
-	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:872)&#13;
+	at quickcheck.QCInterpreter.execute(QCInterpreter.java:308)&#13;
+	at quickcheck.QCInterpreter.executeInvoke(QCInterpreter.java:232)&#13;
+	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:870)&#13;
 	at wyil.interpreter.Interpreter.checkInvariants(Interpreter.java:1293)&#13;
-	at quickcheck.RunTest.executeTest(RunTest.java:288)&#13;
-	at quickcheck.RunTest.execute(RunTest.java:135)&#13;
+	at quickcheck.RunTest.executeTest(RunTest.java:295)&#13;
+	at quickcheck.RunTest.execute(RunTest.java:136)&#13;
 	at test.utils.TestHelper.createRunTest(TestHelper.java:123)&#13;
 	at test.quickcheck.WhileyInvalidTest.invalid(WhileyInvalidTest.java:133)&#13;
 	at jdk.internal.reflect.GeneratedMethodAccessor2.invoke(Unknown Source)&#13;
@@ -446,17 +446,17 @@
       <testcase name="invalid[DoWhile_Invalid_7]" classname="test.quickcheck.WhileyInvalidTest" time="0.063">
         <error>java.lang.NegativeArraySizeException&#13;
 	at wyil.interpreter.Interpreter.executeArrayRange(Interpreter.java:1083)&#13;
-	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:971)&#13;
-	at quickcheck.QCInterpreter.executeQuantifier(QCInterpreter.java:1101)&#13;
-	at quickcheck.QCInterpreter.executeQuantifier(QCInterpreter.java:1076)&#13;
-	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:901)&#13;
+	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:969)&#13;
+	at quickcheck.QCInterpreter.executeQuantifier(QCInterpreter.java:1099)&#13;
+	at quickcheck.QCInterpreter.executeQuantifier(QCInterpreter.java:1074)&#13;
+	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:899)&#13;
 	at wyil.interpreter.Interpreter.checkInvariants(Interpreter.java:1293)&#13;
-	at quickcheck.QCInterpreter.execute(QCInterpreter.java:310)&#13;
-	at quickcheck.QCInterpreter.executeInvoke(QCInterpreter.java:234)&#13;
-	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:872)&#13;
+	at quickcheck.QCInterpreter.execute(QCInterpreter.java:308)&#13;
+	at quickcheck.QCInterpreter.executeInvoke(QCInterpreter.java:232)&#13;
+	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:870)&#13;
 	at wyil.interpreter.Interpreter.checkInvariants(Interpreter.java:1293)&#13;
-	at quickcheck.RunTest.executeTest(RunTest.java:288)&#13;
-	at quickcheck.RunTest.execute(RunTest.java:135)&#13;
+	at quickcheck.RunTest.executeTest(RunTest.java:295)&#13;
+	at quickcheck.RunTest.execute(RunTest.java:136)&#13;
 	at test.utils.TestHelper.createRunTest(TestHelper.java:123)&#13;
 	at test.quickcheck.WhileyInvalidTest.invalid(WhileyInvalidTest.java:133)&#13;
 	at jdk.internal.reflect.GeneratedMethodAccessor2.invoke(Unknown Source)&#13;
@@ -494,21 +494,21 @@
 </error>
       </testcase>
     </testsuite>
-    <testsuite name="[DoWhile_Invalid_8]" time="0.078">
-      <testcase name="invalid[DoWhile_Invalid_8]" classname="test.quickcheck.WhileyInvalidTest" time="0.078">
+    <testsuite name="[DoWhile_Invalid_8]" time="0.047">
+      <testcase name="invalid[DoWhile_Invalid_8]" classname="test.quickcheck.WhileyInvalidTest" time="0.047">
         <error>java.lang.NegativeArraySizeException&#13;
 	at wyil.interpreter.Interpreter.executeArrayRange(Interpreter.java:1083)&#13;
-	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:971)&#13;
-	at quickcheck.QCInterpreter.executeQuantifier(QCInterpreter.java:1101)&#13;
-	at quickcheck.QCInterpreter.executeQuantifier(QCInterpreter.java:1076)&#13;
-	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:901)&#13;
+	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:969)&#13;
+	at quickcheck.QCInterpreter.executeQuantifier(QCInterpreter.java:1099)&#13;
+	at quickcheck.QCInterpreter.executeQuantifier(QCInterpreter.java:1074)&#13;
+	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:899)&#13;
 	at wyil.interpreter.Interpreter.checkInvariants(Interpreter.java:1293)&#13;
-	at quickcheck.QCInterpreter.execute(QCInterpreter.java:310)&#13;
-	at quickcheck.QCInterpreter.executeInvoke(QCInterpreter.java:234)&#13;
-	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:872)&#13;
+	at quickcheck.QCInterpreter.execute(QCInterpreter.java:308)&#13;
+	at quickcheck.QCInterpreter.executeInvoke(QCInterpreter.java:232)&#13;
+	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:870)&#13;
 	at wyil.interpreter.Interpreter.checkInvariants(Interpreter.java:1293)&#13;
-	at quickcheck.RunTest.executeTest(RunTest.java:288)&#13;
-	at quickcheck.RunTest.execute(RunTest.java:135)&#13;
+	at quickcheck.RunTest.executeTest(RunTest.java:295)&#13;
+	at quickcheck.RunTest.execute(RunTest.java:136)&#13;
 	at test.utils.TestHelper.createRunTest(TestHelper.java:123)&#13;
 	at test.quickcheck.WhileyInvalidTest.invalid(WhileyInvalidTest.java:133)&#13;
 	at jdk.internal.reflect.GeneratedMethodAccessor2.invoke(Unknown Source)&#13;
@@ -552,11 +552,11 @@
     <testsuite name="[Ensures_Invalid_1]" time="0.047">
       <testcase name="invalid[Ensures_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
     </testsuite>
-    <testsuite name="[Ensures_Invalid_2]" time="0.0">
-      <testcase name="invalid[Ensures_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
+    <testsuite name="[Ensures_Invalid_2]" time="0.016">
+      <testcase name="invalid[Ensures_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[Ensures_Invalid_3]" time="0.063">
-      <testcase name="invalid[Ensures_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.063"/>
+    <testsuite name="[Ensures_Invalid_3]" time="0.109">
+      <testcase name="invalid[Ensures_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.109"/>
     </testsuite>
     <testsuite name="[Export_Invalid_1]" time="0.0">
       <testcase name="invalid[Export_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.0">
@@ -597,8 +597,8 @@
 </skipped>
       </testcase>
     </testsuite>
-    <testsuite name="[Fail_Invalid_1]" time="0.031">
-      <testcase name="invalid[Fail_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.031"/>
+    <testsuite name="[Fail_Invalid_1]" time="0.047">
+      <testcase name="invalid[Fail_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
     </testsuite>
     <testsuite name="[Fail_Invalid_2]" time="0.016">
       <testcase name="invalid[Fail_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
@@ -609,20 +609,20 @@
     <testsuite name="[Final_Invalid_1]" time="0.015">
       <testcase name="invalid[Final_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
     </testsuite>
-    <testsuite name="[Final_Invalid_10]" time="0.016">
-      <testcase name="invalid[Final_Invalid_10]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    <testsuite name="[Final_Invalid_10]" time="0.0">
+      <testcase name="invalid[Final_Invalid_10]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
     </testsuite>
     <testsuite name="[Final_Invalid_11]" time="0.016">
       <testcase name="invalid[Final_Invalid_11]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[Final_Invalid_12]" time="0.015">
-      <testcase name="invalid[Final_Invalid_12]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    <testsuite name="[Final_Invalid_12]" time="0.016">
+      <testcase name="invalid[Final_Invalid_12]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[Final_Invalid_13]" time="0.016">
-      <testcase name="invalid[Final_Invalid_13]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    <testsuite name="[Final_Invalid_13]" time="0.015">
+      <testcase name="invalid[Final_Invalid_13]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
     </testsuite>
-    <testsuite name="[Final_Invalid_14]" time="0.0">
-      <testcase name="invalid[Final_Invalid_14]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
+    <testsuite name="[Final_Invalid_14]" time="0.016">
+      <testcase name="invalid[Final_Invalid_14]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
     <testsuite name="[Final_Invalid_15]" time="0.016">
       <testcase name="invalid[Final_Invalid_15]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
@@ -633,59 +633,59 @@
     <testsuite name="[Final_Invalid_3]" time="0.016">
       <testcase name="invalid[Final_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[Final_Invalid_4]" time="0.015">
-      <testcase name="invalid[Final_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    <testsuite name="[Final_Invalid_4]" time="0.0">
+      <testcase name="invalid[Final_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
     </testsuite>
-    <testsuite name="[Final_Invalid_5]" time="0.032">
-      <testcase name="invalid[Final_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.032"/>
+    <testsuite name="[Final_Invalid_5]" time="0.015">
+      <testcase name="invalid[Final_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
     </testsuite>
     <testsuite name="[Final_Invalid_6]" time="0.016">
       <testcase name="invalid[Final_Invalid_6]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[Final_Invalid_7]" time="0.031">
-      <testcase name="invalid[Final_Invalid_7]" classname="test.quickcheck.WhileyInvalidTest" time="0.031"/>
+    <testsuite name="[Final_Invalid_7]" time="0.016">
+      <testcase name="invalid[Final_Invalid_7]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[Final_Invalid_8]" time="0.031">
-      <testcase name="invalid[Final_Invalid_8]" classname="test.quickcheck.WhileyInvalidTest" time="0.031"/>
+    <testsuite name="[Final_Invalid_8]" time="0.015">
+      <testcase name="invalid[Final_Invalid_8]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
     </testsuite>
-    <testsuite name="[Final_Invalid_9]" time="0.015">
-      <testcase name="invalid[Final_Invalid_9]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    <testsuite name="[Final_Invalid_9]" time="0.016">
+      <testcase name="invalid[Final_Invalid_9]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[FunctionRef_Invalid_1]" time="0.016">
-      <testcase name="invalid[FunctionRef_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    <testsuite name="[FunctionRef_Invalid_1]" time="0.0">
+      <testcase name="invalid[FunctionRef_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
     </testsuite>
-    <testsuite name="[FunctionRef_Invalid_2]" time="0.0">
-      <testcase name="invalid[FunctionRef_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
+    <testsuite name="[FunctionRef_Invalid_2]" time="0.016">
+      <testcase name="invalid[FunctionRef_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[FunctionRef_Invalid_3]" time="0.016">
-      <testcase name="invalid[FunctionRef_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    <testsuite name="[FunctionRef_Invalid_3]" time="0.015">
+      <testcase name="invalid[FunctionRef_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
     </testsuite>
-    <testsuite name="[FunctionRef_Invalid_4]" time="0.015">
-      <testcase name="invalid[FunctionRef_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    <testsuite name="[FunctionRef_Invalid_4]" time="0.016">
+      <testcase name="invalid[FunctionRef_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[FunctionRef_Invalid_5]" time="0.016">
-      <testcase name="invalid[FunctionRef_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    <testsuite name="[FunctionRef_Invalid_5]" time="0.015">
+      <testcase name="invalid[FunctionRef_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
     </testsuite>
     <testsuite name="[FunctionRef_Invalid_6]" time="0.016">
       <testcase name="invalid[FunctionRef_Invalid_6]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[FunctionRef_Invalid_7]" time="0.015">
-      <testcase name="invalid[FunctionRef_Invalid_7]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    <testsuite name="[FunctionRef_Invalid_7]" time="0.016">
+      <testcase name="invalid[FunctionRef_Invalid_7]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[Function_Invalid_1]" time="0.016">
-      <testcase name="invalid[Function_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    <testsuite name="[Function_Invalid_1]" time="0.015">
+      <testcase name="invalid[Function_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
     </testsuite>
     <testsuite name="[Function_Invalid_10]" time="0.0">
       <testcase name="invalid[Function_Invalid_10]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
     </testsuite>
-    <testsuite name="[Function_Invalid_11]" time="0.015">
-      <testcase name="invalid[Function_Invalid_11]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    <testsuite name="[Function_Invalid_11]" time="0.016">
+      <testcase name="invalid[Function_Invalid_11]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
     <testsuite name="[Function_Invalid_12]" time="0.016">
       <testcase name="invalid[Function_Invalid_12]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[Function_Invalid_13]" time="0.016">
-      <testcase name="invalid[Function_Invalid_13]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    <testsuite name="[Function_Invalid_13]" time="0.015">
+      <testcase name="invalid[Function_Invalid_13]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
     </testsuite>
     <testsuite name="[Function_Invalid_2]" time="0.0">
       <testcase name="invalid[Function_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.0">
@@ -726,11 +726,11 @@
 </skipped>
       </testcase>
     </testsuite>
-    <testsuite name="[Function_Invalid_3]" time="0.015">
-      <testcase name="invalid[Function_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    <testsuite name="[Function_Invalid_3]" time="0.016">
+      <testcase name="invalid[Function_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[Function_Invalid_4]" time="0.016">
-      <testcase name="invalid[Function_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    <testsuite name="[Function_Invalid_4]" time="0.015">
+      <testcase name="invalid[Function_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
     </testsuite>
     <testsuite name="[Function_Invalid_9]" time="0.0">
       <testcase name="invalid[Function_Invalid_9]" classname="test.quickcheck.WhileyInvalidTest" time="0.0">
@@ -777,32 +777,32 @@
     <testsuite name="[If_Invalid_2]" time="0.0">
       <testcase name="invalid[If_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
     </testsuite>
-    <testsuite name="[If_Invalid_4]" time="0.015">
-      <testcase name="invalid[If_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    <testsuite name="[If_Invalid_4]" time="0.016">
+      <testcase name="invalid[If_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[If_Invalid_5]" time="0.016">
-      <testcase name="invalid[If_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    <testsuite name="[If_Invalid_5]" time="0.015">
+      <testcase name="invalid[If_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
     </testsuite>
-    <testsuite name="[Import_Invalid_1]" time="0.015">
-      <testcase name="invalid[Import_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    <testsuite name="[Import_Invalid_1]" time="0.031">
+      <testcase name="invalid[Import_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.031"/>
     </testsuite>
-    <testsuite name="[IntDiv_Invalid_1]" time="0.063">
-      <testcase name="invalid[IntDiv_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.063">
+    <testsuite name="[IntDiv_Invalid_1]" time="0.047">
+      <testcase name="invalid[IntDiv_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.047">
         <error>java.lang.ArithmeticException: BigInteger divide by zero&#13;
 	at java.base/java.math.MutableBigInteger.divideKnuth(Unknown Source)&#13;
 	at java.base/java.math.BigInteger.divideKnuth(Unknown Source)&#13;
 	at java.base/java.math.BigInteger.divide(Unknown Source)&#13;
 	at wyil.interpreter.ConcreteSemantics$RValue$Int.divide(ConcreteSemantics.java:407)&#13;
 	at wyil.interpreter.Interpreter.executeIntegerDivision(Interpreter.java:911)&#13;
-	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:922)&#13;
-	at quickcheck.QCInterpreter.executeMultiReturnExpression(QCInterpreter.java:1203)&#13;
-	at quickcheck.QCInterpreter.executeExpressions(QCInterpreter.java:1166)&#13;
-	at quickcheck.QCInterpreter.executeAssign(QCInterpreter.java:540)&#13;
-	at quickcheck.QCInterpreter.executeStatement(QCInterpreter.java:493)&#13;
-	at quickcheck.QCInterpreter.executeBlock(QCInterpreter.java:467)&#13;
-	at quickcheck.QCInterpreter.execute(QCInterpreter.java:385)&#13;
-	at quickcheck.RunTest.executeTest(RunTest.java:270)&#13;
-	at quickcheck.RunTest.execute(RunTest.java:135)&#13;
+	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:920)&#13;
+	at quickcheck.QCInterpreter.executeMultiReturnExpression(QCInterpreter.java:1201)&#13;
+	at quickcheck.QCInterpreter.executeExpressions(QCInterpreter.java:1164)&#13;
+	at quickcheck.QCInterpreter.executeAssign(QCInterpreter.java:538)&#13;
+	at quickcheck.QCInterpreter.executeStatement(QCInterpreter.java:491)&#13;
+	at quickcheck.QCInterpreter.executeBlock(QCInterpreter.java:465)&#13;
+	at quickcheck.QCInterpreter.execute(QCInterpreter.java:383)&#13;
+	at quickcheck.RunTest.executeTest(RunTest.java:277)&#13;
+	at quickcheck.RunTest.execute(RunTest.java:136)&#13;
 	at test.utils.TestHelper.createRunTest(TestHelper.java:123)&#13;
 	at test.quickcheck.WhileyInvalidTest.invalid(WhileyInvalidTest.java:140)&#13;
 	at jdk.internal.reflect.GeneratedMethodAccessor2.invoke(Unknown Source)&#13;
@@ -843,44 +843,44 @@
     <testsuite name="[Intersection_Invalid_1]" time="0.016">
       <testcase name="invalid[Intersection_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[Intersection_Invalid_2]" time="0.0">
-      <testcase name="invalid[Intersection_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
+    <testsuite name="[Intersection_Invalid_2]" time="0.016">
+      <testcase name="invalid[Intersection_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
     <testsuite name="[Lambda_Invalid_3]" time="0.062">
       <testcase name="invalid[Lambda_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.062"/>
     </testsuite>
-    <testsuite name="[Lifetime_Invalid_1]" time="0.0">
-      <testcase name="invalid[Lifetime_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
+    <testsuite name="[Lifetime_Invalid_1]" time="0.031">
+      <testcase name="invalid[Lifetime_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.031"/>
     </testsuite>
-    <testsuite name="[Lifetime_Invalid_2]" time="0.031">
-      <testcase name="invalid[Lifetime_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.031"/>
+    <testsuite name="[Lifetime_Invalid_2]" time="0.016">
+      <testcase name="invalid[Lifetime_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[Lifetime_Invalid_3]" time="0.016">
-      <testcase name="invalid[Lifetime_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    <testsuite name="[Lifetime_Invalid_3]" time="0.0">
+      <testcase name="invalid[Lifetime_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
     </testsuite>
-    <testsuite name="[Lifetime_Invalid_4]" time="0.015">
-      <testcase name="invalid[Lifetime_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    <testsuite name="[Lifetime_Invalid_4]" time="0.016">
+      <testcase name="invalid[Lifetime_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[Lifetime_Invalid_5]" time="0.016">
-      <testcase name="invalid[Lifetime_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    <testsuite name="[Lifetime_Invalid_5]" time="0.015">
+      <testcase name="invalid[Lifetime_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
     </testsuite>
     <testsuite name="[Lifetime_Invalid_6]" time="0.016">
       <testcase name="invalid[Lifetime_Invalid_6]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[Lifetime_Invalid_7]" time="0.031">
-      <testcase name="invalid[Lifetime_Invalid_7]" classname="test.quickcheck.WhileyInvalidTest" time="0.031"/>
+    <testsuite name="[Lifetime_Invalid_7]" time="0.015">
+      <testcase name="invalid[Lifetime_Invalid_7]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
     </testsuite>
     <testsuite name="[Lifetime_Invalid_8]" time="0.016">
       <testcase name="invalid[Lifetime_Invalid_8]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[Lifetime_Invalid_9]" time="0.031">
-      <testcase name="invalid[Lifetime_Invalid_9]" classname="test.quickcheck.WhileyInvalidTest" time="0.031"/>
+    <testsuite name="[Lifetime_Invalid_9]" time="0.016">
+      <testcase name="invalid[Lifetime_Invalid_9]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[Lifetime_Lambda_Invalid_1]" time="0.0">
-      <testcase name="invalid[Lifetime_Lambda_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
+    <testsuite name="[Lifetime_Lambda_Invalid_1]" time="0.015">
+      <testcase name="invalid[Lifetime_Lambda_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
     </testsuite>
-    <testsuite name="[Lifetime_Lambda_Invalid_2]" time="0.015">
-      <testcase name="invalid[Lifetime_Lambda_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    <testsuite name="[Lifetime_Lambda_Invalid_2]" time="0.0">
+      <testcase name="invalid[Lifetime_Lambda_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
     </testsuite>
     <testsuite name="[Lifetime_Lambda_Invalid_3]" time="0.0">
       <testcase name="invalid[Lifetime_Lambda_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.0">
@@ -1002,23 +1002,23 @@
 </skipped>
       </testcase>
     </testsuite>
-    <testsuite name="[MethodCall_Invalid_1]" time="0.016">
-      <testcase name="invalid[MethodCall_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    <testsuite name="[MethodCall_Invalid_1]" time="0.015">
+      <testcase name="invalid[MethodCall_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
     </testsuite>
-    <testsuite name="[MethodCall_Invalid_2]" time="0.015">
-      <testcase name="invalid[MethodCall_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    <testsuite name="[MethodCall_Invalid_2]" time="0.016">
+      <testcase name="invalid[MethodCall_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
     <testsuite name="[MethodCall_Invalid_3]" time="0.016">
       <testcase name="invalid[MethodCall_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[MethodCall_Invalid_4]" time="0.016">
-      <testcase name="invalid[MethodCall_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    <testsuite name="[MethodCall_Invalid_4]" time="0.0">
+      <testcase name="invalid[MethodCall_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
     </testsuite>
-    <testsuite name="[MethodCall_Invalid_5]" time="0.0">
-      <testcase name="invalid[MethodCall_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
+    <testsuite name="[MethodCall_Invalid_5]" time="0.015">
+      <testcase name="invalid[MethodCall_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
     </testsuite>
-    <testsuite name="[MethodCall_Invalid_6]" time="0.015">
-      <testcase name="invalid[MethodCall_Invalid_6]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    <testsuite name="[MethodCall_Invalid_6]" time="0.016">
+      <testcase name="invalid[MethodCall_Invalid_6]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
     <testsuite name="[MethodCall_Invalid_7]" time="0.016">
       <testcase name="invalid[MethodCall_Invalid_7]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
@@ -1026,20 +1026,20 @@
     <testsuite name="[MethodCall_Invalid_8]" time="0.015">
       <testcase name="invalid[MethodCall_Invalid_8]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
     </testsuite>
-    <testsuite name="[MethodRef_Invalid_1]" time="0.016">
-      <testcase name="invalid[MethodRef_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    <testsuite name="[MethodRef_Invalid_1]" time="0.0">
+      <testcase name="invalid[MethodRef_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
     </testsuite>
-    <testsuite name="[MethodRef_Invalid_2]" time="0.016">
-      <testcase name="invalid[MethodRef_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    <testsuite name="[MethodRef_Invalid_2]" time="0.047">
+      <testcase name="invalid[MethodRef_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
     </testsuite>
-    <testsuite name="[MethodRef_Invalid_3]" time="0.015">
-      <testcase name="invalid[MethodRef_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    <testsuite name="[MethodRef_Invalid_3]" time="0.016">
+      <testcase name="invalid[MethodRef_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[Method_Invalid_9]" time="0.0">
-      <testcase name="invalid[Method_Invalid_9]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
+    <testsuite name="[Method_Invalid_9]" time="0.047">
+      <testcase name="invalid[Method_Invalid_9]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
     </testsuite>
-    <testsuite name="[MultiAssign_Invalid_1]" time="0.016">
-      <testcase name="invalid[MultiAssign_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    <testsuite name="[MultiAssign_Invalid_1]" time="0.015">
+      <testcase name="invalid[MultiAssign_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
     </testsuite>
     <testsuite name="[Native_Invalid_1]" time="0.0">
       <testcase name="invalid[Native_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.0">
@@ -1080,32 +1080,32 @@
 </skipped>
       </testcase>
     </testsuite>
-    <testsuite name="[NegationType_Invalid_1]" time="0.015">
-      <testcase name="invalid[NegationType_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    <testsuite name="[NegationType_Invalid_1]" time="0.016">
+      <testcase name="invalid[NegationType_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[NegationType_Invalid_2]" time="0.016">
-      <testcase name="invalid[NegationType_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    <testsuite name="[NegationType_Invalid_2]" time="0.015">
+      <testcase name="invalid[NegationType_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
     </testsuite>
     <testsuite name="[NegationType_Invalid_3]" time="0.016">
       <testcase name="invalid[NegationType_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[NegationType_Invalid_4]" time="0.015">
-      <testcase name="invalid[NegationType_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    <testsuite name="[NegationType_Invalid_4]" time="0.0">
+      <testcase name="invalid[NegationType_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
     </testsuite>
     <testsuite name="[OpenRecord_Invalid_1]" time="0.016">
       <testcase name="invalid[OpenRecord_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[OpenRecord_Invalid_2]" time="0.0">
-      <testcase name="invalid[OpenRecord_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
+    <testsuite name="[OpenRecord_Invalid_2]" time="0.015">
+      <testcase name="invalid[OpenRecord_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
     </testsuite>
     <testsuite name="[OpenRecord_Invalid_3]" time="0.016">
       <testcase name="invalid[OpenRecord_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[OpenRecord_Invalid_4]" time="0.015">
-      <testcase name="invalid[OpenRecord_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    <testsuite name="[OpenRecord_Invalid_4]" time="0.016">
+      <testcase name="invalid[OpenRecord_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[OpenRecord_Invalid_5]" time="0.016">
-      <testcase name="invalid[OpenRecord_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    <testsuite name="[OpenRecord_Invalid_5]" time="0.0">
+      <testcase name="invalid[OpenRecord_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
     </testsuite>
     <testsuite name="[OpenRecord_Invalid_6]" time="0.015">
       <testcase name="invalid[OpenRecord_Invalid_6]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
@@ -1113,11 +1113,11 @@
     <testsuite name="[OpenRecord_Invalid_7]" time="0.016">
       <testcase name="invalid[OpenRecord_Invalid_7]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[Parameter_Invalid_1]" time="0.016">
-      <testcase name="invalid[Parameter_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    <testsuite name="[Parameter_Invalid_1]" time="0.015">
+      <testcase name="invalid[Parameter_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
     </testsuite>
-    <testsuite name="[Parameter_Invalid_2]" time="0.015">
-      <testcase name="invalid[Parameter_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    <testsuite name="[Parameter_Invalid_2]" time="0.016">
+      <testcase name="invalid[Parameter_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
     <testsuite name="[Parsing_Invalid_1]" time="0.0">
       <testcase name="invalid[Parsing_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.0">
@@ -1164,8 +1164,8 @@
     <testsuite name="[Parsing_Invalid_11]" time="0.0">
       <testcase name="invalid[Parsing_Invalid_11]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
     </testsuite>
-    <testsuite name="[Parsing_Invalid_12]" time="0.032">
-      <testcase name="invalid[Parsing_Invalid_12]" classname="test.quickcheck.WhileyInvalidTest" time="0.032"/>
+    <testsuite name="[Parsing_Invalid_12]" time="0.015">
+      <testcase name="invalid[Parsing_Invalid_12]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
     </testsuite>
     <testsuite name="[Parsing_Invalid_15]" time="0.0">
       <testcase name="invalid[Parsing_Invalid_15]" classname="test.quickcheck.WhileyInvalidTest" time="0.0">
@@ -1206,8 +1206,8 @@
 </skipped>
       </testcase>
     </testsuite>
-    <testsuite name="[Parsing_Invalid_16]" time="0.031">
-      <testcase name="invalid[Parsing_Invalid_16]" classname="test.quickcheck.WhileyInvalidTest" time="0.031"/>
+    <testsuite name="[Parsing_Invalid_16]" time="0.016">
+      <testcase name="invalid[Parsing_Invalid_16]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
     <testsuite name="[Parsing_Invalid_2]" time="0.0">
       <testcase name="invalid[Parsing_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.0">
@@ -1248,8 +1248,8 @@
 </skipped>
       </testcase>
     </testsuite>
-    <testsuite name="[Parsing_Invalid_21]" time="0.031">
-      <testcase name="invalid[Parsing_Invalid_21]" classname="test.quickcheck.WhileyInvalidTest" time="0.031"/>
+    <testsuite name="[Parsing_Invalid_21]" time="0.016">
+      <testcase name="invalid[Parsing_Invalid_21]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
     <testsuite name="[Parsing_Invalid_23]" time="0.015">
       <testcase name="invalid[Parsing_Invalid_23]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
@@ -1257,8 +1257,8 @@
     <testsuite name="[Parsing_Invalid_24]" time="0.016">
       <testcase name="invalid[Parsing_Invalid_24]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[Parsing_Invalid_25]" time="0.016">
-      <testcase name="invalid[Parsing_Invalid_25]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    <testsuite name="[Parsing_Invalid_25]" time="0.0">
+      <testcase name="invalid[Parsing_Invalid_25]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
     </testsuite>
     <testsuite name="[Parsing_Invalid_26]" time="0.015">
       <testcase name="invalid[Parsing_Invalid_26]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
@@ -1344,53 +1344,53 @@
     <testsuite name="[Parsing_Invalid_29]" time="0.016">
       <testcase name="invalid[Parsing_Invalid_29]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[Parsing_Invalid_30]" time="0.015">
-      <testcase name="invalid[Parsing_Invalid_30]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    <testsuite name="[Parsing_Invalid_30]" time="0.016">
+      <testcase name="invalid[Parsing_Invalid_30]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[Parsing_Invalid_31]" time="0.016">
-      <testcase name="invalid[Parsing_Invalid_31]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    <testsuite name="[Parsing_Invalid_31]" time="0.015">
+      <testcase name="invalid[Parsing_Invalid_31]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
     </testsuite>
-    <testsuite name="[Parsing_Invalid_4]" time="0.0">
-      <testcase name="invalid[Parsing_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
+    <testsuite name="[Parsing_Invalid_4]" time="0.016">
+      <testcase name="invalid[Parsing_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[Parsing_Invalid_5]" time="0.016">
-      <testcase name="invalid[Parsing_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    <testsuite name="[Parsing_Invalid_5]" time="0.0">
+      <testcase name="invalid[Parsing_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
     </testsuite>
-    <testsuite name="[Parsing_Invalid_6]" time="0.015">
-      <testcase name="invalid[Parsing_Invalid_6]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    <testsuite name="[Parsing_Invalid_6]" time="0.016">
+      <testcase name="invalid[Parsing_Invalid_6]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[Parsing_Invalid_8]" time="0.016">
-      <testcase name="invalid[Parsing_Invalid_8]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    <testsuite name="[Parsing_Invalid_8]" time="0.015">
+      <testcase name="invalid[Parsing_Invalid_8]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
     </testsuite>
     <testsuite name="[ProcessAccess_Invalid_1]" time="0.016">
       <testcase name="invalid[ProcessAccess_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[ProcessAccess_Invalid_2]" time="0.0">
-      <testcase name="invalid[ProcessAccess_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
+    <testsuite name="[ProcessAccess_Invalid_2]" time="0.015">
+      <testcase name="invalid[ProcessAccess_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
     </testsuite>
-    <testsuite name="[ProcessAccess_Invalid_3]" time="0.015">
-      <testcase name="invalid[ProcessAccess_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    <testsuite name="[ProcessAccess_Invalid_3]" time="0.0">
+      <testcase name="invalid[ProcessAccess_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
     </testsuite>
     <testsuite name="[Process_Invalid_1]" time="0.016">
       <testcase name="invalid[Process_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[Property_Invalid_1]" time="0.015">
-      <testcase name="invalid[Property_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    <testsuite name="[Property_Invalid_1]" time="0.016">
+      <testcase name="invalid[Property_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[Property_Invalid_2]" time="0.047">
-      <testcase name="invalid[Property_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
+    <testsuite name="[Property_Invalid_2]" time="0.046">
+      <testcase name="invalid[Property_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.046"/>
     </testsuite>
     <testsuite name="[Property_Invalid_3]" time="0.063">
       <testcase name="invalid[Property_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.063"/>
     </testsuite>
-    <testsuite name="[Property_Invalid_4]" time="0.031">
-      <testcase name="invalid[Property_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.031"/>
+    <testsuite name="[Property_Invalid_4]" time="0.047">
+      <testcase name="invalid[Property_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
     </testsuite>
-    <testsuite name="[Property_Invalid_5]" time="0.016">
-      <testcase name="invalid[Property_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    <testsuite name="[Property_Invalid_5]" time="0.015">
+      <testcase name="invalid[Property_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
     </testsuite>
-    <testsuite name="[Property_Invalid_6]" time="0.015">
-      <testcase name="invalid[Property_Invalid_6]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    <testsuite name="[Property_Invalid_6]" time="0.016">
+      <testcase name="invalid[Property_Invalid_6]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
     <testsuite name="[Property_Invalid_7]" time="0.016">
       <testcase name="invalid[Property_Invalid_7]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
@@ -1404,50 +1404,50 @@
     <testsuite name="[Quantifiers_Invalid_2]" time="0.062">
       <testcase name="invalid[Quantifiers_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.062"/>
     </testsuite>
-    <testsuite name="[Quantifiers_Invalid_3]" time="0.078">
-      <testcase name="invalid[Quantifiers_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.078"/>
+    <testsuite name="[Quantifiers_Invalid_3]" time="0.063">
+      <testcase name="invalid[Quantifiers_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.063"/>
     </testsuite>
-    <testsuite name="[Quantifiers_Invalid_4]" time="0.063">
-      <testcase name="invalid[Quantifiers_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.063"/>
+    <testsuite name="[Quantifiers_Invalid_4]" time="0.078">
+      <testcase name="invalid[Quantifiers_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.078"/>
     </testsuite>
-    <testsuite name="[Quantifiers_Invalid_5]" time="0.078">
-      <testcase name="invalid[Quantifiers_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.078"/>
+    <testsuite name="[Quantifiers_Invalid_5]" time="0.151">
+      <testcase name="invalid[Quantifiers_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.151"/>
     </testsuite>
-    <testsuite name="[Quantifiers_Invalid_6]" time="0.078">
-      <testcase name="invalid[Quantifiers_Invalid_6]" classname="test.quickcheck.WhileyInvalidTest" time="0.078"/>
+    <testsuite name="[Quantifiers_Invalid_6]" time="0.077">
+      <testcase name="invalid[Quantifiers_Invalid_6]" classname="test.quickcheck.WhileyInvalidTest" time="0.077"/>
     </testsuite>
     <testsuite name="[Quantifiers_Invalid_7]" time="0.078">
       <testcase name="invalid[Quantifiers_Invalid_7]" classname="test.quickcheck.WhileyInvalidTest" time="0.078"/>
     </testsuite>
-    <testsuite name="[Quantifiers_Invalid_8]" time="0.063">
-      <testcase name="invalid[Quantifiers_Invalid_8]" classname="test.quickcheck.WhileyInvalidTest" time="0.063"/>
+    <testsuite name="[Quantifiers_Invalid_8]" time="0.078">
+      <testcase name="invalid[Quantifiers_Invalid_8]" classname="test.quickcheck.WhileyInvalidTest" time="0.078"/>
     </testsuite>
-    <testsuite name="[Record_Invalid_1]" time="0.032">
-      <testcase name="invalid[Record_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.032"/>
+    <testsuite name="[Record_Invalid_1]" time="0.016">
+      <testcase name="invalid[Record_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[Record_Invalid_2]" time="0.015">
-      <testcase name="invalid[Record_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    <testsuite name="[Record_Invalid_2]" time="0.016">
+      <testcase name="invalid[Record_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[Record_Invalid_3]" time="0.031">
-      <testcase name="invalid[Record_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.031"/>
+    <testsuite name="[Record_Invalid_3]" time="0.015">
+      <testcase name="invalid[Record_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
     </testsuite>
-    <testsuite name="[Record_Invalid_4]" time="0.031">
-      <testcase name="invalid[Record_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.031"/>
+    <testsuite name="[Record_Invalid_4]" time="0.016">
+      <testcase name="invalid[Record_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
     <testsuite name="[Record_Invalid_5]" time="0.016">
       <testcase name="invalid[Record_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[Record_Invalid_6]" time="0.0">
-      <testcase name="invalid[Record_Invalid_6]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
+    <testsuite name="[Record_Invalid_6]" time="0.015">
+      <testcase name="invalid[Record_Invalid_6]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
     </testsuite>
-    <testsuite name="[RecursiveType_Invalid_1]" time="0.062">
-      <testcase name="invalid[RecursiveType_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.062"/>
+    <testsuite name="[RecursiveType_Invalid_1]" time="0.047">
+      <testcase name="invalid[RecursiveType_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
     </testsuite>
-    <testsuite name="[RecursiveType_Invalid_10]" time="0.063">
-      <testcase name="invalid[RecursiveType_Invalid_10]" classname="test.quickcheck.WhileyInvalidTest" time="0.063"/>
+    <testsuite name="[RecursiveType_Invalid_10]" time="0.047">
+      <testcase name="invalid[RecursiveType_Invalid_10]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
     </testsuite>
-    <testsuite name="[RecursiveType_Invalid_11]" time="0.0">
-      <testcase name="invalid[RecursiveType_Invalid_11]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
+    <testsuite name="[RecursiveType_Invalid_11]" time="0.015">
+      <testcase name="invalid[RecursiveType_Invalid_11]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
     </testsuite>
     <testsuite name="[RecursiveType_Invalid_2]" time="0.0">
       <testcase name="invalid[RecursiveType_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.0">
@@ -1488,20 +1488,20 @@
 </skipped>
       </testcase>
     </testsuite>
-    <testsuite name="[RecursiveType_Invalid_3]" time="0.015">
-      <testcase name="invalid[RecursiveType_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    <testsuite name="[RecursiveType_Invalid_3]" time="0.016">
+      <testcase name="invalid[RecursiveType_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
     <testsuite name="[RecursiveType_Invalid_4]" time="0.219">
       <testcase name="invalid[RecursiveType_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.219"/>
     </testsuite>
-    <testsuite name="[RecursiveType_Invalid_5]" time="0.016">
-      <testcase name="invalid[RecursiveType_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    <testsuite name="[RecursiveType_Invalid_5]" time="0.015">
+      <testcase name="invalid[RecursiveType_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
     </testsuite>
-    <testsuite name="[RecursiveType_Invalid_7]" time="0.187">
-      <testcase name="invalid[RecursiveType_Invalid_7]" classname="test.quickcheck.WhileyInvalidTest" time="0.187"/>
+    <testsuite name="[RecursiveType_Invalid_7]" time="0.204">
+      <testcase name="invalid[RecursiveType_Invalid_7]" classname="test.quickcheck.WhileyInvalidTest" time="0.204"/>
     </testsuite>
-    <testsuite name="[RecursiveType_Invalid_8]" time="0.188">
-      <testcase name="invalid[RecursiveType_Invalid_8]" classname="test.quickcheck.WhileyInvalidTest" time="0.188"/>
+    <testsuite name="[RecursiveType_Invalid_8]" time="0.218">
+      <testcase name="invalid[RecursiveType_Invalid_8]" classname="test.quickcheck.WhileyInvalidTest" time="0.218"/>
     </testsuite>
     <testsuite name="[RecursiveType_Invalid_9]" time="0.0">
       <testcase name="invalid[RecursiveType_Invalid_9]" classname="test.quickcheck.WhileyInvalidTest" time="0.0">
@@ -1542,8 +1542,8 @@
 </skipped>
       </testcase>
     </testsuite>
-    <testsuite name="[Reference_Subtype_Variant_Invalid_1]" time="0.015">
-      <testcase name="invalid[Reference_Subtype_Variant_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    <testsuite name="[Reference_Subtype_Variant_Invalid_1]" time="0.0">
+      <testcase name="invalid[Reference_Subtype_Variant_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
     </testsuite>
     <testsuite name="[Remainder_Invalid_1]" time="0.063">
       <testcase name="invalid[Remainder_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.063">
@@ -1554,15 +1554,15 @@
 	at java.base/java.math.BigInteger.remainder(Unknown Source)&#13;
 	at wyil.interpreter.ConcreteSemantics$RValue$Int.remainder(ConcreteSemantics.java:413)&#13;
 	at wyil.interpreter.Interpreter.executeIntegerRemainder(Interpreter.java:917)&#13;
-	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:925)&#13;
-	at quickcheck.QCInterpreter.executeMultiReturnExpression(QCInterpreter.java:1203)&#13;
-	at quickcheck.QCInterpreter.executeExpressions(QCInterpreter.java:1166)&#13;
-	at quickcheck.QCInterpreter.executeReturn(QCInterpreter.java:760)&#13;
-	at quickcheck.QCInterpreter.executeStatement(QCInterpreter.java:518)&#13;
-	at quickcheck.QCInterpreter.executeBlock(QCInterpreter.java:467)&#13;
-	at quickcheck.QCInterpreter.execute(QCInterpreter.java:385)&#13;
-	at quickcheck.RunTest.executeTest(RunTest.java:270)&#13;
-	at quickcheck.RunTest.execute(RunTest.java:135)&#13;
+	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:923)&#13;
+	at quickcheck.QCInterpreter.executeMultiReturnExpression(QCInterpreter.java:1201)&#13;
+	at quickcheck.QCInterpreter.executeExpressions(QCInterpreter.java:1164)&#13;
+	at quickcheck.QCInterpreter.executeReturn(QCInterpreter.java:758)&#13;
+	at quickcheck.QCInterpreter.executeStatement(QCInterpreter.java:516)&#13;
+	at quickcheck.QCInterpreter.executeBlock(QCInterpreter.java:465)&#13;
+	at quickcheck.QCInterpreter.execute(QCInterpreter.java:383)&#13;
+	at quickcheck.RunTest.executeTest(RunTest.java:277)&#13;
+	at quickcheck.RunTest.execute(RunTest.java:136)&#13;
 	at test.utils.TestHelper.createRunTest(TestHelper.java:123)&#13;
 	at test.quickcheck.WhileyInvalidTest.invalid(WhileyInvalidTest.java:140)&#13;
 	at jdk.internal.reflect.GeneratedMethodAccessor2.invoke(Unknown Source)&#13;
@@ -1600,41 +1600,41 @@
 </error>
       </testcase>
     </testsuite>
-    <testsuite name="[Remainder_Invalid_2]" time="0.0">
-      <testcase name="invalid[Remainder_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
+    <testsuite name="[Remainder_Invalid_2]" time="0.015">
+      <testcase name="invalid[Remainder_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
     </testsuite>
-    <testsuite name="[Remainder_Invalid_3]" time="0.015">
-      <testcase name="invalid[Remainder_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    <testsuite name="[Remainder_Invalid_3]" time="0.016">
+      <testcase name="invalid[Remainder_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[Requires_Invalid_1]" time="0.063">
-      <testcase name="invalid[Requires_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.063"/>
+    <testsuite name="[Requires_Invalid_1]" time="0.047">
+      <testcase name="invalid[Requires_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
     </testsuite>
     <testsuite name="[Return_Invalid_1]" time="0.015">
       <testcase name="invalid[Return_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
     </testsuite>
-    <testsuite name="[Return_Invalid_10]" time="0.0">
-      <testcase name="invalid[Return_Invalid_10]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
+    <testsuite name="[Return_Invalid_10]" time="0.016">
+      <testcase name="invalid[Return_Invalid_10]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
     <testsuite name="[Return_Invalid_11]" time="0.016">
       <testcase name="invalid[Return_Invalid_11]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[Return_Invalid_12]" time="0.016">
-      <testcase name="invalid[Return_Invalid_12]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    <testsuite name="[Return_Invalid_12]" time="0.015">
+      <testcase name="invalid[Return_Invalid_12]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
     </testsuite>
-    <testsuite name="[Return_Invalid_2]" time="0.015">
-      <testcase name="invalid[Return_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    <testsuite name="[Return_Invalid_2]" time="0.0">
+      <testcase name="invalid[Return_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
     </testsuite>
     <testsuite name="[Return_Invalid_3]" time="0.016">
       <testcase name="invalid[Return_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[Return_Invalid_4]" time="0.032">
-      <testcase name="invalid[Return_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.032"/>
+    <testsuite name="[Return_Invalid_4]" time="0.016">
+      <testcase name="invalid[Return_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[Return_Invalid_5]" time="0.031">
-      <testcase name="invalid[Return_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.031"/>
+    <testsuite name="[Return_Invalid_5]" time="0.015">
+      <testcase name="invalid[Return_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
     </testsuite>
-    <testsuite name="[Return_Invalid_6]" time="0.031">
-      <testcase name="invalid[Return_Invalid_6]" classname="test.quickcheck.WhileyInvalidTest" time="0.031"/>
+    <testsuite name="[Return_Invalid_6]" time="0.016">
+      <testcase name="invalid[Return_Invalid_6]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
     <testsuite name="[Return_Invalid_7]" time="0.015">
       <testcase name="invalid[Return_Invalid_7]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
@@ -1642,20 +1642,20 @@
     <testsuite name="[Return_Invalid_8]" time="0.016">
       <testcase name="invalid[Return_Invalid_8]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[Return_Invalid_9]" time="0.015">
-      <testcase name="invalid[Return_Invalid_9]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    <testsuite name="[Return_Invalid_9]" time="0.016">
+      <testcase name="invalid[Return_Invalid_9]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[StaticVar_Invalid_1]" time="0.016">
-      <testcase name="invalid[StaticVar_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    <testsuite name="[StaticVar_Invalid_1]" time="0.015">
+      <testcase name="invalid[StaticVar_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
     </testsuite>
     <testsuite name="[StaticVar_Invalid_2]" time="0.016">
       <testcase name="invalid[StaticVar_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[StaticVar_Invalid_3]" time="0.0">
-      <testcase name="invalid[StaticVar_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
+    <testsuite name="[StaticVar_Invalid_3]" time="0.015">
+      <testcase name="invalid[StaticVar_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
     </testsuite>
-    <testsuite name="[StaticVar_Invalid_4]" time="0.015">
-      <testcase name="invalid[StaticVar_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    <testsuite name="[StaticVar_Invalid_4]" time="0.016">
+      <testcase name="invalid[StaticVar_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
     <testsuite name="[StaticVar_Invalid_5]" time="0.047">
       <testcase name="invalid[StaticVar_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
@@ -1666,77 +1666,77 @@
     <testsuite name="[StaticVar_Invalid_7]" time="0.015">
       <testcase name="invalid[StaticVar_Invalid_7]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
     </testsuite>
-    <testsuite name="[StaticVar_Invalid_8]" time="0.016">
-      <testcase name="invalid[StaticVar_Invalid_8]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    <testsuite name="[StaticVar_Invalid_8]" time="0.0">
+      <testcase name="invalid[StaticVar_Invalid_8]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
     </testsuite>
-    <testsuite name="[StaticVar_Invalid_9]" time="0.0">
-      <testcase name="invalid[StaticVar_Invalid_9]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
+    <testsuite name="[StaticVar_Invalid_9]" time="0.016">
+      <testcase name="invalid[StaticVar_Invalid_9]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[Subtype_Invalid_1]" time="0.063">
-      <testcase name="invalid[Subtype_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.063"/>
+    <testsuite name="[Subtype_Invalid_1]" time="0.062">
+      <testcase name="invalid[Subtype_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.062"/>
     </testsuite>
     <testsuite name="[Subtype_Invalid_2]" time="0.078">
       <testcase name="invalid[Subtype_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.078"/>
     </testsuite>
-    <testsuite name="[Subtype_Invalid_3]" time="0.062">
-      <testcase name="invalid[Subtype_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.062"/>
+    <testsuite name="[Subtype_Invalid_3]" time="0.047">
+      <testcase name="invalid[Subtype_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
     </testsuite>
     <testsuite name="[Subtype_Invalid_4]" time="0.063">
       <testcase name="invalid[Subtype_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.063"/>
     </testsuite>
-    <testsuite name="[Subtype_Invalid_5]" time="0.046">
-      <testcase name="invalid[Subtype_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.046"/>
+    <testsuite name="[Subtype_Invalid_5]" time="0.062">
+      <testcase name="invalid[Subtype_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.062"/>
     </testsuite>
     <testsuite name="[Subtype_Invalid_6]" time="0.063">
       <testcase name="invalid[Subtype_Invalid_6]" classname="test.quickcheck.WhileyInvalidTest" time="0.063"/>
     </testsuite>
-    <testsuite name="[Subtype_Invalid_7]" time="0.062">
-      <testcase name="invalid[Subtype_Invalid_7]" classname="test.quickcheck.WhileyInvalidTest" time="0.062"/>
+    <testsuite name="[Subtype_Invalid_7]" time="0.047">
+      <testcase name="invalid[Subtype_Invalid_7]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
     </testsuite>
     <testsuite name="[Subtype_Invalid_8]" time="0.078">
       <testcase name="invalid[Subtype_Invalid_8]" classname="test.quickcheck.WhileyInvalidTest" time="0.078"/>
     </testsuite>
-    <testsuite name="[Subtype_Invalid_9]" time="0.079">
-      <testcase name="invalid[Subtype_Invalid_9]" classname="test.quickcheck.WhileyInvalidTest" time="0.079"/>
+    <testsuite name="[Subtype_Invalid_9]" time="0.125">
+      <testcase name="invalid[Subtype_Invalid_9]" classname="test.quickcheck.WhileyInvalidTest" time="0.125"/>
     </testsuite>
-    <testsuite name="[Switch_Invalid_1]" time="0.031">
-      <testcase name="invalid[Switch_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.031"/>
+    <testsuite name="[Switch_Invalid_1]" time="0.015">
+      <testcase name="invalid[Switch_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
     </testsuite>
-    <testsuite name="[Switch_Invalid_2]" time="0.015">
-      <testcase name="invalid[Switch_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    <testsuite name="[Switch_Invalid_2]" time="0.016">
+      <testcase name="invalid[Switch_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
     <testsuite name="[Switch_Invalid_3]" time="0.016">
       <testcase name="invalid[Switch_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[Switch_Invalid_4]" time="0.016">
-      <testcase name="invalid[Switch_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    <testsuite name="[Switch_Invalid_4]" time="0.015">
+      <testcase name="invalid[Switch_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
     </testsuite>
-    <testsuite name="[Switch_Invalid_5]" time="0.015">
-      <testcase name="invalid[Switch_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    <testsuite name="[Switch_Invalid_5]" time="0.016">
+      <testcase name="invalid[Switch_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[Switch_Invalid_6]" time="0.016">
-      <testcase name="invalid[Switch_Invalid_6]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    <testsuite name="[Switch_Invalid_6]" time="0.015">
+      <testcase name="invalid[Switch_Invalid_6]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
     </testsuite>
     <testsuite name="[Switch_Invalid_7]" time="0.016">
       <testcase name="invalid[Switch_Invalid_7]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[TupleAssign_Invalid_1]" time="0.046">
-      <testcase name="invalid[TupleAssign_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.046"/>
+    <testsuite name="[TupleAssign_Invalid_1]" time="0.031">
+      <testcase name="invalid[TupleAssign_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.031"/>
     </testsuite>
-    <testsuite name="[TupleAssign_Invalid_2]" time="0.079">
-      <testcase name="invalid[TupleAssign_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.079"/>
+    <testsuite name="[TupleAssign_Invalid_2]" time="0.078">
+      <testcase name="invalid[TupleAssign_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.078"/>
     </testsuite>
-    <testsuite name="[TupleAssign_Invalid_3]" time="0.109">
-      <testcase name="invalid[TupleAssign_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.109"/>
+    <testsuite name="[TupleAssign_Invalid_3]" time="0.047">
+      <testcase name="invalid[TupleAssign_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
     </testsuite>
-    <testsuite name="[TupleDefine_Invalid_1]" time="0.0">
-      <testcase name="invalid[TupleDefine_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
+    <testsuite name="[TupleDefine_Invalid_1]" time="0.016">
+      <testcase name="invalid[TupleDefine_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[TupleDefine_Invalid_2]" time="0.062">
-      <testcase name="invalid[TupleDefine_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.062"/>
+    <testsuite name="[TupleDefine_Invalid_2]" time="0.047">
+      <testcase name="invalid[TupleDefine_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
     </testsuite>
-    <testsuite name="[Tuple_Invalid_3]" time="0.063">
-      <testcase name="invalid[Tuple_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.063"/>
+    <testsuite name="[Tuple_Invalid_3]" time="0.078">
+      <testcase name="invalid[Tuple_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.078"/>
     </testsuite>
     <testsuite name="[Tuple_Invalid_4]" time="0.078">
       <testcase name="invalid[Tuple_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.078"/>
@@ -1750,20 +1750,20 @@
     <testsuite name="[Tuple_Invalid_7]" time="0.016">
       <testcase name="invalid[Tuple_Invalid_7]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[TypeEquals_Invalid_1]" time="0.015">
-      <testcase name="invalid[TypeEquals_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    <testsuite name="[TypeEquals_Invalid_1]" time="0.0">
+      <testcase name="invalid[TypeEquals_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
     </testsuite>
-    <testsuite name="[TypeEquals_Invalid_10]" time="0.016">
-      <testcase name="invalid[TypeEquals_Invalid_10]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    <testsuite name="[TypeEquals_Invalid_10]" time="0.015">
+      <testcase name="invalid[TypeEquals_Invalid_10]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
     </testsuite>
     <testsuite name="[TypeEquals_Invalid_11]" time="0.016">
       <testcase name="invalid[TypeEquals_Invalid_11]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[TypeEquals_Invalid_12]" time="0.046">
-      <testcase name="invalid[TypeEquals_Invalid_12]" classname="test.quickcheck.WhileyInvalidTest" time="0.046"/>
+    <testsuite name="[TypeEquals_Invalid_12]" time="0.047">
+      <testcase name="invalid[TypeEquals_Invalid_12]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
     </testsuite>
-    <testsuite name="[TypeEquals_Invalid_13]" time="0.016">
-      <testcase name="invalid[TypeEquals_Invalid_13]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    <testsuite name="[TypeEquals_Invalid_13]" time="0.015">
+      <testcase name="invalid[TypeEquals_Invalid_13]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
     </testsuite>
     <testsuite name="[TypeEquals_Invalid_2]" time="0.016">
       <testcase name="invalid[TypeEquals_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
@@ -1771,17 +1771,17 @@
     <testsuite name="[TypeEquals_Invalid_5]" time="0.078">
       <testcase name="invalid[TypeEquals_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.078"/>
     </testsuite>
-    <testsuite name="[TypeEquals_Invalid_6]" time="0.062">
-      <testcase name="invalid[TypeEquals_Invalid_6]" classname="test.quickcheck.WhileyInvalidTest" time="0.062"/>
+    <testsuite name="[TypeEquals_Invalid_6]" time="0.047">
+      <testcase name="invalid[TypeEquals_Invalid_6]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
     </testsuite>
-    <testsuite name="[TypeEquals_Invalid_7]" time="0.0">
-      <testcase name="invalid[TypeEquals_Invalid_7]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
+    <testsuite name="[TypeEquals_Invalid_7]" time="0.016">
+      <testcase name="invalid[TypeEquals_Invalid_7]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[TypeEquals_Invalid_8]" time="0.016">
-      <testcase name="invalid[TypeEquals_Invalid_8]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    <testsuite name="[TypeEquals_Invalid_8]" time="0.015">
+      <testcase name="invalid[TypeEquals_Invalid_8]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
     </testsuite>
-    <testsuite name="[TypeEquals_Invalid_9]" time="0.015">
-      <testcase name="invalid[TypeEquals_Invalid_9]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    <testsuite name="[TypeEquals_Invalid_9]" time="0.0">
+      <testcase name="invalid[TypeEquals_Invalid_9]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
     </testsuite>
     <testsuite name="[Type_Invalid_1]" time="0.016">
       <testcase name="invalid[Type_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
@@ -1825,8 +1825,8 @@
 </skipped>
       </testcase>
     </testsuite>
-    <testsuite name="[Type_Invalid_11]" time="0.0">
-      <testcase name="invalid[Type_Invalid_11]" classname="test.quickcheck.WhileyInvalidTest" time="0.0">
+    <testsuite name="[Type_Invalid_11]" time="0.015">
+      <testcase name="invalid[Type_Invalid_11]" classname="test.quickcheck.WhileyInvalidTest" time="0.015">
         <skipped>org.junit.AssumptionViolatedException: Test Type_Invalid_11 skipped: 793&#13;
 	at org.junit.Assume.assumeTrue(Assume.java:59)&#13;
 	at test.quickcheck.WhileyInvalidTest.beforeMethod(WhileyInvalidTest.java:107)&#13;
@@ -1864,35 +1864,35 @@
 </skipped>
       </testcase>
     </testsuite>
-    <testsuite name="[Type_Invalid_2]" time="0.016">
-      <testcase name="invalid[Type_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    <testsuite name="[Type_Invalid_2]" time="0.0">
+      <testcase name="invalid[Type_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
     </testsuite>
-    <testsuite name="[Type_Invalid_3]" time="0.015">
-      <testcase name="invalid[Type_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    <testsuite name="[Type_Invalid_3]" time="0.016">
+      <testcase name="invalid[Type_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[Type_Invalid_4]" time="0.0">
-      <testcase name="invalid[Type_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
+    <testsuite name="[Type_Invalid_4]" time="0.016">
+      <testcase name="invalid[Type_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[Type_Invalid_5]" time="0.016">
-      <testcase name="invalid[Type_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    <testsuite name="[Type_Invalid_5]" time="0.015">
+      <testcase name="invalid[Type_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
     </testsuite>
     <testsuite name="[Type_Invalid_6]" time="0.016">
       <testcase name="invalid[Type_Invalid_6]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[Type_Invalid_7]" time="0.015">
-      <testcase name="invalid[Type_Invalid_7]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    <testsuite name="[Type_Invalid_7]" time="0.016">
+      <testcase name="invalid[Type_Invalid_7]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[Type_Invalid_8]" time="0.0">
-      <testcase name="invalid[Type_Invalid_8]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
+    <testsuite name="[Type_Invalid_8]" time="0.015">
+      <testcase name="invalid[Type_Invalid_8]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
     </testsuite>
-    <testsuite name="[Type_Invalid_9]" time="0.016">
-      <testcase name="invalid[Type_Invalid_9]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    <testsuite name="[Type_Invalid_9]" time="0.0">
+      <testcase name="invalid[Type_Invalid_9]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
     </testsuite>
-    <testsuite name="[UnionType_Invalid_1]" time="0.015">
-      <testcase name="invalid[UnionType_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    <testsuite name="[UnionType_Invalid_1]" time="0.016">
+      <testcase name="invalid[UnionType_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[UnionType_Invalid_10]" time="0.032">
-      <testcase name="invalid[UnionType_Invalid_10]" classname="test.quickcheck.WhileyInvalidTest" time="0.032"/>
+    <testsuite name="[UnionType_Invalid_10]" time="0.047">
+      <testcase name="invalid[UnionType_Invalid_10]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
     </testsuite>
     <testsuite name="[UnionType_Invalid_11]" time="0.015">
       <testcase name="invalid[UnionType_Invalid_11]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
@@ -1900,57 +1900,57 @@
     <testsuite name="[UnionType_Invalid_12]" time="0.016">
       <testcase name="invalid[UnionType_Invalid_12]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[UnionType_Invalid_13]" time="0.016">
-      <testcase name="invalid[UnionType_Invalid_13]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    <testsuite name="[UnionType_Invalid_13]" time="0.031">
+      <testcase name="invalid[UnionType_Invalid_13]" classname="test.quickcheck.WhileyInvalidTest" time="0.031"/>
     </testsuite>
-    <testsuite name="[UnionType_Invalid_14]" time="0.015">
-      <testcase name="invalid[UnionType_Invalid_14]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    <testsuite name="[UnionType_Invalid_14]" time="0.016">
+      <testcase name="invalid[UnionType_Invalid_14]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[UnionType_Invalid_15]" time="0.0">
-      <testcase name="invalid[UnionType_Invalid_15]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
+    <testsuite name="[UnionType_Invalid_15]" time="0.015">
+      <testcase name="invalid[UnionType_Invalid_15]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
     </testsuite>
     <testsuite name="[UnionType_Invalid_2]" time="0.016">
       <testcase name="invalid[UnionType_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[UnionType_Invalid_3]" time="0.015">
-      <testcase name="invalid[UnionType_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    <testsuite name="[UnionType_Invalid_3]" time="0.016">
+      <testcase name="invalid[UnionType_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[UnionType_Invalid_4]" time="0.016">
-      <testcase name="invalid[UnionType_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    <testsuite name="[UnionType_Invalid_4]" time="0.015">
+      <testcase name="invalid[UnionType_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
     </testsuite>
     <testsuite name="[UnionType_Invalid_5]" time="0.016">
       <testcase name="invalid[UnionType_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[UnionType_Invalid_6]" time="0.0">
-      <testcase name="invalid[UnionType_Invalid_6]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
+    <testsuite name="[UnionType_Invalid_6]" time="0.016">
+      <testcase name="invalid[UnionType_Invalid_6]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
     <testsuite name="[UnionType_Invalid_7]" time="0.093">
       <testcase name="invalid[UnionType_Invalid_7]" classname="test.quickcheck.WhileyInvalidTest" time="0.093"/>
     </testsuite>
-    <testsuite name="[UnionType_Invalid_8]" time="0.079">
-      <testcase name="invalid[UnionType_Invalid_8]" classname="test.quickcheck.WhileyInvalidTest" time="0.079"/>
+    <testsuite name="[UnionType_Invalid_8]" time="0.047">
+      <testcase name="invalid[UnionType_Invalid_8]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
     </testsuite>
-    <testsuite name="[UnionType_Invalid_9]" time="0.078">
-      <testcase name="invalid[UnionType_Invalid_9]" classname="test.quickcheck.WhileyInvalidTest" time="0.078">
+    <testsuite name="[UnionType_Invalid_9]" time="0.063">
+      <testcase name="invalid[UnionType_Invalid_9]" classname="test.quickcheck.WhileyInvalidTest" time="0.063">
         <error>java.lang.RuntimeException: operand returned wyil.interpreter.ConcreteSemantics$RValue$Array, expecting one of [class wyil.interpreter.ConcreteSemantics$RValue$Int]&#13;
 	at wyil.interpreter.Interpreter.error(Interpreter.java:1359)&#13;
 	at wyil.interpreter.Interpreter.checkType(Interpreter.java:1342)&#13;
-	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:988)&#13;
+	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:986)&#13;
 	at wyil.interpreter.Interpreter.executeIntegerGreaterThanOrEqual(Interpreter.java:951)&#13;
-	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:937)&#13;
+	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:935)&#13;
 	at wyil.interpreter.ConcreteSemantics$RValue.checkInvariant(ConcreteSemantics.java:184)&#13;
-	at quickcheck.RunTest.checkInvariant(RunTest.java:357)&#13;
-	at quickcheck.RunTest.checkInvariant(RunTest.java:379)&#13;
-	at quickcheck.RunTest.checkInvariant(RunTest.java:363)&#13;
-	at quickcheck.QCInterpreter.executeInvoke(QCInterpreter.java:200)&#13;
-	at quickcheck.QCInterpreter.executeMultiReturnExpression(QCInterpreter.java:1194)&#13;
-	at quickcheck.QCInterpreter.executeExpressions(QCInterpreter.java:1166)&#13;
-	at quickcheck.QCInterpreter.executeReturn(QCInterpreter.java:760)&#13;
-	at quickcheck.QCInterpreter.executeStatement(QCInterpreter.java:518)&#13;
-	at quickcheck.QCInterpreter.executeBlock(QCInterpreter.java:467)&#13;
-	at quickcheck.QCInterpreter.execute(QCInterpreter.java:385)&#13;
-	at quickcheck.RunTest.executeTest(RunTest.java:270)&#13;
-	at quickcheck.RunTest.execute(RunTest.java:135)&#13;
+	at quickcheck.RunTest.checkInvariant(RunTest.java:364)&#13;
+	at quickcheck.RunTest.checkInvariant(RunTest.java:386)&#13;
+	at quickcheck.RunTest.checkInvariant(RunTest.java:370)&#13;
+	at quickcheck.QCInterpreter.executeInvoke(QCInterpreter.java:202)&#13;
+	at quickcheck.QCInterpreter.executeMultiReturnExpression(QCInterpreter.java:1192)&#13;
+	at quickcheck.QCInterpreter.executeExpressions(QCInterpreter.java:1164)&#13;
+	at quickcheck.QCInterpreter.executeReturn(QCInterpreter.java:758)&#13;
+	at quickcheck.QCInterpreter.executeStatement(QCInterpreter.java:516)&#13;
+	at quickcheck.QCInterpreter.executeBlock(QCInterpreter.java:465)&#13;
+	at quickcheck.QCInterpreter.execute(QCInterpreter.java:383)&#13;
+	at quickcheck.RunTest.executeTest(RunTest.java:277)&#13;
+	at quickcheck.RunTest.execute(RunTest.java:136)&#13;
 	at test.utils.TestHelper.createRunTest(TestHelper.java:123)&#13;
 	at test.quickcheck.WhileyInvalidTest.invalid(WhileyInvalidTest.java:140)&#13;
 	at jdk.internal.reflect.GeneratedMethodAccessor2.invoke(Unknown Source)&#13;
@@ -1999,17 +1999,17 @@
 	at java.base/java.math.BigInteger.divide(Unknown Source)&#13;
 	at wyil.interpreter.ConcreteSemantics$RValue$Int.divide(ConcreteSemantics.java:407)&#13;
 	at wyil.interpreter.Interpreter.executeIntegerDivision(Interpreter.java:911)&#13;
-	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:922)&#13;
-	at quickcheck.QCInterpreter.executeVariableDeclaration(QCInterpreter.java:828)&#13;
-	at quickcheck.QCInterpreter.executeStatement(QCInterpreter.java:525)&#13;
-	at quickcheck.QCInterpreter.executeBlock(QCInterpreter.java:467)&#13;
-	at quickcheck.QCInterpreter.execute(QCInterpreter.java:297)&#13;
-	at quickcheck.QCInterpreter.executeInvoke(QCInterpreter.java:234)&#13;
-	at quickcheck.QCInterpreter.executeStatement(QCInterpreter.java:511)&#13;
-	at quickcheck.QCInterpreter.executeBlock(QCInterpreter.java:467)&#13;
-	at quickcheck.QCInterpreter.execute(QCInterpreter.java:385)&#13;
-	at quickcheck.RunTest.executeTest(RunTest.java:270)&#13;
-	at quickcheck.RunTest.execute(RunTest.java:135)&#13;
+	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:920)&#13;
+	at quickcheck.QCInterpreter.executeVariableDeclaration(QCInterpreter.java:826)&#13;
+	at quickcheck.QCInterpreter.executeStatement(QCInterpreter.java:523)&#13;
+	at quickcheck.QCInterpreter.executeBlock(QCInterpreter.java:465)&#13;
+	at quickcheck.QCInterpreter.execute(QCInterpreter.java:295)&#13;
+	at quickcheck.QCInterpreter.executeInvoke(QCInterpreter.java:232)&#13;
+	at quickcheck.QCInterpreter.executeStatement(QCInterpreter.java:509)&#13;
+	at quickcheck.QCInterpreter.executeBlock(QCInterpreter.java:465)&#13;
+	at quickcheck.QCInterpreter.execute(QCInterpreter.java:383)&#13;
+	at quickcheck.RunTest.executeTest(RunTest.java:277)&#13;
+	at quickcheck.RunTest.execute(RunTest.java:136)&#13;
 	at test.utils.TestHelper.createRunTest(TestHelper.java:123)&#13;
 	at test.quickcheck.WhileyInvalidTest.invalid(WhileyInvalidTest.java:133)&#13;
 	at jdk.internal.reflect.GeneratedMethodAccessor2.invoke(Unknown Source)&#13;
@@ -2061,15 +2061,15 @@
         <error>java.lang.ArrayIndexOutOfBoundsException: 0&#13;
 	at wyil.interpreter.ConcreteSemantics$RValue$Array.write(ConcreteSemantics.java:498)&#13;
 	at wyil.interpreter.ConcreteSemantics$LValue$Array.write(ConcreteSemantics.java:837)&#13;
-	at quickcheck.QCInterpreter.executeAssign(QCInterpreter.java:543)&#13;
-	at quickcheck.QCInterpreter.executeStatement(QCInterpreter.java:493)&#13;
-	at quickcheck.QCInterpreter.executeBlock(QCInterpreter.java:467)&#13;
-	at quickcheck.QCInterpreter.executeWhile(QCInterpreter.java:732)&#13;
-	at quickcheck.QCInterpreter.executeStatement(QCInterpreter.java:516)&#13;
-	at quickcheck.QCInterpreter.executeBlock(QCInterpreter.java:467)&#13;
-	at quickcheck.QCInterpreter.execute(QCInterpreter.java:385)&#13;
-	at quickcheck.RunTest.executeTest(RunTest.java:270)&#13;
-	at quickcheck.RunTest.execute(RunTest.java:135)&#13;
+	at quickcheck.QCInterpreter.executeAssign(QCInterpreter.java:541)&#13;
+	at quickcheck.QCInterpreter.executeStatement(QCInterpreter.java:491)&#13;
+	at quickcheck.QCInterpreter.executeBlock(QCInterpreter.java:465)&#13;
+	at quickcheck.QCInterpreter.executeWhile(QCInterpreter.java:730)&#13;
+	at quickcheck.QCInterpreter.executeStatement(QCInterpreter.java:514)&#13;
+	at quickcheck.QCInterpreter.executeBlock(QCInterpreter.java:465)&#13;
+	at quickcheck.QCInterpreter.execute(QCInterpreter.java:383)&#13;
+	at quickcheck.RunTest.executeTest(RunTest.java:277)&#13;
+	at quickcheck.RunTest.execute(RunTest.java:136)&#13;
 	at test.utils.TestHelper.createRunTest(TestHelper.java:123)&#13;
 	at test.quickcheck.WhileyInvalidTest.invalid(WhileyInvalidTest.java:133)&#13;
 	at jdk.internal.reflect.GeneratedMethodAccessor2.invoke(Unknown Source)&#13;
@@ -2119,35 +2119,35 @@
     <testsuite name="[While_Invalid_14]" time="0.016">
       <testcase name="invalid[While_Invalid_14]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[While_Invalid_15]" time="0.063">
-      <testcase name="invalid[While_Invalid_15]" classname="test.quickcheck.WhileyInvalidTest" time="0.063"/>
+    <testsuite name="[While_Invalid_15]" time="0.094">
+      <testcase name="invalid[While_Invalid_15]" classname="test.quickcheck.WhileyInvalidTest" time="0.094"/>
     </testsuite>
     <testsuite name="[While_Invalid_16]" time="0.015">
       <testcase name="invalid[While_Invalid_16]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
     </testsuite>
-    <testsuite name="[While_Invalid_17]" time="0.047">
-      <testcase name="invalid[While_Invalid_17]" classname="test.quickcheck.WhileyInvalidTest" time="0.047">
+    <testsuite name="[While_Invalid_17]" time="0.063">
+      <testcase name="invalid[While_Invalid_17]" classname="test.quickcheck.WhileyInvalidTest" time="0.063">
         <error>java.lang.ArrayIndexOutOfBoundsException: 2&#13;
 	at wyil.interpreter.ConcreteSemantics$RValue$Array.write(ConcreteSemantics.java:498)&#13;
 	at wyil.interpreter.ConcreteSemantics$LValue$Array.write(ConcreteSemantics.java:837)&#13;
-	at quickcheck.QCInterpreter.executeAssign(QCInterpreter.java:543)&#13;
-	at quickcheck.QCInterpreter.executeStatement(QCInterpreter.java:493)&#13;
-	at quickcheck.QCInterpreter.executeBlock(QCInterpreter.java:467)&#13;
-	at quickcheck.QCInterpreter.executeWhile(QCInterpreter.java:732)&#13;
-	at quickcheck.QCInterpreter.executeStatement(QCInterpreter.java:516)&#13;
-	at quickcheck.QCInterpreter.executeBlock(QCInterpreter.java:467)&#13;
-	at quickcheck.QCInterpreter.execute(QCInterpreter.java:297)&#13;
-	at quickcheck.QCInterpreter.executeInvoke(QCInterpreter.java:234)&#13;
-	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:872)&#13;
+	at quickcheck.QCInterpreter.executeAssign(QCInterpreter.java:541)&#13;
+	at quickcheck.QCInterpreter.executeStatement(QCInterpreter.java:491)&#13;
+	at quickcheck.QCInterpreter.executeBlock(QCInterpreter.java:465)&#13;
+	at quickcheck.QCInterpreter.executeWhile(QCInterpreter.java:730)&#13;
+	at quickcheck.QCInterpreter.executeStatement(QCInterpreter.java:514)&#13;
+	at quickcheck.QCInterpreter.executeBlock(QCInterpreter.java:465)&#13;
+	at quickcheck.QCInterpreter.execute(QCInterpreter.java:295)&#13;
+	at quickcheck.QCInterpreter.executeInvoke(QCInterpreter.java:232)&#13;
+	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:870)&#13;
 	at wyil.interpreter.Interpreter.executeEqual(Interpreter.java:921)&#13;
-	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:904)&#13;
+	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:902)&#13;
 	at wyil.interpreter.Interpreter.checkInvariants(Interpreter.java:1311)&#13;
-	at quickcheck.QCInterpreter.executeAssert(QCInterpreter.java:560)&#13;
-	at quickcheck.QCInterpreter.executeStatement(QCInterpreter.java:489)&#13;
-	at quickcheck.QCInterpreter.executeBlock(QCInterpreter.java:467)&#13;
-	at quickcheck.QCInterpreter.execute(QCInterpreter.java:385)&#13;
-	at quickcheck.RunTest.executeTest(RunTest.java:270)&#13;
-	at quickcheck.RunTest.execute(RunTest.java:135)&#13;
+	at quickcheck.QCInterpreter.executeAssert(QCInterpreter.java:558)&#13;
+	at quickcheck.QCInterpreter.executeStatement(QCInterpreter.java:487)&#13;
+	at quickcheck.QCInterpreter.executeBlock(QCInterpreter.java:465)&#13;
+	at quickcheck.QCInterpreter.execute(QCInterpreter.java:383)&#13;
+	at quickcheck.RunTest.executeTest(RunTest.java:277)&#13;
+	at quickcheck.RunTest.execute(RunTest.java:136)&#13;
 	at test.utils.TestHelper.createRunTest(TestHelper.java:123)&#13;
 	at test.quickcheck.WhileyInvalidTest.invalid(WhileyInvalidTest.java:133)&#13;
 	at jdk.internal.reflect.GeneratedMethodAccessor2.invoke(Unknown Source)&#13;
@@ -2185,26 +2185,26 @@
 </error>
       </testcase>
     </testsuite>
-    <testsuite name="[While_Invalid_18]" time="0.078">
-      <testcase name="invalid[While_Invalid_18]" classname="test.quickcheck.WhileyInvalidTest" time="0.078"/>
+    <testsuite name="[While_Invalid_18]" time="0.062">
+      <testcase name="invalid[While_Invalid_18]" classname="test.quickcheck.WhileyInvalidTest" time="0.062"/>
     </testsuite>
-    <testsuite name="[While_Invalid_19]" time="0.047">
-      <testcase name="invalid[While_Invalid_19]" classname="test.quickcheck.WhileyInvalidTest" time="0.047">
+    <testsuite name="[While_Invalid_19]" time="0.063">
+      <testcase name="invalid[While_Invalid_19]" classname="test.quickcheck.WhileyInvalidTest" time="0.063">
         <error>java.lang.NegativeArraySizeException&#13;
 	at wyil.interpreter.Interpreter.executeArrayRange(Interpreter.java:1083)&#13;
-	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:971)&#13;
-	at quickcheck.QCInterpreter.executeQuantifier(QCInterpreter.java:1101)&#13;
-	at quickcheck.QCInterpreter.executeQuantifier(QCInterpreter.java:1076)&#13;
-	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:901)&#13;
+	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:969)&#13;
+	at quickcheck.QCInterpreter.executeQuantifier(QCInterpreter.java:1099)&#13;
+	at quickcheck.QCInterpreter.executeQuantifier(QCInterpreter.java:1074)&#13;
+	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:899)&#13;
 	at wyil.interpreter.Interpreter.checkInvariants(Interpreter.java:1293)&#13;
-	at quickcheck.QCInterpreter.execute(QCInterpreter.java:310)&#13;
-	at quickcheck.QCInterpreter.executeInvoke(QCInterpreter.java:234)&#13;
-	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:872)&#13;
+	at quickcheck.QCInterpreter.execute(QCInterpreter.java:308)&#13;
+	at quickcheck.QCInterpreter.executeInvoke(QCInterpreter.java:232)&#13;
+	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:870)&#13;
 	at wyil.interpreter.Interpreter.executeLogicalAnd(Interpreter.java:966)&#13;
-	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:888)&#13;
+	at quickcheck.QCInterpreter.executeExpression(QCInterpreter.java:886)&#13;
 	at wyil.interpreter.Interpreter.checkInvariants(Interpreter.java:1293)&#13;
-	at quickcheck.RunTest.executeTest(RunTest.java:288)&#13;
-	at quickcheck.RunTest.execute(RunTest.java:135)&#13;
+	at quickcheck.RunTest.executeTest(RunTest.java:295)&#13;
+	at quickcheck.RunTest.execute(RunTest.java:136)&#13;
 	at test.utils.TestHelper.createRunTest(TestHelper.java:123)&#13;
 	at test.quickcheck.WhileyInvalidTest.invalid(WhileyInvalidTest.java:133)&#13;
 	at jdk.internal.reflect.GeneratedMethodAccessor2.invoke(Unknown Source)&#13;
@@ -2242,41 +2242,41 @@
 </error>
       </testcase>
     </testsuite>
-    <testsuite name="[While_Invalid_2]" time="0.016">
-      <testcase name="invalid[While_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    <testsuite name="[While_Invalid_2]" time="0.015">
+      <testcase name="invalid[While_Invalid_2]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
     </testsuite>
-    <testsuite name="[While_Invalid_20]" time="0.093">
-      <testcase name="invalid[While_Invalid_20]" classname="test.quickcheck.WhileyInvalidTest" time="0.093"/>
+    <testsuite name="[While_Invalid_20]" time="0.094">
+      <testcase name="invalid[While_Invalid_20]" classname="test.quickcheck.WhileyInvalidTest" time="0.094"/>
     </testsuite>
-    <testsuite name="[While_Invalid_21]" time="0.125">
-      <testcase name="invalid[While_Invalid_21]" classname="test.quickcheck.WhileyInvalidTest" time="0.125"/>
+    <testsuite name="[While_Invalid_21]" time="0.188">
+      <testcase name="invalid[While_Invalid_21]" classname="test.quickcheck.WhileyInvalidTest" time="0.188"/>
     </testsuite>
     <testsuite name="[While_Invalid_22]" time="0.078">
       <testcase name="invalid[While_Invalid_22]" classname="test.quickcheck.WhileyInvalidTest" time="0.078"/>
     </testsuite>
-    <testsuite name="[While_Invalid_23]" time="0.079">
-      <testcase name="invalid[While_Invalid_23]" classname="test.quickcheck.WhileyInvalidTest" time="0.079"/>
+    <testsuite name="[While_Invalid_23]" time="0.078">
+      <testcase name="invalid[While_Invalid_23]" classname="test.quickcheck.WhileyInvalidTest" time="0.078"/>
     </testsuite>
-    <testsuite name="[While_Invalid_3]" time="0.015">
-      <testcase name="invalid[While_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
+    <testsuite name="[While_Invalid_3]" time="0.0">
+      <testcase name="invalid[While_Invalid_3]" classname="test.quickcheck.WhileyInvalidTest" time="0.0"/>
     </testsuite>
-    <testsuite name="[While_Invalid_4]" time="0.016">
-      <testcase name="invalid[While_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    <testsuite name="[While_Invalid_4]" time="0.015">
+      <testcase name="invalid[While_Invalid_4]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
     </testsuite>
-    <testsuite name="[While_Invalid_5]" time="0.031">
-      <testcase name="invalid[While_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.031"/>
+    <testsuite name="[While_Invalid_5]" time="0.016">
+      <testcase name="invalid[While_Invalid_5]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[While_Invalid_6]" time="0.047">
-      <testcase name="invalid[While_Invalid_6]" classname="test.quickcheck.WhileyInvalidTest" time="0.047"/>
+    <testsuite name="[While_Invalid_6]" time="0.016">
+      <testcase name="invalid[While_Invalid_6]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
     </testsuite>
-    <testsuite name="[While_Invalid_7]" time="0.094">
-      <testcase name="invalid[While_Invalid_7]" classname="test.quickcheck.WhileyInvalidTest" time="0.094"/>
+    <testsuite name="[While_Invalid_7]" time="0.062">
+      <testcase name="invalid[While_Invalid_7]" classname="test.quickcheck.WhileyInvalidTest" time="0.062"/>
     </testsuite>
-    <testsuite name="[While_Invalid_8]" time="0.046">
-      <testcase name="invalid[While_Invalid_8]" classname="test.quickcheck.WhileyInvalidTest" time="0.046"/>
+    <testsuite name="[While_Invalid_8]" time="0.063">
+      <testcase name="invalid[While_Invalid_8]" classname="test.quickcheck.WhileyInvalidTest" time="0.063"/>
     </testsuite>
-    <testsuite name="[While_Invalid_9]" time="0.016">
-      <testcase name="invalid[While_Invalid_9]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>
+    <testsuite name="[While_Invalid_9]" time="0.015">
+      <testcase name="invalid[While_Invalid_9]" classname="test.quickcheck.WhileyInvalidTest" time="0.015"/>
     </testsuite>
     <testsuite name="[XOR_Invalid_1]" time="0.016">
       <testcase name="invalid[XOR_Invalid_1]" classname="test.quickcheck.WhileyInvalidTest" time="0.016"/>

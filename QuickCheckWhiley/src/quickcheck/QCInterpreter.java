@@ -29,7 +29,6 @@ import static wyil.interpreter.ConcreteSemantics.RValue;
 
 import wyc.lang.WhileyFile;
 import wyc.lang.WhileyFile.Decl;
-import wyc.lang.WhileyFile.Decl.FunctionOrMethod;
 import wyfs.lang.Path;
 import wyc.lang.WhileyFile.Expr;
 import wyc.lang.WhileyFile.Type;
@@ -78,7 +77,7 @@ public class QCInterpreter extends Interpreter {
 	private final PrintStream debug;
 	
 	/** A map from function name to a map of inputs to outputs */ 
-	private final Map<FunctionOrMethod, Map<List<RValue>, RValue[]>> functionParameters;
+	private final Map<Decl.Callable, Map<List<RValue>, RValue[]>> functionParameters;
 	
 	/** Store a list of functions that are called recursively */
 	private Set<Identifier> recursiveInvariantFunctions;
@@ -100,7 +99,7 @@ public class QCInterpreter extends Interpreter {
 		this.debug = debug;
 		this.typeSystem = new TypeSystem(project);
 		this.semantics = new ConcreteSemantics();
-		this.functionParameters = new HashMap<FunctionOrMethod, Map<List<RValue>, RValue[]>>();
+		this.functionParameters = new HashMap<Decl.Callable, Map<List<RValue>, RValue[]>>();
 		this.recursiveInvariantFunctions = new HashSet<Identifier>();
 		this.lowerLimit = lowerLimit;
 		this.upperLimit = upperLimit;
@@ -121,7 +120,7 @@ public class QCInterpreter extends Interpreter {
 		this.debug = debug;
 		this.typeSystem = new TypeSystem(project);
 		this.semantics = new ConcreteSemantics();
-		this.functionParameters = new HashMap<FunctionOrMethod, Map<List<RValue>, RValue[]>>();
+		this.functionParameters = new HashMap<Decl.Callable, Map<List<RValue>, RValue[]>>();
 		this.recursiveInvariantFunctions = new HashSet<Identifier>();
 		this.lowerLimit = BigInteger.valueOf(RunTest.INT_LOWER_LIMIT);
 		this.upperLimit = BigInteger.valueOf(RunTest.INT_UPPER_LIMIT);
@@ -166,17 +165,17 @@ public class QCInterpreter extends Interpreter {
 		 * instead of generating the value.
 		 * Also do not optimise if the declaration is a property.
 		 */
-		if(!(decl instanceof Decl.Property)) {
+		if(funcMemoisation) {
+			Map<List<RValue>, RValue[]> functionIO = functionParameters.getOrDefault(decl, new HashMap<List<RValue>, RValue[]>());
+			List<RValue> argList = Arrays.asList(arguments);
+			if(functionIO.containsKey(argList)){
+				return functionIO.get(argList);
+			}
+		}
+		if(funcOptimisation && !(decl instanceof Decl.Property)) {
 			Identifier funcName = decl.getName();
 			Decl.FunctionOrMethod fun = ((Decl.FunctionOrMethod) decl);
-			if(funcMemoisation) {
-				Map<List<RValue>, RValue[]> functionIO = functionParameters.getOrDefault(fun, new HashMap<List<RValue>, RValue[]>());
-				List<RValue> argList = Arrays.asList(arguments);
-				if(functionIO.containsKey(argList)){
-					return functionIO.get(argList);
-				}
-			}
-			else if(funcOptimisation && !recursiveInvariantFunctions.contains(funcName)) {
+			if(!recursiveInvariantFunctions.contains(funcName)) {
 				// Every function should return the same output for the same input
 				Tuple<Expr> postconditions = fun.getEnsures();
 				Tuple<Decl.Variable> outputParameters = fun.getReturns();
@@ -226,8 +225,16 @@ public class QCInterpreter extends Interpreter {
 				catch (IntegerRangeException e1) {
 					// Execute test normally then
 				}
-				
-			}		
+			}
+		}	
+		// Need to cache the input and corresponding output
+		if(funcMemoisation) {
+			Map<List<RValue>, RValue[]> functionIO = functionParameters.getOrDefault(decl, new HashMap<List<RValue>, RValue[]>());
+			List<RValue> argList = Arrays.asList(arguments);
+			RValue[] returns = execute(decl.getQualifiedName().toNameID(), decl.getType(), frame, arguments);
+			functionIO.put(argList, returns);
+			functionParameters.put(decl, functionIO);
+			return returns;
 		}
 		// Invoke the function or method in question
 		return execute(decl.getQualifiedName().toNameID(), decl.getType(), frame, arguments);

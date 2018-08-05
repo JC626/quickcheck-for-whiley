@@ -155,7 +155,7 @@ public class WhileyValidTest {
 		IGNORED.put("String_Valid_6", "??");
 		IGNORED.put("RecursiveType_Valid_12", "??");
 		// Performance problems?
-		IGNORED.put("Complex_Valid_10", "??");
+//		IGNORED.put("Complex_Valid_10", "??");
 	}
 
 	// ======================================================================

@@ -57,7 +57,7 @@ public class QCInterpreterTest {
 		BigInteger lower = BigInteger.valueOf(0);
 		BigInteger upper = BigInteger.valueOf(10);
 		int numGen = 5;
-		QCInterpreter interpreter = new QCInterpreter(project, System.out, lower, upper, false, true, numGen);
+		QCInterpreter interpreter = new QCInterpreter(project, System.out, lower, upper, true, true, numGen);
 		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
 
 		Decl.FunctionOrMethod func = functions.get(0);
@@ -99,7 +99,7 @@ public class QCInterpreterTest {
 		BigInteger lower = BigInteger.valueOf(0);
 		BigInteger upper = BigInteger.valueOf(10);
 		int numGen = 5;
-		QCInterpreter interpreter = new QCInterpreter(project, System.out, lower, upper, false, true, numGen);
+		QCInterpreter interpreter = new QCInterpreter(project, System.out, lower, upper, true, true, numGen);
 		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
 		
 		Decl.FunctionOrMethod func = functions.get(0);
@@ -141,7 +141,7 @@ public class QCInterpreterTest {
 		BigInteger lower = BigInteger.valueOf(1);
 		BigInteger upper = BigInteger.valueOf(8);
 		int numGen = 5;
-		QCInterpreter interpreter = new QCInterpreter(project, System.out, lower, upper, false, true, numGen);
+		QCInterpreter interpreter = new QCInterpreter(project, System.out, lower, upper, true, true, numGen);
 		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
 		
 		Decl.FunctionOrMethod func = functions.get(0);
@@ -186,7 +186,7 @@ public class QCInterpreterTest {
 		BigInteger lower = BigInteger.valueOf(1);
 		BigInteger upper = BigInteger.valueOf(8);
 		int numGen = 5;
-		QCInterpreter interpreter = new QCInterpreter(project, System.out, lower, upper, false, true, numGen);
+		QCInterpreter interpreter = new QCInterpreter(project, System.out, lower, upper, true, true, numGen);
 		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
 		
 		Decl.FunctionOrMethod func = functions.get(0);
@@ -233,7 +233,7 @@ public class QCInterpreterTest {
 		BigInteger lower = BigInteger.valueOf(1);
 		BigInteger upper = BigInteger.valueOf(8);
 		int numGen = 5;
-		QCInterpreter interpreter = new QCInterpreter(project, System.out, lower, upper, false, true, numGen);
+		QCInterpreter interpreter = new QCInterpreter(project, System.out, lower, upper, true, true, numGen);
 		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
 	
 		Decl.FunctionOrMethod func = functions.get(0);

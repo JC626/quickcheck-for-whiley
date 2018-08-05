@@ -35,7 +35,7 @@ import static wyc.lang.WhileyFile.*;
 /**
  * Responsible for implementing the command "<code>java QuickCheck ...</code>" which
  * loads the appropriate <code>wyil</code> file and executes tests 
- * for the functions/methods using the <code>Interpreter</code>.
+ * for the functions/methods using the <code>QCInterpreter</code>.
  * 	
  * Based on wyc.Command.Run
  *
@@ -43,7 +43,7 @@ import static wyc.lang.WhileyFile.*;
  *
  */
 public class RunTest extends AbstractProjectCommand<RunTest.Result> {
-	public static final int MAX_NUMBER_ARGUMENTS = 8;
+	public static final int MAX_NUMBER_ARGUMENTS = 9;
 	
 	public static final int NUM_TESTS = 10;
 	public static final int INT_LOWER_LIMIT = -10;
@@ -110,11 +110,13 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 			List<Decl.FunctionOrMethod> funcMethods = getFunctionsAndMethods(id, project);
 			BigInteger lower = new BigInteger(args[4]);
 			BigInteger upper = new BigInteger(args[5]);
+			// Function Memoisation
+			boolean funcMemo = args[6].equals(Boolean.toString(true));
 			// Function optimisation parameters
-			boolean funcOpt = args[6].equals(Boolean.toString(true));
-			int numFuncOpGen = Integer.parseInt(args[7]);
+			boolean funcOpt = args[7].equals(Boolean.toString(true));
+			int numFuncOpGen = Integer.parseInt(args[8]);
 			// Generate tests for each function
-			QCInterpreter interpreter = new QCInterpreter(project, System.out, lower, upper, false, funcOpt, numFuncOpGen);
+			QCInterpreter interpreter = new QCInterpreter(project, System.out, lower, upper, funcMemo, funcOpt, numFuncOpGen);
 			int numTests = RunTest.NUM_TESTS;
 			try {
 				numTests = Integer.parseInt(args[3]);

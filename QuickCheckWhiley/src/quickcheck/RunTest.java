@@ -284,13 +284,20 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 						throw new AssertionError("Type constraints for " + parameter  + " failed");
 					}
 					frame.putLocal(parameter.getName(), returns[j]);
-				}				
-				interpreter.checkInvariants(frame, postconditions);
-				numPassed++;
-//				// Print out any return values produced
-//				if (returns != null) {
-//					System.out.println("OUTPUT: " + Arrays.toString(returns));
-//				}
+				}	
+				try {
+					interpreter.checkInvariants(frame, postconditions);
+					numPassed++;
+//					// Print out any return values produced
+					if (returns != null) {
+						System.out.println("OUTPUT: " + Arrays.toString(returns));
+					}
+				}
+				catch(AssertionError e) {
+					System.out.printf("Failed Input: %s%nFailed Output: %s%n", Arrays.toString(paramValues), Arrays.toString(returns));
+					System.out.println("Postcondition failed " + e);
+					numFailed++;
+				} 
 			}
 			catch(AssertionError e) {
 				System.out.printf("Failed Input: %s%nFailed Output: %s%n", Arrays.toString(paramValues), Arrays.toString(returns));

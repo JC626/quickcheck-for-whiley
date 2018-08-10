@@ -72,29 +72,33 @@ public class RandomGenerateTest implements GenerateTest{
 			}
 			this.totalCombinations = BigInteger.valueOf(size);
 		}
-		// FIXME this takes way too long!
-		// Random inputs use Knuth's Algorithm S
-		Random randomiser = new Random(); 
 		testCombos = new ArrayList<Integer>();
-		int nextCombo = 0;
-		int selected = 0; 
-		while(selected < numTests) {
-			double uniform = randomiser.nextDouble();
-			if((this.totalCombinations.intValue() - nextCombo)*uniform >= numTests - selected) {
-				nextCombo++;
-			}
-			else {
-				testCombos.add(nextCombo);
-				nextCombo++;
-				selected++;
-			}
-			if(nextCombo >= this.totalCombinations.intValue()) {
-				nextCombo = 0;
+		if(numTests >= totalCombinations.intValue()) {
+			for(int i=0; i < totalCombinations.intValue(); i++) {
+				testCombos.add(i);
 			}
 		}
-		// Shuffle test values so they are not in order
-		// Only shuffle if all combinations are not executed
-		if(numTests < totalCombinations.intValue()) {
+		else {
+			// FIXME this takes too long!
+			// Random inputs use Knuth's Algorithm S
+			Random randomiser = new Random(); 
+			int nextCombo = 0;
+			int selected = 0; 
+			while(selected < numTests) {
+				double uniform = randomiser.nextDouble();
+				if((this.totalCombinations.intValue() - nextCombo)*uniform >= numTests - selected) {
+					nextCombo++;
+				}
+				else {
+					testCombos.add(nextCombo);
+					nextCombo++;
+					selected++;
+				}
+				if(nextCombo >= this.totalCombinations.intValue()) {
+					nextCombo = 0;
+				}
+			}
+			// Shuffle test values so they are not in order
 			Collections.shuffle(testCombos);
 		}
 	}	

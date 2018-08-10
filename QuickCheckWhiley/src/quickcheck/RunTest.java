@@ -237,7 +237,7 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 		for(int i=0; i < numTest; i++) {
 			// Stop execution if all possible combinations have been generated 
 			// for the function
-			if(isFunction && testGen.exceedSize()) {
+			if(isFunction && testGen.exceedSize() && i != 0) {
 				completedAll = true;
 				break;
 			}

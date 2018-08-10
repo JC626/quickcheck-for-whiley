@@ -2,10 +2,8 @@ package quickcheck.generator.type;
 
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Random;
 import java.util.Set;
 
 import quickcheck.util.TestType;
@@ -40,9 +38,6 @@ public class FunctionGenerator implements Generator{
 
 	private Interpreter interpreter;
 
-	/**Combinations for random test generation*/
-	private List<Integer> testCombos;
-	
 	/** Current return elements generated */
 	private RValue[] returnElements;
 		
@@ -94,30 +89,6 @@ public class FunctionGenerator implements Generator{
 		}		
 		this.body = new WhileyFile.Stmt.Block(new WhileyFile.Stmt.Return(new Tuple<WhileyFile.Expr>(returnStmts))); 
 		this.lambda = new WhileyFile.Decl.Lambda(null, null, new Tuple<Decl.Variable>(inputVars), new Tuple<Decl.Variable>(outputVars), null, null, null, funcType);
-		
-		// Random inputs use Knuth's Algorithm S
-		if(testType == TestType.RANDOM) {
-			Random randomiser = new Random(); 
-			testCombos = new ArrayList<Integer>();
-			int nextCombo = 0;
-			int selected = 0; 
-			while(selected < numTests) {
-				double uniform = randomiser.nextDouble();
-				if((size() - nextCombo)*uniform >= numTests - selected) {
-					nextCombo++;
-				}
-				else {
-					testCombos.add(nextCombo);
-					nextCombo++;
-					selected++;
-				}
-				if(nextCombo >= size()) {
-					nextCombo = 0;
-				}
-			}
-			//  Shuffle test values so they are not in order
-			Collections.shuffle(testCombos);
-		}
 	}
 	
 	/**
@@ -139,58 +110,35 @@ public class FunctionGenerator implements Generator{
 
 	@Override
 	public RValue generate() {
-		if(testType == TestType.EXHAUSTIVE) {
-			if(returnElements == null) {
-				returnElements = new RValue[generators.size()];
-				for(int i=0; i < returnElements.length; i++) {
-					Generator gen = generators.get(i);
+		assert testType == TestType.EXHAUSTIVE;
+		if(returnElements == null) {
+			returnElements = new RValue[generators.size()];
+			for(int i=0; i < returnElements.length; i++) {
+				Generator gen = generators.get(i);
+				gen.resetCount();
+				returnElements[i] = gen.generate();
+			}
+		}
+		else {
+			// Generate the array elements backwards
+			for(int i=returnElements.length - 1; i >= 0 ; i--) {
+				Generator gen = generators.get(i);
+				if(!gen.exceedCount()) {
+					returnElements[i] = gen.generate();
+					break;
+				}
+				else {
 					gen.resetCount();
 					returnElements[i] = gen.generate();
 				}
 			}
-			else {
-				// Generate the array elements backwards
-				for(int i=returnElements.length - 1; i >= 0 ; i--) {
-					Generator gen = generators.get(i);
-					if(!gen.exceedCount()) {
-						returnElements[i] = gen.generate();
-						break;
-					}
-					else {
-						gen.resetCount();
-						returnElements[i] = gen.generate();
-					}
-				}
-			}
-			count++;
-			CallStack frame = interpreter.new CallStack();
-			for(int i=0; i < returnElements.length; i++) {
-				frame.putLocal(returnNames.get(i), returnElements[i]);
-			}
-			return semantics.Lambda(this.lambda, frame, this.body);
 		}
- 		else if(count >= testCombos.size()) {
- 			Random randomiser = new Random(); 
-			int nextCombo = 0;
-			int selected = 0; 
-			while(true) {
-				double uniform = randomiser.nextDouble();
-				if((size() - nextCombo)*uniform >= 1 - selected) {
-					nextCombo++;
-				}
-				else {
-					return generateCombination(nextCombo);
-				}
-				if(nextCombo >= size()) {
-					nextCombo = 0;
-				}
-			}
- 		}
-		else {
-			int index = count - 1;
-			count++;
-			return generateCombination(testCombos.get(index));
+		count++;
+		CallStack frame = interpreter.new CallStack();
+		for(int i=0; i < returnElements.length; i++) {
+			frame.putLocal(returnNames.get(i), returnElements[i]);
 		}
+		return semantics.Lambda(this.lambda, frame, this.body);
 	}
 	
 	@Override

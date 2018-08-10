@@ -55,7 +55,7 @@ public class RandomGenerateTest implements GenerateTest{
 		this.interpreter = interpreter;
 		this.lowerLimit = lowerLimit;
 		this.upperLimit = upperLimit;
-		this.parameterGenerators = new ArrayList<Generator>();		
+		this.parameterGenerators = new ArrayList<Generator>();	
 		// Get the generators
 		for(Variable var : valuesToGenerate) {
 			WhileyFile.Type paramType = var.getType();
@@ -72,6 +72,7 @@ public class RandomGenerateTest implements GenerateTest{
 			}
 			this.totalCombinations = BigInteger.valueOf(size);
 		}
+		// FIXME this takes way too long!
 		// Random inputs use Knuth's Algorithm S
 		Random randomiser = new Random(); 
 		testCombos = new ArrayList<Integer>();
@@ -227,6 +228,11 @@ public class RandomGenerateTest implements GenerateTest{
 	
 	@Override
 	public RValue[] generateParameters() {
+//        RValue[] parameters = new RValue[parameterGenerators.size()];
+//		for(int i=0; i < parameterGenerators.size(); i++) {
+//            parameters[i] = parameterGenerators.get(i).generate();
+//        }
+//        return parameters;
 		if(exceedSize()) {
  			Random randomiser = new Random(); 
 			int nextCombo = 0;

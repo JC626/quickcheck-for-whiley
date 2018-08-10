@@ -1,9 +1,6 @@
 package quickcheck.generator.type;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 import quickcheck.constraints.RangeHelper;
 import quickcheck.exception.IntegerRangeException;
@@ -38,8 +35,6 @@ public class RecordGenerator implements Generator{
 	private List<Generator> generators;
 	/** Field names for the record */
 	private List<Decl.Variable> fields;
-	/**Combinations for random test generation*/
-	private List<Integer> testCombos;
 
 	/** Current field elements generated */
 	private Field[] elements;
@@ -54,93 +49,36 @@ public class RecordGenerator implements Generator{
 		this.fields = fields;
 		this.testType = testType;
 		calculateSize();
-		
-		// Random inputs use Knuth's Algorithm S
-		if(testType == TestType.RANDOM) {
-			Random randomiser = new Random(); 
-			testCombos = new ArrayList<Integer>();
-			int nextCombo = 0;
-			int selected = 0; 
-			while(selected < numTests) {
-				double uniform = randomiser.nextDouble();
-				if((size() - nextCombo)*uniform >= numTests - selected) {
-					nextCombo++;
-				}
-				else {
-					testCombos.add(nextCombo);
-					nextCombo++;
-					selected++;
-				}
-				if(nextCombo >= size()) {
-					nextCombo = 0;
-				}
-			}
-			//  Shuffle test values so they are not in order
-			Collections.shuffle(testCombos);
-		}
 	}
 
 	@Override
 	public RValue generate() {
-		if(testType == TestType.EXHAUSTIVE) {
-			if(elements == null) {
-				elements = new Field[generators.size()];
-				for(int i=0; i < elements.length; i++) {
-					Generator gen = generators.get(i);
+		assert testType == TestType.EXHAUSTIVE;
+		if(elements == null) {
+			elements = new Field[generators.size()];
+			for(int i=0; i < elements.length; i++) {
+				Generator gen = generators.get(i);
+				gen.resetCount();
+				elements[i] = semantics.Field(fields.get(i).getName(), gen.generate());
+			}
+		}
+		else {
+			// Generate the array elements backwards
+			for(int i=elements.length - 1; i >= 0 ; i--) {
+				Generator gen = generators.get(i);
+				if(!gen.exceedCount()) {
+					elements[i] = semantics.Field(fields.get(i).getName(), gen.generate());
+					break;
+				}
+				else {
 					gen.resetCount();
 					elements[i] = semantics.Field(fields.get(i).getName(), gen.generate());
 				}
 			}
-			else {
-				// Generate the array elements backwards
-				for(int i=elements.length - 1; i >= 0 ; i--) {
-					Generator gen = generators.get(i);
-					if(!gen.exceedCount()) {
-						elements[i] = semantics.Field(fields.get(i).getName(), gen.generate());
-						break;
-					}
-					else {
-						gen.resetCount();
-						elements[i] = semantics.Field(fields.get(i).getName(), gen.generate());
-					}
-				}
-			}
-			count++;
-			// Need to clone (shallow is fine) so the elements array doesn't get sorted
-			return semantics.Record(elements.clone());
 		}
- 		else if(count >= testCombos.size()) {
- 			Random randomiser = new Random(); 
-			int nextCombo = 0;
-			int selected = 0; 
-			while(true) {
-				double uniform = randomiser.nextDouble();
-				if((size() - nextCombo)*uniform >= 1 - selected) {
-					nextCombo++;
-				}
-				else {
-					return generateCombination(nextCombo);
-				}
-				if(nextCombo >= size()) {
-					nextCombo = 0;
-				}
-			}
- 		}
-		else {
-			int index = count - 1;
-			count++;
-			return generateCombination(testCombos.get(index));
-		}
-//		else {
-//			Field[] recordFields = new Field[generators.size()];
-//			for(int i=0; i < recordFields.length; i++) {
-//				Generator gen = generators.get(i);
-//				recordFields[i] = semantics.Field(fields.get(i).getName(), gen.generate());
-//			}
-//			count++;
-//			// Need to clone (shallow is fine) so the elements array doesn't get sorted
-//			return semantics.Record(recordFields.clone());
-//		}
+		count++;
+		// Need to clone (shallow is fine) so the elements array doesn't get sorted
+		return semantics.Record(elements.clone());
 	}
 	
 	@Override

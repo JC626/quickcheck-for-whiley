@@ -56,8 +56,8 @@ public class NominalGenerator implements Generator{
 	}
 
 	@Override
-	public RValue generateCombination(int comboNum) {
-		return generator.generateCombination(comboNum);
+	public RValue generate(int comboNum) {
+		return generator.generate(comboNum);
 	}
 
 	/**

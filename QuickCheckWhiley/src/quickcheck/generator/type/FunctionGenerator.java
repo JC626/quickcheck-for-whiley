@@ -142,7 +142,7 @@ public class FunctionGenerator implements Generator{
 	}
 	
 	@Override
-	public RValue generateCombination(int comboNum) {
+	public RValue generate(int comboNum) {
 		RValue[] returnEles = new RValue[generators.size()];
 		int leftover = comboNum;
 		for(int i=0; i < returnEles.length ; i++) {
@@ -160,7 +160,7 @@ public class FunctionGenerator implements Generator{
 				num /= divNum;
 			}
 			Generator gen = generators.get(i);
-			returnEles[i] = gen.generateCombination(num);
+			returnEles[i] = gen.generate(num);
 			leftover -= num * divNum;
 		}
 		CallStack frame = interpreter.new CallStack();

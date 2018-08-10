@@ -103,7 +103,7 @@ public class ArrayGenerator implements Generator{
 	}
 	
 	@Override
-	public RValue generateCombination(int comboNum) {
+	public RValue generate(int comboNum) {
 		if(comboNum == 0) {
 			return semantics.Array(new RValue[0]);
 		}
@@ -134,7 +134,7 @@ public class ArrayGenerator implements Generator{
 				}
 //				System.out.println("Div " + divNum);
 //				System.out.println(combo);
-				elements[arrSize-i-1] = gen.generateCombination(num);
+				elements[arrSize-i-1] = gen.generate(num);
 				leftover -= num * divNum;
 			}
 			return semantics.Array(elements);

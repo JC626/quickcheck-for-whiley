@@ -275,7 +275,7 @@ public class RandomGenerateTest implements GenerateTest{
 				num /= divNum;
 			}
 			Generator gen = parameterGenerators.get(i);
-			parameters[i] = gen.generateCombination(num);
+			parameters[i] = gen.generate(num);
 			leftover -= num * divNum;
 		}
 		return parameters;

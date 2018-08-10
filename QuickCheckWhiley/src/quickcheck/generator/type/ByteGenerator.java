@@ -36,7 +36,7 @@ public class ByteGenerator implements Generator{
 	}
 	
 	@Override
-	public RValue generateCombination(int comboNum) {
+	public RValue generate(int comboNum) {
 		assert LOWER_LIMIT <= comboNum && comboNum < UPPER_LIMIT;
 		return semantics.Byte((byte) comboNum);
 	}

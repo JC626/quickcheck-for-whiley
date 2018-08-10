@@ -52,7 +52,7 @@ public final class IntegerGenerator implements Generator {
 	}
 	
 	@Override
-	public RValue generateCombination(int comboNum) {
+	public RValue generate(int comboNum) {
 		BigInteger value = range.lowerBound().add(BigInteger.valueOf(comboNum));
 		return semantics.Int(value);
 	}

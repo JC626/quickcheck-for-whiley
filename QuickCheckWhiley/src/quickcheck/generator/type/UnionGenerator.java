@@ -73,7 +73,7 @@ public final class UnionGenerator implements Generator {
 	}
 	
 	@Override
-	public RValue generateCombination(int comboNum) {
+	public RValue generate(int comboNum) {
 		int lowerLimit = 0;
 		Generator gen = generators.get(0);
 		for(int i=0; i< generators.size(); i++) {
@@ -83,7 +83,7 @@ public final class UnionGenerator implements Generator {
 			}
 			lowerLimit = gen.size();
 		}
-		return gen.generateCombination(comboNum - lowerLimit);
+		return gen.generate(comboNum - lowerLimit);
 	}
 
 	/**

@@ -82,7 +82,7 @@ public class RecordGenerator implements Generator{
 	}
 	
 	@Override
-	public RValue generateCombination(int comboNum) {
+	public RValue generate(int comboNum) {
 		Field[] recordFields = new Field[generators.size()];
 		int leftover = comboNum;
 		for(int i=0; i < recordFields.length ; i++) {
@@ -100,7 +100,7 @@ public class RecordGenerator implements Generator{
 				num /= divNum;
 			}
 			Generator gen = generators.get(i);
-			RValue val =  gen.generateCombination(num);
+			RValue val =  gen.generate(num);
 			recordFields[i] = semantics.Field(fields.get(i).getName(), val);
 			leftover -= num * divNum;
 		}

@@ -517,6 +517,39 @@ None
 	\item Also in the report, can talk about why aliasing was not done for reference generation and how it could have been approached.
 \end{itemize}
 
+\section{August 7th 2018}
+\subsection{Present}
+\begin{itemize}
+	\item David Pearce
+\end{itemize}
+
+\subsection{Action points were achieved since the last meeting}
+\begin{itemize}
+	\item Added flag for memoisation. Turns out it makes testing a lot faster. Due to methods being executed.
+	\item Stop test execution if all possible test combinations have been generated.
+	\item Allow memoisation on Properties too
+	\item Started looking into the final report.
+	\item Started executing statistics for methods. Still need to do some more due to some tests taking a long time. May need to tweak function optimisation.
+\end{itemize}
+\subsection{Action points have yet to be achieved since the last meeting}
+None
+\subsection{Action points were agreed to for the next meeting}
+
+\begin{itemize}
+	\item Start final report. Concentrate on the implementation and evaluation sections. Want to have a vision of what the final report will look like.
+	\item Want to know how you interpret the various statistics in the evaluation. For example, could have the statistics in a table. GitHub issues could also be represented as a table of what issue was found, how it was identified, where it was corrected etc.
+	\item Send draft to Dave of what was written in the morning. (Plan to send this through by Monday morning, Tuesday morning at the latest!)
+\end{itemize}
+
+\subsection{Discussion Points}
+\begin{itemize}
+	\item Realised I didn't use Knuth Algorithm S for random test case generation. So I implemented it. Problem: Very slow when there are a few tests but a large number of combinations such as when conducting function optimisation. As it has to iterate through X number of combinations, using probability to get the N number of tests. Previously, it would just iterate through the generators (where generators did execute Algorithm S), calling generate.
+	\item Could output statistics into a latex format to be easily copied and pasted into the report.
+	\item Bullet point what you want to write in the relevant sections in the report.
+	\item Limitations part based on feedback on the progress report. Testing can't find everything however, verification can. What are the limitations of the tools in the research paper? Other limitations include the performance of the tool.
+\end{itemize}
+
+
 %\section{ 2018}
 %\subsection{Present}
 %\begin{itemize}

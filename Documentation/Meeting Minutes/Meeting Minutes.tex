@@ -558,7 +558,7 @@ None
 
 \subsection{Action points were achieved since the last meeting}
 \begin{itemize}
-	\item Started implementation chapter - need to write function optimisation and memoisation
+	\item Started implementation chapter - need to write function optimisation and memoisation (\href{https://gitlab.ecs.vuw.ac.nz/project489-2018/chinjani/quickcheck-for-whiley-final-report/blob/master/Draft%20V1%20QuickCheck%20for%20Whiley%20-%20Janice%20Chin.pdf}{Draft QC for Whiley V1}). )
 	\item Started figuring out what to do for the evaluation
 	\item Attempted to fix random test problems - turns out that a high number of combinations 751,747,177 takes 12 seconds to execute 1 test. For 100 tests that is ~20 minutes long. Therefore, need another way to select tests, maybe randomly generate and add to a set until it reaches the number of tests required?
 \end{itemize}
@@ -586,16 +586,39 @@ rename Integer range analysis
 
 \subsection{Action points were achieved since the last meeting}
 Wrote more of the report - especially the design and implementation chapters.
+(\href{https://gitlab.ecs.vuw.ac.nz/project489-2018/chinjani/quickcheck-for-whiley-final-report/blob/master/Draft%20V2%20QuickCheck%20for%20Whiley%20-%20Janice%20Chin.pdf}{Draft QC for Whiley V2}). 
 \subsection{Action points have yet to be achieved since the last meeting}
 None
 \subsection{Action points were agreed to for the next meeting}
-Received feedback on report. Continue writing the report, the most feedback was on the introduction and background chapters so focus on that.
+Received feedback on report. 
+Continue writing the report, the most feedback was on the introduction and background chapters so focus on that.
 \subsection{Discussion Points}
 \begin{itemize}
 	\item  Should memoisation be applied to methods? As the number of method calls can affect the values in global variables. This is a design question that you can explain in your report, why you decided to do/not to do this.
 	\item For statistics in the evaluation, you can either get the average from multiple tests or get the variable coefficient which is the standard deviation divided by the mean.
 \end{itemize}
 
+\section{August 28th 2018}
+\subsection{Present}
+\begin{itemize}
+	\item David Pearce
+\end{itemize}
+
+\subsection{Action points were achieved since the last meeting}
+Reviewing over the introduction and background sections written (\href{https://gitlab.ecs.vuw.ac.nz/project489-2018/chinjani/quickcheck-for-whiley-final-report/blob/master/Draft%20V3%20QuickCheck%20for%20Whiley%20-%20Janice%20Chin.pdf}{Draft QC for Whiley V3}). 
+Overall, it just needs some minor tweaking and additions.
+\subsection{Action points have yet to be achieved since the last meeting}
+None.
+\subsection{Action points were agreed to for the next meeting}
+Start writing the evaluation.
+
+\subsection{Notes}
+\begin{itemize}
+	\item Introduction - first paragraph, should have quote and citations about testing. Would also be good to explain uses of QC and Whiley and why Whiley would be good for automatic testing.
+	\item Future work could be the weighted frequencies as in the original QC.
+	\item Randoop section still needs some work, talk about the test oracle and use a better example for the method sequences.
+	\item In the background, might want a paragraph to discuss American Fuzzy Lop or other testing techniques.
+\end{itemize}
 
 %\section{ 2018}
 %\subsection{Present}

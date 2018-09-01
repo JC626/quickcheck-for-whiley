@@ -921,7 +921,7 @@ public class GenerateExhaustiveTest {
 	}
 	
 	/**
-	 * Test a recursive type
+	 * Test a recursive type that has a null and recursive record union
 	 * @throws IOException 
 	 * @throws IntegerRangeException 
 	 */
@@ -992,7 +992,170 @@ public class GenerateExhaustiveTest {
 				}
 			}
 		}
+		// Check it actually is bounded to a depth of 3
+		generatedParameters = testGen.generateParameters();
+		assertEquals(1, generatedParameters.length);
+		assertEquals(semantics.Null(), generatedParameters[0]);
 	}
+	
+	/**
+	 * Test a recursive type that has a int and recursive record union
+	 * @throws IOException 
+	 * @throws IntegerRangeException 
+	 */
+	@Test
+	public void testRecursiveType3() throws IOException, IntegerRangeException {
+		String testName = "recursive_3";
+		helper.compile(testName);
+		Build.Project project = helper.createProject();
+		Interpreter interpreter = new QCInterpreter(project, System.out);
+		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
+		
+		BigInteger lower = BigInteger.valueOf(0);
+		BigInteger upper = BigInteger.valueOf(2);	
+		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0).getParameters(), interpreter, 40, lower, upper);
+		
+		RValue[] generatedParameters = testGen.generateParameters();
+		assertEquals(1, generatedParameters.length);
+		assertEquals(semantics.Int(BigInteger.valueOf(0)), generatedParameters[0]);
+		
+		RValue.Field[] fields = new RValue.Field[2];
+		fields[0] = semantics.Field(new Identifier("data"), semantics.Int(BigInteger.valueOf(0)));
+		fields[1] = semantics.Field(new Identifier("n"), semantics.Int(BigInteger.valueOf(0)));
+		RValue.Record expectedRecordOne = semantics.Record(fields);
+		
+		generatedParameters = testGen.generateParameters();
+		assertEquals(1, generatedParameters.length);
+		assertEquals(expectedRecordOne, generatedParameters[0]);
+		
+		generatedParameters = testGen.generateParameters();
+		assertEquals(semantics.Int(BigInteger.valueOf(1)), generatedParameters[0]);
+		
+		fields = new RValue.Field[2];
+		fields[0] = semantics.Field(new Identifier("data"), semantics.Int(BigInteger.valueOf(1)));
+		fields[1] = semantics.Field(new Identifier("n"), semantics.Int(BigInteger.valueOf(0)));
+		RValue.Record expectedRecordTwo = semantics.Record(fields);
+		
+		generatedParameters = testGen.generateParameters();
+		assertEquals(1, generatedParameters.length);
+		assertEquals(expectedRecordTwo, generatedParameters[0]);
+		
+		// 2 elements
+		generatedParameters = testGen.generateParameters();
+		assertEquals(1, generatedParameters.length);
+		RValue.Record record = (Record) generatedParameters[0];
+		RValue first = record.read(new Identifier("n"));
+		assertEquals(expectedRecordOne, first);
+		RValue second = record.read(new Identifier("data"));
+		assertEquals(semantics.Int(BigInteger.valueOf(0)), second);
+	}
+	
+	/**
+	 * Test a recursive type that has a null and recursive record union in two fields
+	 * @throws IOException 
+	 * @throws IntegerRangeException 
+	 */
+	@Test
+	public void testRecursiveType4() throws IOException, IntegerRangeException {
+		String testName = "recursive_4";
+		helper.compile(testName);
+		Build.Project project = helper.createProject();
+		Interpreter interpreter = new QCInterpreter(project, System.out);
+		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
+		
+		BigInteger lower = BigInteger.valueOf(0);
+		BigInteger upper = BigInteger.valueOf(2);	
+		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0).getParameters(), interpreter, 40, lower, upper);
+		
+		RValue[] generatedParameters = testGen.generateParameters();
+		assertEquals(1, generatedParameters.length);
+		assertEquals(semantics.Null(), generatedParameters[0]);
+		
+		RValue.Field[] fields = new RValue.Field[2];
+		fields[0] = semantics.Field(new Identifier("n"), semantics.Null());
+		fields[1] = semantics.Field(new Identifier("m"), semantics.Null());
+		RValue.Record expectedRecord = semantics.Record(fields);
+
+		generatedParameters = testGen.generateParameters();
+		assertEquals(1, generatedParameters.length);
+		assertEquals(expectedRecord, generatedParameters[0]);
+		
+		generatedParameters = testGen.generateParameters();
+		assertEquals(1, generatedParameters.length);
+		RValue.Record record = (Record) generatedParameters[0];
+		RValue first = record.read(new Identifier("n"));
+		assertEquals(semantics.Null(), first);
+		RValue second = record.read(new Identifier("m"));
+		assertEquals(expectedRecord, second);
+		
+		// Discard tests
+		for(int i=0; i < 3; i++) {
+			testGen.generateParameters();
+		}
+
+		// Test this
+		generatedParameters = testGen.generateParameters();
+		assertEquals(1, generatedParameters.length);
+		record = (Record) generatedParameters[0];
+		first = record.read(new Identifier("n"));
+		assertEquals(expectedRecord, first);
+		second = record.read(new Identifier("m"));
+		assertEquals(semantics.Null(), second);
+	}
+	
+	/**
+	 * Test a recursive type that has a null and recursive array
+	 * @throws IOException 
+	 * @throws IntegerRangeException 
+	 */
+	@Test
+	public void testRecursiveType5() throws IOException, IntegerRangeException {
+		String testName = "recursive_5";
+		helper.compile(testName);
+		Build.Project project = helper.createProject();
+		Interpreter interpreter = new QCInterpreter(project, System.out);
+		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
+		
+		BigInteger lower = BigInteger.valueOf(0);
+		BigInteger upper = BigInteger.valueOf(2);	
+		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0).getParameters(), interpreter, 40, lower, upper);
+		
+		RValue[] generatedParameters = testGen.generateParameters();
+		assertEquals(1, generatedParameters.length);
+		assertEquals(semantics.Null(), generatedParameters[0]);
+		
+		RValue emptyArray = semantics.Array(new RValue[0]);
+		RValue rootArray = semantics.Array(new RValue[]{semantics.Null()});
+
+		// Empty array
+		generatedParameters = testGen.generateParameters();
+		assertEquals(1, generatedParameters.length);
+		assertEquals(semantics.Array(new RValue[0]), generatedParameters[0]);
+		
+		// Element with one element
+		generatedParameters = testGen.generateParameters();
+		assertEquals(1, generatedParameters.length);
+		assertEquals(rootArray, generatedParameters[0]);
+		
+		// 2d empty array
+		generatedParameters = testGen.generateParameters();
+		assertEquals(1, generatedParameters.length);
+		assertEquals(semantics.Array(new RValue[] {emptyArray}), generatedParameters[0]);
+		
+		generatedParameters = testGen.generateParameters();
+		assertEquals(1, generatedParameters.length);
+		assertEquals(semantics.Array(new RValue[] {rootArray}), generatedParameters[0]);
+		
+		// 3d empty array
+		generatedParameters = testGen.generateParameters();
+		assertEquals(1, generatedParameters.length);
+		assertEquals(semantics.Array(new RValue[] { semantics.Array(new RValue[] {emptyArray})}), generatedParameters[0]);
+		
+		generatedParameters = testGen.generateParameters();
+		assertEquals(1, generatedParameters.length);
+		assertEquals(semantics.Array(new RValue[] { semantics.Array(new RValue[] {rootArray})}), generatedParameters[0]);
+	}
+	
 	
 	/**
 	 * Test when a nominal type has a property

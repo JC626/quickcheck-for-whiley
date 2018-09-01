@@ -112,7 +112,6 @@ public class NominalGenerator implements Generator{
 			catch(AssertionError e) {}
 			// No valid values
 			if(i > generator.size()) {
-				// TODO Change this to a different exception
 				throw new CannotGenerateException("No possible values can be generated for the nominal type: " + decl.getName());
 			}
 			i++;

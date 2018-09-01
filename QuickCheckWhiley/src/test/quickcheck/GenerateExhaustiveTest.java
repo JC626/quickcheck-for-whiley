@@ -10,6 +10,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import quickcheck.QCInterpreter;
+import quickcheck.exception.CannotGenerateException;
 import quickcheck.exception.IntegerRangeException;
 import quickcheck.generator.ExhaustiveGenerateTest;
 import quickcheck.generator.GenerateTest;
@@ -516,7 +517,7 @@ public class GenerateExhaustiveTest {
 			testGen.generateParameters();
 			fail("Should not be able to generate parameters that are invalid");
 		}
-		catch(Error e) {}
+		catch(CannotGenerateException e) {}
 		GenerateTest testGen = new ExhaustiveGenerateTest(functions.get(0).getParameters(), interpreter, 16, lower, upper);
 
 		lower = BigInteger.valueOf(0);

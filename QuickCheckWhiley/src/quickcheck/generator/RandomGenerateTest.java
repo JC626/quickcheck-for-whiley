@@ -138,13 +138,13 @@ public class RandomGenerateTest implements GenerateTest{
 				Decl.Type decl = interpreter.getTypeSystem().resolveExactly(nom.getName(), Decl.Type.class);
 				Decl.Variable var = decl.getVariableDeclaration();
 				Name name = nom.getName();
-				recursiveType.put(name, recursiveType.getOrDefault(name, -1) + 1);
-				if(recursiveType.get(name) > RunTest.RECURSIVE_LIMIT) {
-					return new NullGenerator();
-				}
+				recursiveType.put(name, recursiveType.getOrDefault(name, 0) + 1);
+//				if(recursiveType.get(name) > RunTest.RECURSIVE_LIMIT) {
+//					return new NullGenerator();
+//				}
 				Generator gen = getGenerator(var.getType());
 				recursiveType.put(name, recursiveType.get(name) - 1);
-				if(recursiveType.get(name) == -1) {
+				if(recursiveType.get(name) == 0) {
 					recursiveType.remove(name);
 				}
 				return new NominalGenerator(gen, interpreter, decl);
@@ -176,7 +176,7 @@ public class RandomGenerateTest implements GenerateTest{
 				WhileyFile.Type unionFieldType = union.get(i);
 				if(unionFieldType instanceof WhileyFile.Type.Nominal) {
 					WhileyFile.Type.Nominal nom = (WhileyFile.Type.Nominal) unionFieldType;
-					if(recursiveType.getOrDefault(nom.getName(), 0) >= RunTest.RECURSIVE_LIMIT) {
+					if(recursiveType.containsKey(nom.getName()) && recursiveType.get(nom.getName()) > RunTest.RECURSIVE_LIMIT) {
 						limitReached = true;
 						// No longer be able to generate the nominal type
 						break;
@@ -192,7 +192,7 @@ public class RandomGenerateTest implements GenerateTest{
 						for(Decl.Variable var : tuple) {
 							if(var.getType() instanceof WhileyFile.Type.Nominal) {
 								WhileyFile.Type.Nominal nom = (WhileyFile.Type.Nominal) var.getType();
-								if(recursiveType.getOrDefault(nom.getName(), 0) >= RunTest.RECURSIVE_LIMIT) {
+								if(recursiveType.containsKey(nom.getName()) && recursiveType.get(nom.getName()) > RunTest.RECURSIVE_LIMIT) {
 									limitReached = true;
 									// No longer be able to generate the nominal type
 									break;
@@ -203,13 +203,29 @@ public class RandomGenerateTest implements GenerateTest{
 							}
 						}
 					}
+				} else if(unionFieldType instanceof WhileyFile.Type.Array) {
+					WhileyFile.Type.Array arr = (WhileyFile.Type.Array) unionFieldType;
+					if(arr.getElement() instanceof WhileyFile.Type.Nominal) {
+						WhileyFile.Type.Nominal nom = (WhileyFile.Type.Nominal) arr.getElement();
+						if(recursiveType.containsKey(nom.getName()) && recursiveType.get(nom.getName()) > RunTest.RECURSIVE_LIMIT) {
+							limitReached = true;
+							// No longer be able to generate the nominal type
+							break;
+						}
+					}
+
 				}
+				
+				
 				if(!limitReached) {
 					Generator gen = getGenerator(unionFieldType);
 					if(!generators.contains(gen)) {
 						generators.add(gen);
 					}
 				}
+			}
+			if(generators.size() == 1) {
+				return generators.get(0);
 			}
 			return new UnionGenerator(generators, TestType.RANDOM, numTests);
 		}

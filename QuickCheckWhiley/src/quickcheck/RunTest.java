@@ -54,6 +54,9 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 	public static final int RECURSIVE_LIMIT = 3;
 	// Can only create up to 2D arrays, otherwise it exceeds the number of combos possible
 	public static final int RECURSIVE_ARRAY_LIMIT = 2;
+	
+	/** All the user created types that are recursive structures */
+	private static Map<Name, Integer> recursiveType = new HashMap<Name, Integer>();
 
 	/**
 	 * Result kind for this command
@@ -237,6 +240,7 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 		int numPassed = 0;
 		int numFailed = 0;
 		for(int i=0; i < numTest; i++) {
+			recursiveType.clear();
 			// Stop execution if all possible combinations have been generated 
 			// for the function
 			if(isFunction && testGen.exceedSize() && i != 0) {
@@ -270,6 +274,7 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 			RValue[] returns = null;
 			try {
 				returns = interpreter.execute(name, type, frame, false, false, paramValues);
+				recursiveType.clear();
 			}
 			catch(AssertionError e) {
 				System.out.println("Error occurred during execution " + e + ": " + e.getMessage());
@@ -361,12 +366,19 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 		// Check the nominal type postcondition
 		if(paramType instanceof Type.Nominal) {
 			Type.Nominal nom = (Type.Nominal) paramType;
+			Name name = nom.getName();
+			recursiveType.put(name, recursiveType.getOrDefault(name, 0) + 1);
+			
 			Decl.Type decl = interpreter.getTypeSystem().resolveExactly(nom.getName(), Decl.Type.class);			
 			if(decl.getInvariant().size() > 0) {
 				RValue.Bool valid = returnVal.checkInvariant(decl.getVariableDeclaration(), decl.getInvariant(), interpreter);
 				if(valid == RValue.Bool.False) {
 					return false;
 				}
+			}
+			// For recursive invariants, stop checking at the invariant limit
+			if(recursiveType.getOrDefault(name, 0) > RECURSIVE_LIMIT) {
+				return true;
 			}
 			// Need to go deeper as nominal wraps another type!
 			return checkInvariant(interpreter, decl.getVariableDeclaration().getType(), returnVal);

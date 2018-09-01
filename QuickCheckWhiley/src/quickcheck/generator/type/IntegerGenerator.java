@@ -80,6 +80,9 @@ public final class IntegerGenerator implements Generator {
 	
 	private void calculateSize() {
 		this.size = range.upperBound().subtract(range.lowerBound()).intValue();
+		if(this.size < 0) {
+			size = Integer.MAX_VALUE;
+		}
 	}
 
 	@Override

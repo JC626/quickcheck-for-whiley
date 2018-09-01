@@ -171,7 +171,7 @@ public class FunctionGenerator implements Generator{
 		return semantics.Lambda(this.lambda, frame, this.body);
 	}
 
-	public void calculateSize() {
+	private void calculateSize() {
 		//Calculate size
 		if(generators.size() > 0) {
 			this.size = 1;
@@ -181,6 +181,9 @@ public class FunctionGenerator implements Generator{
 		}
 		else {
 			this.size = 0;
+		}
+		if(this.size < 0) {
+			size = Integer.MAX_VALUE;
 		}
 	}
 

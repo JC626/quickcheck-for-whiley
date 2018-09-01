@@ -121,6 +121,9 @@ public final class UnionGenerator implements Generator {
 		for(int i=0; i < generators.size(); i++) {
 			size += generators.get(i).size();
 		}
+		if(this.size < 0) {
+			size = Integer.MAX_VALUE;
+		}
 	}
 
 	@Override

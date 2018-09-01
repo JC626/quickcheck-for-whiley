@@ -144,7 +144,7 @@ public class RecordGenerator implements Generator{
 		}
 	}
 
-	public void calculateSize() {
+	private void calculateSize() {
 		//Calculate size
 		if(generators.size() > 0) {
 			this.size = 1;
@@ -154,6 +154,9 @@ public class RecordGenerator implements Generator{
 		}
 		else {
 			this.size = 0;
+		}
+		if(this.size < 0) {
+			size = Integer.MAX_VALUE;
 		}
 	}
 

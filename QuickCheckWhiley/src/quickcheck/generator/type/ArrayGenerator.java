@@ -176,6 +176,9 @@ public class ArrayGenerator implements Generator{
 		for(int i=start; i < range.upperBound().intValue(); i++) {
 			this.size += Math.pow(generatorRange, i);
 		}
+		if(this.size < 0) {
+			size = Integer.MAX_VALUE;
+		}
 	}
 	
 	@Override

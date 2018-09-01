@@ -52,7 +52,9 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 	public static final int ARRAY_LOWER_LIMIT = 0;
 	public static final int ARRAY_UPPER_LIMIT = 3;
 	public static final int RECURSIVE_LIMIT = 3;
-	
+	// Can only create up to 2D arrays, otherwise it exceeds the number of combos possible
+	public static final int RECURSIVE_ARRAY_LIMIT = 2;
+
 	/**
 	 * Result kind for this command
 	 *

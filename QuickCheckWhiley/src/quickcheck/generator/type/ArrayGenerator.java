@@ -4,6 +4,7 @@ import java.math.BigInteger;
 import java.util.List;
 
 import quickcheck.constraints.IntegerRange;
+import quickcheck.exception.IntegerRangeException;
 import quickcheck.util.TestType;
 import wyil.interpreter.ConcreteSemantics;
 import wyil.interpreter.ConcreteSemantics.RValue;
@@ -39,7 +40,7 @@ public class ArrayGenerator implements Generator{
 	private int count = 1;
 	
 
-	public ArrayGenerator(List<Generator> generators, TestType testType, int numTests, int lower, int upper) {
+	public ArrayGenerator(List<Generator> generators, TestType testType, int numTests, int lower, int upper) throws IntegerRangeException {
 		this.generators = generators;
 		this.testType = testType;
 		this.range = new IntegerRange(lower, upper + 1);
@@ -142,10 +143,10 @@ public class ArrayGenerator implements Generator{
 	}
 
 	
-	private void checkValidRange() {
+	private void checkValidRange() throws IntegerRangeException {
 		// Throw an error if the range is bigger than the other
 		if(range.lowerBound().compareTo(range.upperBound()) >= 0) {
-			throw new Error("Upper integer limit is less than or equal to the lower integer limit");
+			throw new IntegerRangeException();
 		}
 	}
 	
@@ -154,8 +155,9 @@ public class ArrayGenerator implements Generator{
 	 * another generator if it hasn't generated any values yet.
 	 * 
 	 * @param other An integer range to intersect with
+	 * @throws IntegerRangeException 
 	 */
-	public void joinRange(IntegerRange other) {
+	public void joinRange(IntegerRange other) throws IntegerRangeException {
 		assert count == 1;
 		this.range = range.intersection(other);
 		checkValidRange();

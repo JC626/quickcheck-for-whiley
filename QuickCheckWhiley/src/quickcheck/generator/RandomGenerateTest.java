@@ -48,14 +48,16 @@ public class RandomGenerateTest implements GenerateTest{
     
 	/** All the user created types that are recursive structures */
 	private Map<Name, Integer> recursiveType = new HashMap<Name, Integer>();
-		
+	/** All the user created types that are recursive array structures */
+	private Map<Name, Integer> recursiveArray = new HashMap<Name, Integer>();
+
     public RandomGenerateTest(Tuple<Decl.Variable> valuesToGenerate, Interpreter interpreter, int numTests, BigInteger lowerLimit, BigInteger upperLimit) throws IntegerRangeException {
 		super();
         this.numTests = numTests;
 		this.interpreter = interpreter;
 		this.lowerLimit = lowerLimit;
 		this.upperLimit = upperLimit;
-		this.parameterGenerators = new ArrayList<Generator>();		
+		this.parameterGenerators = new ArrayList<Generator>();	
 		// Get the generators
 		for(Variable var : valuesToGenerate) {
 			WhileyFile.Type paramType = var.getType();
@@ -72,28 +74,33 @@ public class RandomGenerateTest implements GenerateTest{
 			}
 			this.totalCombinations = BigInteger.valueOf(size);
 		}
-		// Random inputs use Knuth's Algorithm S
-		Random randomiser = new Random(); 
 		testCombos = new ArrayList<Integer>();
-		int nextCombo = 0;
-		int selected = 0; 
-		while(selected < numTests) {
-			double uniform = randomiser.nextDouble();
-			if((this.totalCombinations.intValue() - nextCombo)*uniform >= numTests - selected) {
-				nextCombo++;
-			}
-			else {
-				testCombos.add(nextCombo);
-				nextCombo++;
-				selected++;
-			}
-			if(nextCombo >= this.totalCombinations.intValue()) {
-				nextCombo = 0;
+		if(numTests >= totalCombinations.intValue()) {
+			for(int i=0; i < totalCombinations.intValue(); i++) {
+				testCombos.add(i);
 			}
 		}
-		// Shuffle test values so they are not in order
-		// Only shuffle if all combinations are not executed
-		if(numTests < totalCombinations.intValue()) {
+		else {
+			// FIXME this takes too long!
+			// Random inputs use Knuth's Algorithm S
+			Random randomiser = new Random(); 
+			int nextCombo = 0;
+			int selected = 0; 
+			while(selected < numTests) {
+				double uniform = randomiser.nextDouble();
+				if((this.totalCombinations.intValue() - nextCombo)*uniform >= numTests - selected) {
+					nextCombo++;
+				}
+				else {
+					testCombos.add(nextCombo);
+					nextCombo++;
+					selected++;
+				}
+				if(nextCombo >= this.totalCombinations.intValue()) {
+					nextCombo = 0;
+				}
+			}
+			// Shuffle test values so they are not in order
 			Collections.shuffle(testCombos);
 		}
 	}	
@@ -120,9 +127,17 @@ public class RandomGenerateTest implements GenerateTest{
 		else if(paramType instanceof WhileyFile.Type.Array) {
 			WhileyFile.Type arrEle = ((WhileyFile.Type.Array) paramType).getElement();
 			List<Generator> generators = new ArrayList<Generator>();
+			Name nomName = null;
+			if(arrEle instanceof WhileyFile.Type.Nominal) {
+				nomName  = ((WhileyFile.Type.Nominal) arrEle).getName();
+				recursiveArray.put(nomName, recursiveType.getOrDefault(nomName, 0) + 1);
+			}
 			for(int i=0; i < RunTest.ARRAY_UPPER_LIMIT; i++) {
 				Generator gen = getGenerator(arrEle);
 				generators.add(gen);
+			}
+			if(nomName != null) {
+				recursiveArray.put(nomName, recursiveType.getOrDefault(nomName, 0) - 1);
 			}
 			return new ArrayGenerator(generators, TestType.RANDOM, numTests, RunTest.ARRAY_LOWER_LIMIT, RunTest.ARRAY_UPPER_LIMIT);
 		}
@@ -133,13 +148,13 @@ public class RandomGenerateTest implements GenerateTest{
 				Decl.Type decl = interpreter.getTypeSystem().resolveExactly(nom.getName(), Decl.Type.class);
 				Decl.Variable var = decl.getVariableDeclaration();
 				Name name = nom.getName();
-				recursiveType.put(name, recursiveType.getOrDefault(name, -1) + 1);
-				if(recursiveType.get(name) > RunTest.RECURSIVE_LIMIT) {
-					return new NullGenerator();
-				}
+				recursiveType.put(name, recursiveType.getOrDefault(name, 0) + 1);
+//				if(recursiveType.get(name) > RunTest.RECURSIVE_LIMIT) {
+//					return new NullGenerator();
+//				}
 				Generator gen = getGenerator(var.getType());
 				recursiveType.put(name, recursiveType.get(name) - 1);
-				if(recursiveType.get(name) == -1) {
+				if(recursiveType.get(name) == 0) {
 					recursiveType.remove(name);
 				}
 				return new NominalGenerator(gen, interpreter, decl);
@@ -171,7 +186,7 @@ public class RandomGenerateTest implements GenerateTest{
 				WhileyFile.Type unionFieldType = union.get(i);
 				if(unionFieldType instanceof WhileyFile.Type.Nominal) {
 					WhileyFile.Type.Nominal nom = (WhileyFile.Type.Nominal) unionFieldType;
-					if(recursiveType.getOrDefault(nom.getName(), 0) >= RunTest.RECURSIVE_LIMIT) {
+					if(recursiveType.containsKey(nom.getName()) && recursiveType.get(nom.getName()) > RunTest.RECURSIVE_LIMIT) {
 						limitReached = true;
 						// No longer be able to generate the nominal type
 						break;
@@ -187,7 +202,7 @@ public class RandomGenerateTest implements GenerateTest{
 						for(Decl.Variable var : tuple) {
 							if(var.getType() instanceof WhileyFile.Type.Nominal) {
 								WhileyFile.Type.Nominal nom = (WhileyFile.Type.Nominal) var.getType();
-								if(recursiveType.getOrDefault(nom.getName(), 0) >= RunTest.RECURSIVE_LIMIT) {
+								if(recursiveType.containsKey(nom.getName()) && recursiveType.get(nom.getName()) > RunTest.RECURSIVE_LIMIT) {
 									limitReached = true;
 									// No longer be able to generate the nominal type
 									break;
@@ -198,13 +213,35 @@ public class RandomGenerateTest implements GenerateTest{
 							}
 						}
 					}
+				} else if(unionFieldType instanceof WhileyFile.Type.Array) {
+					WhileyFile.Type.Array arr = (WhileyFile.Type.Array) unionFieldType;
+					if(arr.getElement() instanceof WhileyFile.Type.Nominal) {
+						WhileyFile.Type.Nominal nom = (WhileyFile.Type.Nominal) arr.getElement();
+						Name nomName = nom.getName();
+						if(recursiveArray.containsKey(nomName) && recursiveArray.get(nomName) > RunTest.RECURSIVE_ARRAY_LIMIT) {
+							limitReached = true;
+							// No longer be able to generate the nominal type
+							break;	
+						}
+						else if(recursiveType.containsKey(nomName) && recursiveType.get(nomName) > RunTest.RECURSIVE_LIMIT) {
+							limitReached = true;
+							// No longer be able to generate the nominal type
+							break;
+						}
+					}
+
 				}
+				
+				
 				if(!limitReached) {
 					Generator gen = getGenerator(unionFieldType);
 					if(!generators.contains(gen)) {
 						generators.add(gen);
 					}
 				}
+			}
+			if(generators.size() == 1) {
+				return generators.get(0);
 			}
 			return new UnionGenerator(generators, TestType.RANDOM, numTests);
 		}
@@ -227,6 +264,11 @@ public class RandomGenerateTest implements GenerateTest{
 	
 	@Override
 	public RValue[] generateParameters() {
+//        RValue[] parameters = new RValue[parameterGenerators.size()];
+//		for(int i=0; i < parameterGenerators.size(); i++) {
+//            parameters[i] = parameterGenerators.get(i).generate();
+//        }
+//        return parameters;
 		if(exceedSize()) {
  			Random randomiser = new Random(); 
 			int nextCombo = 0;
@@ -269,7 +311,7 @@ public class RandomGenerateTest implements GenerateTest{
 				num /= divNum;
 			}
 			Generator gen = parameterGenerators.get(i);
-			parameters[i] = gen.generateCombination(num);
+			parameters[i] = gen.generate(num);
 			leftover -= num * divNum;
 		}
 		return parameters;

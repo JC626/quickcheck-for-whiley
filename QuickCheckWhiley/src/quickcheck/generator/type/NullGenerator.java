@@ -26,7 +26,7 @@ public class NullGenerator implements Generator{
 	}
 	
 	@Override
-	public RValue generateCombination(int comboNum) {
+	public RValue generate(int comboNum) {
 		return semantics.Null();
 	}
 

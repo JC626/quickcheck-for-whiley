@@ -33,8 +33,8 @@ public class ReferenceGenerator implements Generator{
 	}
 	
 	@Override
-	public RValue generateCombination(int comboNum) {
-		return semantics.Reference(semantics.Cell(generator.generateCombination(comboNum)));
+	public RValue generate(int comboNum) {
+		return semantics.Reference(semantics.Cell(generator.generate(comboNum)));
 	}
 
 	@Override

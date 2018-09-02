@@ -49,6 +49,8 @@ public class ExhaustiveGenerateTest implements GenerateTest{
 
 	/** All the user created types that are recursive structures */
 	private Map<Name, Integer> recursiveType = new HashMap<Name, Integer>();
+	/** All the user created types that are recursive array structures */
+	private Map<Name, Integer> recursiveArray = new HashMap<Name, Integer>();
 	
 	public ExhaustiveGenerateTest(Tuple<Decl.Variable> valuesToGenerate, Interpreter interpreter, int numTests, BigInteger lowerLimit, BigInteger upperLimit) throws IntegerRangeException {
 		this.interpreter = interpreter;
@@ -99,9 +101,17 @@ public class ExhaustiveGenerateTest implements GenerateTest{
 		else if(paramType instanceof WhileyFile.Type.Array) {
 			WhileyFile.Type arrEle = ((WhileyFile.Type.Array) paramType).getElement();
 			List<Generator> generators = new ArrayList<Generator>();
+			Name nomName = null;
+			if(arrEle instanceof WhileyFile.Type.Nominal) {
+				nomName  = ((WhileyFile.Type.Nominal) arrEle).getName();
+				recursiveArray.put(nomName, recursiveType.getOrDefault(nomName, 0) + 1);
+			}
 			for(int i=0; i < RunTest.ARRAY_UPPER_LIMIT; i++) {
 				Generator gen = getGenerator(arrEle);
 				generators.add(gen);
+			}
+			if(nomName != null) {
+				recursiveArray.put(nomName, recursiveType.getOrDefault(nomName, 0) - 1);
 			}
 			return new ArrayGenerator(generators, TestType.EXHAUSTIVE, numTests, RunTest.ARRAY_LOWER_LIMIT, RunTest.ARRAY_UPPER_LIMIT);
 		}
@@ -112,13 +122,13 @@ public class ExhaustiveGenerateTest implements GenerateTest{
 				Decl.Type decl = interpreter.getTypeSystem().resolveExactly(nom.getName(), Decl.Type.class);
 				Decl.Variable var = decl.getVariableDeclaration();
 				Name name = nom.getName();
-				recursiveType.put(name, recursiveType.getOrDefault(name, -1) + 1);
-				if(recursiveType.get(name) > RunTest.RECURSIVE_LIMIT) {
-					return new NullGenerator();
-				}
+				recursiveType.put(name, recursiveType.getOrDefault(name, 0) + 1);
+//				if(recursiveType.get(name) > RunTest.RECURSIVE_LIMIT) {
+//					return new NullGenerator();
+//				}
 				Generator gen = getGenerator(var.getType());
 				recursiveType.put(name, recursiveType.get(name) - 1);
-				if(recursiveType.get(name) == -1) {
+				if(recursiveType.get(name) == 0) {
 					recursiveType.remove(name);
 				}
 				return new NominalGenerator(gen, interpreter, decl);
@@ -150,7 +160,7 @@ public class ExhaustiveGenerateTest implements GenerateTest{
 				WhileyFile.Type unionFieldType = union.get(i);
 				if(unionFieldType instanceof WhileyFile.Type.Nominal) {
 					WhileyFile.Type.Nominal nom = (WhileyFile.Type.Nominal) unionFieldType;
-					if(recursiveType.getOrDefault(nom.getName(), 0) >= RunTest.RECURSIVE_LIMIT) {
+					if(recursiveType.containsKey(nom.getName()) && recursiveType.get(nom.getName()) > RunTest.RECURSIVE_LIMIT) {
 						limitReached = true;
 						// No longer be able to generate the nominal type
 						break;
@@ -166,7 +176,7 @@ public class ExhaustiveGenerateTest implements GenerateTest{
 						for(Decl.Variable var : tuple) {
 							if(var.getType() instanceof WhileyFile.Type.Nominal) {
 								WhileyFile.Type.Nominal nom = (WhileyFile.Type.Nominal) var.getType();
-								if(recursiveType.getOrDefault(nom.getName(), 0) >= RunTest.RECURSIVE_LIMIT) {
+								if(recursiveType.containsKey(nom.getName()) && recursiveType.get(nom.getName()) > RunTest.RECURSIVE_LIMIT) {
 									limitReached = true;
 									// No longer be able to generate the nominal type
 									break;
@@ -177,15 +187,35 @@ public class ExhaustiveGenerateTest implements GenerateTest{
 							}
 						}
 					}
+				} else if(unionFieldType instanceof WhileyFile.Type.Array) {
+					WhileyFile.Type.Array arr = (WhileyFile.Type.Array) unionFieldType;
+					if(arr.getElement() instanceof WhileyFile.Type.Nominal) {
+						WhileyFile.Type.Nominal nom = (WhileyFile.Type.Nominal) arr.getElement();
+						Name nomName = nom.getName();
+						if(recursiveArray.containsKey(nomName) && recursiveArray.get(nomName) > RunTest.RECURSIVE_ARRAY_LIMIT) {
+							limitReached = true;
+							// No longer be able to generate the nominal type
+							break;	
+						}
+						else if(recursiveType.containsKey(nomName) && recursiveType.get(nomName) > RunTest.RECURSIVE_LIMIT) {
+							limitReached = true;
+							// No longer be able to generate the nominal type
+							break;
+						}
+					}
 
-					
 				}
+				
+				
 				if(!limitReached) {
 					Generator gen = getGenerator(unionFieldType);
 					if(!generators.contains(gen)) {
 						generators.add(gen);
 					}
 				}
+			}
+			if(generators.size() == 1) {
+				return generators.get(0);
 			}
 			return new UnionGenerator(generators, TestType.EXHAUSTIVE, numTests);
 		}

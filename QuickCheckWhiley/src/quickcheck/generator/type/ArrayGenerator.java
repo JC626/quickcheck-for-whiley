@@ -1,12 +1,10 @@
 package quickcheck.generator.type;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 import quickcheck.constraints.IntegerRange;
+import quickcheck.exception.IntegerRangeException;
 import quickcheck.util.TestType;
 import wyil.interpreter.ConcreteSemantics;
 import wyil.interpreter.ConcreteSemantics.RValue;
@@ -32,9 +30,7 @@ public class ArrayGenerator implements Generator{
 	private List<Generator> generators;
 	/** Current array elements generated */
 	private RValue[] arrElements;
-	/**Combinations for random test generation*/
-	private List<Integer> testCombos;
-	
+
 	/** Lower limit (inclusive) and upper limit (exclusive) for the size of the array generated */
 	private IntegerRange range;
 	
@@ -44,128 +40,71 @@ public class ArrayGenerator implements Generator{
 	private int count = 1;
 	
 
-	public ArrayGenerator(List<Generator> generators, TestType testType, int numTests, int lower, int upper) {
+	public ArrayGenerator(List<Generator> generators, TestType testType, int numTests, int lower, int upper) throws IntegerRangeException {
 		this.generators = generators;
 		this.testType = testType;
 		this.range = new IntegerRange(lower, upper + 1);
 		this.currentCombinations = 0;
 		checkValidRange();
 		calculateSize();
-				
-		// Random inputs use Knuth's Algorithm S
-		if(testType == TestType.RANDOM) {
-			Random randomiser = new Random(); 
-			testCombos = new ArrayList<Integer>();
-			int nextCombo = 0;
-			int selected = 0; 
-			while(selected < numTests) {
-				double uniform = randomiser.nextDouble();
-				if((size() - nextCombo)*uniform >= numTests - selected) {
-					nextCombo++;
-				}
-				else {
-					testCombos.add(nextCombo);
-					nextCombo++;
-					selected++;
-				}
-				if(nextCombo >= size()) {
-					nextCombo = 0;
-				}
-			}
-			//  Shuffle test values so they are not in order
-			Collections.shuffle(testCombos);
-		}
 	}
 	
 	@Override
 	public RValue generate() {
- 		if(testType == TestType.EXHAUSTIVE) {
-			// Empty array
-			if(count == 1 && range.lowerBound().equals(BigInteger.valueOf(0))) {
-				count++;
-				return semantics.Array(new RValue[0]);
+		assert testType == TestType.EXHAUSTIVE;
+		// Empty array
+		if(count == 1 && range.lowerBound().equals(BigInteger.valueOf(0))) {
+			count++;
+			return semantics.Array(new RValue[0]);
+		}
+		else {
+			int size = range.lowerBound().intValue() > 0 ? range.lowerBound().intValue() : 1;
+			// Get the size of the array
+			if(arrElements != null) {
+				if(currentCombinations >= Math.pow(generators.get(0).size(), arrElements.length)) {
+					size = arrElements.length + 1;
+					currentCombinations = 0;
+				}
+			}
+
+			// Resetting as it is a new array size
+			if(arrElements == null || arrElements.length < size) {
+				arrElements = new RValue[size];
+				// When the size is greater than value generated. 
+				if(size >= range.upperBound().intValue()) {
+					resetCount();
+					return this.generate();
+				}
+				assert size < range.upperBound().intValue();
+				for(int i=0; i < arrElements.length; i++) {
+					Generator gen = generators.get(i);
+					gen.resetCount();
+					arrElements[i] = gen.generate();
+				}
 			}
 			else {
-				int size = range.lowerBound().intValue() > 0 ? range.lowerBound().intValue() : 1;
-				// Get the size of the array
-				if(arrElements != null) {
-					if(currentCombinations >= Math.pow(generators.get(0).size(), arrElements.length)) {
-						size = arrElements.length + 1;
-						currentCombinations = 0;
+				// Generate the array elements backwards 
+				for(int i=arrElements.length - 1; i >= 0 ; i--) {
+					Generator gen = generators.get(i);
+					if(!gen.exceedCount()) {
+						arrElements[i] = gen.generate();
+						break;
 					}
-				}
-
-				// Resetting as it is a new array size
-				if(arrElements == null || arrElements.length < size) {
-					arrElements = new RValue[size];
-					// When the size is greater than value generated. 
-					if(size >= range.upperBound().intValue()) {
-						resetCount();
-						return this.generate();
-					}
-					assert size < range.upperBound().intValue();
-					for(int i=0; i < arrElements.length; i++) {
-						Generator gen = generators.get(i);
+					else {
 						gen.resetCount();
 						arrElements[i] = gen.generate();
 					}
 				}
-				else {
-					// Generate the array elements backwards 
-					for(int i=arrElements.length - 1; i >= 0 ; i--) {
-						Generator gen = generators.get(i);
-						if(!gen.exceedCount()) {
-							arrElements[i] = gen.generate();
-							break;
-						}
-						else {
-							gen.resetCount();
-							arrElements[i] = gen.generate();
-						}
-					}
-				}
-				count++;
-				currentCombinations++;
-				return semantics.Array(arrElements);
 			}
-		}
- 		else if(count >= testCombos.size()) {
- 			Random randomiser = new Random(); 
-			int nextCombo = 0;
-			int selected = 0; 
-			while(true) {
-				double uniform = randomiser.nextDouble();
-				if((size() - nextCombo)*uniform >= 1 - selected) {
-					nextCombo++;
-				}
-				else {
-					return generateCombination(nextCombo);
-				}
-				if(nextCombo >= size()) {
-					nextCombo = 0;
-				}
-			}
- 		}
- 		else {
-			int index = count - 1;
 			count++;
-			return generateCombination(testCombos.get(index));
- 		}
-//		else {
-//			int index = count - 1;
-//			RValue[] array = new RValue[testCombos.get(index)];
-//			assert array.length <= generators.size();
-//			for(int i=0; i < array.length; i++) {
-//				array[i] = generators.get(i).generate();
-//			}
-//			count++;
-//			return semantics.Array(array);
-//		}
+			currentCombinations++;
+			return semantics.Array(arrElements);
+		}
 
 	}
 	
 	@Override
-	public RValue generateCombination(int comboNum) {
+	public RValue generate(int comboNum) {
 		if(comboNum == 0) {
 			return semantics.Array(new RValue[0]);
 		}
@@ -196,7 +135,7 @@ public class ArrayGenerator implements Generator{
 				}
 //				System.out.println("Div " + divNum);
 //				System.out.println(combo);
-				elements[arrSize-i-1] = gen.generateCombination(num);
+				elements[arrSize-i-1] = gen.generate(num);
 				leftover -= num * divNum;
 			}
 			return semantics.Array(elements);
@@ -204,10 +143,10 @@ public class ArrayGenerator implements Generator{
 	}
 
 	
-	private void checkValidRange() {
+	private void checkValidRange() throws IntegerRangeException {
 		// Throw an error if the range is bigger than the other
 		if(range.lowerBound().compareTo(range.upperBound()) >= 0) {
-			throw new Error("Upper integer limit is less than or equal to the lower integer limit");
+			throw new IntegerRangeException();
 		}
 	}
 	
@@ -216,8 +155,9 @@ public class ArrayGenerator implements Generator{
 	 * another generator if it hasn't generated any values yet.
 	 * 
 	 * @param other An integer range to intersect with
+	 * @throws IntegerRangeException 
 	 */
-	public void joinRange(IntegerRange other) {
+	public void joinRange(IntegerRange other) throws IntegerRangeException {
 		assert count == 1;
 		this.range = range.intersection(other);
 		checkValidRange();
@@ -237,6 +177,9 @@ public class ArrayGenerator implements Generator{
 		int generatorRange = generators.get(0).size();
 		for(int i=start; i < range.upperBound().intValue(); i++) {
 			this.size += Math.pow(generatorRange, i);
+		}
+		if(this.size < 0) {
+			size = Integer.MAX_VALUE;
 		}
 	}
 	

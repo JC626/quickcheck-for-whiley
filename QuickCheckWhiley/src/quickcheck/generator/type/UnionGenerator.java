@@ -1,9 +1,6 @@
 package quickcheck.generator.type;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 import quickcheck.constraints.RangeHelper;
 import quickcheck.exception.IntegerRangeException;
@@ -32,8 +29,6 @@ public final class UnionGenerator implements Generator {
 	private List<Generator> generators;
 	/**Index of the next generator used for generating values (exhaustive)*/
 	private int currentIndex;
-	/**Combinations for random test generation*/
-	private List<Integer> testCombos;
 
 	private TestType testType;
 
@@ -45,92 +40,40 @@ public final class UnionGenerator implements Generator {
 		this.testType = testType;
 		currentIndex = 0;
 		calculateSize();
-		
-		// Random inputs use Knuth's Algorithm S
-		if(testType == TestType.RANDOM) {
-			Random randomiser = new Random(); 
-			testCombos = new ArrayList<Integer>();
-			int nextCombo = 0;
-			int selected = 0; 
-			while(selected < numTests) {
-				double uniform = randomiser.nextDouble();
-				if((size() - nextCombo)*uniform >= numTests - selected) {
-					nextCombo++;
-				}
-				else {
-					testCombos.add(nextCombo);
-					nextCombo++;
-					selected++;
-				}
-				if(nextCombo >= size()) {
-					nextCombo = 0;
-				}
-			}
-			//  Shuffle test values so they are not in order
-			Collections.shuffle(testCombos);
-		}
 	}
 
 	@Override
 	public RValue generate() {
-		if(testType == TestType.EXHAUSTIVE) {
-			// Iterate through the different generators
+		assert testType == TestType.EXHAUSTIVE;
+		// Iterate through the different generators
+		if(currentIndex >= generators.size()) {
+			currentIndex = 0;
+		}
+		// Generate all possible values, skip generators that have already finished generating values
+		Generator currentGen = generators.get(currentIndex);
+		if(exceedCount()) {
+			resetCount();
+		}
+		int startIndex = currentIndex;
+		while(currentGen.exceedCount()) {
+			currentIndex++;
 			if(currentIndex >= generators.size()) {
 				currentIndex = 0;
 			}
-			// Generate all possible values, skip generators that have already finished generating values
-			Generator currentGen = generators.get(currentIndex);
-			if(exceedCount()) {
+			currentGen = generators.get(currentIndex);
+			// In the case, when nominal generator has exceeded (but its size is incorrect).
+			if(startIndex == currentIndex) {
 				resetCount();
-			}
-			int startIndex = currentIndex;
-			while(currentGen.exceedCount()) {
-				currentIndex++;
-				if(currentIndex >= generators.size()) {
-					currentIndex = 0;
-				}
-				currentGen = generators.get(currentIndex);
-				// In the case, when nominal generator has exceeded (but its size is incorrect).
-				if(startIndex == currentIndex) {
-					resetCount();
-					break;
-				}
-			}
-			currentIndex++;
-			count++;
-			return currentGen.generate();
-		}
-		else if(count >= testCombos.size()) {
-			Random randomiser = new Random(); 
-			int nextCombo = 0;
-			int selected = 0; 
-			while(true) {
-				double uniform = randomiser.nextDouble();
-				if((size() - nextCombo)*uniform >= 1 - selected) {
-					nextCombo++;
-				}
-				else {
-					return generateCombination(nextCombo);
-				}
-				if(nextCombo >= size()) {
-					nextCombo = 0;
-				}
+				break;
 			}
 		}
-		else {
-			int index = count - 1;
-			count++;
-			return generateCombination(testCombos.get(index));
-		}
-//		else {
-//			// Pick a random generator to generate tests
-//			int index = randomiser.nextInt(generators.size());
-//			return generators.get(index).generate();
-//		}
+		currentIndex++;
+		count++;
+		return currentGen.generate();
 	}
 	
 	@Override
-	public RValue generateCombination(int comboNum) {
+	public RValue generate(int comboNum) {
 		int lowerLimit = 0;
 		Generator gen = generators.get(0);
 		for(int i=0; i< generators.size(); i++) {
@@ -140,7 +83,7 @@ public final class UnionGenerator implements Generator {
 			}
 			lowerLimit = gen.size();
 		}
-		return gen.generateCombination(comboNum - lowerLimit);
+		return gen.generate(comboNum - lowerLimit);
 	}
 
 	/**
@@ -177,6 +120,9 @@ public final class UnionGenerator implements Generator {
 		this.size = 0;
 		for(int i=0; i < generators.size(); i++) {
 			size += generators.get(i).size();
+		}
+		if(this.size < 0) {
+			size = Integer.MAX_VALUE;
 		}
 	}
 

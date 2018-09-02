@@ -5,8 +5,11 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import quickcheck.exception.CannotGenerateException;
 import quickcheck.exception.IntegerRangeException;
 import quickcheck.generator.ExhaustiveGenerateTest;
 import quickcheck.generator.GenerateTest;
@@ -16,6 +19,7 @@ import wybs.lang.Build;
 import wybs.lang.NameID;
 import wybs.lang.NameResolver.ResolutionError;
 import wybs.util.StdProject;
+import wybs.util.AbstractCompilationUnit.Name;
 import wybs.util.AbstractCompilationUnit.Tuple;
 import wyc.lang.WhileyFile;
 import wyc.lang.WhileyFile.Decl;
@@ -51,7 +55,12 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 	public static final int ARRAY_LOWER_LIMIT = 0;
 	public static final int ARRAY_UPPER_LIMIT = 3;
 	public static final int RECURSIVE_LIMIT = 3;
+	// Can only create up to 2D arrays, otherwise it exceeds the number of combos possible
+	public static final int RECURSIVE_ARRAY_LIMIT = 2;
 	
+	/** All the user created types that are recursive structures */
+	private static Map<Name, Integer> recursiveType = new HashMap<Name, Integer>();
+
 	/**
 	 * Result kind for this command
 	 *
@@ -216,10 +225,10 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 		Tuple<Decl.Variable> inputParameters = dec.getParameters();
 		Tuple<Decl.Variable> outputParameters = dec.getReturns();
 		
-		System.out.println("FUNCTION "+ name);
-		System.out.println("FUNCTION PARAM TYPES "+ inputParameters);
-		System.out.println("PRECONDITION "+ preconditions);
-		System.out.println("POSTCONDITION "+ postconditions);
+		System.out.println("Name of the function/method: " + name.name());
+//		System.out.println("FUNCTION PARAM TYPES "+ inputParameters);
+//		System.out.println("PRECONDITION "+ preconditions);
+//		System.out.println("POSTCONDITION "+ postconditions);
 				
 //		// Have to remove the pre and post conditions out of the 
 //		// function so the function is executed without validation
@@ -234,21 +243,28 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 		int numPassed = 0;
 		int numFailed = 0;
 		for(int i=0; i < numTest; i++) {
+			recursiveType.clear();
 			// Stop execution if all possible combinations have been generated 
 			// for the function
-			if(isFunction && testGen.exceedSize()) {
+			if(isFunction && testGen.exceedSize() && i != 0) {
 				completedAll = true;
 				break;
 			}
-			RValue[] paramValues = testGen.generateParameters();
+			RValue[] paramValues = null;
 			CallStack frame = interpreter.new CallStack();
 			// Check the precondition
 			try {
+				paramValues = testGen.generateParameters();
+				
 				for(int j=0; j < inputParameters.size(); j++) {
 					Decl.Variable parameter = inputParameters.get(j);
 					frame.putLocal(parameter.getName(), paramValues[j]);
 				}
 				interpreter.checkInvariants(frame, preconditions);
+			}
+			catch(CannotGenerateException e) {
+				System.out.println(e);
+				return Result.ERRORS;
 			}
 			catch(AssertionError e){
 				System.out.println("Pre-condition failed on input: " + Arrays.toString(paramValues));
@@ -261,6 +277,7 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 			RValue[] returns = null;
 			try {
 				returns = interpreter.execute(name, type, frame, false, false, paramValues);
+				recursiveType.clear();
 			}
 			catch(AssertionError e) {
 				System.out.println("Error occurred during execution " + e + ": " + e.getMessage());
@@ -277,13 +294,20 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 						throw new AssertionError("Type constraints for " + parameter  + " failed");
 					}
 					frame.putLocal(parameter.getName(), returns[j]);
-				}				
-				interpreter.checkInvariants(frame, postconditions);
-				numPassed++;
-//				// Print out any return values produced
-//				if (returns != null) {
-//					System.out.println("OUTPUT: " + Arrays.toString(returns));
-//				}
+				}	
+				try {
+					interpreter.checkInvariants(frame, postconditions);
+					numPassed++;
+//					// Print out any return values produced
+					if (returns != null) {
+						System.out.println("OUTPUT: " + Arrays.toString(returns));
+					}
+				}
+				catch(AssertionError e) {
+					System.out.printf("Failed Input: %s%nFailed Output: %s%n", Arrays.toString(paramValues), Arrays.toString(returns));
+					System.out.println("Postcondition failed " + e);
+					numFailed++;
+				} 
 			}
 			catch(AssertionError e) {
 				System.out.printf("Failed Input: %s%nFailed Output: %s%n", Arrays.toString(paramValues), Arrays.toString(returns));
@@ -345,12 +369,19 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 		// Check the nominal type postcondition
 		if(paramType instanceof Type.Nominal) {
 			Type.Nominal nom = (Type.Nominal) paramType;
+			Name name = nom.getName();
+			recursiveType.put(name, recursiveType.getOrDefault(name, 0) + 1);
+			
 			Decl.Type decl = interpreter.getTypeSystem().resolveExactly(nom.getName(), Decl.Type.class);			
 			if(decl.getInvariant().size() > 0) {
 				RValue.Bool valid = returnVal.checkInvariant(decl.getVariableDeclaration(), decl.getInvariant(), interpreter);
 				if(valid == RValue.Bool.False) {
 					return false;
 				}
+			}
+			// For recursive invariants, stop checking at the invariant limit
+			if(recursiveType.getOrDefault(name, 0) > RECURSIVE_LIMIT) {
+				return true;
 			}
 			// Need to go deeper as nominal wraps another type!
 			return checkInvariant(interpreter, decl.getVariableDeclaration().getType(), returnVal);

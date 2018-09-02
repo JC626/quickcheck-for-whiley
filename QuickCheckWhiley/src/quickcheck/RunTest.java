@@ -373,7 +373,10 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 			recursiveType.put(name, recursiveType.getOrDefault(name, 0) + 1);
 			
 			Decl.Type decl = interpreter.getTypeSystem().resolveExactly(nom.getName(), Decl.Type.class);			
-			if(decl.getInvariant().size() > 0) {
+			if(returnVal.is(decl.getType(), interpreter) != RValue.Bool.True) {
+				return false;
+			}
+			else if(decl.getInvariant().size() > 0) {
 				RValue.Bool valid = returnVal.checkInvariant(decl.getVariableDeclaration(), decl.getInvariant(), interpreter);
 				if(valid == RValue.Bool.False) {
 					return false;

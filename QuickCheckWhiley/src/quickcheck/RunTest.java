@@ -19,6 +19,7 @@ import wybs.lang.Build;
 import wybs.lang.NameID;
 import wybs.lang.NameResolver.ResolutionError;
 import wybs.util.StdProject;
+import wybs.util.AbstractCompilationUnit.Name;
 import wybs.util.AbstractCompilationUnit.Tuple;
 import wyc.lang.WhileyFile;
 import wyc.lang.WhileyFile.Decl;
@@ -224,10 +225,10 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 		Tuple<Decl.Variable> inputParameters = dec.getParameters();
 		Tuple<Decl.Variable> outputParameters = dec.getReturns();
 		
-		System.out.println("FUNCTION "+ name);
-		System.out.println("FUNCTION PARAM TYPES "+ inputParameters);
-		System.out.println("PRECONDITION "+ preconditions);
-		System.out.println("POSTCONDITION "+ postconditions);
+		System.out.println("Name of the function/method: " + name.name());
+//		System.out.println("FUNCTION PARAM TYPES "+ inputParameters);
+//		System.out.println("PRECONDITION "+ preconditions);
+//		System.out.println("POSTCONDITION "+ postconditions);
 				
 //		// Have to remove the pre and post conditions out of the 
 //		// function so the function is executed without validation

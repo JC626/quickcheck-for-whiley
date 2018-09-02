@@ -58,7 +58,7 @@ public class WhileyBenchTest {
 	public final static Map<String, String> IGNORED = new HashMap<>();
 	
 	static {
-		IGNORED.put("025_tries\\main", "Long time to run due to add(Trie trie, Transition transition)");
+//		IGNORED.put("025_tries\\main", "Long time to run due to add(Trie trie, Transition transition)");
 		IGNORED.put("107_minesweeper\\minesweeper", "Long time to run due to exposeNeighbours");
 		IGNORED.put("106_lander\\whiley\\src\\lander\\ui\\LanderCanvas", "Uses native and package.");
 		IGNORED.put("108_scrabble\\Board", "No functions to test.");

@@ -1145,15 +1145,6 @@ public class GenerateExhaustiveTest {
 		generatedParameters = testGen.generateParameters();
 		assertEquals(1, generatedParameters.length);
 		assertEquals(semantics.Array(new RValue[] {rootArray}), generatedParameters[0]);
-		
-		// 3d empty array
-		generatedParameters = testGen.generateParameters();
-		assertEquals(1, generatedParameters.length);
-		assertEquals(semantics.Array(new RValue[] { semantics.Array(new RValue[] {emptyArray})}), generatedParameters[0]);
-		
-		generatedParameters = testGen.generateParameters();
-		assertEquals(1, generatedParameters.length);
-		assertEquals(semantics.Array(new RValue[] { semantics.Array(new RValue[] {rootArray})}), generatedParameters[0]);
 	}
 	
 	

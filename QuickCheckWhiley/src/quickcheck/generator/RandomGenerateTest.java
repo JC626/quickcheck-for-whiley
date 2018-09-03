@@ -72,6 +72,12 @@ public class RandomGenerateTest implements GenerateTest{
 			for(Generator gen : parameterGenerators) {
 				size *= gen.size();
 			}
+			if(size == Integer.MIN_VALUE) {
+				size = Integer.MAX_VALUE;
+			}
+			else if(size < 0) {
+				size = -size;
+			}
 			this.totalCombinations = BigInteger.valueOf(size);
 		}
 		testCombos = new ArrayList<Integer>();

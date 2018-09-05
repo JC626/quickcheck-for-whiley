@@ -11,6 +11,7 @@ import java.util.Map;
 
 import org.junit.Assume;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -29,6 +30,9 @@ import test.utils.TestHelper;
  */
 @RunWith(Parameterized.class)
 public class WhileyBenchTest {
+	
+	public static String isMemoisation;
+	public static String isOptimisation;
 	
 	/**
 	 * The directory where you want to store the results
@@ -58,7 +62,14 @@ public class WhileyBenchTest {
 	public final static Map<String, String> IGNORED = new HashMap<>();
 	
 	static {
+		// Takes too long to execute
+//		IGNORED.put("002_fib\\main", "Long time to run due to main");
+//		IGNORED.put("006_queens\\main", "Long time to run due to main");
+//		IGNORED.put("016_date\\main", "Long time to run due to main");
+//		IGNORED.put("029_bipmatch\\main", "Long time to run due to main");
 //		IGNORED.put("025_tries\\main", "Long time to run due to add(Trie trie, Transition transition)");
+		
+		// 
 		IGNORED.put("107_minesweeper\\minesweeper", "Long time to run due to exposeNeighbours");
 		IGNORED.put("106_lander\\whiley\\src\\lander\\ui\\LanderCanvas", "Uses native and package.");
 		IGNORED.put("108_scrabble\\Board", "No functions to test.");
@@ -75,6 +86,16 @@ public class WhileyBenchTest {
 		
 		public WhileyBenchTest(String testName) {
 			this.testName = testName;
+		}
+		
+		@BeforeClass
+		public static void beforeClass() {
+			isMemoisation = System.getProperty("memoisation");
+			isOptimisation = System.getProperty("optimisation");
+			if(isMemoisation == null && isOptimisation == null) {
+				isMemoisation = "false";
+				isOptimisation = "false";
+			}
 		}
 
 		// Here we enumerate all available test cases.
@@ -104,7 +125,7 @@ public class WhileyBenchTest {
 			// Run tests
 	        try {
 	        	// Negative
-	            String[] args = new String[] {TEST_DIR + File.separatorChar + this.testName, "exhaustive", "100", "-5", "0"};            
+	            String[] args = new String[] {TEST_DIR + File.separatorChar + this.testName, "exhaustive", "100", "-5", "0", isMemoisation, isOptimisation};            
 	            Result result = helper.createRunTest(args);
 	            if(result == Result.ERRORS) {
 					noNegativeLimit = true;
@@ -114,7 +135,7 @@ public class WhileyBenchTest {
 	            }
 	            
 	            // Positive
-	        	args = new String[] {TEST_DIR + File.separatorChar + this.testName, "exhaustive", "100", "0", "5"};
+	        	args = new String[] {TEST_DIR + File.separatorChar + this.testName, "exhaustive", "100", "0", "5", isMemoisation, isOptimisation};
 	        	result = helper.createRunTest(args);
 	        	if(noNegativeLimit) {
 		            assertEquals("A test failed with positive integer limits.", Result.PASSED, result);

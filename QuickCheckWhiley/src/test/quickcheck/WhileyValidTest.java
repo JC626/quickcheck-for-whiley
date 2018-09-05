@@ -11,6 +11,7 @@ import java.util.Map;
 
 import org.junit.Assume;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -29,6 +30,10 @@ import wyc.util.TestUtils;
  */
 @RunWith(Parameterized.class)
 public class WhileyValidTest {
+	
+	public static String isMemoisation;
+	public static String isOptimisation;
+	
 	/**
 	 * The directory where you want to store the results
 	 */
@@ -167,6 +172,16 @@ public class WhileyValidTest {
 	public WhileyValidTest(String testName) {
 		this.testName = testName;
 	}
+	
+	@BeforeClass
+	public static void beforeClass() {
+		isMemoisation = System.getProperty("memoisation");
+		isOptimisation = System.getProperty("optimisation");
+		if(isMemoisation == null && isOptimisation == null) {
+			isMemoisation = "false";
+			isOptimisation = "false";
+		}
+	}
 
 	// Here we enumerate all available test cases.
 	@Parameters(name = "{0}")
@@ -193,7 +208,7 @@ public class WhileyValidTest {
 		// Run tests
         try {
         	// Negative
-            String[] args = new String[] {TEST_DIR + File.separatorChar + this.testName, "exhaustive", "100", "-5", "0"};            
+            String[] args = new String[] {TEST_DIR + File.separatorChar + this.testName, "exhaustive", "100", "-5", "0", isMemoisation, isOptimisation};            
             Result result = helper.createRunTest(args);
             if(result == Result.ERRORS) {
 				noNegativeLimit = true;
@@ -203,7 +218,7 @@ public class WhileyValidTest {
             }
             
             // Positive
-        	args = new String[] {TEST_DIR + File.separatorChar + this.testName, "exhaustive", "100", "0", "5"};
+        	args = new String[] {TEST_DIR + File.separatorChar + this.testName, "exhaustive", "100", "0", "5", isMemoisation, isOptimisation};
         	result = helper.createRunTest(args);
         	if(noNegativeLimit) {
 	            assertEquals("A test failed with positive integer limits.", Result.PASSED, result);

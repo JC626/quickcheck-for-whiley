@@ -11,6 +11,7 @@ import java.util.Map;
 
 import org.junit.Assume;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -29,6 +30,10 @@ import wyc.util.TestUtils;
  */
 @RunWith(Parameterized.class)
 public class WhileyInvalidTest {
+	
+	public static String isMemoisation;
+	public static String isOptimisation;
+	
 	/**
 	 * The directory where you want to store the results
 	 */
@@ -93,12 +98,23 @@ public class WhileyInvalidTest {
 	public WhileyInvalidTest(String testName) {
 		this.testName = testName;
 	}
+	
+	@BeforeClass
+	public static void beforeClass() {
+		isMemoisation = System.getProperty("memoisation");
+		isOptimisation = System.getProperty("optimisation");
+		if(isMemoisation == null && isOptimisation == null) {
+			isMemoisation = "false";
+			isOptimisation = "false";
+		}
+	}
 
 	// Here we enumerate all available test cases.
 	@Parameters(name = "{0}")
 	public static Collection<Object[]> data() {
 		return TestUtils.findTestNames(TEST_DIR);
 	}
+
 
 	// Skip ignored tests
 	@Before
@@ -129,14 +145,14 @@ public class WhileyInvalidTest {
 		// Run tests
         try {
         	// Negative
-            String[] args = new String[] {TEST_DIR + File.separatorChar + this.testName, "exhaustive", "100", "-5", "0"};
+            String[] args = new String[] {TEST_DIR + File.separatorChar + this.testName, "exhaustive", "100", "-5", "0",  isMemoisation, isOptimisation};
             Result result = helper.createRunTest(args);
             if(result == Result.FAILED) {
             	// A negative test failed.
             	return;
             }
             // Positive
-            args = new String[] {TEST_DIR + File.separatorChar + this.testName, "exhaustive", "100", "0", "5"};
+            args = new String[] {TEST_DIR + File.separatorChar + this.testName, "exhaustive", "100", "0", "5", isMemoisation, isOptimisation};
             result = helper.createRunTest(args);
             assertEquals("All tests passed when some tests should fail.", Result.FAILED, result);   
             return;

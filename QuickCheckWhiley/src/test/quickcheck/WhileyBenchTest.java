@@ -90,7 +90,7 @@ public class WhileyBenchTest {
 			Assume.assumeTrue("Test " + this.testName + " skipped: " + ignored, ignored == null);
 		}
 
-		@Test
+	    @Test(timeout = 600000)
 		public void benchmark() throws IOException {
 			helper.compile(this.testName, LIBRARIES);
 			String fileName = this.testName.replace(File.separatorChar, '_');

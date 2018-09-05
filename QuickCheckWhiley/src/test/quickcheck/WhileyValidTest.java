@@ -181,7 +181,7 @@ public class WhileyValidTest {
 		Assume.assumeTrue("Test " + this.testName + " skipped: " + ignored, ignored == null);
 	}
 
-	@Test
+    @Test(timeout = 600000)
 	public void valid() throws IOException {
 		helper.compile(this.testName);
         // Set system output to the file

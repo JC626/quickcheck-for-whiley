@@ -107,7 +107,7 @@ public class WhileyInvalidTest {
 		Assume.assumeTrue("Test " + this.testName + " skipped: " + ignored, ignored == null);
 	}
 
-	@Test
+    @Test(timeout = 600000)
 	public void invalid() throws IOException {
 		try {
 			helper.compile(this.testName);

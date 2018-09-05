@@ -7,6 +7,7 @@ import java.io.PrintWriter;
 
 import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
+import org.junit.runner.notification.Failure;
 
 public class WhileyRunner {
 	
@@ -51,6 +52,7 @@ public class WhileyRunner {
 			}
 			for(int i=0; i < NUM_RUNS; i++) {
 				Result result = JUnitCore.runClasses(testClass);
+//				System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
 				if(i==0) {
 					continue;
 				}
@@ -71,6 +73,16 @@ public class WhileyRunner {
 				out.print(",");
 				out.println(result.getRunTime());
 				out.flush();
+				// Record the failures in a file
+				String failuresFile = testSuiteName + " - " + type + " #" + i + ".txt";
+				FileWriter failureW = new FileWriter(failuresFile, true);
+				BufferedWriter failureBw = new BufferedWriter(failureW);
+				PrintWriter failureOut = new PrintWriter(failureBw);
+				for(Failure f : result.getFailures()) {
+					failureOut.println(f.toString());
+					failureOut.println(f.getTrace());
+				}
+				failureOut.close();
 			}
 		}
 		out.close();

@@ -63,11 +63,11 @@ public class WhileyBenchTest {
 	
 	static {
 		// Takes too long to execute
-//		IGNORED.put("002_fib\\main", "Long time to run due to main");
-//		IGNORED.put("006_queens\\main", "Long time to run due to main");
-//		IGNORED.put("016_date\\main", "Long time to run due to main");
-//		IGNORED.put("029_bipmatch\\main", "Long time to run due to main");
-//		IGNORED.put("025_tries\\main", "Long time to run due to add(Trie trie, Transition transition)");
+		IGNORED.put("002_fib\\main", "Long time to run due to main");
+		IGNORED.put("006_queens\\main", "Long time to run due to main");
+		IGNORED.put("016_date\\main", "Long time to run due to main");
+		IGNORED.put("029_bipmatch\\main", "Long time to run due to main");
+		IGNORED.put("025_tries\\main", "Long time to run due to add(Trie trie, Transition transition)");
 		
 		// 
 		IGNORED.put("107_minesweeper\\minesweeper", "Long time to run due to exposeNeighbours");

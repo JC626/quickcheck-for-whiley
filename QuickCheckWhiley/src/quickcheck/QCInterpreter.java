@@ -21,6 +21,8 @@ import wybs.util.AbstractCompilationUnit.Tuple;
 import wybs.lang.SyntacticElement;
 import wyil.interpreter.ConcreteSemantics;
 import wyil.interpreter.Interpreter;
+import wyil.interpreter.ConcreteSemantics.RValue;
+import wyil.interpreter.Interpreter.CallStack;
 import wyil.type.TypeSystem;
 
 import static wyc.lang.WhileyFile.*;
@@ -92,6 +94,7 @@ public class QCInterpreter extends Interpreter {
 	private final boolean funcOptimisation;
 	/**Flag whether function memoisation/caching should be applied or not*/
 	private final boolean funcMemoisation;
+	private boolean invariantCheck;
 	
 	public QCInterpreter(Build.Project project, PrintStream debug, BigInteger lowerLimit, BigInteger upperLimit, boolean funcMemo,  boolean funcOpt, int numFuncOpGen) {
 		super(project, debug);
@@ -112,6 +115,7 @@ public class QCInterpreter extends Interpreter {
 			this.funcOptimisation = funcOpt;
 		}
 		this.funcMemoisation = funcMemo;
+		this.invariantCheck = false;
 	}
 	
 	public QCInterpreter(Build.Project project, PrintStream debug) {
@@ -127,6 +131,7 @@ public class QCInterpreter extends Interpreter {
 		this.numRandomFuncValGen = NUM_GEN_FUNC_OPT;
 		this.funcOptimisation = FUNCTION_OPTIMISATION;
 		this.funcMemoisation = FUNCTION_MEMOISATION;
+		this.invariantCheck = false;
 	}
 
 	private enum Status {
@@ -160,11 +165,6 @@ public class QCInterpreter extends Interpreter {
 				Decl.Callable.class);
 		// Evaluate argument expressions
 		RValue[] arguments = executeExpressions(expr.getOperands(), frame);
-		/*
-		 * If there is a recursive invariant, then execute the function normally
-		 * instead of generating the value.
-		 * Also do not optimise if the declaration is a property.
-		 */
 		Map<List<RValue>, RValue[]> functionIO = null;
 		List<RValue> argList = null;
 		if(funcMemoisation && !(decl instanceof Decl.Method)) {
@@ -174,7 +174,12 @@ public class QCInterpreter extends Interpreter {
 				return functionIO.get(argList);
 			}
 		}
-		if(funcOptimisation && !(decl instanceof Decl.Property)) {
+		/*
+		 * If there is a recursive invariant, then execute the function normally
+		 * instead of generating the value.
+		 * Also do not optimise if we are checking invariants or it is a property.
+		 */
+		if(funcOptimisation && !this.invariantCheck && !(decl instanceof Decl.Property)) {
 			Identifier funcName = decl.getName();
 			Decl.FunctionOrMethod fun = ((Decl.FunctionOrMethod) decl);
 			if(!recursiveInvariantFunctions.contains(funcName)) {
@@ -184,14 +189,14 @@ public class QCInterpreter extends Interpreter {
 				// Generate until the return type meets the postcondition
 				// If it is unable to generate after a certain number of times,
 				// just call the function/method instead 
-				frame = frame.enter(fun);
+				CallStack enteredFrame = frame.enter(fun);
 				extractParameters(frame, arguments, fun);
 				try {
 					// Generator for the return values of the function
 					GenerateTest testGen = new RandomGenerateTest(fun.getReturns(), this, numRandomFuncValGen, lowerLimit, upperLimit);
 					RValue[] returns;
 					boolean isValid = false;
-					CallStack tempFrame = frame.clone();
+					CallStack tempFrame = enteredFrame.clone();
 					for(int i=0; i < numRandomFuncValGen; i++) {
 						// Create a generator for the return type of the function based on the input
 						returns = testGen.generateParameters();
@@ -1240,6 +1245,48 @@ public class QCInterpreter extends Interpreter {
 			RValue retval = executeExpression(ANY_T,(Expr) body, frame);
 			return new RValue[]{retval};
 		}
+	}
+	
+	/**
+	 * Evaluate zero or more conditional expressions, and check whether any is
+	 * false. If so, raise an exception indicating a runtime fault.
+	 *
+	 * @param frame
+	 * @param context
+	 * @param invariants
+	 */
+	public void checkInvariants(CallStack frame, Tuple<Expr> invariants) {
+		invariantCheck = true;
+		for (int i = 0; i != invariants.size(); ++i) {
+			RValue.Bool b = executeExpression(BOOL_T, invariants.get(i), frame);
+			if (b == RValue.False) {
+				invariantCheck = false;
+				// FIXME: need to do more here
+				throw new AssertionError();
+			}
+		}
+		invariantCheck = false;
+	}
+
+	/**
+	 * Evaluate zero or more conditional expressions, and check whether any is
+	 * false. If so, raise an exception indicating a runtime fault.
+	 *
+	 * @param frame
+	 * @param context
+	 * @param invariants
+	 */
+	public void checkInvariants(CallStack frame, Expr... invariants) {
+		invariantCheck = true;
+		for (int i = 0; i != invariants.length; ++i) {
+			RValue.Bool b = executeExpression(BOOL_T, invariants[i], frame);
+			if (b == RValue.False) {
+				invariantCheck = false;
+				// FIXME: need to do more here
+				throw new AssertionError();
+			}
+		}
+		invariantCheck = false;
 	}
 
 	

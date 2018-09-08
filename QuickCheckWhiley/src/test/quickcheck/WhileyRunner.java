@@ -26,6 +26,7 @@ public class WhileyRunner {
 		BufferedWriter bw = new BufferedWriter(fw);
 		PrintWriter out = new PrintWriter(bw);
 		out.print(testSuiteName);
+		out.print(",");
 		out.print("Passed,");
 		out.print("Failed,");
 		out.print("Skipped,");

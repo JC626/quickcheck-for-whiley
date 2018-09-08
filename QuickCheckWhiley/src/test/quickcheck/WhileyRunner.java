@@ -11,7 +11,7 @@ import org.junit.runner.notification.Failure;
 
 public class WhileyRunner {
 	
-	public static final int NUM_RUNS = 6;
+	public static final int NUM_RUNS = 7;
 	
 
 	public static void main(String[] args) throws IOException {
@@ -53,7 +53,7 @@ public class WhileyRunner {
 			for(int i=0; i < NUM_RUNS; i++) {
 				Result result = JUnitCore.runClasses(testClass);
 //				System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
-				if(i==0) {
+				if(i <= 1) {
 					continue;
 				}
 				int numFailed = result.getFailureCount();

@@ -228,10 +228,11 @@ public class ExhaustiveGenerateTest implements GenerateTest{
 		else if(paramType instanceof WhileyFile.Type.Reference) {
 			WhileyFile.Type.Reference ref = (WhileyFile.Type.Reference) paramType;
 			Generator gen = getGenerator(ref.getElement());
+			//TODO Recursive reference?
 			return new ReferenceGenerator(gen);
 		}
-		else if(paramType instanceof WhileyFile.Type.Function) {
-			WhileyFile.Type.Function func = (WhileyFile.Type.Function) paramType;
+		else if(paramType instanceof WhileyFile.Type.Function || paramType instanceof WhileyFile.Type.Method) {
+			WhileyFile.Type.Callable func = (WhileyFile.Type.Callable) paramType;	
 			List<Generator> generators = new ArrayList<Generator>();
 			for(WhileyFile.Type type : func.getReturns()) {
 				generators.add(getGenerator(type));

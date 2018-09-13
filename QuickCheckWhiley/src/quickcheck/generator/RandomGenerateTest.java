@@ -87,7 +87,6 @@ public class RandomGenerateTest implements GenerateTest{
 			}
 		}
 		else {
-			// FIXME this takes too long!
 			// Random inputs use Knuth's Algorithm S
 			Random randomiser = new Random(); 
 			int nextCombo = 0;
@@ -256,8 +255,8 @@ public class RandomGenerateTest implements GenerateTest{
 			Generator gen = getGenerator(ref.getElement());
 			return new ReferenceGenerator(gen);
 		}
-		else if(paramType instanceof WhileyFile.Type.Function) {
-			WhileyFile.Type.Function func = (WhileyFile.Type.Function) paramType;
+		else if(paramType instanceof WhileyFile.Type.Function || paramType instanceof WhileyFile.Type.Method) {
+			WhileyFile.Type.Callable func = (WhileyFile.Type.Callable) paramType;
 			List<Generator> generators = new ArrayList<Generator>();
 			for(WhileyFile.Type type : func.getReturns()) {
 				generators.add(getGenerator(type));

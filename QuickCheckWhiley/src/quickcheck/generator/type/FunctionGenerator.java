@@ -50,7 +50,7 @@ public class FunctionGenerator implements Generator{
 	private int size;
 	private int count = 1;
 
-	public FunctionGenerator(List<Generator> generators, WhileyFile.Type.Function funcType, Interpreter interpreter, TestType testType, int numTests) {
+	public FunctionGenerator(List<Generator> generators, WhileyFile.Type.Callable funcType, Interpreter interpreter, TestType testType, int numTests) {
 		this.generators = generators;
 		this.interpreter = interpreter;
 		this.testType = testType;

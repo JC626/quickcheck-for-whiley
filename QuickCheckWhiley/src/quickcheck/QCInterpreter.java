@@ -190,7 +190,7 @@ public class QCInterpreter extends Interpreter {
 				// If it is unable to generate after a certain number of times,
 				// just call the function/method instead 
 				CallStack enteredFrame = frame.enter(fun);
-				extractParameters(frame, arguments, fun);
+				extractParameters(enteredFrame, arguments, fun);
 				try {
 					// Generator for the return values of the function
 					GenerateTest testGen = new RandomGenerateTest(fun.getReturns(), this, numRandomFuncValGen, lowerLimit, upperLimit);

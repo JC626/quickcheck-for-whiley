@@ -271,6 +271,10 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 				numSkipped++;
 				continue;
 			}
+			catch(RuntimeException e) {
+				System.out.println("Error occurred when generating input " + e + ": " + e.getMessage());
+				return Result.ERRORS;
+			}
 			
 			System.out.println("INPUT: " + Arrays.toString(paramValues));
 			// Checks the postcondition when it is executed
@@ -284,6 +288,11 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 				numFailed++;
 				continue;
 			} 
+			catch(RuntimeException e) {
+				System.out.println("Error occurred during execution " + e + ": " + e.getMessage());
+				return Result.ERRORS;
+			}
+			
 			try {
 				// Add the return values into the frame for validation
 				for(int j=0; j < outputParameters.size(); j++) {
@@ -308,12 +317,20 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 					System.out.println("Postcondition failed " + e);
 					numFailed++;
 				} 
+				catch(RuntimeException e) {
+					System.out.println("Error when checking invariants of return values " + e + ": " + e.getMessage());
+					return Result.ERRORS;
+				}
 			}
 			catch(AssertionError e) {
 				System.out.printf("Failed Input: %s%nFailed Output: %s%n", Arrays.toString(paramValues), Arrays.toString(returns));
 				System.out.println("Due to error " + e);
 				numFailed++;
 			} 
+			catch(RuntimeException e) {
+				System.out.println("Error when checking type invariants of return values " + e + ": " + e.getMessage());
+				return Result.ERRORS;
+			}
 			catch (ResolutionError e) {
 				// FIXME resolution error
 				e.printStackTrace();

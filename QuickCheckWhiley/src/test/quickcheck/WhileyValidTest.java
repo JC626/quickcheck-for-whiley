@@ -159,6 +159,19 @@ public class WhileyValidTest {
 		//
 		IGNORED.put("String_Valid_6", "??");
 		IGNORED.put("RecursiveType_Valid_12", "??");
+		
+		// Tests to ignore
+		IGNORED.put("Assume_Valid_1", "Assume statement causes return to be invalid");
+		IGNORED.put("While_Valid_58", "Assume statement invariant is checked");
+		IGNORED.put("ListGenerator_Valid_2", "Assume statement invariant is checked");
+		IGNORED.put("MessageSend_Valid_1", "Assume statement invariant is checked");
+		IGNORED.put("ProcessAccess_Valid_2", "Assume statement invariant is checked");
+
+		IGNORED.put("ConstrainedIntersection_Valid_1", "Intersection not supported in this version of Whiley");
+		IGNORED.put("Intersection_Valid_1", "Intersection not supported in this version of Whiley");
+		IGNORED.put("Intersection_Valid_2", "Intersection not supported in this version of Whiley");
+		IGNORED.put("NegationType_Valid_3", "Intersection not supported in this version of Whiley");
+
 	}
 
 	// ======================================================================

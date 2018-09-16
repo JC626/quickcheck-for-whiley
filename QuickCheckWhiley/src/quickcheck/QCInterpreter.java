@@ -21,8 +21,6 @@ import wybs.util.AbstractCompilationUnit.Tuple;
 import wybs.lang.SyntacticElement;
 import wyil.interpreter.ConcreteSemantics;
 import wyil.interpreter.Interpreter;
-import wyil.interpreter.ConcreteSemantics.RValue;
-import wyil.interpreter.Interpreter.CallStack;
 import wyil.type.TypeSystem;
 
 import static wyc.lang.WhileyFile.*;
@@ -221,10 +219,10 @@ public class QCInterpreter extends Interpreter {
 							isValid = false;
 						}
 						if(isValid) {
-							if(funcMemoisation) {
-								functionIO.put(argList, returns);
-								functionParameters.put(fun, functionIO);
-							}
+//							if(funcMemoisation) {
+//								functionIO.put(argList, returns);
+//								functionParameters.put(fun, functionIO);
+//							}
 							return returns;
 						}
 					}

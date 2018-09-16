@@ -175,9 +175,10 @@ public class QCInterpreter extends Interpreter {
 		/*
 		 * If there is a recursive invariant, then execute the function normally
 		 * instead of generating the value.
-		 * Also do not optimise if we are checking invariants or it is a property.
+		 * Only optimise if it is a function.
+		 * Also do not optimise if we are checking invariants.
 		 */
-		if(funcOptimisation && !this.invariantCheck && !(decl instanceof Decl.Property)) {
+		if(funcOptimisation && !this.invariantCheck && decl instanceof Decl.Function) {
 			Identifier funcName = decl.getName();
 			Decl.FunctionOrMethod fun = ((Decl.FunctionOrMethod) decl);
 			if(!recursiveInvariantFunctions.contains(funcName)) {

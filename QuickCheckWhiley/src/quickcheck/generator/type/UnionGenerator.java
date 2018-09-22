@@ -81,7 +81,7 @@ public final class UnionGenerator implements Generator {
 			if(lowerLimit <= comboNum && comboNum < gen.size() + lowerLimit) {
 				break;
 			}
-			lowerLimit = gen.size();
+			lowerLimit += gen.size();
 		}
 		return gen.generate(comboNum - lowerLimit);
 	}

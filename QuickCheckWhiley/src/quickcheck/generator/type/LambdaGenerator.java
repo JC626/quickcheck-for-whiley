@@ -19,13 +19,13 @@ import wyil.interpreter.ConcreteSemantics.RValue;
 import wyil.interpreter.Interpreter.CallStack;
 
 /**
- * Generate the return value of a function
+ * Generate the return value of a function/method
  * that meets its postcondition.
  * 
  * @author Janice Chin
  *
  */
-public class FunctionGenerator implements Generator{
+public class LambdaGenerator implements Generator{
 	private static final String ALPHA_NUMERIC_STRING = "abcdefghijklmnopqrstuvwxyz0123456789";
 	private static final int RETURN_NAME_MAX = 5;
 	private static final int RETURN_NAME_MIN = 3;
@@ -50,7 +50,7 @@ public class FunctionGenerator implements Generator{
 	private int size;
 	private int count = 1;
 
-	public FunctionGenerator(List<Generator> generators, WhileyFile.Type.Callable funcType, Interpreter interpreter, TestType testType, int numTests) {
+	public LambdaGenerator(List<Generator> generators, WhileyFile.Type.Callable lambdaType, Interpreter interpreter, TestType testType, int numTests) {
 		this.generators = generators;
 		this.interpreter = interpreter;
 		this.testType = testType;
@@ -58,20 +58,18 @@ public class FunctionGenerator implements Generator{
 		
 		// Set input and output parameters for creating a lambda
 		List<Decl.Variable> inputVars = new ArrayList<Decl.Variable>();
-		for(WhileyFile.Type t : funcType.getParameters()) { 
+		for(WhileyFile.Type t : lambdaType.getParameters()) { 
 			WhileyFile.Decl.Variable var = new WhileyFile.Decl.Variable(null, null, t);
 			inputVars.add(var);
 		}
 		List<WhileyFile.Expr> returnStmts = new ArrayList<WhileyFile.Expr>();
 		List<Decl.Variable> outputVars = new ArrayList<Decl.Variable>();
 		this.returnNames = new ArrayList<Identifier>();
-		Tuple<WhileyFile.Type> returnTypes = funcType.getReturns();
+		Tuple<WhileyFile.Type> returnTypes = lambdaType.getReturns();
 		Set<String> returnNamesUsed = new HashSet<String>();
 		/*
-		 * The return statement in the lambda is returning
-		 * a local variable(s).
-		 * The local variable(s) are the generated values from the
-		 * function.
+		 * The return statement in the lambda is returning local variable(s).
+		 * The local variable(s) are generated values from the lambda.
 		 */ 
 		for(int i=0; i < returnTypes.size(); i++) {
 			// Make a random return name
@@ -88,12 +86,11 @@ public class FunctionGenerator implements Generator{
 			outputVars.add(var);
 		}		
 		this.body = new WhileyFile.Stmt.Block(new WhileyFile.Stmt.Return(new Tuple<WhileyFile.Expr>(returnStmts))); 
-		this.lambda = new WhileyFile.Decl.Lambda(null, null, new Tuple<Decl.Variable>(inputVars), new Tuple<Decl.Variable>(outputVars), null, null, null, funcType);
+		this.lambda = new WhileyFile.Decl.Lambda(null, null, new Tuple<Decl.Variable>(inputVars), new Tuple<Decl.Variable>(outputVars), null, null, null, lambdaType);
 	}
 	
 	/**
-	 * Randomly generate a string that is 
-	 * a random length.
+	 * Randomly generate a string that is a random length.
 	 * This is for generating random return names.
 	 * @return A random string
 	 */

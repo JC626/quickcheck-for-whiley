@@ -261,7 +261,7 @@ public class RandomGenerateTest implements GenerateTest{
 			for(WhileyFile.Type type : func.getReturns()) {
 				generators.add(getGenerator(type));
 			}
-			return new FunctionGenerator(generators, func, interpreter, TestType.RANDOM, numTests);
+			return new LambdaGenerator(generators, func, interpreter, TestType.RANDOM, numTests);
 		}
 		assert false;
 		return null;

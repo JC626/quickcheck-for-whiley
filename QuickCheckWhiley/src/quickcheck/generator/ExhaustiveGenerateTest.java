@@ -237,7 +237,7 @@ public class ExhaustiveGenerateTest implements GenerateTest{
 			for(WhileyFile.Type type : func.getReturns()) {
 				generators.add(getGenerator(type));
 			}
-			return new FunctionGenerator(generators, func, interpreter, TestType.EXHAUSTIVE, numTests);
+			return new LambdaGenerator(generators, func, interpreter, TestType.EXHAUSTIVE, numTests);
 		}
 		assert false;
 		return null;

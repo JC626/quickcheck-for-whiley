@@ -33,6 +33,7 @@ public class WhileyBenchTest {
 	
 	public static String isMemoisation;
 	public static String isOptimisation;
+	public static String testType;
 	
 	/**
 	 * The directory where you want to store the results
@@ -92,9 +93,11 @@ public class WhileyBenchTest {
 		public static void beforeClass() {
 			isMemoisation = System.getProperty("memoisation");
 			isOptimisation = System.getProperty("optimisation");
-			if(isMemoisation == null && isOptimisation == null) {
+			testType = System.getProperty("testType");
+			if(isMemoisation == null && isOptimisation == null && testType == null) {
 				isMemoisation = "false";
 				isOptimisation = "false";
+				testType = "exhaustive";
 			}
 		}
 
@@ -125,7 +128,7 @@ public class WhileyBenchTest {
 			// Run tests
 	        try {
 	        	// Negative
-	            String[] args = new String[] {TEST_DIR + File.separatorChar + this.testName, "exhaustive", "100", "-5", "0", isMemoisation, isOptimisation};            
+	            String[] args = new String[] {TEST_DIR + File.separatorChar + this.testName, testType, "100", "-5", "0", isMemoisation, isOptimisation};            
 	            Result result = helper.createRunTest(args);
 	            if(result == Result.ERRORS) {
 					noNegativeLimit = true;
@@ -135,7 +138,7 @@ public class WhileyBenchTest {
 	            }
 	            
 	            // Positive
-	        	args = new String[] {TEST_DIR + File.separatorChar + this.testName, "exhaustive", "100", "0", "5", isMemoisation, isOptimisation};
+	        	args = new String[] {TEST_DIR + File.separatorChar + this.testName, testType, "100", "0", "5", isMemoisation, isOptimisation};
 	        	result = helper.createRunTest(args);
 	        	if(noNegativeLimit) {
 		            assertEquals("A test failed with positive integer limits.", Result.PASSED, result);

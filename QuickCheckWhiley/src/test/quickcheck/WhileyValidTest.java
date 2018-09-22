@@ -190,9 +190,11 @@ public class WhileyValidTest {
 	public static void beforeClass() {
 		isMemoisation = System.getProperty("memoisation");
 		isOptimisation = System.getProperty("optimisation");
-		if(isMemoisation == null && isOptimisation == null) {
+		testType = System.getProperty("testType");
+		if(isMemoisation == null && isOptimisation == null && testType == null) {
 			isMemoisation = "false";
 			isOptimisation = "false";
+			testType = "exhaustive";
 		}
 	}
 
@@ -231,11 +233,11 @@ public class WhileyValidTest {
             }
             
             // Positive
-        	args = new String[] {TEST_DIR + File.separatorChar + this.testName, "exhaustive", "100", "0", "5", isMemoisation, isOptimisation};
+        	args = new String[] {TEST_DIR + File.separatorChar + this.testName, testType, "100", "0", "5", isMemoisation, isOptimisation};
         	result = helper.createRunTest(args);
         	if(noNegativeLimit) {
 	            assertEquals("A test failed with positive integer limits.", Result.PASSED, result);
-        	}
+        	}	            
         	else if(result != Result.ERRORS){
 	            assertEquals("A test failed with positive integer limits.", Result.PASSED, result);
         	}
@@ -247,48 +249,6 @@ public class WhileyValidTest {
 				file.delete();
 			}
 		}
-
-//		// Check which limits pass
-//		boolean negative = true;
-//		boolean positive = true;
-//		try {
-//			// Negative limits
-//			try {
-//				String[] args = new String[] {TEST_DIR + "/" + this.testName, "exhaustive", "100", "-5", "0"};
-//				QuickCheck.main(args);
-//			}
-//			catch (Error e) {
-//				if(e.getMessage().equals("Upper integer limit is less than or equal to the lower integer limit")) {
-//					negative = false;
-//				}
-//				else {
-//					throw e;
-//				}
-//			}
-//			try {
-//				// Positive
-//				String[] args = new String[] {TEST_DIR + "/" + this.testName, "exhaustive", "100", "0", "5"};
-//				QuickCheck.main(args);
-//			}
-//			catch (Error e) {
-//				if(e.getMessage().equals("Upper integer limit is less than or equal to the lower integer limit")) {
-//					positive = false;
-//				}
-//				else {
-//					throw e;
-//				}
-//			}
-//		}
-//		finally {
-//			stream.close();
-//			// Delete file if it is empty
-//			if(file.length() == 0) {
-//				file.delete();
-//			}
-//		}
-//		if(!positive && !negative) {
-//			fail("No possible values could be generated at all");
-//		}
 	}
 
 }

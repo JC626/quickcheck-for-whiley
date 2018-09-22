@@ -57,7 +57,17 @@ public class NominalGenerator implements Generator{
 
 	@Override
 	public RValue generate(int comboNum) {
-		return generator.generate(comboNum);
+		RValue value = generator.generate(comboNum);
+		try {
+			RValue.Bool isValid =  value.checkInvariant(decl.getVariableDeclaration(), decl.getInvariant(), interpreter);
+			if(isValid == RValue.Bool.False) {
+				throw new CannotGenerateException("Value:" + value + " does not meet type constraint.");
+			}
+			return value;
+		}
+		catch(AssertionError e) {
+			throw new CannotGenerateException("Value:" + value + " does not meet type constraint.");
+		}
 	}
 
 	/**

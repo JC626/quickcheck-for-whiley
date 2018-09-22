@@ -45,11 +45,15 @@ public class RandomGenerateTest implements GenerateTest{
 	private BigInteger totalCombinations;
 	private int numTested = 1;
     private int numTests;
+    /**Whether to execute all combinations or not*/
+    private boolean allCombos;
     
 	/** All the user created types that are recursive structures */
 	private Map<Name, Integer> recursiveType = new HashMap<Name, Integer>();
 	/** All the user created types that are recursive array structures */
 	private Map<Name, Integer> recursiveArray = new HashMap<Name, Integer>();
+	/** Randomiser */
+	private Random randomiser = new Random(1000L); 
 
     public RandomGenerateTest(Tuple<Decl.Variable> valuesToGenerate, Interpreter interpreter, int numTests, BigInteger lowerLimit, BigInteger upperLimit) throws IntegerRangeException {
 		super();
@@ -85,10 +89,11 @@ public class RandomGenerateTest implements GenerateTest{
 			for(int i=0; i < totalCombinations.intValue(); i++) {
 				testCombos.add(i);
 			}
+			allCombos = true;
 		}
 		else {
+			allCombos = false;
 			// Random inputs use Knuth's Algorithm S
-			Random randomiser = new Random(); 
 			int nextCombo = 0;
 			int selected = 0; 
 			while(selected < numTests) {
@@ -105,9 +110,9 @@ public class RandomGenerateTest implements GenerateTest{
 					nextCombo = 0;
 				}
 			}
-			// Shuffle test values so they are not in order
-			Collections.shuffle(testCombos);
 		}
+		// Shuffle test values so they are not in order
+		Collections.shuffle(testCombos, randomiser);
 	}	
 
 	/**
@@ -269,18 +274,21 @@ public class RandomGenerateTest implements GenerateTest{
 	
 	@Override
 	public RValue[] generateParameters() {
-//        RValue[] parameters = new RValue[parameterGenerators.size()];
-//		for(int i=0; i < parameterGenerators.size(); i++) {
-//            parameters[i] = parameterGenerators.get(i).generate();
-//        }
-//        return parameters;
+		// TODO: Known bug - does not check for type constraints. Fails instead.
+		if(parameterGenerators.size() == 0) {
+			return new RValue[0];
+		}
 		if(exceedSize()) {
- 			Random randomiser = new Random(); 
 			int nextCombo = 0;
-			int selected = 0; 
+			int selected = numTested % totalCombinations.intValue(); 
+			int remaining = numTests % totalCombinations.intValue();
+			if(remaining == 0) {
+				remaining = totalCombinations.intValue();
+			}
 			while(true) {
+				remaining -= selected;
 				double uniform = randomiser.nextDouble();
-				if((this.totalCombinations.intValue() - nextCombo)*uniform >= 1 - selected) {
+				if((this.totalCombinations.intValue() - nextCombo)*uniform >= remaining - selected) {
 					nextCombo++;
 				}
 				else {
@@ -324,7 +332,7 @@ public class RandomGenerateTest implements GenerateTest{
 
 	@Override
 	public boolean exceedSize() {
-		return numTested > totalCombinations.intValue();
+		return numTested > testCombos.size();
 	}
 	
 }

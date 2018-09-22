@@ -722,12 +722,14 @@ public class GenerateRandomTest {
 
 		RValue[] generatedParameters = testGen.generateParameters();
 		assertEquals(1, generatedParameters.length);
-		assertTrue(generatedParameters[0] instanceof RValue.Record);
-		RValue.Record record = (RValue.Record) generatedParameters[0];
-		RValue first = record.read(new Identifier("data"));
-		assertTrue(first instanceof RValue.Int);
-		RValue second = record.read(new Identifier("n"));
-		assertTrue(second instanceof RValue.Null || second instanceof RValue.Record);
+		if(!(generatedParameters[0] instanceof RValue.Null)) {
+			assertTrue(generatedParameters[0] instanceof RValue.Record);
+			RValue.Record record = (RValue.Record) generatedParameters[0];
+			RValue first = record.read(new Identifier("data"));
+			assertTrue(first instanceof RValue.Int);
+			RValue second = record.read(new Identifier("n"));
+			assertTrue(second instanceof RValue.Null || second instanceof RValue.Record);
+		}
 	}
 
 	/**

@@ -10,6 +10,7 @@ import java.util.Random;
 import java.util.Stack;
 
 import quickcheck.RunTest;
+import quickcheck.exception.CannotGenerateException;
 import quickcheck.exception.IntegerRangeException;
 import quickcheck.generator.type.*;
 import quickcheck.util.TestType;
@@ -274,35 +275,81 @@ public class RandomGenerateTest implements GenerateTest{
 	
 	@Override
 	public RValue[] generateParameters() {
-		// TODO: Known bug - does not check for type constraints. Fails instead.
 		if(parameterGenerators.size() == 0) {
 			return new RValue[0];
 		}
 		if(exceedSize()) {
-			int nextCombo = 0;
-			int selected = numTested % totalCombinations.intValue(); 
-			int remaining = numTests % totalCombinations.intValue();
-			if(remaining == 0) {
-				remaining = totalCombinations.intValue();
-			}
-			while(true) {
-				remaining -= selected;
-				double uniform = randomiser.nextDouble();
-				if((this.totalCombinations.intValue() - nextCombo)*uniform >= remaining - selected) {
-					nextCombo++;
+            int selected = numTested % totalCombinations.intValue(); 
+            int remaining = numTests % totalCombinations.intValue();
+            if(remaining == 0) {
+                remaining = totalCombinations.intValue();
+            }
+            while(true) {
+				int combo = generateComboNum(selected, remaining);
+				try {
+					RValue[] values = generateCombination(combo);
+					numTested++;
+					return values;
 				}
-				else {
-					return generateCombination(nextCombo);
-				}
-				if(nextCombo >= this.totalCombinations.intValue()) {
-					nextCombo = 0;
-				}
-			}
- 		}
-		else {
-			int index = numTested - 1;
+				catch(CannotGenerateException e){}
+				selected++;
+            }
+		}		
+		// See if the first combination can be generated correctly
+		try {
+			RValue[] values = generateCombination(testCombos.get(numTested-1));
 			numTested++;
-			return generateCombination(testCombos.get(index));
+			return values;
+		}
+		catch(CannotGenerateException e){}
+		
+		// If executing all combos, just iterate through all of them.
+		if(allCombos) {
+			int currentIndex = numTested + 1;
+			while(currentIndex < testCombos.size()) {
+				try {
+					RValue[] values = generateCombination(testCombos.get(currentIndex));
+					numTested++;
+					return values;
+				}
+				catch(CannotGenerateException e){}
+				currentIndex++;
+			}
+		}
+		else {
+			// Since an exception was thrown then need to replace the 
+			// current testCombo with a different value. 
+			// Ideally, this value is unique. 
+			// However, this is not checked.
+			int currentIndex = numTested + 1;
+			while(currentIndex < numTests) {
+				int combo = generateComboNum(currentIndex, numTests);
+				try {
+					RValue[] values = generateCombination(combo);
+					numTested++;
+					return values;
+				}
+				catch(CannotGenerateException e){}
+				currentIndex++;
+			}
+		}
+		// All possible combinations have been tried
+		throw new CannotGenerateException("No possible values can be generated.");
+	}
+	
+	private int generateComboNum(int selected, int remaining) {
+		int nextCombo = 0;
+		while(true) {
+			double uniform = randomiser.nextDouble();
+			if((this.totalCombinations.intValue() - nextCombo)*uniform >= remaining - selected) {
+				nextCombo++;
+			}
+			else {
+				return nextCombo;
+			}
+			if(nextCombo >= this.totalCombinations.intValue()) {
+				nextCombo = 0;
+			}
 		}
 	}
 	

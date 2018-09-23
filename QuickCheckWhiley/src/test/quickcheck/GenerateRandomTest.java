@@ -12,6 +12,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import quickcheck.QCInterpreter;
+import quickcheck.exception.CannotGenerateException;
 import quickcheck.exception.IntegerRangeException;
 import quickcheck.generator.GenerateTest;
 import quickcheck.generator.RandomGenerateTest;
@@ -401,18 +402,18 @@ public class GenerateRandomTest {
 		List<Decl.FunctionOrMethod> functions = helper.getFunctionsAndMethods(testName, project);
 
 		BigInteger lower = BigInteger.valueOf(0);
-		BigInteger upper = BigInteger.valueOf(11);
+		BigInteger upper = BigInteger.valueOf(10);
 		try {
 			GenerateTest testGen = new RandomGenerateTest(functions.get(0).getParameters(), interpreter, 10, lower,
 					upper);
 			testGen.generateParameters();
 			fail("Should not be able to generate parameters that are invalid");
-		} catch (Error e) {
+		} catch (CannotGenerateException e) {
 		}
 		GenerateTest testGen = new RandomGenerateTest(functions.get(0).getParameters(), interpreter, 10, lower, upper);
 
-		lower = BigInteger.valueOf(0);
-		upper = BigInteger.valueOf(20);
+		lower = BigInteger.valueOf(10);
+		upper = BigInteger.valueOf(11);
 		testGen = new RandomGenerateTest(functions.get(0).getParameters(), interpreter, 10, lower, upper);
 		RValue[] generatedParameters = testGen.generateParameters();
 		assertEquals(1, generatedParameters.length);

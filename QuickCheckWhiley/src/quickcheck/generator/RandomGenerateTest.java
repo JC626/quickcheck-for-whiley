@@ -278,7 +278,8 @@ public class RandomGenerateTest implements GenerateTest{
 		if(parameterGenerators.size() == 0) {
 			return new RValue[0];
 		}
-		if(exceedSize()) {
+		boolean exceeded = exceedSize();
+		if(exceeded && !allCombos) {
             int selected = numTested % totalCombinations.intValue(); 
             int remaining = numTests % totalCombinations.intValue();
             if(remaining == 0) {
@@ -297,7 +298,13 @@ public class RandomGenerateTest implements GenerateTest{
 		}		
 		// See if the first combination can be generated correctly
 		try {
-			RValue[] values = generateCombination(testCombos.get(numTested-1));
+			int index = numTested - 1;
+			// If we have completed all combinations, just loop around the combo list again
+			if(exceeded && allCombos) {
+				index = index % totalCombinations.intValue();
+				Collections.shuffle(testCombos, randomiser);
+			}
+			RValue[] values = generateCombination(testCombos.get(index));
 			numTested++;
 			return values;
 		}

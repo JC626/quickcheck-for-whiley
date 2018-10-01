@@ -237,7 +237,6 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 //		dec.setOperand(4, empty); // Remove precondition
 //		dec.setOperand(5, empty); // Remove postcondition
 		
-		boolean isFunction = dec instanceof Decl.Function;
 		boolean completedAll = false;
 		int numSkipped = 0;
 		int numPassed = 0;

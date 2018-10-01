@@ -245,8 +245,8 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 		for(int i=0; i < numTest; i++) {
 			recursiveType.clear();
 			// Stop execution if all possible combinations have been generated 
-			// for the function
-			if(isFunction && testGen.exceedSize() && i != 0) {
+			// Can do this for methods as well as a new call stack is created each time
+			if(testGen.exceedSize() && i != 0) {
 				completedAll = true;
 				break;
 			}
@@ -338,7 +338,7 @@ public class RunTest extends AbstractProjectCommand<RunTest.Result> {
 			} 
 		}
 		// Overall test statistics
-		if(isFunction && completedAll) {
+		if(completedAll) {
 			System.out.println("Tested all possible combinations");
 			int numActualTest = numPassed + numFailed + numSkipped;
 			if(numFailed == 0) {

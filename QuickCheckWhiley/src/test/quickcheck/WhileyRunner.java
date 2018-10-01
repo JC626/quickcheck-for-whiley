@@ -15,13 +15,16 @@ public class WhileyRunner {
 	
 
 	public static void main(String[] args) throws IOException {
-		runnerTest("INVALID_TEST_RESULT.csv", "Whiley Invalid Tests", WhileyInvalidTest.class);
-		runnerTest("VALID_TEST_RESULT.csv", "Whiley Valid Tests", WhileyValidTest.class);
-		runnerTest("BENCHMARK_TEST_RESULT.csv", "Whiley Benchmark Tests", WhileyBenchTest.class);
+		runnerTest("INVALID_TEST_RESULT.csv", "Whiley Invalid Tests", "exhaustive", WhileyInvalidTest.class);
+		runnerTest("BENCHMARK_TEST_RESULT.csv", "Whiley Benchmark Tests", "exhaustive", WhileyBenchTest.class);
+		runnerTest("VALID_TEST_RESULT.csv", "Whiley Valid Tests", "exhaustive", WhileyValidTest.class);
+		runnerTest("INVALID_TEST_RESULT_RANDOM.csv", "Whiley Invalid Tests (Random)", "random", WhileyInvalidTest.class);
+		runnerTest("BENCHMARK_TEST_RESULT_RANDOM.csv", "Whiley Benchmark Tests (Random)", "random", WhileyBenchTest.class);
+		runnerTest("VALID_TEST_RESULT_RANDOM.csv", "Whiley Valid Tests (Random)", "random", WhileyValidTest.class);
 	}
 	
-	public static void runnerTest(String fileName, String testSuiteName, Class<?> testClass) throws IOException {
-		String[] types = new String[] {"None", "Function Optimisation", "Memoisation", "Function Optimisation & Memoisation"};
+	public static void runnerTest(String fileName, String testSuiteName, String testType, Class<?> testClass) throws IOException {
+		String[] types = new String[] {"None", "Function Optimisation", "Memoisation", "Function Optimisation & Memoisation" };
 		FileWriter fw = new FileWriter(fileName, true);
 		BufferedWriter bw = new BufferedWriter(fw);
 		PrintWriter out = new PrintWriter(bw);
@@ -35,6 +38,7 @@ public class WhileyRunner {
 		out.println("Execution Time");
 		out.flush();
 		for(String type : types) {
+			System.setProperty("testType", testType);
 			if(type.equals("None")) {
 				System.setProperty("memoisation", "false");
 				System.setProperty("optimisation", "false");

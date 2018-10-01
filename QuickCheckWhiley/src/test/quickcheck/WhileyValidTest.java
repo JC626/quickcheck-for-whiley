@@ -33,7 +33,8 @@ public class WhileyValidTest {
 	
 	public static String isMemoisation;
 	public static String isOptimisation;
-	
+	public static String testType;
+
 	/**
 	 * The directory where you want to store the results
 	 */

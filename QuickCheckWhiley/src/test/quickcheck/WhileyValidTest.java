@@ -224,7 +224,7 @@ public class WhileyValidTest {
 		// Run tests
         try {
         	// Negative
-            String[] args = new String[] {TEST_DIR + File.separatorChar + this.testName, "exhaustive", "100", "-5", "0", isMemoisation, isOptimisation};            
+            String[] args = new String[] {TEST_DIR + File.separatorChar + this.testName, testType, "100", "-5", "0", isMemoisation, isOptimisation};            
             Result result = helper.createRunTest(args);
             if(result == Result.ERRORS) {
 				noNegativeLimit = true;

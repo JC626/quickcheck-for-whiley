@@ -48,6 +48,8 @@ public class RandomGenerateTest implements GenerateTest{
     private int numTests;
     /**Whether to execute all combinations or not*/
     private boolean allCombos;
+    /** Whether the tests have exceeded the test combos*/
+    private boolean hasExceeded;
     
 	/** All the user created types that are recursive structures */
 	private Map<Name, Integer> recursiveType = new HashMap<Name, Integer>();
@@ -55,6 +57,12 @@ public class RandomGenerateTest implements GenerateTest{
 	private Map<Name, Integer> recursiveArray = new HashMap<Name, Integer>();
 	/** Randomiser */
 	private Random randomiser = new Random(1000L); 
+	
+	/** Last combo used, when iterating through exhaustively. 
+	    Used when we cannot generate value for a nominal type */
+	private int exhaustiveCombo = 0;
+	/** Current index to look at in the list of total combinations*/
+	private int currentIndex = 0;
 
     public RandomGenerateTest(Tuple<Decl.Variable> valuesToGenerate, Interpreter interpreter, int numTests, BigInteger lowerLimit, BigInteger upperLimit) throws IntegerRangeException {
 		super();
@@ -277,87 +285,60 @@ public class RandomGenerateTest implements GenerateTest{
 	public RValue[] generateParameters() {
 		if(parameterGenerators.size() == 0) {
 			return new RValue[0];
-		}
-		boolean exceeded = exceedSize();
-		if(exceeded && !allCombos) {
-            int selected = numTested % totalCombinations.intValue(); 
-            int remaining = numTests % totalCombinations.intValue();
-            if(remaining == 0) {
-                remaining = totalCombinations.intValue();
-            }
-            while(true) {
-				int combo = generateComboNum(selected, remaining);
-				try {
-					RValue[] values = generateCombination(combo);
-					numTested++;
-					return values;
-				}
-				catch(CannotGenerateException e){}
-				selected++;
-            }
-		}		
+		}	
 		// See if the first combination can be generated correctly
-		try {
-			int index = numTested - 1;
-			// If we have completed all combinations, just loop around the combo list again
-			if(exceeded && allCombos) {
-				index = index % totalCombinations.intValue();
-				Collections.shuffle(testCombos, randomiser);
+		if(currentIndex < testCombos.size()) {
+			try {
+				// If we have completed all combinations, just loop around the combo list again
+//				if(exceedSize() && allCombos) {
+//					index = index % totalCombinations.intValue();
+//					Collections.shuffle(testCombos, randomiser);
+//				}
+				RValue[] values = generateCombination(testCombos.get(currentIndex++));
+				numTested++;
+				return values;
 			}
-			RValue[] values = generateCombination(testCombos.get(index));
-			numTested++;
-			return values;
+			catch(CannotGenerateException e){}
 		}
-		catch(CannotGenerateException e){}
-		
 		// If executing all combos, just iterate through all of them.
 		if(allCombos) {
-			int currentIndex = numTested + 1;
-			while(currentIndex < testCombos.size()) {
+			int wentThroughAll = 0;
+			while(wentThroughAll <= totalCombinations.intValue()) {
+				if(currentIndex >= testCombos.size()) {
+					hasExceeded = true;
+					currentIndex = 0;
+					Collections.shuffle(testCombos, randomiser);
+				}
 				try {
-					RValue[] values = generateCombination(testCombos.get(currentIndex));
+					RValue[] values = generateCombination(testCombos.get(currentIndex++));
 					numTested++;
 					return values;
 				}
 				catch(CannotGenerateException e){}
-				currentIndex++;
+				wentThroughAll++;
 			}
 		}
 		else {
+			int wentThroughAll = 0;
 			// Since an exception was thrown then need to replace the 
 			// current testCombo with a different value. 
 			// Ideally, this value is unique. 
 			// However, this is not checked.
-			int currentIndex = numTested + 1;
-			while(currentIndex < numTests) {
-				int combo = generateComboNum(currentIndex, numTests);
+			while(wentThroughAll <= totalCombinations.intValue()) {
+				if(exhaustiveCombo >= totalCombinations.intValue()) {
+					hasExceeded = true;
+					exhaustiveCombo = 0;
+				}
 				try {
-					RValue[] values = generateCombination(combo);
+					RValue[] values = generateCombination(exhaustiveCombo++);
 					numTested++;
 					return values;
 				}
 				catch(CannotGenerateException e){}
-				currentIndex++;
 			}
 		}
 		// All possible combinations have been tried
 		throw new CannotGenerateException("No possible values can be generated.");
-	}
-	
-	private int generateComboNum(int selected, int remaining) {
-		int nextCombo = 0;
-		while(true) {
-			double uniform = randomiser.nextDouble();
-			if((this.totalCombinations.intValue() - nextCombo)*uniform >= remaining - selected) {
-				nextCombo++;
-			}
-			else {
-				return nextCombo;
-			}
-			if(nextCombo >= this.totalCombinations.intValue()) {
-				nextCombo = 0;
-			}
-		}
 	}
 	
 	private RValue[] generateCombination(int comboNum) {
@@ -386,7 +367,7 @@ public class RandomGenerateTest implements GenerateTest{
 
 	@Override
 	public boolean exceedSize() {
-		return numTested > testCombos.size();
+		return numTested > testCombos.size() || hasExceeded;
 	}
 	
 }

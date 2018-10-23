@@ -56,7 +56,7 @@ public class RandomGenerateTest implements GenerateTest{
 	/** All the user created types that are recursive array structures */
 	private Map<Name, Integer> recursiveArray = new HashMap<Name, Integer>();
 	/** Randomiser */
-	private Random randomiser = new Random(1000L); 
+	private Random randomiser = new Random(); 
 	
 	/** Last combo used, when iterating through exhaustively. 
 	    Used when we cannot generate value for a nominal type */
